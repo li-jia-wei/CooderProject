@@ -34,6 +34,9 @@ class MainActivityLogic(
 	
 	val infoList: MutableList<CooderTabBottomInfo<*>> = ArrayList()
 	
+	/**
+	 * 当前页面索引
+	 */
 	var currentItemIndex: Int = 0
 		private set
 	
@@ -46,7 +49,6 @@ class MainActivityLogic(
 		savedInstanceState?.also {
 			currentItemIndex = it.getInt(SAVED_CURRENT_ID)
 		}
-		
 		initTabBottom()
 	}
 	
@@ -70,7 +72,8 @@ class MainActivityLogic(
 	 */
 	private fun initTabBottom() {
 		tabBottomLayout = activityProvider.findViewById(R.id.tab_bottom_layout)
-		tabBottomLayout.setTabAlpha(0.85F)
+		tabBottomLayout.setEnableSliding(true)
+		tabBottomLayout.setTabAlpha(0.9F)
 		val iconFont = "fonts/alibaba_iconfont.ttf"
 		
 		// 首页
