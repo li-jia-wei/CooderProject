@@ -7,6 +7,15 @@ import com.cooder.cooder.project.app.ui.main.logic.MainActivityLogic
 import com.cooder.cooder.project.app.ui.main.logic.MainActivityLogic.ActivityProvider
 import com.cooder.cooder.project.common.ui.component.CooderBaseActivity
 
+/**
+ * 项目：CooderProject
+ *
+ * 作者：李佳伟
+ *
+ * 创建：2022/10/4 12:20
+ *
+ * 介绍：MainActivity
+ */
 class MainActivity : CooderBaseActivity(), ActivityProvider {
 	
 	private lateinit var activityLogic: MainActivityLogic

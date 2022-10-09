@@ -2,9 +2,22 @@
 	<string name="app_name">Cooder项目</string>
 
 	<!-- 首页 -->
-	<string name="home_page_title">首页</string>
-	<string name="home_page_icon_home">&#xe89a;</string>
-	<string name="home_page_icon_home_fill">&#xe8a0;</string>
+	<string name="homepage_title">首页</string>
+	<string name="homepage_icon_home">&#xe89a;</string>
+	<string name="homepage_icon_home_fill">&#xe8a0;</string>
+	<string-array name="homepage_tab_names">
+		<item>热门</item>
+		<item>服装</item>
+		<item>数码</item>
+		<item>鞋子</item>
+		<item>零食</item>
+		<item>家电</item>
+		<item>汽车</item>
+		<item>百货</item>
+		<item>家具</item>
+		<item>装修</item>
+		<item>运动</item>
+	</string-array>
 	
 	<!-- 收藏 -->
 	<string name="favorite_title">收藏</string>

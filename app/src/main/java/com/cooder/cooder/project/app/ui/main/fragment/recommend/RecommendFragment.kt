@@ -1,5 +1,6 @@
-package com.cooder.cooder.project.app.ui.main.fragment
+package com.cooder.cooder.project.app.ui.main.fragment.recommend
 
+import android.os.Bundle
 import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.common.ui.component.CooderBaseFragment
 
@@ -16,5 +17,9 @@ class RecommendFragment : CooderBaseFragment() {
 	
 	override fun getLayoutId(): Int {
 		return R.layout.fragment_recommend
+	}
+	
+	override fun onCreateView(savedInstanceState: Bundle?) {
+	
 	}
 }

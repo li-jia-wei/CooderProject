@@ -30,6 +30,32 @@ class CooderFragmentTabView @JvmOverloads constructor(
 			field = value
 		}
 	
+	/**
+	 * 默认全部是以hide隐藏，设置哪些是remove来移除
+	 */
+	private var removeFragments = mutableSetOf<Class<out Fragment>>()
+	
+	/**
+	 * 增加需要隐藏的Fragment
+	 */
+	fun addRemoveFragments(fragments: Set<Class<out Fragment>>) {
+		removeFragments += fragments
+	}
+	
+	/**
+	 * 增加需要隐藏的Fragment
+	 */
+	fun addRemoveFragments(vararg fragments: Class<out Fragment>) {
+		removeFragments += fragments
+	}
+	
+	/**
+	 * 增加需要隐藏的Fragment
+	 */
+	fun addRemoveFragment(fragment: Class<out Fragment>) {
+		removeFragments += fragment
+	}
+	
 	private var currentPosition: Int = -1
 	
 	/**
@@ -44,7 +70,7 @@ class CooderFragmentTabView @JvmOverloads constructor(
 		}
 		if (currentPosition != position) {
 			currentPosition = position
-			adapter!!.instantiateItem(this, position)
+			adapter!!.instantiateItem(this, position, removeFragments)
 		}
 	}
 	

@@ -8,7 +8,11 @@ import android.view.View
 import androidx.annotation.IdRes
 import androidx.fragment.app.FragmentManager
 import com.cooder.cooder.project.app.R
-import com.cooder.cooder.project.app.ui.main.fragment.*
+import com.cooder.cooder.project.app.ui.main.fragment.category.CategoryFragment
+import com.cooder.cooder.project.app.ui.main.fragment.favorite.FavoriteFragment
+import com.cooder.cooder.project.app.ui.main.fragment.homepage.HomepageFragment
+import com.cooder.cooder.project.app.ui.main.fragment.profile.ProfileFragment
+import com.cooder.cooder.project.app.ui.main.fragment.recommend.RecommendFragment
 import com.cooder.cooder.project.common.tab.CooderFragmentTabView
 import com.cooder.cooder.project.common.tab.CooderTabViewAdapter
 import com.cooder.cooder.ui.tab.bottom.CooderTabBottomInfo
@@ -28,9 +32,11 @@ class MainActivityLogic(
 	private val activityProvider: ActivityProvider,
 	savedInstanceState: Bundle?
 ) {
-	lateinit var fragmentTabView: CooderFragmentTabView private set
+	lateinit var fragmentTabView: CooderFragmentTabView
+		private set
 	
-	lateinit var tabBottomLayout: CooderTabBottomLayout private set
+	lateinit var tabBottomLayout: CooderTabBottomLayout
+		private set
 	
 	val infoList: MutableList<CooderTabBottomInfo<*>> = ArrayList()
 	
@@ -72,21 +78,21 @@ class MainActivityLogic(
 	 */
 	private fun initTabBottom() {
 		tabBottomLayout = activityProvider.findViewById(R.id.tab_bottom_layout)
-		tabBottomLayout.setEnableSliding(true)
 		tabBottomLayout.setTabAlpha(0.9F)
+		tabBottomLayout.setEnableSliding(true)
 		val iconFont = "fonts/alibaba_iconfont.ttf"
 		
 		// 首页
-		val homePageInfo = CooderTabBottomInfo<Int>(
-			R.string.home_page_title,
+		val homepageInfo = CooderTabBottomInfo<Int>(
+			R.string.homepage_title,
 			iconFont,
-			R.string.home_page_icon_home,
-			R.string.home_page_icon_home_fill,
-			R.color.tab_bottom_default,
-			R.color.tab_bottom_tint,
-			HomePageFragment::class.java
+			R.string.homepage_icon_home,
+			R.string.homepage_icon_home_fill,
+			R.color.tab_default,
+			R.color.tab_tint,
+			HomepageFragment::class.java
 		)
-		infoList += homePageInfo
+		infoList += homepageInfo
 		
 		// 收藏
 		val favoriteInfo = CooderTabBottomInfo<Int>(
@@ -94,8 +100,8 @@ class MainActivityLogic(
 			iconFont,
 			R.string.favorite_icon_collection,
 			R.string.favotite_icon_collection_fill,
-			R.color.tab_bottom_default,
-			R.color.tab_bottom_tint,
+			R.color.tab_default,
+			R.color.tab_tint,
 			FavoriteFragment::class.java
 		)
 		infoList += favoriteInfo
@@ -106,8 +112,8 @@ class MainActivityLogic(
 			iconFont,
 			R.string.category_icon_category,
 			R.string.category_icon_category,
-			R.color.tab_bottom_default,
-			R.color.tab_bottom_tint,
+			R.color.tab_default,
+			R.color.tab_tint,
 			CategoryFragment::class.java
 		)
 		infoList += categoryInfo
@@ -118,8 +124,8 @@ class MainActivityLogic(
 			iconFont,
 			R.string.recommend_icon_good,
 			R.string.recommend_icon_good_fill,
-			R.color.tab_bottom_default,
-			R.color.tab_bottom_tint,
+			R.color.tab_default,
+			R.color.tab_tint,
 			RecommendFragment::class.java
 		)
 		infoList += recommendInfo
@@ -130,13 +136,18 @@ class MainActivityLogic(
 			iconFont,
 			R.string.profile_icon_account,
 			R.string.profile_icon_account_fill,
-			R.color.tab_bottom_default,
-			R.color.tab_bottom_tint,
+			R.color.tab_default,
+			R.color.tab_tint,
 			ProfileFragment::class.java
 		)
 		infoList += profileInfo
 		tabBottomLayout.inflateInfo(infoList)
-		initFragmentTabView()
+		// 初始化FragmentTabView
+		val tabViewAdapter = CooderTabViewAdapter(activityProvider.getSupportFragmentManager(), infoList)
+		fragmentTabView = activityProvider.findViewById(R.id.fragment_tab_view)
+		fragmentTabView.adapter = tabViewAdapter
+		fragmentTabView.addRemoveFragment(homepageInfo.fragment!!)
+		
 		tabBottomLayout.addTabSelectedChangeListener(object : ICooderTabLayout.OnTabSelectedListener<CooderTabBottomInfo<*>> {
 			override fun onTabSelectedChange(index: Int, prevInfo: CooderTabBottomInfo<*>?, nextInfo: CooderTabBottomInfo<*>) {
 				fragmentTabView.setCurrentItem(index)
@@ -144,14 +155,5 @@ class MainActivityLogic(
 			}
 		})
 		tabBottomLayout.defaultSelected(infoList[currentItemIndex])
-	}
-	
-	/**
-	 * 初始化Fragment
-	 */
-	private fun initFragmentTabView() {
-		val tabViewAdapter = CooderTabViewAdapter(activityProvider.getSupportFragmentManager(), infoList)
-		fragmentTabView = activityProvider.findViewById(R.id.fragment_tab_view)
-		fragmentTabView.adapter = tabViewAdapter
 	}
 }

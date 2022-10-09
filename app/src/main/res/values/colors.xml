@@ -7,6 +7,6 @@
 	<color name="black">#FF000000</color>
 	<color name="white">#FFFFFFFF</color>
 
-	<color name="tab_bottom_default">#434343</color>
-	<color name="tab_bottom_tint">#1790FE</color>
+	<color name="tab_default">#434343</color>
+	<color name="tab_tint">@color/primary</color>
 </resources>

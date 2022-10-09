@@ -16,19 +16,19 @@ import androidx.fragment.app.Fragment
  *
  * 文件介绍：CooderBaseFragment
  */
-abstract class CooderBaseFragment : Fragment(), FindViewById {
+abstract class CooderBaseFragment : Fragment() {
 	
-	lateinit var layoutView: View private set
+	lateinit var layoutView: View
+		private set
 	
 	@LayoutRes
 	abstract fun getLayoutId(): Int
 	
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 		layoutView = inflater.inflate(getLayoutId(), container, false)
+		onCreateView(savedInstanceState)
 		return layoutView
 	}
 	
-	override fun <T : View> findViewById(id: Int): T {
-		return layoutView.findViewById(id)
-	}
+	abstract fun onCreateView(savedInstanceState: Bundle?)
 }

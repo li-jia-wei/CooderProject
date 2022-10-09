@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.cooder.cooder.project.common.R
 import com.cooder.cooder.project.common.tab.ToggleSpeedType.*
-import com.cooder.cooder.ui.tab.bottom.CooderTabBottomInfo
+import com.cooder.cooder.ui.tab.common.ICooderTabInfo
 
 /**
  * 项目名称：CooderProject
@@ -19,9 +19,10 @@ import com.cooder.cooder.ui.tab.bottom.CooderTabBottomInfo
  */
 class CooderTabViewAdapter(
 	private val fragmentManager: FragmentManager,
-	private val infoList: MutableList<CooderTabBottomInfo<*>>,
-	private val speedType: ToggleSpeedType = DECELERATION,
+	private val infoList: MutableList<out ICooderTabInfo<*>>,
+	private val speedType: ToggleSpeedType = DECELERATION
 ) {
+	
 	var currentFragment: Fragment? = null
 		private set
 	
@@ -30,8 +31,10 @@ class CooderTabViewAdapter(
 	
 	/**
 	 * 实例化以及显示指定位置的Fragment
+	 * @param remove 是否使用remove，false - hide
 	 */
-	fun instantiateItem(container: View, position: Int) {
+	@JvmOverloads
+	fun instantiateItem(container: View, position: Int, removeFragments: Set<Class<out Fragment>>? = null) {
 		lastPosition = currentPosition
 		currentPosition = position
 		val transaction = fragmentManager.beginTransaction()
@@ -39,7 +42,11 @@ class CooderTabViewAdapter(
 			transaction.setToggleAnimation(currentPosition - lastPosition)
 		}
 		currentFragment?.also {
-			transaction.hide(it)
+			if (removeFragments != null && removeFragments.contains(it::class.java)) {
+				transaction.remove(it)
+			} else {
+				transaction.hide(it)
+			}
 		}
 		val tag = "${container.id}:$position"
 		currentFragment = fragmentManager.findFragmentByTag(tag)?.also {
