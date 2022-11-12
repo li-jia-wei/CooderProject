@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- 空页面 -->
+	<string name="empty_view_icon">&#xe7b9;</string>
+	<string name="empty_view_title">页面跑远了，开发小哥正在加急抢修……</string>
+	<string name="empty_view_refresh">刷新</string>
+</resources>

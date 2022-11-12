@@ -18,7 +18,7 @@
 		<item>装修</item>
 		<item>运动</item>
 	</string-array>
-	
+
 	<!-- 收藏 -->
 	<string name="favorite_title">收藏</string>
 	<string name="favorite_icon_collection">&#xe882;</string>
@@ -37,4 +37,10 @@
 	<string name="profile_title">我的</string>
 	<string name="profile_icon_account">&#xe8a5;</string>
 	<string name="profile_icon_account_fill">&#xe89d;</string>
+
+	<!-- Route -->
+	<string name="route_profile_detail">个人中心</string>
+	<string name="route_profile_vip">会员权益</string>
+	<string name="route_profile_authentication">账户充值</string>
+	<string name="route_profile_unknown">全局降级策略</string>
 </resources>

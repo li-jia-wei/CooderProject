@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:dist="http://schemas.android.com/apk/distribution"
 	xmlns:tools="http://schemas.android.com/tools">
 
+	<uses-permission android:name="android.permission.INTERNET" />
+
+	<dist:module dist:instant="true" />
 	<application
 		android:name=".application.CooderApplication"
 		android:allowBackup="true"
@@ -12,20 +16,21 @@
 		android:roundIcon="@mipmap/ic_launcher_round"
 		android:supportsRtl="true"
 		android:theme="@style/Theme.CooderProject"
+		android:usesCleartextTraffic="true"
 		tools:targetApi="33">
 		<activity
-			android:name=".ui.main.MainActivity"
+			android:name=".ui.main.http.TestApiActivity"
 			android:exported="true">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
-
-			<meta-data
-				android:name="android.app.lib_name"
-				android:value="" />
 		</activity>
+		<activity android:name=".ui.main.biz.AuthenticationActivity" />
+		<activity android:name=".ui.main.biz.LoginActivity" />
+		<activity android:name=".ui.main.biz.ProfileDetailActivity" />
+		<activity android:name=".ui.main.biz.VIPActivity" />
+		<activity android:name=".ui.main.route.DegradeGlobalActivity" />
 	</application>
-
 </manifest>

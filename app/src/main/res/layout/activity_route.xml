@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:gravity="center"
+	android:orientation="vertical"
+	tools:context=".ui.main.biz.RouteActivity">
+
+	<Button
+		android:id="@+id/detail"
+		android:layout_width="200dp"
+		android:layout_height="wrap_content"
+		android:text="@string/route_profile_detail" />
+
+	<Button
+		android:id="@+id/vip"
+		android:layout_width="200dp"
+		android:layout_height="wrap_content"
+		android:layout_marginVertical="10dp"
+		android:text="@string/route_profile_vip" />
+
+	<Button
+		android:id="@+id/authentication"
+		android:layout_width="200dp"
+		android:layout_height="wrap_content"
+		android:text="@string/route_profile_authentication" />
+
+	<Button
+		android:id="@+id/unknown"
+		android:layout_width="200dp"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="10dp"
+		android:text="@string/route_profile_unknown" />
+
+</LinearLayout>
