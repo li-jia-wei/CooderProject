@@ -43,4 +43,13 @@
 	<string name="route_profile_vip">会员权益</string>
 	<string name="route_profile_authentication">账户充值</string>
 	<string name="route_profile_unknown">全局降级策略</string>
+
+	<!-- 登录 -->
+	<string name="login_title">登录</string>
+	<string name="login_register">注册</string>
+	<string name="login_username">用户名</string>
+	<string name="login_please_input_username">请输入用户名</string>
+	<string name="login_password">密码</string>
+	<string name="login_please_input_password">请输入密码</string>
+	<string name="login_hint">提示：如您忘记密码，重新注册即可</string>
 </resources>

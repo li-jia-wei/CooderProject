@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.cooder.cooder.project.common.R
 import com.cooder.cooder.project.common.tab.ToggleSpeedType.*
-import com.cooder.cooder.ui.tab.common.ICooderTabInfo
+import com.cooder.cooder.ui.tab.common.CooderTabInfo
 
 /**
  * 项目名称：CooderProject
@@ -19,7 +19,7 @@ import com.cooder.cooder.ui.tab.common.ICooderTabInfo
  */
 class CooderTabViewAdapter(
 	private val fragmentManager: FragmentManager,
-	private val infoList: MutableList<out ICooderTabInfo<*>>,
+	private val infoList: MutableList<out CooderTabInfo<*>>,
 	private val speedType: ToggleSpeedType = DECELERATION
 ) {
 	

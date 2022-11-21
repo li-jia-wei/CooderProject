@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/color_background"
+	android:orientation="vertical"
+	tools:context=".ui.main.biz.LoginActivity">
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/dp_45"
+		android:background="@color/white">
+
+		<com.cooder.cooder.project.common.ui.view.IconFontTextView
+			android:id="@+id/action_back"
+			android:layout_width="@dimen/dp_45"
+			android:layout_height="@dimen/dp_45"
+			android:layout_alignParentStart="true"
+			android:layout_centerVertical="true"
+			android:gravity="center"
+			android:text="@string/ic_arrow_left"
+			android:textSize="@dimen/sp_30"
+			app:typeface="@string/ic_alibaba_path" />
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_centerHorizontal="true"
+			android:gravity="center"
+			android:text="@string/login_title"
+			android:textColor="@color/black"
+			android:textSize="@dimen/sp_16" />
+
+		<TextView
+			android:id="@+id/action_register"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_alignParentEnd="true"
+			android:layout_marginEnd="@dimen/dp_6"
+			android:gravity="center"
+			android:paddingHorizontal="@dimen/dp_10"
+			android:text="@string/login_register"
+			android:textColor="@color/blue"
+			android:textSize="@dimen/sp_16" />
+
+	</RelativeLayout>
+
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/dp_0.5"
+		android:background="@color/lighter_gray" />
+
+	<com.cooder.cooder.project.common.ui.view.input.InputItemLayout
+		android:id="@+id/input_item_username"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/dp_50"
+		android:layout_marginTop="@dimen/dp_10"
+		android:background="@color/white"
+		android:paddingHorizontal="@dimen/dp_16"
+		app:bottomLineAppearance="@style/LeftMarginLineAppearance"
+		app:hint="@string/login_please_input_username"
+		app:inputTextAppearance="@style/InputTextAppearance"
+		app:inputType="username"
+		app:maxLength="20"
+		app:title="@string/login_username"
+		app:titleTextAppearance="@style/TitleTextAppearance"
+		app:topLineAppearance="@style/LineAppearance" />
+
+	<com.cooder.cooder.project.common.ui.view.input.InputItemLayout
+		android:id="@+id/input_item_password"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/dp_50"
+		android:background="@color/white"
+		android:paddingHorizontal="@dimen/dp_16"
+		app:bottomLineAppearance="@style/LineAppearance"
+		app:hint="@string/login_please_input_password"
+		app:inputTextAppearance="@style/InputTextAppearance"
+		app:inputType="password"
+		app:maxLength="20"
+		app:title="@string/login_password"
+		app:titleTextAppearance="@style/TitleTextAppearance" />
+
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/action_login"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/dp_55"
+		android:layout_marginHorizontal="@dimen/dp_16"
+		android:layout_marginTop="@dimen/dp_10"
+		android:text="@string/login_title"
+		android:textColor="@color/white"
+		android:textSize="@dimen/sp_16"
+		app:cornerRadius="@dimen/dp_6" />
+
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginHorizontal="@dimen/dp_16"
+		android:layout_marginTop="@dimen/dp_6"
+		android:text="@string/login_hint"
+		android:textColor="@color/gray"
+		android:textSize="@dimen/sp_12" />
+
+</LinearLayout>

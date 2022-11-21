@@ -40,7 +40,7 @@ class EmptyView @JvmOverloads constructor(
 		title = findViewById(R.id.empty_title)
 		refresh = findViewById(R.id.empty_refresh)
 		
-		icon.typeface = Typeface.createFromAsset(context.assets, "fonts/alibaba_iconfont.ttf")
+		icon.typeface = Typeface.createFromAsset(context.assets, "font/alibaba_iconfont.ttf")
 		icon.setText(R.string.empty_view_icon)
 	}
 	

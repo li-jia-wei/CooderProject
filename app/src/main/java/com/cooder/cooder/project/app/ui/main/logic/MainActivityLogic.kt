@@ -17,7 +17,7 @@ import com.cooder.cooder.project.common.tab.CooderFragmentTabView
 import com.cooder.cooder.project.common.tab.CooderTabViewAdapter
 import com.cooder.cooder.ui.tab.bottom.CooderTabBottomInfo
 import com.cooder.cooder.ui.tab.bottom.CooderTabBottomLayout
-import com.cooder.cooder.ui.tab.common.ICooderTabLayout
+import com.cooder.cooder.ui.tab.common.CooderTabLayout
 
 /**
  * 项目名称：CooderProject
@@ -80,7 +80,7 @@ class MainActivityLogic(
 		tabBottomLayout = activityProvider.findViewById(R.id.tab_bottom_layout)
 		tabBottomLayout.setTabAlpha(0.9F)
 		tabBottomLayout.setEnableSliding(true)
-		val iconFont = "fonts/alibaba_iconfont.ttf"
+		val iconFont = "font/alibaba_iconfont.ttf"
 		
 		// 首页
 		val homepageInfo = CooderTabBottomInfo<Int>(
@@ -148,7 +148,7 @@ class MainActivityLogic(
 		fragmentTabView.adapter = tabViewAdapter
 		fragmentTabView.addRemoveFragment(homepageInfo.fragment!!)
 		
-		tabBottomLayout.addTabSelectedChangeListener(object : ICooderTabLayout.OnTabSelectedListener<CooderTabBottomInfo<*>> {
+		tabBottomLayout.addTabSelectedChangeListener(object : CooderTabLayout.OnTabSelectedListener<CooderTabBottomInfo<*>> {
 			override fun onTabSelectedChange(index: Int, prevInfo: CooderTabBottomInfo<*>?, nextInfo: CooderTabBottomInfo<*>) {
 				fragmentTabView.setCurrentItem(index)
 				currentItemIndex = index

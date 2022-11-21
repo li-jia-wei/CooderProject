@@ -11,7 +11,7 @@ import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.app.ui.main.fragment.homepage.fragment.HomepageHotFragment
 import com.cooder.cooder.project.common.tab.CooderFragmentTabView
 import com.cooder.cooder.project.common.tab.CooderTabViewAdapter
-import com.cooder.cooder.ui.tab.common.ICooderTabLayout
+import com.cooder.cooder.ui.tab.common.CooderTabLayout
 import com.cooder.cooder.ui.tab.top.CooderTabTopInfo
 import com.cooder.cooder.ui.tab.top.CooderTabTopLayout
 
@@ -82,7 +82,7 @@ class HomepageFragmentLogic(
 		}
 		tabTopLayout.inflateInfo(infoList)
 		initFragmentTabView()
-		tabTopLayout.addTabSelectedChangeListener(object : ICooderTabLayout.OnTabSelectedListener<CooderTabTopInfo<*>> {
+		tabTopLayout.addTabSelectedChangeListener(object : CooderTabLayout.OnTabSelectedListener<CooderTabTopInfo<*>> {
 			override fun onTabSelectedChange(index: Int, prevInfo: CooderTabTopInfo<*>?, nextInfo: CooderTabTopInfo<*>) {
 				fragmentTabView.setCurrentItem(index)
 				currentItemIndex = index
