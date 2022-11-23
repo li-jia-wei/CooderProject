@@ -3,8 +3,6 @@ package com.cooder.cooder.project.app.ui.main.http
 import android.os.Bundle
 import android.widget.Button
 import com.cooder.cooder.project.app.R
-import com.cooder.cooder.project.app.http.ApiFactory
-import com.cooder.cooder.project.app.http.api.TestApi
 import com.cooder.cooder.project.common.ui.component.CooderBaseActivity
 
 /**
@@ -24,9 +22,7 @@ class TestApiActivity : CooderBaseActivity() {
 		
 		val makeNetworkRequest: Button = findViewById(R.id.make_network_request)
 		makeNetworkRequest.setOnClickListener {
-			Thread {
-				ApiFactory.create(TestApi::class.java).listCities("LJW").execute()
-			}.start()
+		
 		}
 	}
 }

@@ -1,5 +1,6 @@
 package com.cooder.cooder.project.app.http
 
+import com.cooder.cooder.library.log.CooderLog
 import com.cooder.cooder.library.restful.*
 import okhttp3.FormBody
 import okhttp3.MediaType
@@ -55,6 +56,7 @@ class RetrofitCallFactory(baseUrl: String) : CooderCall.Factory {
 				}
 				
 				override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+					CooderLog.e(t.message)
 					callback.onFailed(t)
 				}
 			})
@@ -65,7 +67,6 @@ class RetrofitCallFactory(baseUrl: String) : CooderCall.Factory {
 			if (response.isSuccessful) {
 				val body = response.body()
 				if (body != null) rawData = body.string()
-				
 			} else {
 				val body = response.errorBody()
 				if (body != null) rawData = body.string()

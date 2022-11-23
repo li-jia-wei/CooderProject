@@ -16,6 +16,10 @@ import androidx.core.content.ContextCompat
 import com.cooder.cooder.library.util.dp
 import com.cooder.cooder.library.util.sp
 import com.cooder.cooder.project.common.R
+import com.cooder.cooder.project.common.ui.view.input.processor.InputTypeProcessor
+import com.cooder.cooder.project.common.ui.view.input.processor.PasswordProcessor
+import com.cooder.cooder.project.common.ui.view.input.processor.RegisterPasswordProcessor
+import com.cooder.cooder.project.common.ui.view.input.watcher.*
 
 /**
  * 项目：CooderLibrary
@@ -47,6 +51,7 @@ class InputItemLayout @JvmOverloads constructor(
 		const val PASSWORD = 3
 		const val PHONE = 4
 		const val EMAIL = 5
+		const val REGISTER_PASSWORD = 6
 		
 		val DEFAULT_INPUT_FONT_SIZE = 14.sp.toInt()
 		val DEFAULT_TITLE_FONT_SIZE = 15.sp.toInt()
@@ -72,11 +77,12 @@ class InputItemLayout @JvmOverloads constructor(
 		
 		// 输入框
 		val inputStyleId = array.getResourceId(R.styleable.InputItemLayout_inputTextAppearance, 0)
+		val text = array.getString(R.styleable.InputItemLayout_text)
 		val hint = array.getString(R.styleable.InputItemLayout_hint)
 		val inputType = array.getInteger(R.styleable.InputItemLayout_inputType, TEXT)
 		maxLength = array.getInteger(R.styleable.InputItemLayout_maxLength, DEFAULT_MAX_LENGTH)
 		
-		parseInputStyle(inputStyleId, hint, inputType)
+		parseInputStyle(inputStyleId, text, hint, inputType)
 		
 		// 上下分割线
 		val topLineStyleId = array.getResourceId(R.styleable.InputItemLayout_topLineAppearance, 0)
@@ -90,7 +96,21 @@ class InputItemLayout @JvmOverloads constructor(
 	}
 	
 	/**
-	 * 获取输入框数据
+	 * 获取输入框
+	 */
+	fun getEditText(): EditText {
+		return this.editText
+	}
+	
+	/**
+	 * 写入输入框
+	 */
+	fun setText(text: String) {
+		this.editText.setText(text)
+	}
+	
+	/**
+	 * 获取输入框文本
 	 */
 	fun getText(): String {
 		return this.editText.text.toString()
@@ -125,7 +145,7 @@ class InputItemLayout @JvmOverloads constructor(
 	 * 在parseTitleStyle方法之后执行
 	 */
 	@SuppressLint("CustomViewStyleable")
-	private fun parseInputStyle(resId: Int, hint: String?, inputType: Int) {
+	private fun parseInputStyle(resId: Int, text: String?, hint: String?, inputType: Int) {
 		val array = context.obtainStyledAttributes(resId, R.styleable.InputTextAppearance)
 		val hintColor = array.getColor(R.styleable.InputTextAppearance_hintColor, ContextCompat.getColor(context, R.color.gray))
 		val inputColor = array.getColor(R.styleable.InputTextAppearance_inputColor, ContextCompat.getColor(context, R.color.darker_gray))
@@ -139,13 +159,14 @@ class InputItemLayout @JvmOverloads constructor(
 		editText.setHintTextColor(hintColor)
 		editText.setTextColor(inputColor)
 		editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize.toFloat())
-		editText.hint = hint
+		text.also { editText.setText(it) }
+		hint.also { editText.hint = it }
 		editText.setBackgroundColor(Color.TRANSPARENT)
 		editText.gravity = Gravity.START or Gravity.CENTER_VERTICAL
 		editText.inputType = when (inputType) {
 			TEXT, USERNAME -> InputType.TYPE_CLASS_TEXT
 			NUMBER -> InputType.TYPE_CLASS_NUMBER
-			PASSWORD -> InputType.TYPE_TEXT_VARIATION_PASSWORD or InputType.TYPE_CLASS_TEXT
+			PASSWORD, REGISTER_PASSWORD -> InputType.TYPE_TEXT_VARIATION_PASSWORD or InputType.TYPE_CLASS_TEXT
 			PHONE -> InputType.TYPE_CLASS_PHONE
 			EMAIL -> InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
 			else -> InputType.TYPE_CLASS_TEXT
@@ -162,10 +183,18 @@ class InputItemLayout @JvmOverloads constructor(
 	 */
 	private fun parseTextWatcher(inputType: Int) {
 		val watchers = mutableListOf<InputTextWatcher>()
-		watchers += MaxLengthWatcher(editText, maxLength)
 		when (inputType) {
 			USERNAME -> {
 				watchers += UsernameWatcher(editText)
+			}
+			PASSWORD, REGISTER_PASSWORD -> {
+				watchers += PasswordWatcher(editText)
+			}
+			EMAIL -> {
+				watchers += EmailWatcher(editText)
+			}
+			else -> {
+				watchers += MaxLengthWatcher(editText, maxLength)
 			}
 		}
 		for (watcher in watchers) {
@@ -182,10 +211,12 @@ class InputItemLayout @JvmOverloads constructor(
 			PASSWORD -> {
 				processor = PasswordProcessor(context, this, editText)
 			}
+			REGISTER_PASSWORD -> {
+				processor = RegisterPasswordProcessor(context, this, editText)
+			}
 		}
 		processor?.process()
 	}
-	
 	
 	/**
 	 * 解析上下分割线
@@ -195,12 +226,12 @@ class InputItemLayout @JvmOverloads constructor(
 		val array = context.obtainStyledAttributes(resId, R.styleable.LineAppearance)
 		val color = array.getColor(R.styleable.LineAppearance_color, ContextCompat.getColor(context, R.color.lighter_gray))
 		val height = array.getDimensionPixelOffset(R.styleable.LineAppearance_height, DEFAULT_LINE_HEIGHT)
-		val leftMargin = array.getDimensionPixelOffset(R.styleable.LineAppearance_leftMargin, 0)
-		val rightMargin = array.getDimensionPixelOffset(R.styleable.LineAppearance_rightMargin, 0)
+		val marginStart = array.getDimensionPixelOffset(R.styleable.LineAppearance_marginStart, 0)
+		val marginEnd = array.getDimensionPixelOffset(R.styleable.LineAppearance_marginEnd, 0)
 		val enable = array.getBoolean(R.styleable.LineAppearance_enable, false)
 		array.recycle()
 		
-		return Line(color, height, leftMargin, rightMargin, enable)
+		return Line(color, height, marginStart, marginEnd, enable)
 	}
 	
 	/**

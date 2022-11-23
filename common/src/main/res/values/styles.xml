@@ -18,13 +18,13 @@
 	<style name="LineAppearance">
 		<item name="color">@color/lighter_gray</item>
 		<item name="height">@dimen/dp_0.5</item>
-		<item name="leftMargin">@dimen/dp_0</item>
-		<item name="rightMargin">@dimen/dp_0</item>
+		<item name="marginStart">@dimen/dp_0</item>
+		<item name="marginEnd">@dimen/dp_0</item>
 		<item name="enable">true</item>
 	</style>
 
-	<style name="LeftMarginLineAppearance" parent="LineAppearance">
-		<item name="leftMargin">@dimen/dp_16</item>
+	<style name="MarginStartLineAppearance" parent="LineAppearance">
+		<item name="marginStart">@dimen/dp_16</item>
 	</style>
 
 </resources>

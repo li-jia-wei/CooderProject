@@ -8,6 +8,7 @@
 	<!-- InputItemLayout - 输入框组件 -->
 	<declare-styleable name="InputItemLayout">
 		<attr name="title" format="string" />
+		<attr name="text" format="string" />
 		<attr name="hint" format="string" />
 		<attr name="inputType" format="enum">
 			<enum name="text" value="0" />
@@ -16,6 +17,7 @@
 			<enum name="password" value="3" />
 			<enum name="phone" value="4" />
 			<enum name="email" value="5" />
+			<enum name="register_password" value="6" />
 		</attr>
 		<attr name="maxLength" format="integer" />
 		<attr name="inputTextAppearance" format="reference" />
@@ -42,8 +44,8 @@
 	<declare-styleable name="LineAppearance">
 		<attr name="color" format="color" />
 		<attr name="height" format="dimension" />
-		<attr name="leftMargin" format="dimension" />
-		<attr name="rightMargin" format="dimension" />
+		<attr name="marginStart" format="dimension" />
+		<attr name="marginEnd" format="dimension" />
 		<attr name="enable" format="boolean" />
 	</declare-styleable>
 </resources>

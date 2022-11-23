@@ -33,14 +33,14 @@ class BizInterceptor : IInterceptor {
 		val flag = postcard.extra
 		if (flag and RouteFlag.FLAG_LOGIN != 0) {
 			// login
-			callback?.onInterrupt(RuntimeException("Need login."))
 			showToast("请先登录")
+			callback?.onInterrupt(RuntimeException("Need login."))
 		} else if (flag and RouteFlag.FLAG_AUTHENTICATION != 0) {
-			callback?.onInterrupt(RuntimeException("Need Authentication."))
 			showToast("请先实名认证")
+			callback?.onInterrupt(RuntimeException("Need Authentication."))
 		} else if (flag and RouteFlag.FLAG_VIP != 0) {
-			callback?.onInterrupt(RuntimeException("Need VIP."))
 			showToast("请先加入会员")
+			callback?.onInterrupt(RuntimeException("Need VIP."))
 		}
 	}
 	

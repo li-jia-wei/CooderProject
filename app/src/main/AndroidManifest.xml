@@ -19,7 +19,7 @@
 		android:usesCleartextTraffic="true"
 		tools:targetApi="33">
 		<activity
-			android:name=".ui.main.biz.LoginActivity"
+			android:name=".ui.main.MainActivity"
 			android:exported="true">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -31,5 +31,8 @@
 		<activity android:name=".ui.main.biz.ProfileDetailActivity" />
 		<activity android:name=".ui.main.biz.VIPActivity" />
 		<activity android:name=".ui.main.route.DegradeGlobalActivity" />
+
+		<activity android:name=".ui.main.biz.LoginActivity" />
+		<activity android:name=".ui.main.biz.RegisterActivity" />
 	</application>
 </manifest>

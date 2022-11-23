@@ -6,7 +6,7 @@
 	android:layout_height="match_parent"
 	android:background="@color/color_background"
 	android:orientation="vertical"
-	tools:context=".ui.main.biz.LoginActivity">
+	tools:context=".ui.main.biz.RegisterActivity">
 
 	<RelativeLayout
 		android:layout_width="match_parent"
@@ -29,20 +29,8 @@
 			android:layout_height="match_parent"
 			android:layout_centerHorizontal="true"
 			android:gravity="center"
-			android:text="@string/login_title"
+			android:text="@string/register_title"
 			android:textColor="@color/black"
-			android:textSize="@dimen/sp_16" />
-
-		<TextView
-			android:id="@+id/action_register"
-			android:layout_width="wrap_content"
-			android:layout_height="match_parent"
-			android:layout_alignParentEnd="true"
-			android:layout_marginEnd="@dimen/dp_6"
-			android:gravity="center"
-			android:paddingHorizontal="@dimen/dp_10"
-			android:text="@string/login_register"
-			android:textColor="@color/blue"
 			android:textSize="@dimen/sp_16" />
 
 	</RelativeLayout>
@@ -53,20 +41,50 @@
 		android:background="@color/lighter_gray" />
 
 	<com.cooder.cooder.project.common.ui.view.input.InputItemLayout
-		android:id="@+id/input_item_username"
+		android:id="@+id/input_item_course_order_id"
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/dp_50"
 		android:layout_marginTop="@dimen/dp_10"
 		android:background="@color/white"
 		android:paddingHorizontal="@dimen/dp_16"
 		app:bottomLineAppearance="@style/MarginStartLineAppearance"
-		app:hint="@string/login_please_input_username"
+		app:hint="@string/register_please_input_course_order_id_last_4_digits"
 		app:inputTextAppearance="@style/InputTextAppearance"
-		app:inputType="username"
-		app:text="hello"
-		app:title="@string/login_username"
+		app:inputType="number"
+		app:maxLength="4"
+		app:text="3359"
+		app:title="@string/register_course_order_id"
 		app:titleTextAppearance="@style/TitleTextAppearance"
 		app:topLineAppearance="@style/LineAppearance" />
+
+	<com.cooder.cooder.project.common.ui.view.input.InputItemLayout
+		android:id="@+id/input_item_mooc_id"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/dp_50"
+		android:background="@color/white"
+		android:paddingHorizontal="@dimen/dp_16"
+		app:bottomLineAppearance="@style/MarginStartLineAppearance"
+		app:hint="@string/register_please_input_mooc_id"
+		app:inputTextAppearance="@style/InputTextAppearance"
+		app:inputType="number"
+		app:maxLength="8"
+		app:text="5733850"
+		app:title="@string/register_mooc_id"
+		app:titleTextAppearance="@style/TitleTextAppearance" />
+
+	<com.cooder.cooder.project.common.ui.view.input.InputItemLayout
+		android:id="@+id/input_item_username"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/dp_50"
+		android:background="@color/white"
+		android:paddingHorizontal="@dimen/dp_16"
+		app:bottomLineAppearance="@style/MarginStartLineAppearance"
+		app:hint="@string/register_please_input_username"
+		app:inputTextAppearance="@style/InputTextAppearance"
+		app:inputType="username"
+		app:text="cooder"
+		app:title="@string/register_username"
+		app:titleTextAppearance="@style/TitleTextAppearance" />
 
 	<com.cooder.cooder.project.common.ui.view.input.InputItemLayout
 		android:id="@+id/input_item_password"
@@ -74,32 +92,37 @@
 		android:layout_height="@dimen/dp_50"
 		android:background="@color/white"
 		android:paddingHorizontal="@dimen/dp_16"
-		app:bottomLineAppearance="@style/LineAppearance"
-		app:hint="@string/login_please_input_password"
+		app:bottomLineAppearance="@style/MarginStartLineAppearance"
+		app:hint="@string/register_please_input_password"
 		app:inputTextAppearance="@style/InputTextAppearance"
-		app:inputType="password"
-		app:text="123456"
-		app:title="@string/login_password"
+		app:inputType="register_password"
+		app:text="12345678"
+		app:title="@string/register_password"
+		app:titleTextAppearance="@style/TitleTextAppearance" />
+
+	<com.cooder.cooder.project.common.ui.view.input.InputItemLayout
+		android:id="@+id/input_item_confirm_password"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/dp_50"
+		android:background="@color/white"
+		android:paddingHorizontal="@dimen/dp_16"
+		app:bottomLineAppearance="@style/LineAppearance"
+		app:hint="@string/register_please_confirm_password_again"
+		app:inputTextAppearance="@style/InputTextAppearance"
+		app:inputType="register_password"
+		app:text="12345678"
+		app:title="@string/register_confirm_password"
 		app:titleTextAppearance="@style/TitleTextAppearance" />
 
 	<com.google.android.material.button.MaterialButton
-		android:id="@+id/action_login"
+		android:id="@+id/action_submit"
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/dp_55"
 		android:layout_marginHorizontal="@dimen/dp_16"
 		android:layout_marginTop="@dimen/dp_10"
-		android:text="@string/login_title"
+		android:text="@string/register_submit"
 		android:textColor="@color/white"
 		android:textSize="@dimen/sp_16"
 		app:cornerRadius="@dimen/dp_6" />
-
-	<TextView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginHorizontal="@dimen/dp_16"
-		android:layout_marginTop="@dimen/dp_6"
-		android:text="@string/login_hint"
-		android:textColor="@color/gray"
-		android:textSize="@dimen/sp_11" />
 
 </LinearLayout>

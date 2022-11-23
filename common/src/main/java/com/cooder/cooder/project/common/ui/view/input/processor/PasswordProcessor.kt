@@ -1,8 +1,9 @@
-package com.cooder.cooder.project.common.ui.view.input
+package com.cooder.cooder.project.common.ui.view.input.processor
 
 import android.content.Context
 import android.text.InputType
 import android.view.Gravity
+import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -18,9 +19,9 @@ import com.cooder.cooder.project.common.ui.view.IconFontTextView
  *
  * 创建：2022/11/21 09:10
  *
- * 介绍：密码处理者
+ * 介绍：密码处理器
  */
-internal class PasswordProcessor(
+internal open class PasswordProcessor(
 	private val context: Context,
 	private val viewGroup: ViewGroup,
 	private val editText: EditText
@@ -29,25 +30,25 @@ internal class PasswordProcessor(
 	private var hidden = true
 	
 	@StringRes
-	private val visible = R.string.ic_visible
+	private val icVisible = R.string.ic_visible
 	
 	@StringRes
-	private val notVisible = R.string.ic_not_visible
+	private val icNotVisible = R.string.ic_not_visible
 	
 	override fun process() {
 		val visibleView = IconFontTextView(context)
-		visibleView.textSize = 25F
+		visibleView.textSize = 24F
 		visibleView.setTypeface(R.string.ic_alibaba_path)
-		visibleView.setText(notVisible)
+		visibleView.setText(icNotVisible)
 		visibleView.gravity = Gravity.CENTER
 		visibleView.setTextColor(ContextCompat.getColor(context, R.color.darker_gray))
 		visibleView.setOnClickListener {
 			hidden = !hidden
 			if (hidden) {
-				visibleView.setText(notVisible)
+				visibleView.setText(icNotVisible)
 				editText.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD or InputType.TYPE_CLASS_TEXT
 			} else {
-				visibleView.setText(visible)
+				visibleView.setText(icVisible)
 				editText.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
 			}
 			editText.setSelection(editText.length())
@@ -55,5 +56,23 @@ internal class PasswordProcessor(
 		val visibleParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
 		visibleParams.gravity = Gravity.CENTER_VERTICAL
 		viewGroup.addView(visibleView, visibleParams)
+		visibleView.visibility = View.GONE
+		editText.setOnFocusChangeListener { _, hasFocus ->
+			setVisibleViewVisible(visibleView, hasFocus)
+		}
+	}
+	
+	/**
+	 * 设置查看密码的按钮的可见性
+	 */
+	protected fun setVisibleViewVisible(view: IconFontTextView, visible: Boolean) {
+		if (visible) {
+			view.visibility = View.VISIBLE
+		} else {
+			hidden = true
+			view.setText(icNotVisible)
+			editText.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD or InputType.TYPE_CLASS_TEXT
+			view.visibility = View.GONE
+		}
 	}
 }

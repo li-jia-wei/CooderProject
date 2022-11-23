@@ -4,6 +4,7 @@ import com.cooder.cooder.library.restful.CooderConvert
 import com.cooder.cooder.library.restful.CooderResponse
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.reflect.Type
 
@@ -14,12 +15,15 @@ import java.lang.reflect.Type
  *
  * 创建：2022/11/12 17:40
  *
- * 介绍：GsonConvert
+ * 介绍：Gson转换
  */
 class GsonConvert : CooderConvert {
 	
 	private val gson = Gson()
 	
+	/**
+	 * 转换
+	 */
 	override fun <T> convert(rawData: String, dataType: Type): CooderResponse<T> {
 		val response = CooderResponse<T>()
 		response.rawData = rawData
@@ -27,11 +31,17 @@ class GsonConvert : CooderConvert {
 			val jsonObject = JSONObject(rawData)
 			response.code = jsonObject.optInt("code")
 			response.msg = jsonObject.optString("msg")
-			val data = jsonObject.optString("data")
-			if (response.code == CooderResponse.SUCCESS) {
-				response.data = gson.fromJson(data, dataType)
+			val data = jsonObject.opt("data")
+			
+			if (data is JSONObject || data is JSONArray) {
+				if (response.code == CooderResponse.SUCCESS) {
+					response.data = gson.fromJson(data.toString(), dataType)
+				} else {
+					response.errorData = gson.fromJson(data.toString(), object : TypeToken<MutableMap<String, String>>() {}.type)
+				}
 			} else {
-				response.errorData = gson.fromJson(data, object : TypeToken<MutableMap<String, String>>() {}.type)
+				@Suppress("UNCHECKED_CAST")
+				response.data = data as T?
 			}
 		} catch (e: Exception) {
 			e.printStackTrace()

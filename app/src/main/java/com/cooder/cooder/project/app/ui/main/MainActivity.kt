@@ -1,8 +1,10 @@
 package com.cooder.cooder.project.app.ui.main
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import com.cooder.cooder.project.app.R
+import com.cooder.cooder.project.app.ui.main.biz.LoginActivity
 import com.cooder.cooder.project.app.ui.main.logic.MainActivityLogic
 import com.cooder.cooder.project.app.ui.main.logic.MainActivityLogic.ActivityProvider
 import com.cooder.cooder.project.common.ui.component.CooderBaseActivity
@@ -23,6 +25,9 @@ class MainActivity : CooderBaseActivity(), ActivityProvider {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_main)
+		
+		// 去登录
+		startActivity(Intent(this, LoginActivity::class.java))
 		
 		activityLogic = MainActivityLogic(this, savedInstanceState)
 	}
