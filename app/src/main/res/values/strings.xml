@@ -22,7 +22,7 @@
 	<!-- 收藏 -->
 	<string name="favorite_title">收藏</string>
 	<string name="favorite_icon_collection">&#xe882;</string>
-	<string name="favotite_icon_collection_fill">&#xe884;</string>
+	<string name="favorite_icon_collection_fill">&#xe884;</string>
 
 	<!-- 分类 -->
 	<string name="category_title">分类</string>
@@ -37,8 +37,19 @@
 	<string name="profile_title">我的</string>
 	<string name="profile_icon_account">&#xe8a5;</string>
 	<string name="profile_icon_account_fill">&#xe89d;</string>
+	<string name="profile_please_login_first">请先登录</string>
+	<string name="profile_login_desc_welcome_back">Hi，欢迎回来</string>
+	<string name="profile_login_desc_unlock_all_features">解锁全部功能，畅想架构师专属福利</string>
+	<string name="profile_favorite">收藏</string>
+	<string name="profile_history_browsing">历史浏览</string>
+	<string name="profile_learn_minutes">学习时长</string>
+	<string name="profile_course_announcement">课程公告</string>
+	<string name="profile_my_collect">我的收藏</string>
+	<string name="profile_delivery_address">收货地址</string>
+	<string name="profile_browsing_history">浏览历史</string>
+	<string name="profile_course_notice_count_geature_99">99+</string>
 
-	<!-- Route -->
+	<!-- 路由 -->
 	<string name="route_profile_detail">个人中心</string>
 	<string name="route_profile_vip">会员权益</string>
 	<string name="route_profile_authentication">账户充值</string>
@@ -73,4 +84,10 @@
 	<string name="register_confirm_password_failure">密码验证失败</string>
 	<string name="register_success">注册成功</string>
 	<string name="register_failure">注册失败，%1$s</string>
+
+	<!-- Token过期 -->
+	<string name="token_degrade_title">非法访问</string>
+
+	<!-- 拦截器 -->
+	<string name="interceptor_please_login_first">请先登录</string>
 </resources>

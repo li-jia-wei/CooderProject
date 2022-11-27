@@ -1,14 +1,15 @@
 package com.cooder.cooder.project.common.ui.view
 
 import android.content.Context
-import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.cooder.cooder.project.common.R
 
@@ -27,97 +28,87 @@ class EmptyView @JvmOverloads constructor(
 	defStyleAttr: Int = 0
 ) : LinearLayout(context, attributeSet, defStyleAttr) {
 	
-	private val icon: TextView
-	private val title: TextView
-	private val refresh: Button
+	private val imageView: ImageView
+	private val iconView: IconFontTextView
+	private val titleView: TextView
+	private val descView: TextView
+	private val helpActionView: IconFontTextView
+	private val refreshButton: Button
 	
 	init {
 		orientation = VERTICAL
 		gravity = Gravity.CENTER
+		
 		LayoutInflater.from(context).inflate(R.layout.layout_empty_view, this, true)
 		
-		icon = findViewById(R.id.empty_icon)
-		title = findViewById(R.id.empty_title)
-		refresh = findViewById(R.id.empty_refresh)
-		
-		icon.typeface = Typeface.createFromAsset(context.assets, "font/alibaba_iconfont.ttf")
-		icon.setText(R.string.empty_view_icon)
+		imageView = findViewById(R.id.empty_image)
+		iconView = findViewById(R.id.empty_icon)
+		titleView = findViewById(R.id.empty_title)
+		descView = findViewById(R.id.empty_desc)
+		helpActionView = findViewById(R.id.empty_help_action)
+		refreshButton = findViewById(R.id.empty_refresh)
 	}
 	
 	/**
-	 * 设置图标
+	 * 设置图片
 	 */
-	fun setIcon(icon: String) {
-		this.icon.text = icon
+	fun setImage(@DrawableRes resId: Int) {
+		this.imageView.setImageResource(resId)
+		this.imageView.visibility = View.VISIBLE
+		this.iconView.visibility = View.GONE
 	}
 	
 	/**
-	 * 设置图标
+	 * 设置图标字体
 	 */
-	fun setIcon(@StringRes icon: Int) {
-		this.icon.setText(icon)
+	fun setIcon(@StringRes resId: Int) {
+		this.iconView.setText(resId)
+		this.iconView.visibility = View.VISIBLE
+		this.imageView.visibility = View.GONE
 	}
 	
 	/**
 	 * 设置标题
 	 */
-	fun setTitle(title: String) {
-		this.title.text = title
+	fun setTitle(@StringRes resId: Int) {
+		this.titleView.setText(resId)
+		this.titleView.visibility = View.VISIBLE
 	}
 	
 	/**
 	 * 设置标题
 	 */
-	fun setTitle(@StringRes title: Int) {
-		this.title.setText(title)
+	fun setTitle(text: String) {
+		this.titleView.text = text
+		this.titleView.visibility = View.VISIBLE
 	}
 	
 	/**
-	 * 设置刷新按钮文本
+	 * 设置描述
 	 */
-	fun setRefreshText(text: String) {
-		this.refresh.text = text
+	fun setDesc(@StringRes resId: Int) {
+		this.descView.setText(resId)
 	}
 	
 	/**
-	 * 设置刷新按钮文本
+	 * 设置描述
 	 */
-	fun setRefreshText(@StringRes text: Int) {
-		this.refresh.setText(text)
+	fun setDesc(text: String) {
+		this.descView.text = text
 	}
 	
 	/**
-	 * 设置字体
+	 * 设置帮助事件
 	 */
-	fun setTypeface(typeface: Typeface) {
-		icon.typeface = typeface
+	fun setOnClickHelpActionListener(listener: OnClickListener) {
+		this.helpActionView.setOnClickListener(listener)
+		this.helpActionView.visibility = View.VISIBLE
 	}
 	
 	/**
-	 * 隐藏图标
+	 * 设置刷新事件
 	 */
-	fun goneIcon() {
-		this.icon.visibility = GONE
-	}
-	
-	/**
-	 * 隐藏标题
-	 */
-	fun goneTitle() {
-		this.title.visibility = GONE
-	}
-	
-	/**
-	 * 隐藏刷新按钮
-	 */
-	fun goneRefresh() {
-		this.refresh.visibility = GONE
-	}
-	
-	/**
-	 * 设置刷新按钮点击事件
-	 */
-	fun setOnClickRefreshListener(listener: (View) -> Unit) {
-		refresh.setOnClickListener(listener)
+	fun setOnClickRefreshListener(listener: OnClickListener) {
+		this.refreshButton.setOnClickListener(listener)
 	}
 }

@@ -73,13 +73,13 @@ object PreferencesUtil {
 	
 	@JvmStatic
 	fun delete() {
-		val application = AppGlobals.get()
-		application?.deleteSharedPreferences(CACHE_FILE)
+		val application = AppGlobals.getApplication()
+		application.deleteSharedPreferences(CACHE_FILE)
 	}
 	
 	@JvmStatic
 	private fun getPreferences(): SharedPreferences? {
-		val application = AppGlobals.get()
-		return application?.getSharedPreferences(CACHE_FILE, Context.MODE_PRIVATE)
+		val application = AppGlobals.getApplication()
+		return application.getSharedPreferences(CACHE_FILE, Context.MODE_PRIVATE)
 	}
 }

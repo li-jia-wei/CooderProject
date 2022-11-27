@@ -9,6 +9,4 @@ package com.cooder.cooder.project.common.ui.component
  *
  * 文件介绍：给上层提供通用的功能
  */
-interface CooderBaseActionInterface {
-
-}
+interface CooderBaseActionInterface

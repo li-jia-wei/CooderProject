@@ -13,7 +13,4 @@ import android.app.Application
  */
 open class CooderBaseApplication : Application() {
 	
-	override fun onCreate() {
-		super.onCreate()
-	}
 }

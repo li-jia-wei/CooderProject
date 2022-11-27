@@ -18,7 +18,7 @@ import com.cooder.cooder.library.util.sp
 import com.cooder.cooder.project.common.R
 import com.cooder.cooder.project.common.ui.view.input.processor.InputTypeProcessor
 import com.cooder.cooder.project.common.ui.view.input.processor.PasswordProcessor
-import com.cooder.cooder.project.common.ui.view.input.processor.RegisterPasswordProcessor
+import com.cooder.cooder.project.common.ui.view.input.processor.PasswordSecurityProcessor
 import com.cooder.cooder.project.common.ui.view.input.watcher.*
 
 /**
@@ -212,7 +212,7 @@ class InputItemLayout @JvmOverloads constructor(
 				processor = PasswordProcessor(context, this, editText)
 			}
 			REGISTER_PASSWORD -> {
-				processor = RegisterPasswordProcessor(context, this, editText)
+				processor = PasswordSecurityProcessor(context, this, editText)
 			}
 		}
 		processor?.process()

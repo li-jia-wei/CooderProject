@@ -40,8 +40,8 @@ class IconFontTextView @JvmOverloads constructor(
 		typedArray.recycle()
 	}
 	
-	fun setTypeface(@StringRes pathResId: Int) {
-		setTypeface(context.getString(pathResId))
+	fun setTypeface(@StringRes pathId: Int) {
+		typeface = Typeface.createFromAsset(context.assets, context.getString(pathId))
 	}
 	
 	fun setTypeface(path: String) {

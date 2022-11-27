@@ -2,13 +2,17 @@ package com.cooder.cooder.project.common.util
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.content.Context
 
 object AppGlobals {
 	
 	private var application: Application? = null
 	
+	/**
+	 * 获取Application
+	 */
 	@SuppressLint("PrivateApi")
-	fun get(): Application? {
+	fun getApplication(): Application {
 		try {
 			if (application == null) {
 				application = Class.forName("android.app.ActivityThread")
@@ -18,6 +22,15 @@ object AppGlobals {
 		} catch (e: Exception) {
 			e.printStackTrace()
 		}
-		return application
+		return application ?: throw IllegalStateException("Failed to get application!")
+	}
+	
+	/**
+	 * 获取BaseContext
+	 */
+	fun getBaseContext(): Context {
+		if (application != null)
+			return application!!.baseContext
+		return getApplication().baseContext ?: throw IllegalStateException("Failed to get application!")
 	}
 }

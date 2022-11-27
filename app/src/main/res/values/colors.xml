@@ -3,7 +3,7 @@
 	<color name="primary">#1790FE</color>
 	<color name="primary_variant">#40A9FE</color>
 	<color name="status_bar_color">#1790FE</color>
-	<color name="color_background">#F6F6F6</color>
+	<color name="bg_view_default">#07969C</color>
 
 	<color name="black">#FF000000</color>
 	<color name="white">#FFFFFFFF</color>

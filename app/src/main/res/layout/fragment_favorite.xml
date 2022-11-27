@@ -5,7 +5,7 @@
 	android:layout_height="match_parent"
 	android:gravity="center"
 	android:orientation="vertical"
-	tools:context=".ui.main.fragment.favorite.FavoriteFragment">
+	tools:context=".main.fragment.favorite.FavoriteFragment">
 
 	<View
 		android:layout_width="match_parent"

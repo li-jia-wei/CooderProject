@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.LayoutRes
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import com.cooder.cooder.library.log.CooderLog
 
 /**
  * 项目名称：CooderProject
@@ -22,13 +25,27 @@ abstract class CooderBaseFragment : Fragment() {
 		private set
 	
 	@LayoutRes
-	abstract fun getLayoutId(): Int
+	protected abstract fun getLayoutId(): Int
 	
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 		layoutView = inflater.inflate(getLayoutId(), container, false)
-		onCreateView(savedInstanceState)
 		return layoutView
 	}
 	
-	abstract fun onCreateView(savedInstanceState: Bundle?)
+	protected fun isAlive(): Boolean {
+		if (isRemoving || isDetached || activity == null) {
+			return false
+		}
+		return true
+	}
+	
+	protected fun showToast(text: String?) {
+		CooderLog.i(text)
+		Toast.makeText(requireContext(), text ?: "null", Toast.LENGTH_SHORT).show()
+	}
+	
+	protected fun showToast(@StringRes resId: Int) {
+		CooderLog.i(getString(resId))
+		Toast.makeText(requireContext(), resId, Toast.LENGTH_SHORT).show()
+	}
 }

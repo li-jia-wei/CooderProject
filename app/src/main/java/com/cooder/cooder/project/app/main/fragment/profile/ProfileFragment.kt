@@ -1,0 +1,197 @@
+package com.cooder.cooder.project.app.main.fragment.profile
+
+import android.content.Intent
+import android.graphics.Typeface
+import android.net.Uri
+import android.os.Bundle
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.AbsoluteSizeSpan
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
+import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+import com.cooder.cooder.library.restful.CooderCallback
+import com.cooder.cooder.library.restful.CooderResponse
+import com.cooder.cooder.library.util.dp
+import com.cooder.cooder.project.app.R
+import com.cooder.cooder.project.app.main.http.ApiFactory
+import com.cooder.cooder.project.app.main.http.api.AccountApi
+import com.cooder.cooder.project.app.main.model.CourseNotice
+import com.cooder.cooder.project.app.main.model.Notice
+import com.cooder.cooder.project.app.main.model.UserProfile
+import com.cooder.cooder.project.common.ui.component.CooderBaseFragment
+import com.cooder.cooder.project.common.ui.view.expends.loadCircle
+import com.cooder.cooder.project.common.ui.view.expends.loadCorner
+import com.cooder.cooder.ui.banner.CooderBanner
+import com.cooder.cooder.ui.banner.core.CooderBannerMo
+
+/**
+ * 项目名称：CooderProject
+ *
+ * 作者姓名：李佳伟
+ *
+ * 创建时间：2022/10/3 23:47
+ *
+ * 文件介绍：配置Fragment
+ */
+class ProfileFragment : CooderBaseFragment() {
+	
+	private lateinit var userAvatar: ImageView
+	private lateinit var username: TextView
+	private lateinit var loginDesc: TextView
+	
+	private lateinit var favorite: TextView
+	private lateinit var historyBrowsing: TextView
+	private lateinit var learnMinutes: TextView
+	
+	private lateinit var banner: CooderBanner
+	
+	private lateinit var itemCourse: LinearLayout
+	private lateinit var itemCollect: LinearLayout
+	private lateinit var itemAddress: LinearLayout
+	private lateinit var itemHistory: LinearLayout
+	
+	private lateinit var courseNotice: TextView
+	
+	override fun getLayoutId(): Int {
+		return R.layout.fragment_profile
+	}
+	
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
+		
+		userAvatar = view.findViewById(R.id.profile_user_avatar)
+		username = view.findViewById(R.id.profile_username)
+		loginDesc = view.findViewById(R.id.profile_login_desc)
+		
+		favorite = view.findViewById(R.id.profile_favorite)
+		historyBrowsing = view.findViewById(R.id.profile_history_browsing)
+		learnMinutes = view.findViewById(R.id.profile_learn_minutes)
+		
+		banner = view.findViewById(R.id.profile_banner)
+		
+		itemCourse = view.findViewById(R.id.item_course)
+		itemCollect = view.findViewById(R.id.item_collect)
+		itemAddress = view.findViewById(R.id.item_address)
+		itemHistory = view.findViewById(R.id.item_history)
+		
+		courseNotice = view.findViewById(R.id.course_notice)
+		
+		queryLoginUserData()
+		queryCourseNotice()
+	}
+	
+	/**
+	 * 查询课程通知
+	 */
+	private fun queryCourseNotice() {
+		ApiFactory.create(AccountApi::class.java).notice().enqueue(object : CooderCallback<CourseNotice> {
+			override fun onSuccess(response: CooderResponse<CourseNotice>) {
+				val data = response.data
+				if (data != null) {
+					val total = data.total
+					courseNotice.visibility = if (total > 0) View.VISIBLE else View.GONE
+					if (total > 99) {
+						courseNotice.text = getString(R.string.profile_course_notice_count_geature_99)
+					} else if (total > 0) {
+						courseNotice.text = String.format("%d", total)
+					}
+				}
+			}
+			
+			override fun onFailed(throwable: Throwable) {
+			
+			}
+		})
+	}
+	
+	/**
+	 * 查询登录用户数据
+	 */
+	private fun queryLoginUserData() {
+		ApiFactory.create(AccountApi::class.java).profile().enqueue(object : CooderCallback<UserProfile> {
+			override fun onSuccess(response: CooderResponse<UserProfile>) {
+				val userProfile = response.data
+				if (response.code == CooderResponse.SUCCESS && userProfile != null) {
+					updateUI(userProfile)
+				} else {
+					showToast(response.msg)
+				}
+			}
+			
+			override fun onFailed(throwable: Throwable) {
+				showToast(throwable.message)
+			}
+		})
+	}
+	
+	/**
+	 * 更新UI
+	 */
+	private fun updateUI(userProfile: UserProfile) {
+		if (userProfile.isLogin) {
+			username.text = userProfile.userName
+			loginDesc.text = getString(R.string.profile_login_desc_welcome_back)
+			userAvatar.loadCircle(userProfile.avatar)
+		} else {
+			username.text = getString(R.string.profile_please_login_first)
+			loginDesc.text = getString(R.string.profile_login_desc_welcome_back)
+		}
+		favorite.text = spannableTabItem(userProfile.favoriteCount, getString(R.string.profile_favorite))
+		historyBrowsing.text = spannableTabItem(userProfile.browseCount, getString(R.string.profile_favorite))
+		learnMinutes.text = spannableTabItem(userProfile.learnMinutes, getString(R.string.profile_favorite))
+		
+		updateBanner(userProfile.bannerNoticeList)
+	}
+	
+	/**
+	 * 更新Banner
+	 */
+	private fun updateBanner(bannerNoticeList: List<Notice>?) {
+		if (bannerNoticeList == null || bannerNoticeList.isEmpty()) return
+		val models = mutableListOf<CooderBannerMo>()
+		bannerNoticeList.forEach {
+			val model = CooderBannerMo(it.cover)
+			models += model
+		}
+		banner.setBannerData(R.layout.item_profile_banner, models)
+		banner.setBindAdapter { viewHolder, mo, _: Int ->
+			val imageView = viewHolder.findViewById<ImageView>(R.id.banner_item_image_view)
+			imageView.loadCorner(mo.url, 10.dp.toInt())
+		}
+		banner.setOnBannerClickListener { _, _, position ->
+			val uri = Uri.parse(bannerNoticeList[position].url)
+			val intent = Intent(Intent.ACTION_VIEW, uri)
+			startActivity(intent)
+		}
+		banner.visibility = View.VISIBLE
+	}
+	
+	/**
+	 * 设置字体样式
+	 */
+	private fun spannableTabItem(topText: Int, bottomText: String): CharSequence {
+		val top = topText.toString()
+		val ssb = SpannableStringBuilder()
+		val ssTop = SpannableString(top)
+		
+		// 设置字体颜色
+		ssTop.setSpan(ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.black)), 0, ssTop.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+		// 设置字体大小
+		ssTop.setSpan(AbsoluteSizeSpan(18, true), 0, ssTop.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+		// 设置粗细
+		ssTop.setSpan(StyleSpan(Typeface.BOLD), 0, ssTop.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+		
+		ssb.append(ssTop)
+		if (!bottomText.startsWith("\n")) {
+			ssb.append("\n")
+		}
+		ssb.append(bottomText)
+		return ssb
+	}
+}

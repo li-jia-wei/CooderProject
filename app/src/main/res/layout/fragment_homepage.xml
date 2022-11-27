@@ -4,7 +4,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="vertical"
-	tools:context=".ui.main.fragment.homepage.HomepageFragment">
+	tools:context=".main.fragment.homepage.HomepageFragment">
 
 	<com.cooder.cooder.ui.tab.top.CooderTabTopLayout
 		android:id="@+id/tab_top_layout"
