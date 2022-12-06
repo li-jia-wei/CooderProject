@@ -46,7 +46,7 @@ class EmptyView @JvmOverloads constructor(
 		titleView = findViewById(R.id.empty_title)
 		descView = findViewById(R.id.empty_desc)
 		helpActionView = findViewById(R.id.empty_help_action)
-		refreshButton = findViewById(R.id.empty_refresh)
+		refreshButton = findViewById(R.id.empty_refresh_button)
 	}
 	
 	/**
@@ -84,6 +84,27 @@ class EmptyView @JvmOverloads constructor(
 	}
 	
 	/**
+	 * 设置按钮文字
+	 */
+	fun setRefreshButton(@StringRes resId: Int) {
+		this.refreshButton.setText(resId)
+	}
+	
+	/**
+	 * 设置按钮文字
+	 */
+	fun setRefreshButton(text: String) {
+		this.refreshButton.text = text
+	}
+	
+	/**
+	 * 设置按钮点击事件
+	 */
+	fun setOnRefreshListener(listener: OnClickListener) {
+		this.refreshButton.setOnClickListener(listener)
+	}
+	
+	/**
 	 * 设置描述
 	 */
 	fun setDesc(@StringRes resId: Int) {
@@ -103,12 +124,5 @@ class EmptyView @JvmOverloads constructor(
 	fun setOnClickHelpActionListener(listener: OnClickListener) {
 		this.helpActionView.setOnClickListener(listener)
 		this.helpActionView.visibility = View.VISIBLE
-	}
-	
-	/**
-	 * 设置刷新事件
-	 */
-	fun setOnClickRefreshListener(listener: OnClickListener) {
-		this.refreshButton.setOnClickListener(listener)
 	}
 }

@@ -13,6 +13,7 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.cooder.cooder.project.common.R
 import kotlin.math.min
 
 /**
@@ -48,7 +49,7 @@ fun ImageView.loadCircle(@DrawableRes resId: Int) {
  */
 fun ImageView.loadCorner(url: String, corner: Int) {
 	// fix: 需要先裁剪再设置圆角，否则可能会导致被设置的圆角被裁剪
-	Glide.with(this).load(url).transform(CenterCrop(), RoundedCorners(corner)).into(this)
+	Glide.with(this).load(url).transform(CenterCrop(), RoundedCorners(corner)).error(R.drawable.shape_view_bg).into(this)
 }
 
 /**

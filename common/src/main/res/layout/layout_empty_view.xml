@@ -68,7 +68,7 @@
 	</LinearLayout>
 
 	<Button
-		android:id="@+id/empty_refresh"
+		android:id="@+id/empty_refresh_button"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:backgroundTint="@android:color/holo_red_light"

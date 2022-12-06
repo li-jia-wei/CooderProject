@@ -50,8 +50,8 @@ class DegradeGlobalActivity : CooderBaseActivity() {
 		
 		val actionBack: IconFontTextView = findViewById(R.id.action_back)
 		val emptyView: EmptyView = findViewById(R.id.empty_view)
-		degradeTitle?.also { emptyView.setTitle(it) }
-		degradeDesc?.also { emptyView.setDesc(it) }
+		degradeTitle?.let { emptyView.setTitle(it) }
+		degradeDesc?.let { emptyView.setDesc(it) }
 		// 设置帮助页面
 		if (degradeAction != null) {
 			emptyView.setOnClickHelpActionListener {
@@ -60,7 +60,7 @@ class DegradeGlobalActivity : CooderBaseActivity() {
 			}
 		}
 		// 设置刷新点击事件
-		emptyView.setOnClickRefreshListener {
+		emptyView.setOnRefreshListener() {
 		
 		}
 		

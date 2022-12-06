@@ -78,7 +78,6 @@ class RetrofitCallFactory(baseUrl: String) : CooderCall.Factory {
 		 * 创建真实调用
 		 */
 		private fun createRealCall(request: CooderRequest): Call<ResponseBody> {
-			CooderLog.i(request.getCompleteUrl())
 			return when (request.httpMethod) {
 				CooderRequest.METHOD.GET -> {
 					apiService.get(request.headers, request.getCompleteUrl(), request.parameters)

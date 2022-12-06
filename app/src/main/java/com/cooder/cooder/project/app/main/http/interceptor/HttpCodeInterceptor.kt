@@ -15,9 +15,9 @@ import com.cooder.cooder.project.common.util.AppGlobals
  *
  * 创建：2022/11/23 18:54
  *
- * 介绍：Http状态拦截器，根据response的code自动路由到相关页面
+ * 介绍：HttpCode拦截器，根据response的code自动路由到相关页面
  */
-class HttpStatusInterceptor : CooderInterceptor {
+class HttpCodeInterceptor : CooderInterceptor {
 	
 	override fun requestIntercept(chain: CooderInterceptor.RequestChain): Boolean {
 		return false
@@ -29,7 +29,6 @@ class HttpStatusInterceptor : CooderInterceptor {
 			CooderResponse.RC_NEED_LOGIN -> {
 				ARouter.getInstance()
 					.build(RoutePath.ACTIVITY_ACCOUNT_LOGIN)
-					.greenChannel()
 					.navigation()
 			}
 			CooderResponse.RC_AUTH_TOKEN_EXPIRED, CooderResponse.RC_AUTH_TOKEN_INVALID -> {
@@ -42,7 +41,6 @@ class HttpStatusInterceptor : CooderInterceptor {
 					.withString(DegradeGlobalActivity.DEGRADE_TITLE, AppGlobals.getBaseContext().getString(R.string.token_degrade_title))
 					.withString(DegradeGlobalActivity.DEGRADE_DESC, response.msg)
 					.withString(DegradeGlobalActivity.DEGRADE_ACTION, helpUrl)
-					.greenChannel()
 					.navigation()
 			}
 		}

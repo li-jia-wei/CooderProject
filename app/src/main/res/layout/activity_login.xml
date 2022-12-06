@@ -63,7 +63,7 @@
 		app:hint="@string/login_please_input_username"
 		app:inputTextAppearance="@style/InputTextAppearance"
 		app:inputType="username"
-		app:text="hello"
+		app:text="imooc"
 		app:title="@string/login_username"
 		app:titleTextAppearance="@style/TitleTextAppearance"
 		app:topLineAppearance="@style/LineAppearance" />

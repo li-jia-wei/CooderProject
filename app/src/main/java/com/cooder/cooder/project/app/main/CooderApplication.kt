@@ -31,7 +31,7 @@ class CooderApplication : CooderBaseApplication() {
 			}
 			
 			override fun globalTag(): String {
-				return "Cooder"
+				return "CooderProjectTAG"
 			}
 			
 			override fun includeThread(): Boolean {

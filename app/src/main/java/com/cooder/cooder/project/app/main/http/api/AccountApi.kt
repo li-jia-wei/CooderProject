@@ -2,7 +2,6 @@ package com.cooder.cooder.project.app.main.http.api
 
 import com.cooder.cooder.library.restful.CooderCall
 import com.cooder.cooder.library.restful.annotation.*
-import com.cooder.cooder.project.app.main.http.ApiFactory
 import com.cooder.cooder.project.app.main.model.CourseNotice
 import com.cooder.cooder.project.app.main.model.UserProfile
 
@@ -15,7 +14,7 @@ import com.cooder.cooder.project.app.main.model.UserProfile
  *
  * 介绍：Account接口
  */
-interface AccountApi : ApiFactory.Api {
+interface AccountApi : Api {
 	
 	/**
 	 * 登录

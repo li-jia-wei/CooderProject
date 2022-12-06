@@ -17,7 +17,6 @@ class BizInterceptor : CooderInterceptor {
 	
 	override fun requestIntercept(chain: CooderInterceptor.RequestChain): Boolean {
 		val request = chain.request()
-		CooderLog.i(request.getCompleteUrl())
 		request.addHeader("Connection", "Keep-alive")
 		request.addHeader("Accept-Charset", "utf-8")
 		request.addHeader("auth-token", "MTU5Mjg1MDg3NDcwNw11.26==")

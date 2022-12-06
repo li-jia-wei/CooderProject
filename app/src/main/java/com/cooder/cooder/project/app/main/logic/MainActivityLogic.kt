@@ -8,11 +8,7 @@ import android.view.View
 import androidx.annotation.IdRes
 import androidx.fragment.app.FragmentManager
 import com.cooder.cooder.project.app.R
-import com.cooder.cooder.project.app.main.fragment.category.CategoryFragment
-import com.cooder.cooder.project.app.main.fragment.favorite.FavoriteFragment
-import com.cooder.cooder.project.app.main.fragment.homepage.HomepageFragment
-import com.cooder.cooder.project.app.main.fragment.profile.ProfileFragment
-import com.cooder.cooder.project.app.main.fragment.recommend.RecommendFragment
+import com.cooder.cooder.project.app.main.fragment.*
 import com.cooder.cooder.project.common.tab.CooderFragmentTabView
 import com.cooder.cooder.project.common.tab.CooderTabViewAdapter
 import com.cooder.cooder.ui.tab.bottom.CooderTabBottomInfo
@@ -52,7 +48,7 @@ class MainActivityLogic(
 	
 	init {
 		// fix: 不保留活动导致的Fragment重叠问题
-		savedInstanceState?.also {
+		savedInstanceState?.let {
 			currentItemIndex = it.getInt(SAVED_CURRENT_ID)
 		}
 		initTabBottom()

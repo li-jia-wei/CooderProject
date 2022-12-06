@@ -159,8 +159,8 @@ class InputItemLayout @JvmOverloads constructor(
 		editText.setHintTextColor(hintColor)
 		editText.setTextColor(inputColor)
 		editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize.toFloat())
-		text.also { editText.setText(it) }
-		hint.also { editText.hint = it }
+		text.let { editText.setText(it) }
+		hint.let{ editText.hint = it }
 		editText.setBackgroundColor(Color.TRANSPARENT)
 		editText.gravity = Gravity.START or Gravity.CENTER_VERTICAL
 		editText.inputType = when (inputType) {

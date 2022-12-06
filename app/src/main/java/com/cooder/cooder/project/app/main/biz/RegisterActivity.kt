@@ -76,7 +76,7 @@ class RegisterActivity : CooderBaseActivity() {
 		}
 		ApiFactory.create(AccountApi::class.java).register(username, password, moocId, courseOrderId).enqueue(object : CooderCallback<String> {
 			override fun onSuccess(response: CooderResponse<String>) {
-				if (response.code == CooderResponse.SUCCESS) {
+				if (response.isSuccess()) {
 					// 注册成功
 					val intent = Intent()
 					intent.putExtra("username", username)

@@ -1,4 +1,4 @@
-package com.cooder.cooder.project.app.main.fragment.recommend
+package com.cooder.cooder.project.app.main.fragment
 
 import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.common.ui.component.CooderBaseFragment
@@ -8,14 +8,14 @@ import com.cooder.cooder.project.common.ui.component.CooderBaseFragment
  *
  * 作者姓名：李佳伟
  *
- * 创建时间：2022/10/4 15:42
+ * 创建时间：2022/10/4 15:38
  *
- * 文件介绍：推荐Fragment
+ * 文件介绍：喜欢Fragment
  */
-class RecommendFragment : CooderBaseFragment() {
+class FavoriteFragment : CooderBaseFragment() {
 	
 	override fun getLayoutId(): Int {
-		return R.layout.fragment_recommend
+		return R.layout.fragment_favorite
 	}
 	
 }

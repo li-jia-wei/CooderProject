@@ -1,8 +1,10 @@
 package com.cooder.cooder.project.app.main.http
 
+import com.cooder.cooder.library.restful.CooderInterceptor
 import com.cooder.cooder.library.restful.CooderRestful
+import com.cooder.cooder.project.app.main.http.api.Api
 import com.cooder.cooder.project.app.main.http.interceptor.BizInterceptor
-import com.cooder.cooder.project.app.main.http.interceptor.HttpStatusInterceptor
+import com.cooder.cooder.project.app.main.http.interceptor.HttpCodeInterceptor
 
 /**
  * 项目：CooderProject
@@ -14,6 +16,7 @@ import com.cooder.cooder.project.app.main.http.interceptor.HttpStatusInterceptor
  * 介绍：ApiFactory
  *
  * [auto-token更新网站](https://class.imooc.com/course/qadetail/235042)
+ *
  * [API网站](http://api.devio.org/as/swagger-ui.html)
  */
 object ApiFactory {
@@ -24,16 +27,15 @@ object ApiFactory {
 	
 	init {
 		cooderRestful.addInterceptor(BizInterceptor())
-		cooderRestful.addInterceptor(HttpStatusInterceptor())
-	}
-	
-	@JvmStatic
-	fun <T> create(service: Class<T>): T where T : Api {
-		return cooderRestful.create(service)
+		cooderRestful.addInterceptor(HttpCodeInterceptor())
 	}
 	
 	/**
-	 * 使用网络请求需要实现这个标记接口
+	 * @param service 返回的数据类型
+	 * @param cancelInterceptors 不参与拦截的拦截器
 	 */
-	interface Api
+	@JvmStatic
+	fun <T : Api> create(service: Class<T>, vararg cancelInterceptors: Class<out CooderInterceptor>): T {
+		return cooderRestful.create(service, cancelInterceptors)
+	}
 }

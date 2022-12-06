@@ -41,7 +41,7 @@ class CooderTabViewAdapter(
 		if (lastPosition != -1 && currentPosition != -1) {
 			transaction.setToggleAnimation(currentPosition - lastPosition)
 		}
-		currentFragment?.also {
+		currentFragment?.let {
 			if (removeFragments != null && removeFragments.contains(it::class.java)) {
 				transaction.remove(it)
 			} else {
@@ -49,10 +49,14 @@ class CooderTabViewAdapter(
 			}
 		}
 		val tag = "${container.id}:$position"
-		currentFragment = fragmentManager.findFragmentByTag(tag)?.also {
-			transaction.show(it)
-		} ?: getItem(position)?.also {
-			if (!it.isAdded) transaction.add(container.id, it, tag)
+		currentFragment = fragmentManager.findFragmentByTag(tag)
+		if (currentFragment != null) {
+			transaction.show(currentFragment!!)
+		} else {
+			currentFragment = getItem(position)
+			if (currentFragment != null && !currentFragment!!.isAdded) {
+				transaction.add(container.id, currentFragment!!, tag)
+			}
 		}
 		transaction.commitAllowingStateLoss()
 	}

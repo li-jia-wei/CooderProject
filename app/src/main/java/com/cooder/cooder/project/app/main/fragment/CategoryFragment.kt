@@ -1,4 +1,4 @@
-package com.cooder.cooder.project.app.main.fragment.category
+package com.cooder.cooder.project.app.main.fragment
 
 import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.common.ui.component.CooderBaseFragment
@@ -17,5 +17,4 @@ class CategoryFragment : CooderBaseFragment() {
 	override fun getLayoutId(): Int {
 		return R.layout.fragment_category
 	}
-	
 }

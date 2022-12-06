@@ -3,18 +3,28 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	android:background="@color/white"
 	android:orientation="vertical"
-	tools:context=".main.fragment.homepage.HomepageFragment">
-
+	tools:context=".main.fragment.HomepageFragment">
+	
+	<com.cooder.cooder.project.common.ui.view.IconFontTextView
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/dp_35"
+		android:layout_margin="@dimen/dp_16"
+		android:background="@drawable/shape_homepage_search"
+		android:gravity="center"
+		android:text="@string/homepage_search_hint"
+		android:textColor="@color/color_9fa"
+		android:textSize="@dimen/sp_14" />
+	
 	<com.cooder.cooder.ui.tab.top.CooderTabTopLayout
 		android:id="@+id/tab_top_layout"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content" />
-
-	<com.cooder.cooder.project.common.tab.CooderFragmentTabView
-		android:id="@+id/fragment_tab_view"
+		android:layout_height="@dimen/dp_45" />
+	
+	<androidx.viewpager.widget.ViewPager
+		android:id="@+id/view_pager"
 		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:layout_weight="1" />
+		android:layout_height="match_parent" />
 
 </LinearLayout>

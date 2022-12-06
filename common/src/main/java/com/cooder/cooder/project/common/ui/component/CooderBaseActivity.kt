@@ -9,9 +9,9 @@ import android.widget.Toast
 import android.window.OnBackInvokedCallback
 import android.window.OnBackInvokedDispatcher
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.CallSuper
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import com.cooder.cooder.library.log.CooderLog
 
 /**
  * 项目名称：CooderProject
@@ -26,6 +26,7 @@ open class CooderBaseActivity : AppCompatActivity(), CooderBaseActionInterface {
 	
 	private var onBackInvokedCallback: OnBackInvokedCallback? = null
 	
+	@CallSuper
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		if (VERSION.SDK_INT >= VERSION_CODES.TIRAMISU) {
@@ -36,12 +37,10 @@ open class CooderBaseActivity : AppCompatActivity(), CooderBaseActionInterface {
 	}
 	
 	protected fun showToast(text: String?) {
-		CooderLog.i(text)
 		Toast.makeText(this, text ?: "null", Toast.LENGTH_SHORT).show()
 	}
 	
 	protected fun showToast(@StringRes resId: Int) {
-		CooderLog.i(getString(resId))
 		Toast.makeText(this, resId, Toast.LENGTH_SHORT).show()
 	}
 	
@@ -83,10 +82,11 @@ open class CooderBaseActivity : AppCompatActivity(), CooderBaseActionInterface {
 		onBackPressedDispatcher.onBackPressed()
 	}
 	
+	@CallSuper
 	override fun onDestroy() {
 		super.onDestroy()
 		if (VERSION.SDK_INT >= VERSION_CODES.TIRAMISU) {
-			onBackInvokedCallback?.also {
+			onBackInvokedCallback?.let {
 				onBackInvokedDispatcher.unregisterOnBackInvokedCallback(it)
 			}
 		}

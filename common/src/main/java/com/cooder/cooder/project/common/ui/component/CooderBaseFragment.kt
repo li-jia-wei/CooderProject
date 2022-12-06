@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
-import com.cooder.cooder.library.log.CooderLog
 
 /**
  * 项目名称：CooderProject
@@ -27,6 +27,7 @@ abstract class CooderBaseFragment : Fragment() {
 	@LayoutRes
 	protected abstract fun getLayoutId(): Int
 	
+	@CallSuper
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 		layoutView = inflater.inflate(getLayoutId(), container, false)
 		return layoutView
@@ -40,12 +41,10 @@ abstract class CooderBaseFragment : Fragment() {
 	}
 	
 	protected fun showToast(text: String?) {
-		CooderLog.i(text)
 		Toast.makeText(requireContext(), text ?: "null", Toast.LENGTH_SHORT).show()
 	}
 	
 	protected fun showToast(@StringRes resId: Int) {
-		CooderLog.i(getString(resId))
 		Toast.makeText(requireContext(), resId, Toast.LENGTH_SHORT).show()
 	}
 }

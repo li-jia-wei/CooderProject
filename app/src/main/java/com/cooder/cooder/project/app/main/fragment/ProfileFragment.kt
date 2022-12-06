@@ -1,4 +1,4 @@
-package com.cooder.cooder.project.app.main.fragment.profile
+package com.cooder.cooder.project.app.main.fragment
 
 import android.content.Intent
 import android.graphics.Typeface
@@ -15,15 +15,18 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.alibaba.android.arouter.launcher.ARouter
 import com.cooder.cooder.library.restful.CooderCallback
 import com.cooder.cooder.library.restful.CooderResponse
 import com.cooder.cooder.library.util.dp
 import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.app.main.http.ApiFactory
 import com.cooder.cooder.project.app.main.http.api.AccountApi
+import com.cooder.cooder.project.app.main.http.interceptor.HttpCodeInterceptor
 import com.cooder.cooder.project.app.main.model.CourseNotice
 import com.cooder.cooder.project.app.main.model.Notice
 import com.cooder.cooder.project.app.main.model.UserProfile
+import com.cooder.cooder.project.app.main.route.RoutePath
 import com.cooder.cooder.project.common.ui.component.CooderBaseFragment
 import com.cooder.cooder.project.common.ui.view.expends.loadCircle
 import com.cooder.cooder.project.common.ui.view.expends.loadCorner
@@ -40,6 +43,12 @@ import com.cooder.cooder.ui.banner.core.CooderBannerMo
  * 文件介绍：配置Fragment
  */
 class ProfileFragment : CooderBaseFragment() {
+	
+	private companion object {
+		private const val REQUEST_CODE_LOGIN_PROFILE = 1001
+		
+		private const val BANNER_CORNER = 10
+	}
 	
 	private lateinit var userAvatar: ImageView
 	private lateinit var username: TextView
@@ -90,22 +99,24 @@ class ProfileFragment : CooderBaseFragment() {
 	 * 查询课程通知
 	 */
 	private fun queryCourseNotice() {
-		ApiFactory.create(AccountApi::class.java).notice().enqueue(object : CooderCallback<CourseNotice> {
+		ApiFactory.create(AccountApi::class.java, HttpCodeInterceptor::class.java).notice().enqueue(object : CooderCallback<CourseNotice> {
 			override fun onSuccess(response: CooderResponse<CourseNotice>) {
-				val data = response.data
-				if (data != null) {
-					val total = data.total
-					courseNotice.visibility = if (total > 0) View.VISIBLE else View.GONE
-					if (total > 99) {
-						courseNotice.text = getString(R.string.profile_course_notice_count_geature_99)
-					} else if (total > 0) {
-						courseNotice.text = String.format("%d", total)
+				if (response.isSuccess()) {
+					val data = response.data
+					if (data != null) {
+						val total = data.total
+						courseNotice.visibility = if (total > 0) View.VISIBLE else View.GONE
+						if (total > 99) {
+							courseNotice.text = getString(R.string.profile_course_notice_count_geature_99)
+						} else if (total > 0) {
+							courseNotice.text = String.format("%d", total)
+						}
 					}
 				}
 			}
 			
 			override fun onFailed(throwable: Throwable) {
-			
+				showToast(throwable.message)
 			}
 		})
 	}
@@ -116,9 +127,9 @@ class ProfileFragment : CooderBaseFragment() {
 	private fun queryLoginUserData() {
 		ApiFactory.create(AccountApi::class.java).profile().enqueue(object : CooderCallback<UserProfile> {
 			override fun onSuccess(response: CooderResponse<UserProfile>) {
-				val userProfile = response.data
-				if (response.code == CooderResponse.SUCCESS && userProfile != null) {
-					updateUI(userProfile)
+				val data = response.data
+				if (response.isSuccess() && data != null) {
+					updateUI(data)
 				} else {
 					showToast(response.msg)
 				}
@@ -137,14 +148,18 @@ class ProfileFragment : CooderBaseFragment() {
 		if (userProfile.isLogin) {
 			username.text = userProfile.userName
 			loginDesc.text = getString(R.string.profile_login_desc_welcome_back)
-			userAvatar.loadCircle(userProfile.avatar)
+			userAvatar.loadCircle(userProfile.userIcon)
 		} else {
 			username.text = getString(R.string.profile_please_login_first)
-			loginDesc.text = getString(R.string.profile_login_desc_welcome_back)
+			loginDesc.text = getString(R.string.profile_please_login_first)
+			userAvatar.loadCircle(R.drawable.ic_avatar_default)
+			username.setOnClickListener {
+				ARouter.getInstance().build(RoutePath.ACTIVITY_ACCOUNT_LOGIN).navigation(activity, REQUEST_CODE_LOGIN_PROFILE)
+			}
 		}
 		favorite.text = spannableTabItem(userProfile.favoriteCount, getString(R.string.profile_favorite))
-		historyBrowsing.text = spannableTabItem(userProfile.browseCount, getString(R.string.profile_favorite))
-		learnMinutes.text = spannableTabItem(userProfile.learnMinutes, getString(R.string.profile_favorite))
+		historyBrowsing.text = spannableTabItem(userProfile.browseCount, getString(R.string.profile_history_browsing))
+		learnMinutes.text = spannableTabItem(userProfile.learnMinutes, getString(R.string.profile_learn_minutes))
 		
 		updateBanner(userProfile.bannerNoticeList)
 	}
@@ -156,13 +171,12 @@ class ProfileFragment : CooderBaseFragment() {
 		if (bannerNoticeList == null || bannerNoticeList.isEmpty()) return
 		val models = mutableListOf<CooderBannerMo>()
 		bannerNoticeList.forEach {
-			val model = CooderBannerMo(it.cover)
-			models += model
+			models += CooderBannerMo(it.cover)
 		}
 		banner.setBannerData(R.layout.item_profile_banner, models)
-		banner.setBindAdapter { viewHolder, mo, _: Int ->
+		banner.setBindAdapter { viewHolder, mo: CooderBannerMo, _: Int ->
 			val imageView = viewHolder.findViewById<ImageView>(R.id.banner_item_image_view)
-			imageView.loadCorner(mo.url, 10.dp.toInt())
+			imageView.loadCorner(mo.url, BANNER_CORNER.dp.toInt())
 		}
 		banner.setOnBannerClickListener { _, _, position ->
 			val uri = Uri.parse(bannerNoticeList[position].url)
@@ -181,7 +195,9 @@ class ProfileFragment : CooderBaseFragment() {
 		val ssTop = SpannableString(top)
 		
 		// 设置字体颜色
-		ssTop.setSpan(ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.black)), 0, ssTop.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+		ssTop.setSpan(
+			ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.black)), 0, ssTop.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+		)
 		// 设置字体大小
 		ssTop.setSpan(AbsoluteSizeSpan(18, true), 0, ssTop.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 		// 设置粗细
@@ -193,5 +209,14 @@ class ProfileFragment : CooderBaseFragment() {
 		}
 		ssb.append(bottomText)
 		return ssb
+	}
+	
+	@Suppress("OVERRIDE_DEPRECATION")
+	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+		super.onActivityResult(requestCode, resultCode, data)
+		if (requestCode == REQUEST_CODE_LOGIN_PROFILE) {
+			queryLoginUserData()
+			queryCourseNotice()
+		}
 	}
 }

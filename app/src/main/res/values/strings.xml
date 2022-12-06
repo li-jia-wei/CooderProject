@@ -18,6 +18,7 @@
 		<item>装修</item>
 		<item>运动</item>
 	</string-array>
+	<string name="homepage_search_hint">&#xe8aa; 搜索你想要的商品</string>
 
 	<!-- 收藏 -->
 	<string name="favorite_title">收藏</string>

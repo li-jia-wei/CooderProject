@@ -2,10 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:dist="http://schemas.android.com/apk/distribution"
 	xmlns:tools="http://schemas.android.com/tools">
-
+	
 	<uses-permission android:name="android.permission.INTERNET" />
-
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	
 	<dist:module dist:instant="true" />
+	
 	<application
 		android:name=".main.CooderApplication"
 		android:allowBackup="true"
@@ -18,21 +21,47 @@
 		android:theme="@style/Theme.CooderProject"
 		android:usesCleartextTraffic="true"
 		tools:targetApi="33">
+		
 		<activity
 			android:name=".main.MainActivity"
-			android:exported="true">
+			android:exported="true"
+			android:screenOrientation="portrait"
+			tools:ignore="LockedOrientationActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
-
+				
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:name=".main.biz.AuthenticationActivity" />
-		<activity android:name=".main.biz.ProfileDetailActivity" />
-		<activity android:name=".main.biz.VIPActivity" />
-		<activity android:name=".main.route.DegradeGlobalActivity" />
-
-		<activity android:name=".main.biz.LoginActivity" />
-		<activity android:name=".main.biz.RegisterActivity" />
+		
+		<activity
+			android:name=".main.biz.AuthenticationActivity"
+			android:screenOrientation="portrait"
+			tools:ignore="LockedOrientationActivity" />
+		
+		<activity
+			android:name=".main.biz.ProfileDetailActivity"
+			android:screenOrientation="portrait"
+			tools:ignore="LockedOrientationActivity" />
+		
+		<activity
+			android:name=".main.biz.VIPActivity"
+			android:screenOrientation="portrait"
+			tools:ignore="LockedOrientationActivity" />
+		
+		<activity
+			android:name=".main.route.DegradeGlobalActivity"
+			android:screenOrientation="portrait"
+			tools:ignore="LockedOrientationActivity" />
+		
+		<activity
+			android:name=".main.biz.LoginActivity"
+			android:screenOrientation="portrait"
+			tools:ignore="LockedOrientationActivity" />
+		
+		<activity
+			android:name=".main.biz.RegisterActivity"
+			android:screenOrientation="portrait"
+			tools:ignore="LockedOrientationActivity" />
 	</application>
 </manifest>

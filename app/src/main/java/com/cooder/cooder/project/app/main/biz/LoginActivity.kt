@@ -60,7 +60,6 @@ class LoginActivity : CooderBaseActivity() {
 		val inputItemPassword: InputItemLayout = findViewById(R.id.input_item_password)
 		val username = inputItemUsername.getText()
 		val password = inputItemPassword.getText()
-		CooderLog.i(username, password)
 		if (username.isEmpty()) {
 			showToast(R.string.login_please_input_username)
 			return
@@ -71,8 +70,7 @@ class LoginActivity : CooderBaseActivity() {
 		}
 		ApiFactory.create(AccountApi::class.java).login(username, password).enqueue(object : CooderCallback<String> {
 			override fun onSuccess(response: CooderResponse<String>) {
-				CooderLog.i(response.code)
-				if (response.code == CooderResponse.SUCCESS) {
+				if (response.isSuccess()) {
 					showToast(R.string.login_success)
 					val data: String? = response.data
 					

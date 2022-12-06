@@ -3,12 +3,15 @@
 	<color name="primary">#1790FE</color>
 	<color name="primary_variant">#40A9FE</color>
 	<color name="status_bar_color">#1790FE</color>
-	<color name="bg_view_default">#07969C</color>
-
+	
 	<color name="black">#FF000000</color>
 	<color name="white">#FFFFFFFF</color>
 	<color name="blue">#1790FE</color>
-
+	
 	<color name="tab_default">#434343</color>
 	<color name="tab_tint">@color/primary</color>
+	
+	<color name="profile_banner_bg">@color/view_bg</color>
+	
+	<color name="homepage_search_bg">@color/color_eae</color>
 </resources>

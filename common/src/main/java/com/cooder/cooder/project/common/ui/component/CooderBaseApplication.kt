@@ -1,6 +1,7 @@
 package com.cooder.cooder.project.common.ui.component
 
 import android.app.Application
+import androidx.annotation.CallSuper
 
 /**
  * 项目名称：CooderProject
@@ -13,4 +14,8 @@ import android.app.Application
  */
 open class CooderBaseApplication : Application() {
 	
+	@CallSuper
+	override fun onCreate() {
+		super.onCreate()
+	}
 }
