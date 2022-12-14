@@ -33,11 +33,18 @@ abstract class CooderBaseFragment : Fragment() {
 		return layoutView
 	}
 	
-	protected fun isAlive(): Boolean {
-		if (isRemoving || isDetached || activity == null) {
-			return false
-		}
-		return true
+	/**
+	 * 判断是否存活
+	 */
+	protected open fun isAlive(): Boolean {
+		return !isNotAlive()
+	}
+	
+	/**
+	 * 判断是否不存活
+	 */
+	protected open fun isNotAlive(): Boolean {
+		return isRemoving || isDetached || activity == null
 	}
 	
 	protected fun showToast(text: String?) {

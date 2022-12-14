@@ -2,7 +2,6 @@ package com.cooder.cooder.project.app.main.http.api
 
 import com.cooder.cooder.library.restful.CooderCall
 import com.cooder.cooder.library.restful.annotation.*
-import com.cooder.cooder.project.app.main.model.CourseNotice
 import com.cooder.cooder.project.app.main.model.UserProfile
 
 /**
@@ -12,7 +11,7 @@ import com.cooder.cooder.project.app.main.model.UserProfile
  *
  * 创建：2022/11/21 10:19
  *
- * 介绍：Account接口
+ * 介绍：账号模块接口
  */
 interface AccountApi : Api {
 	
@@ -41,10 +40,4 @@ interface AccountApi : Api {
 	 */
 	@GET("user/profile")
 	fun profile(): CooderCall<UserProfile>
-	
-	/**
-	 * 通知
-	 */
-	@GET("notice")
-	fun notice(): CooderCall<CourseNotice>
 }

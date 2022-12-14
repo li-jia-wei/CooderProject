@@ -22,6 +22,7 @@ import com.cooder.cooder.library.util.dp
 import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.app.main.http.ApiFactory
 import com.cooder.cooder.project.app.main.http.api.AccountApi
+import com.cooder.cooder.project.app.main.http.api.NoticeApi
 import com.cooder.cooder.project.app.main.http.interceptor.HttpCodeInterceptor
 import com.cooder.cooder.project.app.main.model.CourseNotice
 import com.cooder.cooder.project.app.main.model.Notice
@@ -99,7 +100,7 @@ class ProfileFragment : CooderBaseFragment() {
 	 * 查询课程通知
 	 */
 	private fun queryCourseNotice() {
-		ApiFactory.create(AccountApi::class.java, HttpCodeInterceptor::class.java).notice().enqueue(object : CooderCallback<CourseNotice> {
+		ApiFactory.create(NoticeApi::class.java, HttpCodeInterceptor::class.java).notice().enqueue(object : CooderCallback<CourseNotice> {
 			override fun onSuccess(response: CooderResponse<CourseNotice>) {
 				if (response.isSuccess()) {
 					val data = response.data
@@ -173,7 +174,7 @@ class ProfileFragment : CooderBaseFragment() {
 		bannerNoticeList.forEach {
 			models += CooderBannerMo(it.cover)
 		}
-		banner.setBannerData(R.layout.item_profile_banner, models)
+		banner.setBannerData(R.layout.layout_profile_banner, models)
 		banner.setBindAdapter { viewHolder, mo: CooderBannerMo, _: Int ->
 			val imageView = viewHolder.findViewById<ImageView>(R.id.banner_item_image_view)
 			imageView.loadCorner(mo.url, BANNER_CORNER.dp.toInt())

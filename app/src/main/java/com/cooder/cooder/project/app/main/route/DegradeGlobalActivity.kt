@@ -43,7 +43,7 @@ class DegradeGlobalActivity : CooderBaseActivity() {
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		setContentView(R.layout.activity_degrade_global)
+		setContentView(R.layout.layout_degrade_global)
 		
 		// 给@Autowired注解的属性赋值
 		ARouter.getInstance().inject(this)

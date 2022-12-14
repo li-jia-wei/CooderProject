@@ -9,6 +9,7 @@ import androidx.annotation.IdRes
 import androidx.fragment.app.FragmentManager
 import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.app.main.fragment.*
+import com.cooder.cooder.project.app.main.fragment.home.HomePageFragment
 import com.cooder.cooder.project.common.tab.CooderFragmentTabView
 import com.cooder.cooder.project.common.tab.CooderTabViewAdapter
 import com.cooder.cooder.ui.tab.bottom.CooderTabBottomInfo
@@ -79,16 +80,16 @@ class MainActivityLogic(
 		val iconFont = "font/alibaba_iconfont.ttf"
 		
 		// 首页
-		val homepageInfo = CooderTabBottomInfo<Int>(
-			R.string.homepage_title,
+		val homePageInfo = CooderTabBottomInfo<Int>(
+			R.string.home_title,
 			iconFont,
-			R.string.homepage_icon_home,
-			R.string.homepage_icon_home_fill,
+			R.string.home_icon_home,
+			R.string.home_icon_home_fill,
 			R.color.tab_default,
 			R.color.tab_tint,
-			HomepageFragment::class.java
+			HomePageFragment::class.java
 		)
-		infoList += homepageInfo
+		infoList += homePageInfo
 		
 		// 收藏
 		val favoriteInfo = CooderTabBottomInfo<Int>(
@@ -142,7 +143,6 @@ class MainActivityLogic(
 		val tabViewAdapter = CooderTabViewAdapter(activityProvider.getSupportFragmentManager(), infoList)
 		fragmentTabView = activityProvider.findViewById(R.id.fragment_tab_view)
 		fragmentTabView.adapter = tabViewAdapter
-//		fragmentTabView.addRemoveFragment(homepageInfo.fragment!!)
 		
 		tabBottomLayout.addTabSelectedChangeListener(object : CooderTabLayout.OnTabSelectedListener<CooderTabBottomInfo<*>> {
 			override fun onTabSelectedChange(index: Int, prevInfo: CooderTabBottomInfo<*>?, nextInfo: CooderTabBottomInfo<*>) {
@@ -150,6 +150,6 @@ class MainActivityLogic(
 				currentItemIndex = index
 			}
 		})
-		tabBottomLayout.defaultSelected(infoList[currentItemIndex])
+		tabBottomLayout.selectTabInfo(infoList[currentItemIndex])
 	}
 }

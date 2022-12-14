@@ -8,5 +8,6 @@
 		<!-- Status bar color. -->
 		<item name="android:statusBarColor">@color/status_bar_color</item>
 		<!-- Customize your theme here. -->
+		<item name="android:textColor">@color/font</item>
 	</style>
 </resources>

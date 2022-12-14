@@ -8,6 +8,8 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
+import androidx.annotation.FloatRange
+import androidx.annotation.IntRange
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -47,15 +49,15 @@ fun ImageView.loadCircle(@DrawableRes resId: Int) {
 /**
  * 加载圆角图片
  */
-fun ImageView.loadCorner(url: String, corner: Int) {
+fun ImageView.loadCorner(url: String, @IntRange(from = 0) corner: Int) {
 	// fix: 需要先裁剪再设置圆角，否则可能会导致被设置的圆角被裁剪
-	Glide.with(this).load(url).transform(CenterCrop(), RoundedCorners(corner)).error(R.drawable.shape_view_bg).into(this)
+	Glide.with(this).load(url).transform(CenterCrop(), RoundedCorners(corner)).error(R.drawable.shape_view).into(this)
 }
 
 /**
  * 加载圆角图片
  */
-fun ImageView.loadCorner(@DrawableRes resId: Int, corner: Int) {
+fun ImageView.loadCorner(@DrawableRes resId: Int, @IntRange(from = 0) corner: Int) {
 	Glide.with(this).load(resId).transform(CenterCrop(), RoundedCorners(corner)).into(this)
 }
 
@@ -63,7 +65,7 @@ fun ImageView.loadCorner(@DrawableRes resId: Int, corner: Int) {
  * 加载圆形描边图片
  */
 @JvmOverloads
-fun ImageView.loadCircleBorder(url: String, borderWidth: Float = 0F, borderColor: Int = Color.WHITE) {
+fun ImageView.loadCircleBorder(url: String, @FloatRange(from = 0.0) borderWidth: Float = 0F, borderColor: Int = Color.WHITE) {
 	Glide.with(this).load(url).transform(CircleBorderCrop(borderWidth, borderColor)).into(this)
 }
 
@@ -71,7 +73,7 @@ fun ImageView.loadCircleBorder(url: String, borderWidth: Float = 0F, borderColor
  * 加载圆形描边图片
  */
 @JvmOverloads
-fun ImageView.loadCircleBorder(@DrawableRes resId: Int, borderWidth: Float = 0F, borderColor: Int = Color.WHITE) {
+fun ImageView.loadCircleBorder(@DrawableRes resId: Int, @FloatRange(from = 0.0) borderWidth: Float = 0F, borderColor: Int = Color.WHITE) {
 	Glide.with(this).load(resId).transform(CircleBorderCrop(borderWidth, borderColor)).into(this)
 }
 
