@@ -1,7 +1,5 @@
 package com.cooder.cooder.project.app.main.route
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -55,8 +53,7 @@ class DegradeGlobalActivity : CooderBaseActivity() {
 		// 设置帮助页面
 		if (degradeAction != null) {
 			emptyView.setOnClickHelpActionListener {
-				val intent = Intent(Intent.ACTION_VIEW, Uri.parse(degradeAction))
-				startActivity(intent)
+				CooderRoute.startActivityForBrowser(degradeAction)
 			}
 		}
 		// 设置刷新点击事件

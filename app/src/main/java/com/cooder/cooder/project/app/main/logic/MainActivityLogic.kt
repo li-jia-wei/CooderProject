@@ -152,4 +152,11 @@ class MainActivityLogic(
 		})
 		tabBottomLayout.selectTabInfo(infoList[currentItemIndex])
 	}
+	
+	/**
+	 * 获取底部高度
+	 */
+	fun getTabBottomLayoutHeight(): Float {
+		return tabBottomLayout.getTabBottomLayoutHeight()
+	}
 }

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+	<color name="primary">#1790FE</color>
+	<color name="primary_variant">#40A9FE</color>
 	<color name="background">#F6F6F6</color>
 	
+	<!-- 颜色 -->
 	<color name="black">#000000</color>
 	<color name="white">#FFFFFF</color>
 	<color name="lighter_gray">#AAAAAA</color>
@@ -12,10 +15,12 @@
 	<color name="green">#52C41A</color>
 	<color name="blue">#1790FE</color>
 	
+	<!-- 全局 -->
 	<color name="font">#222222</color>
 	<color name="view">#13C2C2</color>
 	<color name="line">#EEEEEE</color>
 	
+	<!-- 颜色argb -->
 	<color name="color_999">#999999</color>
 	<color name="color_f1">#f1f1f1</color>
 	<color name="color_000">#000000</color>
@@ -50,4 +55,7 @@
 	<color name="color_4a4">#4A4f50</color>
 	<color name="color_9fa">#9FA3A4</color>
 	<color name="color_929">#929697</color>
+	
+	<!-- CooderAbsListFragment -->
+	<color name="abs_list_empty">@color/primary</color>
 </resources>

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.cooder.cooder.library.log.CooderLog
+import com.cooder.cooder.library.util.dp
 import com.cooder.cooder.project.common.R
 import com.cooder.cooder.ui.item.CooderAdapter
 
@@ -48,13 +49,14 @@ class CooderRecyclerView @JvmOverloads constructor(
 		private val callback: () -> Unit
 	) : OnScrollListener() {
 		
+		val cooderAdapter = adapter as CooderAdapter
+		
 		override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
 			// 根据当前的华东状态，决定要不要添加FooterView，要不要执行上拉加载分页动作
 			if (isLoadingMore) {
 				return
 			}
 			
-			val cooderAdapter = adapter as CooderAdapter
 			val totalItemCount = cooderAdapter.itemCount
 			if (totalItemCount <= 0) {
 				return
@@ -64,13 +66,14 @@ class CooderRecyclerView @JvmOverloads constructor(
 			val canScrollVertical = recyclerView.canScrollVertically(CHECK_SCROLLING_DOWN)
 			
 			// 特殊情况，咱们的列表依旧滑动到底部，但是分页失败了
-			val lastVisibleItemPosition = findLastVisibleItemPosition(recyclerView)
-			if (lastVisibleItemPosition == -1) {
+			val lastVisibleItem = findLastVisibleItemPosition(recyclerView)
+			val firstVisibleItem = findFirstVisibleItem(recyclerView)
+			if (lastVisibleItem <= 0) {
 				return
 			}
 			
 			// 到达底部
-			val arriveBottom = lastVisibleItemPosition >= totalItemCount - 1
+			val arriveBottom = lastVisibleItem >= totalItemCount - 1 && firstVisibleItem > 0
 			// 可以向下滑动，或者当前已经滑动到最底下，此时拖动列表可以分页的
 			if (newState == SCROLL_STATE_DRAGGING && (canScrollVertical || arriveBottom)) {
 				addFooterView()
@@ -82,66 +85,72 @@ class CooderRecyclerView @JvmOverloads constructor(
 			}
 			
 			// 预加载，不需要等待，滑动到最后一个Item的时候就发出下一页的加载动作
-			val arriveRefreshPosition = totalItemCount - lastVisibleItemPosition <= prefetchSize
+			val arriveRefreshPosition = totalItemCount - lastVisibleItem <= prefetchSize
 			if (!arriveRefreshPosition) {
 				return
 			}
 			isLoadingMore = true
 			callback.invoke()
 		}
-	}
-	
-	/**
-	 * 添加FooterView
-	 */
-	private fun addFooterView() {
-		val footerView = getFooterView()
-		// 在边界状态下，多次添加的情况或者add之前先remove不会的到立即刷新
-		// 避免在addFooterView时还没有从RecyclerView上remove掉，导致出现Add view must call remove view from it parent first exception! 的异常
-		val cooderAdapter = adapter as? CooderAdapter
-		if (footerView.parent != null) {
-			footerView.post {
-				cooderAdapter?.addFooterView(footerView)
-			}
-		} else {
-			cooderAdapter?.addFooterView(footerView)
-		}
-	}
-	
-	/**
-	 * 移除FooterView
-	 */
-	private fun removeFooterView() {
-		val cooderAdapter = adapter as? CooderAdapter
-		if (footerView != null && footerView!!.parent != null) {
-			cooderAdapter?.removeFooterView(footerView!!)
-		}
-		isLoadingMore = false
-	}
-	
-	/**
-	 * 获取FooterView
-	 */
-	private fun getFooterView(): View {
-		if (footerView == null) {
-			footerView = LayoutInflater.from(context).inflate(R.layout.layout_footer_loading, this, false)
-		}
-		return footerView!!
-	}
-	
-	/**
-	 * 查询最后一个可见Item的位置
-	 */
-	private fun findLastVisibleItemPosition(recyclerView: RecyclerView): Int {
-		when (val manager = recyclerView.layoutManager) {
-			is LinearLayoutManager -> {
-				return manager.findLastVisibleItemPosition()
-			}
-			is StaggeredGridLayoutManager -> {
-				return manager.findLastVisibleItemPositions(null)[0]
+		
+		/**
+		 * 添加FooterView
+		 */
+		private fun addFooterView() {
+			val footerView = getFooterView()
+			// 在边界状态下，多次添加的情况或者add之前先remove不会的到立即刷新
+			// 避免在addFooterView时还没有从RecyclerView上remove掉，导致出现Add view must call remove view from it parent first exception! 的异常
+			if (footerView.parent != null) {
+				footerView.post {
+					cooderAdapter.addFooterView(footerView)
+				}
+			} else {
+				cooderAdapter.addFooterView(footerView)
 			}
 		}
-		return -1
+		
+		/**
+		 * 获取FooterView
+		 */
+		private fun getFooterView(): View {
+			if (footerView == null) {
+				footerView = LayoutInflater.from(context).inflate(R.layout.layout_footer_loading, this@CooderRecyclerView, false)
+				val params = footerView!!.layoutParams as LayoutParams
+				params.bottomMargin = 52.dp.toInt()
+				footerView!!.layoutParams = params
+			}
+			return footerView!!
+		}
+		
+		/**
+		 * 查询最后一个可见Item的位置
+		 */
+		private fun findLastVisibleItemPosition(recyclerView: RecyclerView): Int {
+			when (val manager = recyclerView.layoutManager) {
+				is LinearLayoutManager -> {
+					return manager.findLastVisibleItemPosition()
+				}
+				is StaggeredGridLayoutManager -> {
+					return manager.findLastVisibleItemPositions(null)[0]
+				}
+			}
+			return -1
+		}
+		
+		/**
+		 * 查询第一个可见Item的位置
+		 */
+		private fun findFirstVisibleItem(recyclerView: RecyclerView): Int {
+			when (val manager = recyclerView.layoutManager) {
+				is LinearLayoutManager -> {
+					return manager.findFirstVisibleItemPosition()
+				}
+				is StaggeredGridLayoutManager -> {
+					return manager.findFirstVisibleItemPositions(null)[0]
+				}
+			}
+			return -1
+		}
 	}
 	
 	/**
@@ -167,11 +176,17 @@ class CooderRecyclerView @JvmOverloads constructor(
 			CooderLog.e("disableLoadMore must use CooderAdapter!")
 			return
 		}
-		removeFooterView()
+		val cooderAdapter = adapter as CooderAdapter
+		footerView?.let {
+			if (footerView!!.parent != null) {
+				cooderAdapter.removeFooterView(footerView!!)
+			}
+		}
 		loadMoreScrollListener?.let {
 			removeOnScrollListener(it)
 			loadMoreScrollListener = null
 			footerView = null
+			isLoadingMore = false
 		}
 	}
 	
@@ -190,8 +205,14 @@ class CooderRecyclerView @JvmOverloads constructor(
 			CooderLog.e("loadFinished must use CooderAdapter!")
 			return
 		}
+		isLoadingMore = false
+		val cooderAdapter = adapter as CooderAdapter
 		if (!success) {
-			removeFooterView()
+			footerView?.let {
+				if (footerView!!.parent != null) {
+					cooderAdapter.removeFooterView(footerView!!)
+				}
+			}
 		}
 	}
 }

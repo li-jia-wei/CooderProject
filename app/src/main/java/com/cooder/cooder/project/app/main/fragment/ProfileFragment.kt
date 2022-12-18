@@ -2,7 +2,6 @@ package com.cooder.cooder.project.app.main.fragment
 
 import android.content.Intent
 import android.graphics.Typeface
-import android.net.Uri
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
@@ -27,6 +26,7 @@ import com.cooder.cooder.project.app.main.http.interceptor.HttpCodeInterceptor
 import com.cooder.cooder.project.app.main.model.CourseNotice
 import com.cooder.cooder.project.app.main.model.Notice
 import com.cooder.cooder.project.app.main.model.UserProfile
+import com.cooder.cooder.project.app.main.route.CooderRoute
 import com.cooder.cooder.project.app.main.route.RoutePath
 import com.cooder.cooder.project.common.ui.component.CooderBaseFragment
 import com.cooder.cooder.project.common.ui.view.expends.loadCircle
@@ -180,9 +180,8 @@ class ProfileFragment : CooderBaseFragment() {
 			imageView.loadCorner(mo.url, BANNER_CORNER.dp.toInt())
 		}
 		banner.setOnBannerClickListener { _, _, position ->
-			val uri = Uri.parse(bannerNoticeList[position].url)
-			val intent = Intent(Intent.ACTION_VIEW, uri)
-			startActivity(intent)
+			val url = bannerNoticeList[position].url
+			CooderRoute.startActivityForBrowser(url)
 		}
 		banner.visibility = View.VISIBLE
 	}

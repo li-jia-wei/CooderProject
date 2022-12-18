@@ -7,7 +7,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.cooder.cooder.library.log.CooderLog
 import com.cooder.cooder.library.restful.CooderCallback
 import com.cooder.cooder.library.restful.CooderResponse
 import com.cooder.cooder.project.app.R
@@ -62,7 +61,6 @@ class HomePageFragment : CooderBaseFragment() {
 				val data: List<TabCategory>? = response.data
 				if (response.isSuccess() && data != null) {
 					updateUI(data)
-					CooderLog.i(data)
 				} else {
 					showToast(response.msg)
 				}
@@ -122,7 +120,7 @@ class HomePageFragment : CooderBaseFragment() {
 		}
 		
 		override fun getCount(): Int {
-			return fragments.size()
+			return tabs.size
 		}
 	}
 }

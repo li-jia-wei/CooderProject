@@ -42,7 +42,8 @@
 	<string name="route_profile_vip">会员权益</string>
 	<string name="route_profile_authentication">账户充值</string>
 	<string name="route_profile_unknown">全局降级策略</string>
-
+	<string name="route_url_is_empty">无法获取到网址</string>
+	
 	<!-- 登录 -->
 	<string name="login_title">登录</string>
 	<string name="login_register">注册</string>

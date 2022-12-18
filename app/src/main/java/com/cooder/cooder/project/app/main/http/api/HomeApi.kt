@@ -1,9 +1,10 @@
 package com.cooder.cooder.project.app.main.http.api
 
 import com.cooder.cooder.library.restful.CooderCall
+import com.cooder.cooder.library.restful.annotation.Filed
+import com.cooder.cooder.library.restful.annotation.GET
+import com.cooder.cooder.library.restful.annotation.Path
 import com.cooder.cooder.project.app.main.model.HomeModel
-import retrofit2.http.GET
-import retrofit2.http.Path
 
 /**
  * 项目：CooderProject
@@ -20,5 +21,9 @@ interface HomeApi : Api {
 	 * 商品列表
 	 */
 	@GET("home/{categoryId}")
-	fun queryTabCategoryList(@Path("categoryId") categoryId: String): CooderCall<HomeModel>
+	fun queryTabCategoryList(
+		@Path("categoryId") categoryId: String,
+		@Filed("pageIndex") pageIndex: Int,
+		@Filed("pageSize") pageSize: Int
+	): CooderCall<HomeModel>
 }

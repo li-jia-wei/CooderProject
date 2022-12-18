@@ -2,6 +2,8 @@ package com.cooder.cooder.project.app.main.fragment.home
 
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.cooder.cooder.library.restful.CooderCallback
 import com.cooder.cooder.library.restful.CooderResponse
 import com.cooder.cooder.project.app.main.http.ApiFactory
@@ -40,8 +42,11 @@ class HomePageTabFragment private constructor() : CooderAbsListFragment() {
 	}
 	
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		super.onViewCreated(view, savedInstanceState)
 		categoryId = arguments?.getString("categoryId", DEFAULT_HOT_TAB_CATEGORY_ID)
+		
+		super.onViewCreated(view, savedInstanceState)
+		
+		// 查询数据
 		queryTabCategoryList()
 		
 		enableLoadMore {
@@ -51,11 +56,17 @@ class HomePageTabFragment private constructor() : CooderAbsListFragment() {
 	
 	override fun onRefresh() {
 		super.onRefresh()
+		
 		queryTabCategoryList()
 	}
 	
+	override fun createLayoutManager(): RecyclerView.LayoutManager {
+		val isHotTab = categoryId == DEFAULT_HOT_TAB_CATEGORY_ID
+		return if (isHotTab) super.createLayoutManager() else GridLayoutManager(context, 2)
+	}
+	
 	private fun queryTabCategoryList() {
-		ApiFactory.create(HomeApi::class.java).queryTabCategoryList(categoryId!!).enqueue(object : CooderCallback<HomeModel> {
+		ApiFactory.create(HomeApi::class.java).queryTabCategoryList(categoryId!!, pageIndex, 10).enqueue(object : CooderCallback<HomeModel> {
 			override fun onSuccess(response: CooderResponse<HomeModel>) {
 				if (response.isSuccess() && response.data != null) {
 					updateUI(response.data!!)
@@ -76,15 +87,27 @@ class HomePageTabFragment private constructor() : CooderAbsListFragment() {
 	private fun updateUI(data: HomeModel) {
 		if (isNotAlive()) return
 		val dataItems = mutableListOf<CooderDataItem<*, *>>()
-		data.homeBannerList?.let {
+		data.bannerList?.let {
 			dataItems += BannerItem(it)
 		}
 		data.subcategoryList?.let {
 			dataItems += SubcategoryItem(it)
 		}
-		data.homeGoodsList?.forEach {
-			dataItems += GoodsItem(it)
+		data.goodsList?.forEach {
+			dataItems += GoodsItem(it, categoryId == DEFAULT_HOT_TAB_CATEGORY_ID)
 		}
 		finishRefresh(dataItems)
 	}
+//
+//	/**
+//	 * 修复底部Padding
+//	 */
+//	private fun fixTabBottomPadding() {
+//		val bottomView = View(context)
+//		bottomView.setBackgroundColor(Color.TRANSPARENT)
+//		val height = (requireActivity() as MainActivity).getTabBottomLayoutHeight()
+//		val params = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, height.dp.toInt())
+//		bottomView.layoutParams = params
+//		adapter.addFooterView(bottomView)
+//	}
 }

@@ -58,4 +58,8 @@ class MainActivity : CooderBaseActivity(), ActivityProvider {
 			fragment.onActivityResult(requestCode, resultCode, data)
 		}
 	}
+	
+	fun getTabBottomLayoutHeight(): Float {
+		return activityLogic.getTabBottomLayoutHeight()
+	}
 }

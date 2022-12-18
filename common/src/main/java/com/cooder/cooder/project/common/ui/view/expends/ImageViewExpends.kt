@@ -22,28 +22,88 @@ import kotlin.math.min
  * 加载图片
  */
 fun ImageView.load(url: String) {
-	Glide.with(this).load(url).into(this)
+	Glide.with(this)
+		.load(url)
+		.error(R.drawable.ic_load_failed)
+		.into(this)
 }
 
 /**
  * 加载图片
  */
 fun ImageView.load(@DrawableRes resId: Int) {
-	Glide.with(this).load(resId).into(this)
+	Glide.with(this)
+		.load(resId)
+		.error(R.drawable.ic_load_failed)
+		.into(this)
+}
+
+/**
+ * 加载图片
+ */
+fun ImageView.load(url: String, width: Int, height: Int) {
+	Glide.with(this)
+		.load(url)
+		.override(width, height)
+		.error(R.drawable.ic_load_failed)
+		.into(this)
+}
+
+/**
+ * 加载图片
+ */
+fun ImageView.load(@DrawableRes resId: Int, width: Int, height: Int) {
+	Glide.with(this)
+		.load(resId)
+		.override(width, height)
+		.error(R.drawable.ic_load_failed)
+		.into(this)
 }
 
 /**
  * 加载圆形图片
  */
 fun ImageView.loadCircle(url: String) {
-	Glide.with(this).load(url).transform(CircleCrop()).into(this)
+	Glide.with(this)
+		.load(url)
+		.transform(CircleCrop())
+		.error(R.drawable.ic_load_failed)
+		.into(this)
 }
 
 /**
  * 加载圆形图片
  */
 fun ImageView.loadCircle(@DrawableRes resId: Int) {
-	Glide.with(this).load(resId).transform(CircleCrop()).into(this)
+	Glide.with(this)
+		.load(resId)
+		.transform(CircleCrop())
+		.error(R.drawable.ic_load_failed)
+		.into(this)
+}
+
+/**
+ * 加载圆形图片
+ */
+fun ImageView.loadCircle(url: String, width: Int, height: Int) {
+	Glide.with(this)
+		.load(url)
+		.transform(CircleCrop())
+		.override(width, height)
+		.error(R.drawable.ic_load_failed)
+		.into(this)
+}
+
+/**
+ * 加载圆形图片
+ */
+fun ImageView.loadCircle(@DrawableRes resId: Int, width: Int, height: Int) {
+	Glide.with(this)
+		.load(resId)
+		.transform(CircleCrop())
+		.override(width, height)
+		.error(R.drawable.ic_load_failed)
+		.into(this)
 }
 
 /**
@@ -51,14 +111,47 @@ fun ImageView.loadCircle(@DrawableRes resId: Int) {
  */
 fun ImageView.loadCorner(url: String, @IntRange(from = 0) corner: Int) {
 	// fix: 需要先裁剪再设置圆角，否则可能会导致被设置的圆角被裁剪
-	Glide.with(this).load(url).transform(CenterCrop(), RoundedCorners(corner)).error(R.drawable.shape_view).into(this)
+	Glide.with(this)
+		.load(url)
+		.transform(CenterCrop(), RoundedCorners(corner))
+		.error(R.drawable.ic_load_failed)
+		.into(this)
 }
 
 /**
  * 加载圆角图片
  */
 fun ImageView.loadCorner(@DrawableRes resId: Int, @IntRange(from = 0) corner: Int) {
-	Glide.with(this).load(resId).transform(CenterCrop(), RoundedCorners(corner)).into(this)
+	Glide.with(this)
+		.load(resId)
+		.transform(CenterCrop(), RoundedCorners(corner))
+		.error(R.drawable.ic_load_failed)
+		.into(this)
+}
+
+/**
+ * 加载圆角图片
+ */
+fun ImageView.loadCorner(url: String, @IntRange(from = 0) corner: Int, width: Int, height: Int) {
+	// fix: 需要先裁剪再设置圆角，否则可能会导致被设置的圆角被裁剪
+	Glide.with(this)
+		.load(url)
+		.transform(CenterCrop(), RoundedCorners(corner))
+		.override(width, height)
+		.error(R.drawable.ic_load_failed)
+		.into(this)
+}
+
+/**
+ * 加载圆角图片
+ */
+fun ImageView.loadCorner(@DrawableRes resId: Int, @IntRange(from = 0) corner: Int, width: Int, height: Int) {
+	Glide.with(this)
+		.load(resId)
+		.transform(CenterCrop(), RoundedCorners(corner))
+		.override(width, height)
+		.error(R.drawable.ic_load_failed)
+		.into(this)
 }
 
 /**
@@ -66,7 +159,11 @@ fun ImageView.loadCorner(@DrawableRes resId: Int, @IntRange(from = 0) corner: In
  */
 @JvmOverloads
 fun ImageView.loadCircleBorder(url: String, @FloatRange(from = 0.0) borderWidth: Float = 0F, borderColor: Int = Color.WHITE) {
-	Glide.with(this).load(url).transform(CircleBorderCrop(borderWidth, borderColor)).into(this)
+	Glide.with(this)
+		.load(url)
+		.transform(CircleBorderCrop(borderWidth, borderColor))
+		.error(R.drawable.ic_load_failed)
+		.into(this)
 }
 
 /**
@@ -74,7 +171,37 @@ fun ImageView.loadCircleBorder(url: String, @FloatRange(from = 0.0) borderWidth:
  */
 @JvmOverloads
 fun ImageView.loadCircleBorder(@DrawableRes resId: Int, @FloatRange(from = 0.0) borderWidth: Float = 0F, borderColor: Int = Color.WHITE) {
-	Glide.with(this).load(resId).transform(CircleBorderCrop(borderWidth, borderColor)).into(this)
+	Glide.with(this)
+		.load(resId)
+		.transform(CircleBorderCrop(borderWidth, borderColor))
+		.error(R.drawable.ic_load_failed)
+		.into(this)
+}
+
+/**
+ * 加载圆形描边图片
+ */
+@JvmOverloads
+fun ImageView.loadCircleBorder(url: String, width: Int, height: Int, @FloatRange(from = 0.0) borderWidth: Float = 0F, borderColor: Int = Color.WHITE) {
+	Glide.with(this)
+		.load(url)
+		.transform(CircleBorderCrop(borderWidth, borderColor))
+		.override(width, height)
+		.error(R.drawable.ic_load_failed)
+		.into(this)
+}
+
+/**
+ * 加载圆形描边图片
+ */
+@JvmOverloads
+fun ImageView.loadCircleBorder(@DrawableRes resId: Int, width: Int, height: Int, @FloatRange(from = 0.0) borderWidth: Float = 0F, borderColor: Int = Color.WHITE) {
+	Glide.with(this)
+		.load(resId)
+		.transform(CircleBorderCrop(borderWidth, borderColor))
+		.override(width, height)
+		.error(R.drawable.ic_load_failed)
+		.into(this)
 }
 
 /**

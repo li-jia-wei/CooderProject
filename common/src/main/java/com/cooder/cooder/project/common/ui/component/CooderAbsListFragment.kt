@@ -36,7 +36,7 @@ open class CooderAbsListFragment : CooderBaseFragment(), CooderRefresh.CooderRef
 	protected lateinit var refreshHeaderView: CooderTextOverView
 	protected lateinit var layoutManager: RecyclerView.LayoutManager
 	
-	private var pageIndex = 1
+	var pageIndex = 1
 	
 	companion object {
 		const val PREFETCH_SIZE = 5
@@ -64,7 +64,7 @@ open class CooderAbsListFragment : CooderBaseFragment(), CooderRefresh.CooderRef
 		recyclerView.adapter = adapter
 		
 		emptyView.visibility = View.GONE
-		emptyView.setIcon(R.string.ic_help)
+		emptyView.setIcon(R.string.ic_help, R.color.abs_list_empty)
 		emptyView.setDesc(R.string.abs_list_desc)
 		emptyView.setRefreshButton(R.string.abs_list_refresh)
 		emptyView.setOnRefreshListener {
@@ -86,7 +86,8 @@ open class CooderAbsListFragment : CooderBaseFragment(), CooderRefresh.CooderRef
 			refreshLayout.refreshFinished()
 			if (success) {
 				emptyView.visibility = View.GONE
-				adapter.removeAllItems()
+				adapter.removeAll()
+				
 				adapter.addItems(dataItems!!)
 			} else {
 				// 此时就需要判断列表上有没有数据，如果没有，显示出空页面状态
@@ -103,6 +104,35 @@ open class CooderAbsListFragment : CooderBaseFragment(), CooderRefresh.CooderRef
 	}
 	
 	/**
+	 * 添加HeaderView
+	 */
+	fun addHeaderView(view: View) {
+		adapter.addHeaderView(view)
+	}
+	
+	/**
+	 * 添加多个HeaderView
+	 */
+	fun addHeaderViews(views: Collection<View>) {
+		adapter.addHeaderViews(views)
+	}
+	
+	/**
+	 * 添加FooterView
+	 */
+	fun addFooterView(view: View) {
+		adapter.addFooterView(view)
+		adapter.refreshAllItems()
+	}
+	
+	/**
+	 * 添加多个FooterView
+	 */
+	fun addFooterViews(views: Collection<View>) {
+		adapter.addFooterViews(views)
+	}
+	
+	/**
 	 * 开启加载更多
 	 */
 	fun enableLoadMore(callback: () -> Unit) {
@@ -116,13 +146,12 @@ open class CooderAbsListFragment : CooderBaseFragment(), CooderRefresh.CooderRef
 			pageIndex++
 			callback.invoke()
 		}
-		return
 	}
 	
 	/**
 	 * 关闭加载更多
 	 */
-	fun disableLoadMore() {
+	private fun disableLoadMore() {
 		recyclerView.disableLoadMore()
 	}
 	

@@ -13,8 +13,8 @@ data class TabCategory(
  * 主页模型
  */
 data class HomeModel(
-	val homeBannerList: List<HomeBanner>?,
-	val homeGoodsList: List<HomeGoods>?,
+	val bannerList: List<HomeBanner>?,
+	val goodsList: List<HomeGoods>?,
 	val subcategoryList: List<Subcategory>?
 )
 
@@ -43,7 +43,7 @@ data class HomeGoods(
 	val goodsName: String,
 	val groupPrice: String,
 	val hot: Boolean,
-	val joinedAvatars: Any,
+	val joinedAvatars: List<SliderImage>?,
 	val marketPrice: String,
 	val sliderImage: String,
 	val sliderImages: List<SliderImage>,

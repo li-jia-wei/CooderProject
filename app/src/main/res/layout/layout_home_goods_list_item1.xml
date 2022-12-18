@@ -11,10 +11,10 @@
 		android:layout_width="@dimen/dp_110"
 		android:layout_height="@dimen/dp_110"
 		android:layout_marginStart="@dimen/dp_10"
-		android:background="@drawable/shape_view"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent" />
+		app:layout_constraintTop_toTopOf="parent"
+		tools:background="@drawable/shape_view" />
 	
 	<TextView
 		android:id="@+id/item_title"
@@ -74,6 +74,7 @@
 		tools:text="已拼1000件" />
 	
 	<View
+		android:id="@+id/item_line"
 		android:layout_width="0dp"
 		android:layout_height="@dimen/dp_1"
 		android:layout_marginHorizontal="@dimen/dp_10"

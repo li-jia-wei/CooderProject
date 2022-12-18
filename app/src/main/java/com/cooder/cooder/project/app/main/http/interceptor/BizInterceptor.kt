@@ -26,7 +26,6 @@ class BizInterceptor : CooderInterceptor {
 	}
 	
 	override fun responseIntercept(chain: CooderInterceptor.ResponseChain): Boolean {
-		CooderLog.i(chain.response().rawData)
 		return false
 	}
 }

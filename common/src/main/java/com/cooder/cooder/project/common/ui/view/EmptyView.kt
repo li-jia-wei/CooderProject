@@ -9,8 +9,10 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import com.cooder.cooder.project.common.R
 
 /**
@@ -61,9 +63,13 @@ class EmptyView @JvmOverloads constructor(
 	/**
 	 * 设置图标字体
 	 */
-	fun setIcon(@StringRes resId: Int) {
+	@JvmOverloads
+	fun setIcon(@StringRes resId: Int, @ColorRes colorId: Int = -1) {
 		this.iconView.setText(resId)
 		this.iconView.visibility = View.VISIBLE
+		if (colorId != -1) {
+			this.iconView.setTextColor(ContextCompat.getColor(context, colorId))
+		}
 		this.imageView.visibility = View.GONE
 	}
 	
