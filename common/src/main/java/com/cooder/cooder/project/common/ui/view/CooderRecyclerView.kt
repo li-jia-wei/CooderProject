@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.cooder.cooder.library.log.CooderLog
-import com.cooder.cooder.library.util.dp
 import com.cooder.cooder.project.common.R
 import com.cooder.cooder.ui.item.CooderAdapter
 
@@ -116,7 +115,7 @@ class CooderRecyclerView @JvmOverloads constructor(
 			if (footerView == null) {
 				footerView = LayoutInflater.from(context).inflate(R.layout.layout_footer_loading, this@CooderRecyclerView, false)
 				val params = footerView!!.layoutParams as LayoutParams
-				params.bottomMargin = 52.dp.toInt()
+//				params.bottomMargin = 52.dp.toInt()
 				footerView!!.layoutParams = params
 			}
 			return footerView!!

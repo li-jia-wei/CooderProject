@@ -2,7 +2,9 @@ package com.cooder.cooder.project.app.main
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import com.cooder.cooder.library.util.CooderStatusBar
 import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.app.main.logic.MainActivityLogic
 import com.cooder.cooder.project.app.main.logic.MainActivityLogic.ActivityProvider
@@ -26,6 +28,9 @@ class MainActivity : CooderBaseActivity(), ActivityProvider {
 		setContentView(R.layout.activity_main)
 		
 		activityLogic = MainActivityLogic(this, savedInstanceState)
+		
+		// 设置状态栏
+		CooderStatusBar.setStatusBar(this, true, Color.WHITE)
 	}
 	
 	override fun getContext(): Context {

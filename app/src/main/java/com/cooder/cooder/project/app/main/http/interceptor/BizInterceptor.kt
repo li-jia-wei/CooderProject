@@ -22,6 +22,7 @@ class BizInterceptor : CooderInterceptor {
 		request.addHeader("auth-token", "MTU5Mjg1MDg3NDcwNw11.26==")
 		val boardingPass = PreferencesUtil.getString("boarding-pass", "")
 		request.addHeader("boarding-pass", boardingPass!!)
+		CooderLog.i("request: ${request.getCompleteUrl()}")
 		return false
 	}
 	

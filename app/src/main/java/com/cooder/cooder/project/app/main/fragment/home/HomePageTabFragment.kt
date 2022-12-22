@@ -1,11 +1,14 @@
 package com.cooder.cooder.project.app.main.fragment.home
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cooder.cooder.library.restful.CooderCallback
 import com.cooder.cooder.library.restful.CooderResponse
+import com.cooder.cooder.library.util.dp
+import com.cooder.cooder.project.app.main.MainActivity
 import com.cooder.cooder.project.app.main.http.ApiFactory
 import com.cooder.cooder.project.app.main.http.api.HomeApi
 import com.cooder.cooder.project.app.main.model.HomeModel
@@ -97,17 +100,18 @@ class HomePageTabFragment private constructor() : CooderAbsListFragment() {
 			dataItems += GoodsItem(it, categoryId == DEFAULT_HOT_TAB_CATEGORY_ID)
 		}
 		finishRefresh(dataItems)
+		fixTabBottomPadding()
 	}
-//
-//	/**
-//	 * 修复底部Padding
-//	 */
-//	private fun fixTabBottomPadding() {
-//		val bottomView = View(context)
-//		bottomView.setBackgroundColor(Color.TRANSPARENT)
-//		val height = (requireActivity() as MainActivity).getTabBottomLayoutHeight()
-//		val params = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, height.dp.toInt())
-//		bottomView.layoutParams = params
-//		adapter.addFooterView(bottomView)
-//	}
+	
+	/**
+	 * 修复底部Padding
+	 */
+	private fun fixTabBottomPadding() {
+		val bottomView = View(context)
+		bottomView.setBackgroundColor(Color.TRANSPARENT)
+		val height = (requireActivity() as MainActivity).getTabBottomLayoutHeight()
+		val params = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, height.dp.toInt())
+		bottomView.layoutParams = params
+		adapter.setBottomView(bottomView)
+	}
 }

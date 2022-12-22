@@ -2,6 +2,7 @@ package com.cooder.cooder.project.app.main.biz
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -10,6 +11,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.cooder.cooder.library.log.CooderLog
 import com.cooder.cooder.library.restful.CooderCallback
 import com.cooder.cooder.library.restful.CooderResponse
+import com.cooder.cooder.library.util.CooderStatusBar
 import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.app.main.http.ApiFactory
 import com.cooder.cooder.project.app.main.http.api.AccountApi
@@ -38,6 +40,8 @@ class LoginActivity : CooderBaseActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_login)
+		
+		CooderStatusBar.setStatusBar(this, true, Color.WHITE)
 		
 		val actionBack: IconFontTextView = findViewById(R.id.action_back)
 		actionBack.setOnClickListener {

@@ -1,7 +1,10 @@
 package com.cooder.cooder.project.common.ui.component
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.CallSuper
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +18,7 @@ import com.cooder.cooder.ui.refresh.CooderRefresh
 import com.cooder.cooder.ui.refresh.CooderRefreshLayout
 import com.cooder.cooder.ui.refresh.overview.CooderOverView
 import com.cooder.cooder.ui.refresh.overview.CooderTextOverView
+import java.util.concurrent.Executors
 
 /**
  * 项目：CooderProject
@@ -36,10 +40,30 @@ open class CooderAbsListFragment : CooderBaseFragment(), CooderRefresh.CooderRef
 	protected lateinit var refreshHeaderView: CooderTextOverView
 	protected lateinit var layoutManager: RecyclerView.LayoutManager
 	
-	var pageIndex = 1
+	private val executor = Executors.newCachedThreadPool()
+	private val handler = Handler(Looper.myLooper()!!)
+	
+	private var refreshFailedDuration = 500L
+	private var loadFailedDuration = 500L
+	
+	protected var pageIndex = 1
 	
 	companion object {
 		const val PREFETCH_SIZE = 5
+	}
+	
+	/**
+	 * 设置下拉刷新失败持续时间
+	 */
+	protected fun setRefreshFailedDuration(duration: Long) {
+		this.refreshFailedDuration = duration
+	}
+	
+	/**
+	 * 设置上拉加载失败持续时间
+	 */
+	protected fun setLoadFailedDuration(duration: Long) {
+		this.loadFailedDuration = duration
 	}
 	
 	override fun getLayoutId(): Int {
@@ -83,23 +107,44 @@ open class CooderAbsListFragment : CooderBaseFragment(), CooderRefresh.CooderRef
 		val refresh = pageIndex == 1
 		if (refresh) {
 			loadingView.visibility = View.GONE
-			refreshLayout.refreshFinished()
 			if (success) {
+				refreshLayout.refreshFinished()
 				emptyView.visibility = View.GONE
 				adapter.removeAll()
-				
 				adapter.addItems(dataItems!!)
 			} else {
-				// 此时就需要判断列表上有没有数据，如果没有，显示出空页面状态
-				if (adapter.itemCount <= 0) {
-					emptyView.visibility = View.VISIBLE
+				// 延迟0.5s，显示empty视图
+				delayInvoke(refreshFailedDuration) {
+					refreshLayout.refreshFinished()
+					Toast.makeText(requireContext(), R.string.abs_list_refresh_failure, Toast.LENGTH_SHORT).show()
+					if (adapter.isEmpty()) {
+						emptyView.visibility = View.VISIBLE
+					}
 				}
 			}
 		} else {
 			if (success) {
 				adapter.addItems(dataItems!!)
+				recyclerView.loadFinished(true)
+			} else {
+				// 延迟0.5s
+				delayInvoke(loadFailedDuration) {
+					recyclerView.loadFinished(false)
+					Toast.makeText(requireContext(), R.string.abs_list_load_failure, Toast.LENGTH_SHORT).show()
+				}
 			}
-			recyclerView.loadFinished(success)
+		}
+	}
+	
+	/**
+	 * 延迟调用
+	 */
+	private fun delayInvoke(duration: Long, callback: () -> Unit) {
+		executor.execute {
+			Thread.sleep(duration)
+			handler.post {
+				callback.invoke()
+			}
 		}
 	}
 	

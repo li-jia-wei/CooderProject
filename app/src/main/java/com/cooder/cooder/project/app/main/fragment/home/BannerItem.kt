@@ -46,7 +46,7 @@ class BannerItem(
 	override fun getItemView(parent: ViewGroup): View {
 		val context = parent.context
 		val banner = CooderBanner(context)
-		val params = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, 160.dp.toInt())
+		val params = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, 170.dp.toInt())
 		params.bottomMargin = 14.dp.toInt()
 		banner.setBackgroundColor(Color.WHITE)
 		banner.layoutParams = params
