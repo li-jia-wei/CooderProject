@@ -4,11 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import com.cooder.cooder.library.util.CooderStatusBar
+import com.cooder.cooder.library.util.setStatusBar
 import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.app.main.logic.MainActivityLogic
 import com.cooder.cooder.project.app.main.logic.MainActivityLogic.ActivityProvider
-import com.cooder.cooder.project.common.ui.component.CooderBaseActivity
+import com.cooder.cooder.project.common.ui.component.CoBaseActivity
 
 /**
  * 项目：CooderProject
@@ -19,7 +19,7 @@ import com.cooder.cooder.project.common.ui.component.CooderBaseActivity
  *
  * 介绍：MainActivity
  */
-class MainActivity : CooderBaseActivity(), ActivityProvider {
+class MainActivity : CoBaseActivity(), ActivityProvider {
 	
 	private lateinit var activityLogic: MainActivityLogic
 	
@@ -30,7 +30,7 @@ class MainActivity : CooderBaseActivity(), ActivityProvider {
 		activityLogic = MainActivityLogic(this, savedInstanceState)
 		
 		// 设置状态栏
-		CooderStatusBar.setStatusBar(this, true, Color.WHITE)
+		setStatusBar(true, Color.WHITE)
 	}
 	
 	override fun getContext(): Context {

@@ -14,15 +14,15 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 
 /**
- * 项目名称：CooderProject
+ * 项目：CooderProject
  *
- * 作者姓名：李佳伟
+ * 作者：李佳伟
  *
- * 创建时间：2022/10/3 14:16
+ * 创建：2022/10/3 14:16
  *
- * 文件介绍：CooderBaseActivity
+ * 介绍：CoBaseActivity
  */
-open class CooderBaseActivity : AppCompatActivity(), CooderBaseActionInterface {
+open class CoBaseActivity : AppCompatActivity(), CoBaseActionInterface {
 	
 	private var onBackInvokedCallback: OnBackInvokedCallback? = null
 	

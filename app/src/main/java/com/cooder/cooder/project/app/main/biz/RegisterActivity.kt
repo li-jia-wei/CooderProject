@@ -4,14 +4,14 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.cooder.cooder.library.restful.CooderCallback
-import com.cooder.cooder.library.restful.CooderResponse
-import com.cooder.cooder.library.util.CooderStatusBar
+import com.cooder.cooder.library.restful.CoCallback
+import com.cooder.cooder.library.restful.CoResponse
+import com.cooder.cooder.library.util.setStatusBar
 import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.app.main.http.ApiFactory
 import com.cooder.cooder.project.app.main.http.api.AccountApi
 import com.cooder.cooder.project.app.main.route.RoutePath
-import com.cooder.cooder.project.common.ui.component.CooderBaseActivity
+import com.cooder.cooder.project.common.ui.component.CoBaseActivity
 import com.cooder.cooder.project.common.ui.view.IconFontTextView
 import com.cooder.cooder.project.common.ui.view.input.InputItemLayout
 import com.google.android.material.button.MaterialButton
@@ -26,13 +26,13 @@ import com.google.android.material.button.MaterialButton
  * 介绍：RegisterActivity
  */
 @Route(path = RoutePath.ACTIVITY_ACCOUNT_REGISTER)
-class RegisterActivity : CooderBaseActivity() {
+class RegisterActivity : CoBaseActivity() {
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_register)
 		
-		CooderStatusBar.setStatusBar(this, true, Color.WHITE)
+		setStatusBar(true, Color.WHITE)
 		
 		val actionBack: IconFontTextView = findViewById(R.id.action_back)
 		actionBack.setOnClickListener {
@@ -78,8 +78,8 @@ class RegisterActivity : CooderBaseActivity() {
 			inputItemConfirmPassword.setText("")
 			return
 		}
-		ApiFactory.create(AccountApi::class.java).register(username, password, moocId, courseOrderId).enqueue(object : CooderCallback<String> {
-			override fun onSuccess(response: CooderResponse<String>) {
+		ApiFactory.create(AccountApi::class.java).register(username, password, moocId, courseOrderId).enqueue(object : CoCallback<String> {
+			override fun onSuccess(response: CoResponse<String>) {
 				if (response.isSuccess()) {
 					// 注册成功
 					val intent = Intent()

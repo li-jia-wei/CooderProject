@@ -8,11 +8,11 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.cooder.cooder.library.util.dp
+import com.cooder.cooder.library.util.expends.dpInt
 import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.app.main.model.HomeGoods
 import com.cooder.cooder.project.common.ui.view.expends.loadCorner
-import com.cooder.cooder.ui.item.CooderDataItem
+import com.cooder.cooder.ui.item.CoDataItem
 
 /**
  * 项目：CooderProject
@@ -26,7 +26,7 @@ import com.cooder.cooder.ui.item.CooderDataItem
 class GoodsItem(
 	goods: HomeGoods,
 	private val hotTab: Boolean
-) : CooderDataItem<HomeGoods, RecyclerView.ViewHolder>(goods) {
+) : CoDataItem<HomeGoods, RecyclerView.ViewHolder>(goods) {
 	
 	companion object {
 		private const val IMAGE_CORNER = 10
@@ -66,10 +66,10 @@ class GoodsItem(
 			labelContainer.visibility = View.GONE
 		}
 		if (!hotTab) {
-			val margin = 2.dp.toInt()
+			val margin = 2.dpInt
 			val param = holder.itemView.layoutParams as RecyclerView.LayoutParams
-			val parentLeft = cooderAdapter?.getAttachRecyclerView()?.left ?: 0
-			val parentPaddingLeft = cooderAdapter?.getAttachRecyclerView()?.paddingLeft ?: 0
+			val parentLeft = coAdapter?.getAttachRecyclerView()?.left ?: 0
+			val parentPaddingLeft = coAdapter?.getAttachRecyclerView()?.paddingLeft ?: 0
 			val itemLeft = holder.itemView.left
 			if (itemLeft == parentLeft + parentPaddingLeft) {   // 处于列表左边
 				param.rightMargin = margin
@@ -97,9 +97,9 @@ class GoodsItem(
 		labelView.textSize = 9F
 		labelView.gravity = Gravity.CENTER
 		labelView.setBackgroundResource(R.drawable.shape_goods_label)
-		val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 14.dp.toInt())
+		val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 14.dpInt)
 		if (hasStartMargin) {
-			params.marginStart = 5.dp.toInt()
+			params.marginStart = 5.dpInt
 		}
 		labelView.layoutParams = params
 		return labelView

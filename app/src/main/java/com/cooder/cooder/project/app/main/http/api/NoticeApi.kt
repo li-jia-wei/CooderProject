@@ -1,6 +1,6 @@
 package com.cooder.cooder.project.app.main.http.api
 
-import com.cooder.cooder.library.restful.CooderCall
+import com.cooder.cooder.library.restful.CoCall
 import com.cooder.cooder.library.restful.annotation.GET
 import com.cooder.cooder.project.app.main.model.CourseNotice
 
@@ -19,5 +19,5 @@ interface NoticeApi : Api {
 	 * 获取通知列表
 	 */
 	@GET("notice")
-	fun notice(): CooderCall<CourseNotice>
+	fun notice(): CoCall<CourseNotice>
 }

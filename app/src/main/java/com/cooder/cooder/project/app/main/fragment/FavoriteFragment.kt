@@ -1,18 +1,18 @@
 package com.cooder.cooder.project.app.main.fragment
 
 import com.cooder.cooder.project.app.R
-import com.cooder.cooder.project.common.ui.component.CooderBaseFragment
+import com.cooder.cooder.project.common.ui.component.CoBaseFragment
 
 /**
- * 项目名称：CooderProject
+ * 项目：CooderProject
  *
- * 作者姓名：李佳伟
+ * 作者：李佳伟
  *
- * 创建时间：2022/10/4 15:38
+ * 创建：2022/10/4 15:38
  *
- * 文件介绍：喜欢Fragment
+ * 介绍：喜欢Fragment
  */
-class FavoriteFragment : CooderBaseFragment() {
+class FavoriteFragment : CoBaseFragment() {
 	
 	override fun getLayoutId(): Int {
 		return R.layout.fragment_favorite

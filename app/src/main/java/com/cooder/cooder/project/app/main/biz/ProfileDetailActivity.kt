@@ -3,7 +3,7 @@ package com.cooder.cooder.project.app.main.biz
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.cooder.cooder.project.app.main.route.RouteFlag
 import com.cooder.cooder.project.app.main.route.RoutePath
-import com.cooder.cooder.project.common.ui.component.CooderBaseActivity
+import com.cooder.cooder.project.common.ui.component.CoBaseActivity
 
 /**
  * 项目：CooderProject
@@ -15,6 +15,6 @@ import com.cooder.cooder.project.common.ui.component.CooderBaseActivity
  * 介绍：ProfileDetailActivity
  */
 @Route(path = RoutePath.ACTIVITY_PROFILE_DETAIL, extras = RouteFlag.FLAG_LOGIN or RouteFlag.FLAG_VIP)
-class ProfileDetailActivity : CooderBaseActivity() {
+class ProfileDetailActivity : CoBaseActivity() {
 
 }

@@ -7,9 +7,9 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.cooder.cooder.library.log.CooderLog
+import com.cooder.cooder.library.log.CoLog
 import com.cooder.cooder.project.common.R
-import com.cooder.cooder.ui.item.CooderAdapter
+import com.cooder.cooder.ui.item.CoAdapter
 
 /**
  * 项目：CooderProject
@@ -18,11 +18,11 @@ import com.cooder.cooder.ui.item.CooderAdapter
  *
  * 创建：2022/12/4 06:35
  *
- * 介绍：CooderRecyclerView
+ * 介绍：CoRecyclerView
  */
-class CooderRecyclerView @JvmOverloads constructor(
-	context: Context, attributeSet: AttributeSet? = null, defStyleAttr: Int = 0
-) : RecyclerView(context, attributeSet, defStyleAttr) {
+class CoRecyclerView @JvmOverloads constructor(
+	context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : RecyclerView(context, attrs, defStyleAttr) {
 	
 	private var isLoadingMore = false
 	private var footerView: View? = null
@@ -44,11 +44,10 @@ class CooderRecyclerView @JvmOverloads constructor(
 	 * 向下滑动，加载更多监听
 	 */
 	inner class LoadMoreScrollListener(
-		private val prefetchSize: Int,
-		private val callback: () -> Unit
+		private val prefetchSize: Int, private val callback: () -> Unit
 	) : OnScrollListener() {
 		
-		val cooderAdapter = adapter as CooderAdapter
+		val coAdapter = adapter as CoAdapter
 		
 		override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
 			// 根据当前的华东状态，决定要不要添加FooterView，要不要执行上拉加载分页动作
@@ -56,7 +55,7 @@ class CooderRecyclerView @JvmOverloads constructor(
 				return
 			}
 			
-			val totalItemCount = cooderAdapter.itemCount
+			val totalItemCount = coAdapter.itemCount
 			if (totalItemCount <= 0) {
 				return
 			}
@@ -101,10 +100,10 @@ class CooderRecyclerView @JvmOverloads constructor(
 			// 避免在addFooterView时还没有从RecyclerView上remove掉，导致出现Add view must call remove view from it parent first exception! 的异常
 			if (footerView.parent != null) {
 				footerView.post {
-					cooderAdapter.addFooterView(footerView)
+					coAdapter.addFooterView(footerView)
 				}
 			} else {
-				cooderAdapter.addFooterView(footerView)
+				coAdapter.addFooterView(footerView)
 			}
 		}
 		
@@ -113,7 +112,7 @@ class CooderRecyclerView @JvmOverloads constructor(
 		 */
 		private fun getFooterView(): View {
 			if (footerView == null) {
-				footerView = LayoutInflater.from(context).inflate(R.layout.layout_footer_loading, this@CooderRecyclerView, false)
+				footerView = LayoutInflater.from(context).inflate(R.layout.layout_footer_loading, this@CoRecyclerView, false)
 				val params = footerView!!.layoutParams as LayoutParams
 //				params.bottomMargin = 52.dp.toInt()
 				footerView!!.layoutParams = params
@@ -156,8 +155,8 @@ class CooderRecyclerView @JvmOverloads constructor(
 	 * 开启加载更多功能
 	 */
 	fun enableLoadMore(prefetchSize: Int, callback: () -> Unit) {
-		if (adapter !is CooderAdapter) {
-			CooderLog.e("enableLoadMore must use CooderAdapter!")
+		if (adapter !is CoAdapter) {
+			CoLog.e("enableLoadMore must use CoAdapter!")
 			return
 		}
 		loadMoreScrollListener?.let {
@@ -171,14 +170,14 @@ class CooderRecyclerView @JvmOverloads constructor(
 	 * 关闭加载更多功能
 	 */
 	fun disableLoadMore() {
-		if (adapter !is CooderAdapter) {
-			CooderLog.e("disableLoadMore must use CooderAdapter!")
+		if (adapter !is CoAdapter) {
+			CoLog.e("disableLoadMore must use CoAdapter!")
 			return
 		}
-		val cooderAdapter = adapter as CooderAdapter
+		val coAdapter = adapter as CoAdapter
 		footerView?.let {
 			if (footerView!!.parent != null) {
-				cooderAdapter.removeFooterView(footerView!!)
+				coAdapter.removeFooterView(footerView!!)
 			}
 		}
 		loadMoreScrollListener?.let {
@@ -200,16 +199,16 @@ class CooderRecyclerView @JvmOverloads constructor(
 	 * 加载完成
 	 */
 	fun loadFinished(success: Boolean) {
-		if (adapter !is CooderAdapter) {
-			CooderLog.e("loadFinished must use CooderAdapter!")
+		if (adapter !is CoAdapter) {
+			CoLog.e("loadFinished must use CoAdapter!")
 			return
 		}
 		isLoadingMore = false
-		val cooderAdapter = adapter as CooderAdapter
+		val coAdapter = adapter as CoAdapter
 		if (!success) {
 			footerView?.let {
 				if (footerView!!.parent != null) {
-					cooderAdapter.removeFooterView(footerView!!)
+					coAdapter.removeFooterView(footerView!!)
 				}
 			}
 		}

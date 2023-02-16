@@ -7,12 +7,12 @@
 	android:background="@color/background"
 	android:orientation="vertical"
 	tools:context=".main.biz.LoginActivity">
-
+	
 	<RelativeLayout
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/dp_45"
 		android:background="@color/white">
-
+		
 		<com.cooder.cooder.project.common.ui.view.IconFontTextView
 			android:id="@+id/action_back"
 			android:layout_width="@dimen/dp_45"
@@ -23,7 +23,7 @@
 			android:text="@string/ic_arrow_left"
 			android:textSize="@dimen/sp_30"
 			app:typeface="@string/ic_alibaba_path" />
-
+		
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="match_parent"
@@ -32,7 +32,7 @@
 			android:text="@string/login_title"
 			android:textColor="@color/black"
 			android:textSize="@dimen/sp_16" />
-
+		
 		<TextView
 			android:id="@+id/action_register"
 			android:layout_width="wrap_content"
@@ -44,14 +44,14 @@
 			android:text="@string/login_register"
 			android:textColor="@color/blue"
 			android:textSize="@dimen/sp_16" />
-
+	
 	</RelativeLayout>
-
+	
 	<View
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/dp_0.5"
 		android:background="@color/lighter_gray" />
-
+	
 	<com.cooder.cooder.project.common.ui.view.input.InputItemLayout
 		android:id="@+id/input_item_username"
 		android:layout_width="match_parent"
@@ -67,7 +67,7 @@
 		app:title="@string/login_username"
 		app:titleTextAppearance="@style/TitleTextAppearance"
 		app:topLineAppearance="@style/LineAppearance" />
-
+	
 	<com.cooder.cooder.project.common.ui.view.input.InputItemLayout
 		android:id="@+id/input_item_password"
 		android:layout_width="match_parent"
@@ -81,7 +81,7 @@
 		app:text="123456"
 		app:title="@string/login_password"
 		app:titleTextAppearance="@style/TitleTextAppearance" />
-
+	
 	<com.google.android.material.button.MaterialButton
 		android:id="@+id/action_login"
 		android:layout_width="match_parent"
@@ -92,7 +92,7 @@
 		android:textColor="@color/white"
 		android:textSize="@dimen/sp_16"
 		app:cornerRadius="@dimen/dp_6" />
-
+	
 	<TextView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"

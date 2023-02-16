@@ -7,7 +7,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.core.view.setPadding
 import androidx.core.widget.addTextChangedListener
-import com.cooder.cooder.library.util.dp
+import com.cooder.cooder.library.util.expends.dp
 import com.cooder.cooder.project.common.R
 import com.cooder.cooder.project.common.ui.view.IconFontTextView
 import java.util.regex.Pattern
@@ -22,9 +22,7 @@ import java.util.regex.Pattern
  * 介绍：密码安全处理
  */
 internal class PasswordSecurityProcessor(
-	private val context: Context,
-	private val viewGroup: ViewGroup,
-	private val editText: EditText
+	private val context: Context, private val viewGroup: ViewGroup, private val editText: EditText
 ) : PasswordProcessor(context, viewGroup, editText) {
 	
 	private val patternDigit = Pattern.compile("[0-9]")

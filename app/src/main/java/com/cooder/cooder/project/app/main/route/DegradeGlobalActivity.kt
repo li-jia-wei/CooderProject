@@ -5,7 +5,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.cooder.cooder.project.app.R
-import com.cooder.cooder.project.common.ui.component.CooderBaseActivity
+import com.cooder.cooder.project.common.ui.component.CoBaseActivity
 import com.cooder.cooder.project.common.ui.view.EmptyView
 import com.cooder.cooder.project.common.ui.view.IconFontTextView
 
@@ -19,7 +19,7 @@ import com.cooder.cooder.project.common.ui.view.IconFontTextView
  * 介绍：DegradeGlobalActivity
  */
 @Route(path = RoutePath.ACTIVITY_DEGRADE_GLOBAL)
-class DegradeGlobalActivity : CooderBaseActivity() {
+class DegradeGlobalActivity : CoBaseActivity() {
 	
 	companion object {
 		const val DEGRADE_TITLE = "degradeTitle"
@@ -53,7 +53,7 @@ class DegradeGlobalActivity : CooderBaseActivity() {
 		// 设置帮助页面
 		if (degradeAction != null) {
 			emptyView.setOnClickHelpActionListener {
-				CooderRoute.startActivityForBrowser(degradeAction)
+				CoRoute.startActivityForBrowser(degradeAction)
 			}
 		}
 		// 设置刷新点击事件

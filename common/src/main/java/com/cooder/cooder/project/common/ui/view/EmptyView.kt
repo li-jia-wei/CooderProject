@@ -26,9 +26,9 @@ import com.cooder.cooder.project.common.R
  */
 class EmptyView @JvmOverloads constructor(
 	context: Context,
-	attributeSet: AttributeSet? = null,
+	attrs: AttributeSet? = null,
 	defStyleAttr: Int = 0
-) : LinearLayout(context, attributeSet, defStyleAttr) {
+) : LinearLayout(context, attrs, defStyleAttr) {
 	
 	private val imageView: ImageView
 	private val iconView: IconFontTextView

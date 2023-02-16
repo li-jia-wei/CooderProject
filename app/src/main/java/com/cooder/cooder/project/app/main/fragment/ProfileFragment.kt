@@ -15,9 +15,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.launcher.ARouter
-import com.cooder.cooder.library.restful.CooderCallback
-import com.cooder.cooder.library.restful.CooderResponse
-import com.cooder.cooder.library.util.dp
+import com.cooder.cooder.library.restful.CoCallback
+import com.cooder.cooder.library.restful.CoResponse
+import com.cooder.cooder.library.util.expends.dpInt
 import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.app.main.http.ApiFactory
 import com.cooder.cooder.project.app.main.http.api.AccountApi
@@ -26,24 +26,24 @@ import com.cooder.cooder.project.app.main.http.interceptor.HttpCodeInterceptor
 import com.cooder.cooder.project.app.main.model.CourseNotice
 import com.cooder.cooder.project.app.main.model.Notice
 import com.cooder.cooder.project.app.main.model.UserProfile
-import com.cooder.cooder.project.app.main.route.CooderRoute
+import com.cooder.cooder.project.app.main.route.CoRoute
 import com.cooder.cooder.project.app.main.route.RoutePath
-import com.cooder.cooder.project.common.ui.component.CooderBaseFragment
+import com.cooder.cooder.project.common.ui.component.CoBaseFragment
 import com.cooder.cooder.project.common.ui.view.expends.loadCircle
 import com.cooder.cooder.project.common.ui.view.expends.loadCorner
-import com.cooder.cooder.ui.banner.CooderBanner
-import com.cooder.cooder.ui.banner.core.CooderBannerMo
+import com.cooder.cooder.ui.banner.CoBanner
+import com.cooder.cooder.ui.banner.core.CoBannerMo
 
 /**
- * 项目名称：CooderProject
+ * 项目：CooderProject
  *
- * 作者姓名：李佳伟
+ * 作者：李佳伟
  *
- * 创建时间：2022/10/3 23:47
+ * 创建：2022/10/3 23:47
  *
- * 文件介绍：配置Fragment
+ * 介绍：配置Fragment
  */
-class ProfileFragment : CooderBaseFragment() {
+class ProfileFragment : CoBaseFragment() {
 	
 	private companion object {
 		private const val REQUEST_CODE_LOGIN_PROFILE = 1001
@@ -59,7 +59,7 @@ class ProfileFragment : CooderBaseFragment() {
 	private lateinit var historyBrowsing: TextView
 	private lateinit var learnMinutes: TextView
 	
-	private lateinit var banner: CooderBanner
+	private lateinit var banner: CoBanner
 	
 	private lateinit var itemCourse: LinearLayout
 	private lateinit var itemCollect: LinearLayout
@@ -100,8 +100,8 @@ class ProfileFragment : CooderBaseFragment() {
 	 * 查询课程通知
 	 */
 	private fun queryCourseNotice() {
-		ApiFactory.create(NoticeApi::class.java, HttpCodeInterceptor::class.java).notice().enqueue(object : CooderCallback<CourseNotice> {
-			override fun onSuccess(response: CooderResponse<CourseNotice>) {
+		ApiFactory.create(NoticeApi::class.java, HttpCodeInterceptor::class.java).notice().enqueue(object : CoCallback<CourseNotice> {
+			override fun onSuccess(response: CoResponse<CourseNotice>) {
 				if (response.isSuccess()) {
 					val data = response.data
 					if (data != null) {
@@ -126,8 +126,8 @@ class ProfileFragment : CooderBaseFragment() {
 	 * 查询登录用户数据
 	 */
 	private fun queryLoginUserData() {
-		ApiFactory.create(AccountApi::class.java).profile().enqueue(object : CooderCallback<UserProfile> {
-			override fun onSuccess(response: CooderResponse<UserProfile>) {
+		ApiFactory.create(AccountApi::class.java).profile().enqueue(object : CoCallback<UserProfile> {
+			override fun onSuccess(response: CoResponse<UserProfile>) {
 				val data = response.data
 				if (response.isSuccess() && data != null) {
 					updateUI(data)
@@ -170,18 +170,18 @@ class ProfileFragment : CooderBaseFragment() {
 	 */
 	private fun updateBanner(bannerNoticeList: List<Notice>?) {
 		if (bannerNoticeList == null || bannerNoticeList.isEmpty()) return
-		val models = mutableListOf<CooderBannerMo>()
+		val models = mutableListOf<CoBannerMo>()
 		bannerNoticeList.forEach {
-			models += CooderBannerMo(it.cover)
+			models += CoBannerMo(it.cover)
 		}
 		banner.setBannerData(R.layout.layout_profile_banner, models)
-		banner.setBindAdapter { viewHolder, mo: CooderBannerMo, _: Int ->
+		banner.setBindAdapter { viewHolder, mo: CoBannerMo, _: Int ->
 			val imageView = viewHolder.findViewById<ImageView>(R.id.banner_item_image_view)
-			imageView.loadCorner(mo.url, BANNER_CORNER.dp.toInt())
+			imageView.loadCorner(mo.url, BANNER_CORNER.dpInt)
 		}
 		banner.setOnBannerClickListener { _, _, position ->
 			val url = bannerNoticeList[position].url
-			CooderRoute.startActivityForBrowser(url)
+			CoRoute.startActivityForBrowser(url)
 		}
 		banner.visibility = View.VISIBLE
 	}

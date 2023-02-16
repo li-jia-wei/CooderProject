@@ -17,7 +17,7 @@
 		android:textColor="@color/color_9fa"
 		android:textSize="@dimen/sp_14" />
 	
-	<com.cooder.cooder.ui.tab.top.CooderTabTopLayout
+	<com.cooder.cooder.ui.tab.top.CoTabTopLayout
 		android:id="@+id/tab_top_layout"
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/dp_45" />

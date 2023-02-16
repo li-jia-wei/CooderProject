@@ -19,12 +19,12 @@ import com.cooder.cooder.project.common.R
  */
 class IconFontTextView @JvmOverloads constructor(
 	context: Context,
-	attributeSet: AttributeSet? = null,
+	attrs: AttributeSet? = null,
 	defStyleAttr: Int = 0
-) : AppCompatTextView(context, attributeSet, defStyleAttr) {
+) : AppCompatTextView(context, attrs, defStyleAttr) {
 	
 	init {
-		val typedArray: TypedArray = context.obtainStyledAttributes(attributeSet, R.styleable.IconFontTextView)
+		val typedArray: TypedArray = context.obtainStyledAttributes(attrs, R.styleable.IconFontTextView)
 		var typefaceFilename = typedArray.getString(R.styleable.IconFontTextView_typeface)
 		if (typefaceFilename != null) {
 			if (!isFontFile(typefaceFilename)) {

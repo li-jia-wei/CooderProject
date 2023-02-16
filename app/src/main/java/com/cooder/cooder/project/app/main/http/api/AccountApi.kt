@@ -1,6 +1,6 @@
 package com.cooder.cooder.project.app.main.http.api
 
-import com.cooder.cooder.library.restful.CooderCall
+import com.cooder.cooder.library.restful.CoCall
 import com.cooder.cooder.library.restful.annotation.*
 import com.cooder.cooder.project.app.main.model.UserProfile
 
@@ -22,7 +22,7 @@ interface AccountApi : Api {
 	fun login(
 		@Filed("userName") username: String,    // 用户名
 		@Filed("password") password: String     // 密码
-	): CooderCall<String>
+	): CoCall<String>
 	
 	/**
 	 * 注册
@@ -33,11 +33,11 @@ interface AccountApi : Api {
 		@Filed("password") password: String,    // 密码
 		@Filed("imoocId") imoocId: String,      // 慕课ID
 		@Filed("orderId") orderId: String       // 课程编号
-	): CooderCall<String>
+	): CoCall<String>
 	
 	/**
 	 * 个人中心
 	 */
 	@GET("user/profile")
-	fun profile(): CooderCall<UserProfile>
+	fun profile(): CoCall<UserProfile>
 }

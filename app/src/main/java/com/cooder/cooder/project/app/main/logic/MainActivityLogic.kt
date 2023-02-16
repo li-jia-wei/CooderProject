@@ -10,32 +10,32 @@ import androidx.fragment.app.FragmentManager
 import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.app.main.fragment.*
 import com.cooder.cooder.project.app.main.fragment.home.HomePageFragment
-import com.cooder.cooder.project.common.tab.CooderFragmentTabView
-import com.cooder.cooder.project.common.tab.CooderTabViewAdapter
-import com.cooder.cooder.ui.tab.bottom.CooderTabBottomInfo
-import com.cooder.cooder.ui.tab.bottom.CooderTabBottomLayout
-import com.cooder.cooder.ui.tab.common.CooderTabLayout
+import com.cooder.cooder.project.common.tab.CoFragmentTabView
+import com.cooder.cooder.project.common.tab.CoTabViewAdapter
+import com.cooder.cooder.ui.tab.bottom.CoTabBottomInfo
+import com.cooder.cooder.ui.tab.bottom.CoTabBottomLayout
+import com.cooder.cooder.ui.tab.common.CoTabLayout
 
 /**
- * 项目名称：CooderProject
+ * 项目：CooderProject
  *
- * 作者姓名：李佳伟
+ * 作者：李佳伟
  *
- * 创建时间：2022/10/4 15:47
+ * 创建：2022/10/4 15:47
  *
- * 文件介绍：MainActivity逻辑层
+ * 介绍：MainActivity逻辑层
  */
 class MainActivityLogic(
 	private val activityProvider: ActivityProvider,
 	savedInstanceState: Bundle?
 ) {
-	lateinit var fragmentTabView: CooderFragmentTabView
+	lateinit var fragmentTabView: CoFragmentTabView
 		private set
 	
-	lateinit var tabBottomLayout: CooderTabBottomLayout
+	lateinit var tabBottomLayout: CoTabBottomLayout
 		private set
 	
-	val infoList: MutableList<CooderTabBottomInfo<*>> = ArrayList()
+	val infoList: MutableList<CoTabBottomInfo<*>> = ArrayList()
 	
 	/**
 	 * 当前页面索引
@@ -80,7 +80,7 @@ class MainActivityLogic(
 		val iconFont = "font/alibaba_iconfont.ttf"
 		
 		// 首页
-		val homePageInfo = CooderTabBottomInfo<Int>(
+		val homePageInfo = CoTabBottomInfo<Int>(
 			R.string.home_title,
 			iconFont,
 			R.string.home_icon_home,
@@ -92,7 +92,7 @@ class MainActivityLogic(
 		infoList += homePageInfo
 		
 		// 收藏
-		val favoriteInfo = CooderTabBottomInfo<Int>(
+		val favoriteInfo = CoTabBottomInfo<Int>(
 			R.string.favorite_title,
 			iconFont,
 			R.string.favorite_icon_collection,
@@ -104,7 +104,7 @@ class MainActivityLogic(
 		infoList += favoriteInfo
 		
 		// 分类
-		val categoryInfo = CooderTabBottomInfo<Int>(
+		val categoryInfo = CoTabBottomInfo<Int>(
 			R.string.category_title,
 			iconFont,
 			R.string.category_icon_category,
@@ -116,7 +116,7 @@ class MainActivityLogic(
 		infoList += categoryInfo
 		
 		// 推荐
-		val recommendInfo = CooderTabBottomInfo<Int>(
+		val recommendInfo = CoTabBottomInfo<Int>(
 			R.string.recommend_title,
 			iconFont,
 			R.string.recommend_icon_good,
@@ -128,7 +128,7 @@ class MainActivityLogic(
 		infoList += recommendInfo
 		
 		// 我的
-		val profileInfo = CooderTabBottomInfo<Int>(
+		val profileInfo = CoTabBottomInfo<Int>(
 			R.string.profile_title,
 			iconFont,
 			R.string.profile_icon_account,
@@ -140,12 +140,12 @@ class MainActivityLogic(
 		infoList += profileInfo
 		tabBottomLayout.inflateInfo(infoList)
 		// 初始化FragmentTabView
-		val tabViewAdapter = CooderTabViewAdapter(activityProvider.getSupportFragmentManager(), infoList)
+		val tabViewAdapter = CoTabViewAdapter(activityProvider.getSupportFragmentManager(), infoList)
 		fragmentTabView = activityProvider.findViewById(R.id.fragment_tab_view)
 		fragmentTabView.adapter = tabViewAdapter
 		
-		tabBottomLayout.addTabSelectedChangeListener(object : CooderTabLayout.OnTabSelectedListener<CooderTabBottomInfo<*>> {
-			override fun onTabSelectedChange(index: Int, prevInfo: CooderTabBottomInfo<*>?, nextInfo: CooderTabBottomInfo<*>) {
+		tabBottomLayout.addTabSelectedChangeListener(object : CoTabLayout.OnTabSelectedListener<CoTabBottomInfo<*>> {
+			override fun onTabSelectedChange(index: Int, prevInfo: CoTabBottomInfo<*>?, nextInfo: CoTabBottomInfo<*>) {
 				fragmentTabView.setCurrentItem(index)
 				currentItemIndex = index
 			}

@@ -56,6 +56,6 @@
 	<color name="color_9fa">#9FA3A4</color>
 	<color name="color_929">#929697</color>
 	
-	<!-- CooderAbsListFragment -->
+	<!-- CoAbsListFragment -->
 	<color name="abs_list_empty">@color/primary</color>
 </resources>

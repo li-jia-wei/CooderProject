@@ -13,8 +13,8 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.cooder.cooder.library.util.dp
-import com.cooder.cooder.library.util.sp
+import com.cooder.cooder.library.util.expends.dp
+import com.cooder.cooder.library.util.expends.sp
 import com.cooder.cooder.project.common.R
 import com.cooder.cooder.project.common.ui.view.input.processor.InputTypeProcessor
 import com.cooder.cooder.project.common.ui.view.input.processor.PasswordProcessor
@@ -31,8 +31,8 @@ import com.cooder.cooder.project.common.ui.view.input.watcher.*
  * 介绍：InputItemLayout
  */
 class InputItemLayout @JvmOverloads constructor(
-	context: Context, attributeSet: AttributeSet? = null, defStyleAttr: Int = 0
-) : LinearLayout(context, attributeSet, defStyleAttr) {
+	context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : LinearLayout(context, attrs, defStyleAttr) {
 	
 	private lateinit var editText: EditText
 	
@@ -68,7 +68,7 @@ class InputItemLayout @JvmOverloads constructor(
 		// 防止不执行onDraw方法
 		setWillNotDraw(false)
 		
-		val array = context.obtainStyledAttributes(attributeSet, R.styleable.InputItemLayout)
+		val array = context.obtainStyledAttributes(attrs, R.styleable.InputItemLayout)
 		
 		// 标题
 		val titleStyleId = array.getResourceId(R.styleable.InputItemLayout_titleTextAppearance, 0)
@@ -160,7 +160,7 @@ class InputItemLayout @JvmOverloads constructor(
 		editText.setTextColor(inputColor)
 		editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize.toFloat())
 		text.let { editText.setText(it) }
-		hint.let{ editText.hint = it }
+		hint.let { editText.hint = it }
 		editText.setBackgroundColor(Color.TRANSPARENT)
 		editText.gravity = Gravity.START or Gravity.CENTER_VERTICAL
 		editText.inputType = when (inputType) {

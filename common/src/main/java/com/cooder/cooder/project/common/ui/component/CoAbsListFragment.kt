@@ -10,14 +10,14 @@ import androidx.core.widget.ContentLoadingProgressBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cooder.cooder.project.common.R
-import com.cooder.cooder.project.common.ui.view.CooderRecyclerView
+import com.cooder.cooder.project.common.ui.view.CoRecyclerView
 import com.cooder.cooder.project.common.ui.view.EmptyView
-import com.cooder.cooder.ui.item.CooderAdapter
-import com.cooder.cooder.ui.item.CooderDataItem
-import com.cooder.cooder.ui.refresh.CooderRefresh
-import com.cooder.cooder.ui.refresh.CooderRefreshLayout
-import com.cooder.cooder.ui.refresh.overview.CooderOverView
-import com.cooder.cooder.ui.refresh.overview.CooderTextOverView
+import com.cooder.cooder.ui.item.CoAdapter
+import com.cooder.cooder.ui.item.CoDataItem
+import com.cooder.cooder.ui.refresh.CoRefresh
+import com.cooder.cooder.ui.refresh.CoRefreshLayout
+import com.cooder.cooder.ui.refresh.overview.CoOverView
+import com.cooder.cooder.ui.refresh.overview.CoTextOverView
 import java.util.concurrent.Executors
 
 /**
@@ -27,17 +27,17 @@ import java.util.concurrent.Executors
  *
  * 创建：2022/12/5 20:45
  *
- * 介绍：CooderAbsListFragment
+ * 介绍：CoAbsListFragment
  */
-open class CooderAbsListFragment : CooderBaseFragment(), CooderRefresh.CooderRefreshListener {
+open class CoAbsListFragment : CoBaseFragment(), CoRefresh.CoRefreshListener {
 	
-	protected lateinit var refreshLayout: CooderRefreshLayout
-	protected lateinit var recyclerView: CooderRecyclerView
+	protected lateinit var refreshLayout: CoRefreshLayout
+	protected lateinit var recyclerView: CoRecyclerView
 	protected lateinit var emptyView: EmptyView
 	protected lateinit var loadingView: ContentLoadingProgressBar
 	
-	protected lateinit var adapter: CooderAdapter
-	protected lateinit var refreshHeaderView: CooderTextOverView
+	protected lateinit var adapter: CoAdapter
+	protected lateinit var refreshHeaderView: CoTextOverView
 	protected lateinit var layoutManager: RecyclerView.LayoutManager
 	
 	private val executor = Executors.newCachedThreadPool()
@@ -78,11 +78,11 @@ open class CooderAbsListFragment : CooderBaseFragment(), CooderRefresh.CooderRef
 		this.emptyView = view.findViewById(R.id.empty_view)
 		this.loadingView = view.findViewById(R.id.content_loading)
 		
-		refreshHeaderView = CooderTextOverView(requireContext())
+		refreshHeaderView = CoTextOverView(requireContext())
 		refreshLayout.setRefreshOverView(refreshHeaderView)
 		refreshLayout.setRefreshListener(this)
 		layoutManager = createLayoutManager()
-		adapter = CooderAdapter(requireContext())
+		adapter = CoAdapter(requireContext())
 		
 		recyclerView.layoutManager = layoutManager
 		recyclerView.adapter = adapter
@@ -102,7 +102,7 @@ open class CooderAbsListFragment : CooderBaseFragment(), CooderRefresh.CooderRef
 	/**
 	 * 完成刷新
 	 */
-	fun finishRefresh(dataItems: List<CooderDataItem<*, out RecyclerView.ViewHolder>>?) {
+	fun finishRefresh(dataItems: List<CoDataItem<*, out RecyclerView.ViewHolder>>?) {
 		val success = dataItems != null && dataItems.isNotEmpty()
 		val refresh = pageIndex == 1
 		if (refresh) {
@@ -182,7 +182,7 @@ open class CooderAbsListFragment : CooderBaseFragment(), CooderRefresh.CooderRef
 	 */
 	fun enableLoadMore(callback: () -> Unit) {
 		recyclerView.enableLoadMore(PREFETCH_SIZE) {
-			if (refreshHeaderView.state == CooderOverView.CooderRefreshState.STATE_REFRESH) {
+			if (refreshHeaderView.state == CoOverView.CoRefreshState.STATE_REFRESH) {
 				// 正处于刷新状态
 				recyclerView.loadFinished(false)
 				@Suppress("LABEL_NAME_CLASH")

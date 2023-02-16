@@ -1,7 +1,7 @@
 package com.cooder.cooder.project.app.main.http
 
-import com.cooder.cooder.library.restful.CooderInterceptor
-import com.cooder.cooder.library.restful.CooderRestful
+import com.cooder.cooder.library.restful.CoInterceptor
+import com.cooder.cooder.library.restful.CoRestful
 import com.cooder.cooder.project.app.main.http.api.Api
 import com.cooder.cooder.project.app.main.http.interceptor.BizInterceptor
 import com.cooder.cooder.project.app.main.http.interceptor.HttpCodeInterceptor
@@ -23,7 +23,7 @@ object ApiFactory {
 	
 	private const val baseUrl = "http://api.devio.org/as/"
 	
-	private val cooderRestful = CooderRestful(baseUrl, RetrofitCallFactory(baseUrl))
+	private val cooderRestful = CoRestful(baseUrl, RetrofitCallFactory(baseUrl))
 	
 	init {
 		cooderRestful.addInterceptor(BizInterceptor())
@@ -35,7 +35,7 @@ object ApiFactory {
 	 * @param cancelInterceptors 不参与拦截的拦截器
 	 */
 	@JvmStatic
-	fun <T : Api> create(service: Class<T>, vararg cancelInterceptors: Class<out CooderInterceptor>): T {
+	fun <T : Api> create(service: Class<T>, vararg cancelInterceptors: Class<out CoInterceptor>): T {
 		return cooderRestful.create(service, cancelInterceptors)
 	}
 }

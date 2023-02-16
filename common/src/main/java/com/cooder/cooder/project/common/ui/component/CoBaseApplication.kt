@@ -4,15 +4,15 @@ import android.app.Application
 import androidx.annotation.CallSuper
 
 /**
- * 项目名称：CooderProject
+ * 项目：CooderProject
  *
- * 作者姓名：李佳伟
+ * 作者：李佳伟
  *
- * 创建时间：2022/10/3 14:17
+ * 创建：2022/10/3 14:17
  *
- * 文件介绍：CooderBaseApplication
+ * 介绍：CoBaseApplication
  */
-open class CooderBaseApplication : Application() {
+open class CoBaseApplication : Application() {
 	
 	@CallSuper
 	override fun onCreate() {

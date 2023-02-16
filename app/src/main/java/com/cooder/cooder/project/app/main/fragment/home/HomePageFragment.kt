@@ -7,28 +7,28 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.cooder.cooder.library.restful.CooderCallback
-import com.cooder.cooder.library.restful.CooderResponse
+import com.cooder.cooder.library.restful.CoCallback
+import com.cooder.cooder.library.restful.CoResponse
 import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.app.main.http.ApiFactory
 import com.cooder.cooder.project.app.main.http.api.CategoryApi
 import com.cooder.cooder.project.app.main.model.TabCategory
-import com.cooder.cooder.project.common.ui.component.CooderBaseFragment
-import com.cooder.cooder.ui.tab.top.CooderTabTopInfo
-import com.cooder.cooder.ui.tab.top.CooderTabTopLayout
+import com.cooder.cooder.project.common.ui.component.CoBaseFragment
+import com.cooder.cooder.ui.tab.top.CoTabTopInfo
+import com.cooder.cooder.ui.tab.top.CoTabTopLayout
 
 /**
- * 项目名称：CooderProject
+ * 项目：CooderProject
  *
- * 作者姓名：李佳伟
+ * 作者：李佳伟
  *
- * 创建时间：2022/10/3 23:40
+ * 创建：2022/10/3 23:40
  *
- * 文件介绍：主页Fragment
+ * 介绍：主页Fragment
  */
-class HomePageFragment : CooderBaseFragment() {
+class HomePageFragment : CoBaseFragment() {
 	
-	private lateinit var tabTopLayout: CooderTabTopLayout
+	private lateinit var tabTopLayout: CoTabTopLayout
 	private lateinit var viewPager: ViewPager
 	
 	private var tabTopSelectIndex = DEFAULT_TAB_TOP_SELECT_INDEX
@@ -56,8 +56,8 @@ class HomePageFragment : CooderBaseFragment() {
 	 * 查询顶部Tab
 	 */
 	private fun queryTabList() {
-		ApiFactory.create(CategoryApi::class.java).queryTab().enqueue(object : CooderCallback<List<TabCategory>> {
-			override fun onSuccess(response: CooderResponse<List<TabCategory>>) {
+		ApiFactory.create(CategoryApi::class.java).queryTab().enqueue(object : CoCallback<List<TabCategory>> {
+			override fun onSuccess(response: CoResponse<List<TabCategory>>) {
 				val data: List<TabCategory>? = response.data
 				if (response.isSuccess() && data != null) {
 					updateUI(data)
@@ -79,9 +79,9 @@ class HomePageFragment : CooderBaseFragment() {
 		if (!isAlive() || data.isEmpty()) return
 		val defaultColor = ContextCompat.getColor(requireContext(), R.color.home_tab_top_default)
 		val tintColor = ContextCompat.getColor(requireContext(), R.color.home_tab_top_tint)
-		val tabTopInfos = mutableListOf<CooderTabTopInfo<Int>>()
+		val tabTopInfos = mutableListOf<CoTabTopInfo<Int>>()
 		data.forEachIndexed { index, tabCategory ->
-			val tabTopInfo = CooderTabTopInfo(tabCategory.categoryName, defaultColor, tintColor)
+			val tabTopInfo = CoTabTopInfo(tabCategory.categoryName, defaultColor, tintColor)
 			tabTopInfos += tabTopInfo
 		}
 		tabTopLayout.inflateInfo(tabTopInfos)

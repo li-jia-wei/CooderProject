@@ -4,19 +4,19 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="vertical"
-	tools:context=".ui.component.CooderAbsListFragment">
+	tools:context=".ui.component.CoAbsListFragment">
 	
-	<com.cooder.cooder.ui.refresh.CooderRefreshLayout
+	<com.cooder.cooder.ui.refresh.CoRefreshLayout
 		android:id="@+id/refresh_layout"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
 		
-		<com.cooder.cooder.project.common.ui.view.CooderRecyclerView
+		<com.cooder.cooder.project.common.ui.view.CoRecyclerView
 			android:id="@+id/recycler_view"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent" />
 	
-	</com.cooder.cooder.ui.refresh.CooderRefreshLayout>
+	</com.cooder.cooder.ui.refresh.CoRefreshLayout>
 	
 	<com.cooder.cooder.project.common.ui.view.EmptyView
 		android:id="@+id/empty_view"

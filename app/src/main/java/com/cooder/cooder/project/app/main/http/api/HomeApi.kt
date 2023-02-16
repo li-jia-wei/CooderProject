@@ -1,6 +1,6 @@
 package com.cooder.cooder.project.app.main.http.api
 
-import com.cooder.cooder.library.restful.CooderCall
+import com.cooder.cooder.library.restful.CoCall
 import com.cooder.cooder.library.restful.annotation.Filed
 import com.cooder.cooder.library.restful.annotation.GET
 import com.cooder.cooder.library.restful.annotation.Path
@@ -25,5 +25,5 @@ interface HomeApi : Api {
 		@Path("categoryId") categoryId: String,
 		@Filed("pageIndex") pageIndex: Int,
 		@Filed("pageSize") pageSize: Int
-	): CooderCall<HomeModel>
+	): CoCall<HomeModel>
 }

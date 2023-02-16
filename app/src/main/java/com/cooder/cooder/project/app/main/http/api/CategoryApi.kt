@@ -1,6 +1,6 @@
 package com.cooder.cooder.project.app.main.http.api
 
-import com.cooder.cooder.library.restful.CooderCall
+import com.cooder.cooder.library.restful.CoCall
 import com.cooder.cooder.library.restful.annotation.GET
 import com.cooder.cooder.project.app.main.model.TabCategory
 
@@ -19,5 +19,5 @@ interface CategoryApi : Api {
 	 * 获取商品类别
 	 */
 	@GET("category/categories")
-	fun queryTab(): CooderCall<List<TabCategory>>
+	fun queryTab(): CoCall<List<TabCategory>>
 }

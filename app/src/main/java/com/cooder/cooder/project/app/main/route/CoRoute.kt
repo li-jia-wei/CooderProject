@@ -6,7 +6,7 @@ import android.widget.Toast
 import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.common.util.AppGlobals
 
-object CooderRoute {
+object CoRoute {
 	
 	/**
 	 * 通过网址启动浏览器

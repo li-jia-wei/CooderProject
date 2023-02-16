@@ -8,15 +8,15 @@ import android.widget.Button
 import android.widget.TextView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.cooder.cooder.library.log.CooderLog
-import com.cooder.cooder.library.restful.CooderCallback
-import com.cooder.cooder.library.restful.CooderResponse
-import com.cooder.cooder.library.util.CooderStatusBar
+import com.cooder.cooder.library.log.CoLog
+import com.cooder.cooder.library.restful.CoCallback
+import com.cooder.cooder.library.restful.CoResponse
+import com.cooder.cooder.library.util.setStatusBar
 import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.app.main.http.ApiFactory
 import com.cooder.cooder.project.app.main.http.api.AccountApi
 import com.cooder.cooder.project.app.main.route.RoutePath
-import com.cooder.cooder.project.common.ui.component.CooderBaseActivity
+import com.cooder.cooder.project.common.ui.component.CoBaseActivity
 import com.cooder.cooder.project.common.ui.view.IconFontTextView
 import com.cooder.cooder.project.common.ui.view.input.InputItemLayout
 import com.cooder.cooder.project.common.util.PreferencesUtil
@@ -31,7 +31,7 @@ import com.cooder.cooder.project.common.util.PreferencesUtil
  * 介绍：AuthenticationActivity
  */
 @Route(path = RoutePath.ACTIVITY_ACCOUNT_LOGIN)
-class LoginActivity : CooderBaseActivity() {
+class LoginActivity : CoBaseActivity() {
 	
 	private companion object {
 		private const val REQUEST_CODE_REGISTER = 1000
@@ -40,8 +40,7 @@ class LoginActivity : CooderBaseActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_login)
-		
-		CooderStatusBar.setStatusBar(this, true, Color.WHITE)
+		setStatusBar(true, Color.WHITE)
 		
 		val actionBack: IconFontTextView = findViewById(R.id.action_back)
 		actionBack.setOnClickListener {
@@ -72,8 +71,8 @@ class LoginActivity : CooderBaseActivity() {
 			showToast(R.string.login_please_input_password)
 			return
 		}
-		ApiFactory.create(AccountApi::class.java).login(username, password).enqueue(object : CooderCallback<String> {
-			override fun onSuccess(response: CooderResponse<String>) {
+		ApiFactory.create(AccountApi::class.java).login(username, password).enqueue(object : CoCallback<String> {
+			override fun onSuccess(response: CoResponse<String>) {
 				if (response.isSuccess()) {
 					showToast(R.string.login_success)
 					val data: String? = response.data
@@ -89,7 +88,7 @@ class LoginActivity : CooderBaseActivity() {
 			}
 			
 			override fun onFailed(throwable: Throwable) {
-				CooderLog.e(throwable.message)
+				CoLog.e(throwable.message)
 				showToast(getString(R.string.login_failure, throwable.message))
 				inputItemPassword.setText("")
 			}

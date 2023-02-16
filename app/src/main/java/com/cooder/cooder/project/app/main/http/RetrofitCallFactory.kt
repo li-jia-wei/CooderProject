@@ -1,6 +1,6 @@
 package com.cooder.cooder.project.app.main.http
 
-import com.cooder.cooder.library.log.CooderLog
+import com.cooder.cooder.library.log.CoLog
 import com.cooder.cooder.library.restful.*
 import okhttp3.FormBody
 import okhttp3.MediaType
@@ -22,10 +22,10 @@ import retrofit2.http.*
  *
  * 介绍：RetrofitCallFactory
  */
-class RetrofitCallFactory(baseUrl: String) : CooderCall.Factory {
+class RetrofitCallFactory(baseUrl: String) : CoCall.Factory {
 	
 	private val apiService: ApiService
-	private val cooderConvert: CooderConvert = GsonConvert()
+	private val cooderConvert: CoConvert = GsonConvert()
 	
 	init {
 		val retrofit = Retrofit.Builder()
@@ -34,21 +34,21 @@ class RetrofitCallFactory(baseUrl: String) : CooderCall.Factory {
 		apiService = retrofit.create(ApiService::class.java)
 	}
 	
-	override fun newCall(request: CooderRequest): CooderCall<Any> {
+	override fun newCall(request: CoRequest): CoCall<Any> {
 		return RetrofitCall(request)
 	}
 	
 	internal inner class RetrofitCall<T>(
-		private val request: CooderRequest
-	) : CooderCall<T> {
+		private val request: CoRequest
+	) : CoCall<T> {
 		
-		override fun execute(): CooderResponse<T> {
+		override fun execute(): CoResponse<T> {
 			val realCall = createRealCall(request)
 			val response = realCall.execute()
 			return parseResponse(response)
 		}
 		
-		override fun enqueue(callback: CooderCallback<T>) {
+		override fun enqueue(callback: CoCallback<T>) {
 			val realCall = createRealCall(request)
 			realCall.enqueue(object : Callback<ResponseBody> {
 				override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -56,13 +56,13 @@ class RetrofitCallFactory(baseUrl: String) : CooderCall.Factory {
 				}
 				
 				override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-					CooderLog.e(t.message)
+					CoLog.e(t.message)
 					callback.onFailed(t)
 				}
 			})
 		}
 		
-		private fun parseResponse(response: Response<ResponseBody>): CooderResponse<T> {
+		private fun parseResponse(response: Response<ResponseBody>): CoResponse<T> {
 			var rawData: String? = null
 			if (response.isSuccessful) {
 				val body = response.body()
@@ -77,12 +77,12 @@ class RetrofitCallFactory(baseUrl: String) : CooderCall.Factory {
 		/**
 		 * 创建真实调用
 		 */
-		private fun createRealCall(request: CooderRequest): Call<ResponseBody> {
+		private fun createRealCall(request: CoRequest): Call<ResponseBody> {
 			return when (request.httpMethod) {
-				CooderRequest.METHOD.GET -> {
+				CoRequest.METHOD.GET -> {
 					apiService.get(request.headers, request.getCompleteUrl(), request.parameters)
 				}
-				CooderRequest.METHOD.POST -> {
+				CoRequest.METHOD.POST -> {
 					val parameters = request.parameters!!
 					val requestBody: RequestBody = if (request.formPost) {
 						val builder = FormBody.Builder()

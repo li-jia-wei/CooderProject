@@ -5,15 +5,15 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.cooder.cooder.library.restful.CooderCallback
-import com.cooder.cooder.library.restful.CooderResponse
-import com.cooder.cooder.library.util.dp
+import com.cooder.cooder.library.restful.CoCallback
+import com.cooder.cooder.library.restful.CoResponse
+import com.cooder.cooder.library.util.expends.dpInt
 import com.cooder.cooder.project.app.main.MainActivity
 import com.cooder.cooder.project.app.main.http.ApiFactory
 import com.cooder.cooder.project.app.main.http.api.HomeApi
 import com.cooder.cooder.project.app.main.model.HomeModel
-import com.cooder.cooder.project.common.ui.component.CooderAbsListFragment
-import com.cooder.cooder.ui.item.CooderDataItem
+import com.cooder.cooder.project.common.ui.component.CoAbsListFragment
+import com.cooder.cooder.ui.item.CoDataItem
 
 /**
  * 项目：CooderProject
@@ -24,7 +24,7 @@ import com.cooder.cooder.ui.item.CooderDataItem
  *
  * 介绍：主页TabFragment
  */
-class HomePageTabFragment private constructor() : CooderAbsListFragment() {
+class HomePageTabFragment private constructor() : CoAbsListFragment() {
 	
 	private var categoryId: String? = null
 	
@@ -69,8 +69,8 @@ class HomePageTabFragment private constructor() : CooderAbsListFragment() {
 	}
 	
 	private fun queryTabCategoryList() {
-		ApiFactory.create(HomeApi::class.java).queryTabCategoryList(categoryId!!, pageIndex, 10).enqueue(object : CooderCallback<HomeModel> {
-			override fun onSuccess(response: CooderResponse<HomeModel>) {
+		ApiFactory.create(HomeApi::class.java).queryTabCategoryList(categoryId!!, pageIndex, 10).enqueue(object : CoCallback<HomeModel> {
+			override fun onSuccess(response: CoResponse<HomeModel>) {
 				if (response.isSuccess() && response.data != null) {
 					updateUI(response.data!!)
 				} else {
@@ -89,7 +89,7 @@ class HomePageTabFragment private constructor() : CooderAbsListFragment() {
 	 */
 	private fun updateUI(data: HomeModel) {
 		if (isNotAlive()) return
-		val dataItems = mutableListOf<CooderDataItem<*, *>>()
+		val dataItems = mutableListOf<CoDataItem<*, *>>()
 		data.bannerList?.let {
 			dataItems += BannerItem(it)
 		}
@@ -110,7 +110,7 @@ class HomePageTabFragment private constructor() : CooderAbsListFragment() {
 		val bottomView = View(context)
 		bottomView.setBackgroundColor(Color.TRANSPARENT)
 		val height = (requireActivity() as MainActivity).getTabBottomLayoutHeight()
-		val params = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, height.dp.toInt())
+		val params = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, height.dpInt)
 		bottomView.layoutParams = params
 		adapter.setBottomView(bottomView)
 	}

@@ -11,15 +11,15 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 
 /**
- * 项目名称：CooderProject
+ * 项目：CooderProject
  *
- * 作者姓名：李佳伟
+ * 作者：李佳伟
  *
- * 创建时间：2022/10/3 14:18
+ * 创建：2022/10/3 14:18
  *
- * 文件介绍：CooderBaseFragment
+ * 介绍：CoBaseFragment
  */
-abstract class CooderBaseFragment : Fragment() {
+abstract class CoBaseFragment : Fragment() {
 	
 	lateinit var layoutView: View
 		private set

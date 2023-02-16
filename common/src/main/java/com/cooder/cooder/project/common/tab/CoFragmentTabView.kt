@@ -7,15 +7,15 @@ import androidx.annotation.IntRange
 import androidx.fragment.app.Fragment
 
 /**
- * 项目名称：CooderProject
+ * 项目：CooderProject
  *
- * 作者姓名：李佳伟
+ * 作者：李佳伟
  *
- * 创建时间：2022/10/3 23:05
+ * 创建：2022/10/3 23:05
  *
- * 文件介绍：将Fragment的操作内聚，提供通用的一些API
+ * 介绍：将Fragment的操作内聚，提供通用的一些API
  */
-class CooderFragmentTabView @JvmOverloads constructor(
+class CoFragmentTabView @JvmOverloads constructor(
 	context: Context,
 	attrs: AttributeSet? = null,
 	defStyleAttr: Int = 0,
@@ -24,7 +24,7 @@ class CooderFragmentTabView @JvmOverloads constructor(
 	/**
 	 * 适配器
 	 */
-	var adapter: CooderTabViewAdapter? = null
+	var adapter: CoTabViewAdapter? = null
 		set(value) {
 			if (field != null || value == null) return
 			field = value

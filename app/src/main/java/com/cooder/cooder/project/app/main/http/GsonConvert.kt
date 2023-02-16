@@ -1,7 +1,7 @@
 package com.cooder.cooder.project.app.main.http
 
-import com.cooder.cooder.library.restful.CooderConvert
-import com.cooder.cooder.library.restful.CooderResponse
+import com.cooder.cooder.library.restful.CoConvert
+import com.cooder.cooder.library.restful.CoResponse
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import org.json.JSONArray
@@ -17,15 +17,15 @@ import java.lang.reflect.Type
  *
  * 介绍：Gson转换
  */
-class GsonConvert : CooderConvert {
+class GsonConvert : CoConvert {
 	
 	private val gson = Gson()
 	
 	/**
 	 * 转换
 	 */
-	override fun <T> convert(rawData: String, dataType: Type): CooderResponse<T> {
-		val response = CooderResponse<T>()
+	override fun <T> convert(rawData: String, dataType: Type): CoResponse<T> {
+		val response = CoResponse<T>()
 		response.rawData = rawData
 		try {
 			val jsonObject = JSONObject(rawData)
@@ -33,7 +33,7 @@ class GsonConvert : CooderConvert {
 			response.msg = jsonObject.optString("msg")
 			val data = jsonObject.opt("data")
 			if (data is JSONObject || data is JSONArray) {
-				if (response.code == CooderResponse.SUCCESS) {
+				if (response.code == CoResponse.SUCCESS) {
 					response.data = gson.fromJson(data.toString(), dataType)
 				} else {
 					response.errorData = gson.fromJson(data.toString(), object : TypeToken<MutableMap<String, String>>() {}.type)
@@ -44,7 +44,7 @@ class GsonConvert : CooderConvert {
 			}
 		} catch (e: Exception) {
 			e.printStackTrace()
-			response.code = CooderResponse.EXCEPTION
+			response.code = CoResponse.EXCEPTION
 			response.msg = e.message
 		}
 		return response

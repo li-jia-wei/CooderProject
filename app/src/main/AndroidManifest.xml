@@ -10,7 +10,7 @@
 	<dist:module dist:instant="true" />
 	
 	<application
-		android:name=".main.CooderApplication"
+		android:name=".main.CoApplication"
 		android:allowBackup="true"
 		android:dataExtractionRules="@xml/data_extraction_rules"
 		android:fullBackupContent="@xml/backup_rules"

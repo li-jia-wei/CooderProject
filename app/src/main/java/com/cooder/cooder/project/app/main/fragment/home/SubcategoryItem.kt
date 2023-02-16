@@ -10,11 +10,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.cooder.cooder.library.util.dp
+import com.cooder.cooder.library.util.expends.dpInt
 import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.app.main.model.Subcategory
 import com.cooder.cooder.project.common.ui.view.expends.load
-import com.cooder.cooder.ui.item.CooderDataItem
+import com.cooder.cooder.ui.item.CoDataItem
 
 /**
  * 项目：CooderProject
@@ -27,7 +27,7 @@ import com.cooder.cooder.ui.item.CooderDataItem
  */
 class SubcategoryItem(
 	subcategoryList: List<Subcategory>
-) : CooderDataItem<List<Subcategory>, RecyclerView.ViewHolder>(subcategoryList) {
+) : CoDataItem<List<Subcategory>, RecyclerView.ViewHolder>(subcategoryList) {
 	
 	override fun onBindData(holder: RecyclerView.ViewHolder, position: Int) {
 		val context = holder.itemView.context
@@ -38,7 +38,7 @@ class SubcategoryItem(
 	override fun getItemView(parent: ViewGroup): View? {
 		val gridView = RecyclerView(parent.context)
 		val params = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT)
-		params.bottomMargin = 10.dp.toInt()
+		params.bottomMargin = 10.dpInt
 		gridView.layoutManager = GridLayoutManager(parent.context, 5)
 		gridView.layoutParams = params
 		gridView.setBackgroundColor(Color.WHITE)
