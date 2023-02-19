@@ -3,6 +3,7 @@ package com.cooder.cooder.project.app.main.fragment.home
 import android.os.Bundle
 import android.util.SparseArray
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
@@ -33,6 +34,8 @@ class HomePageFragment : CoBaseFragment() {
 	
 	private var tabTopSelectIndex = DEFAULT_TAB_TOP_SELECT_INDEX
 	
+	private var isSuccessful = false
+	
 	private companion object {
 		/**
 		 * 默认TabTop选中的索引
@@ -48,7 +51,10 @@ class HomePageFragment : CoBaseFragment() {
 		super.onViewCreated(view, savedInstanceState)
 		tabTopLayout = view.findViewById(R.id.tab_top_layout)
 		viewPager = view.findViewById(R.id.view_pager)
-		
+	}
+	
+	override fun onResume() {
+		super.onResume()
 		queryTabList()
 	}
 	
@@ -56,20 +62,23 @@ class HomePageFragment : CoBaseFragment() {
 	 * 查询顶部Tab
 	 */
 	private fun queryTabList() {
-		ApiFactory.create(CategoryApi::class.java).queryTab().enqueue(object : CoCallback<List<TabCategory>> {
-			override fun onSuccess(response: CoResponse<List<TabCategory>>) {
-				val data: List<TabCategory>? = response.data
-				if (response.isSuccess() && data != null) {
-					updateUI(data)
-				} else {
-					showToast(response.msg)
+		if (!isSuccessful) {
+			ApiFactory.create(CategoryApi::class.java).queryCategoryList().enqueue(object : CoCallback<List<TabCategory>> {
+				override fun onSuccess(response: CoResponse<List<TabCategory>>) {
+					val data: List<TabCategory>? = response.data
+					if (response.isSuccessful() && data != null) {
+						isSuccessful = true
+						updateUI(data)
+					} else {
+						Toast.makeText(requireContext(), response.message, Toast.LENGTH_SHORT).show()
+					}
 				}
-			}
-			
-			override fun onFailed(throwable: Throwable) {
-				showToast(throwable.message)
-			}
-		})
+				
+				override fun onFailed(throwable: Throwable) {
+					Toast.makeText(requireContext(), throwable.message, Toast.LENGTH_SHORT).show()
+				}
+			})
+		}
 	}
 	
 	/**

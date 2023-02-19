@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import com.cooder.cooder.library.util.setStatusBar
-import com.cooder.cooder.project.app.R
+import com.cooder.cooder.library.util.expends.setStatusBar
+import com.cooder.cooder.project.app.databinding.ActivityMainBinding
 import com.cooder.cooder.project.app.main.logic.MainActivityLogic
 import com.cooder.cooder.project.app.main.logic.MainActivityLogic.ActivityProvider
 import com.cooder.cooder.project.common.ui.component.CoBaseActivity
@@ -22,10 +22,12 @@ import com.cooder.cooder.project.common.ui.component.CoBaseActivity
 class MainActivity : CoBaseActivity(), ActivityProvider {
 	
 	private lateinit var activityLogic: MainActivityLogic
+	private lateinit var binding: ActivityMainBinding
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		setContentView(R.layout.activity_main)
+		binding = ActivityMainBinding.inflate(layoutInflater)
+		setContentView(binding.root)
 		
 		activityLogic = MainActivityLogic(this, savedInstanceState)
 		

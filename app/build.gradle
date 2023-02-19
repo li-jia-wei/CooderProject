@@ -12,8 +12,8 @@ android {
         applicationId "com.cooder.cooder.project.app"
         minSdk 26
         targetSdk 33
-        versionCode 22
-        versionName "2.0.0"
+        versionCode 23
+        versionName "2.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -23,7 +23,6 @@ android {
             }
         }
     }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -31,13 +30,13 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '11'
     }
-    buildToolsVersion '33.0.0'
+    buildToolsVersion '33.0.2'
     buildFeatures {
         viewBinding true
     }

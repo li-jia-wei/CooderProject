@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
 import android.os.Bundle
+import android.util.SparseArray
+import android.view.View
 import android.widget.Toast
 import android.window.OnBackInvokedCallback
 import android.window.OnBackInvokedDispatcher
@@ -22,7 +24,9 @@ import androidx.appcompat.app.AppCompatActivity
  *
  * 介绍：CoBaseActivity
  */
-open class CoBaseActivity : AppCompatActivity(), CoBaseActionInterface {
+abstract class CoBaseActivity : AppCompatActivity(), CoBaseActionInterface {
+	
+	private val viewCaches = SparseArray<View>()
 	
 	private var onBackInvokedCallback: OnBackInvokedCallback? = null
 	
@@ -80,6 +84,16 @@ open class CoBaseActivity : AppCompatActivity(), CoBaseActionInterface {
 			}
 		})
 		onBackPressedDispatcher.onBackPressed()
+	}
+	
+	@Suppress("UNCHECKED_CAST")
+	override fun <T : View> findViewById(id: Int): T {
+		var view = viewCaches[id]
+		if (view == null) {
+			view = super.findViewById(id)
+			viewCaches[id] = view
+		}
+		return view as T
 	}
 	
 	@CallSuper

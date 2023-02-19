@@ -1,13 +1,14 @@
 package com.cooder.cooder.project.common.ui.component
 
 import android.os.Bundle
+import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.CallSuper
+import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
-import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 
 /**
@@ -21,7 +22,9 @@ import androidx.fragment.app.Fragment
  */
 abstract class CoBaseFragment : Fragment() {
 	
-	lateinit var layoutView: View
+	private val viewCaches = SparseArray<View>()
+	
+	lateinit var root: View
 		private set
 	
 	@LayoutRes
@@ -29,8 +32,8 @@ abstract class CoBaseFragment : Fragment() {
 	
 	@CallSuper
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-		layoutView = inflater.inflate(getLayoutId(), container, false)
-		return layoutView
+		root = inflater.inflate(getLayoutId(), container, false)
+		return root
 	}
 	
 	/**
@@ -51,7 +54,13 @@ abstract class CoBaseFragment : Fragment() {
 		Toast.makeText(requireContext(), text ?: "null", Toast.LENGTH_SHORT).show()
 	}
 	
-	protected fun showToast(@StringRes resId: Int) {
-		Toast.makeText(requireContext(), resId, Toast.LENGTH_SHORT).show()
+	@Suppress("UNCHECKED_CAST")
+	fun <T : View> findViewById(@IdRes id: Int): T {
+		var view = viewCaches[id]
+		if (view == null) {
+			view = root.findViewById(id)
+			viewCaches[id] = view
+		}
+		return view as T
 	}
 }

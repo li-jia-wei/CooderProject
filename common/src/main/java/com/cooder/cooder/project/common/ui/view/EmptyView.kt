@@ -106,7 +106,7 @@ class EmptyView @JvmOverloads constructor(
 	/**
 	 * 设置按钮点击事件
 	 */
-	fun setOnRefreshListener(listener: OnClickListener) {
+	fun setOnClickRefreshListener(listener: OnClickListener) {
 		this.refreshButton.setOnClickListener(listener)
 	}
 	

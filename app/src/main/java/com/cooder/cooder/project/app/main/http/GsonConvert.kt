@@ -30,7 +30,7 @@ class GsonConvert : CoConvert {
 		try {
 			val jsonObject = JSONObject(rawData)
 			response.code = jsonObject.optInt("code")
-			response.msg = jsonObject.optString("msg")
+			response.message = jsonObject.optString("msg")
 			val data = jsonObject.opt("data")
 			if (data is JSONObject || data is JSONArray) {
 				if (response.code == CoResponse.SUCCESS) {
@@ -45,7 +45,7 @@ class GsonConvert : CoConvert {
 		} catch (e: Exception) {
 			e.printStackTrace()
 			response.code = CoResponse.EXCEPTION
-			response.msg = e.message
+			response.message = e.message
 		}
 		return response
 	}

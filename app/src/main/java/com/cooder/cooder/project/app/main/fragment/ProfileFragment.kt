@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.launcher.ARouter
 import com.cooder.cooder.library.restful.CoCallback
@@ -102,7 +103,7 @@ class ProfileFragment : CoBaseFragment() {
 	private fun queryCourseNotice() {
 		ApiFactory.create(NoticeApi::class.java, HttpCodeInterceptor::class.java).notice().enqueue(object : CoCallback<CourseNotice> {
 			override fun onSuccess(response: CoResponse<CourseNotice>) {
-				if (response.isSuccess()) {
+				if (response.isSuccessful()) {
 					val data = response.data
 					if (data != null) {
 						val total = data.total
@@ -117,7 +118,7 @@ class ProfileFragment : CoBaseFragment() {
 			}
 			
 			override fun onFailed(throwable: Throwable) {
-				showToast(throwable.message)
+				Toast.makeText(requireContext(), throwable.message, Toast.LENGTH_SHORT).show()
 			}
 		})
 	}
@@ -129,15 +130,15 @@ class ProfileFragment : CoBaseFragment() {
 		ApiFactory.create(AccountApi::class.java).profile().enqueue(object : CoCallback<UserProfile> {
 			override fun onSuccess(response: CoResponse<UserProfile>) {
 				val data = response.data
-				if (response.isSuccess() && data != null) {
+				if (response.isSuccessful() && data != null) {
 					updateUI(data)
 				} else {
-					showToast(response.msg)
+					Toast.makeText(requireContext(), response.message, Toast.LENGTH_SHORT).show()
 				}
 			}
 			
 			override fun onFailed(throwable: Throwable) {
-				showToast(throwable.message)
+				Toast.makeText(requireContext(), throwable.message, Toast.LENGTH_SHORT).show()
 			}
 		})
 	}

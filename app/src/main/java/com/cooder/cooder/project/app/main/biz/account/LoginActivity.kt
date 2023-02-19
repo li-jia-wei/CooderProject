@@ -1,23 +1,21 @@
-package com.cooder.cooder.project.app.main.biz
+package com.cooder.cooder.project.app.main.biz.account
 
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.cooder.cooder.library.log.CoLog
 import com.cooder.cooder.library.restful.CoCallback
 import com.cooder.cooder.library.restful.CoResponse
-import com.cooder.cooder.library.util.setStatusBar
+import com.cooder.cooder.library.util.expends.setStatusBar
 import com.cooder.cooder.project.app.R
+import com.cooder.cooder.project.app.databinding.ActivityLoginBinding
 import com.cooder.cooder.project.app.main.http.ApiFactory
 import com.cooder.cooder.project.app.main.http.api.AccountApi
 import com.cooder.cooder.project.app.main.route.RoutePath
 import com.cooder.cooder.project.common.ui.component.CoBaseActivity
-import com.cooder.cooder.project.common.ui.view.IconFontTextView
 import com.cooder.cooder.project.common.ui.view.input.InputItemLayout
 import com.cooder.cooder.project.common.util.PreferencesUtil
 
@@ -33,36 +31,35 @@ import com.cooder.cooder.project.common.util.PreferencesUtil
 @Route(path = RoutePath.ACTIVITY_ACCOUNT_LOGIN)
 class LoginActivity : CoBaseActivity() {
 	
+	private lateinit var binding: ActivityLoginBinding
+	
 	private companion object {
 		private const val REQUEST_CODE_REGISTER = 1000
 	}
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		setContentView(R.layout.activity_login)
+		binding = ActivityLoginBinding.inflate(layoutInflater)
+		setContentView(binding.root)
+		
 		setStatusBar(true, Color.WHITE)
 		
-		val actionBack: IconFontTextView = findViewById(R.id.action_back)
-		actionBack.setOnClickListener {
+		binding.actionBack.setOnClickListener {
 			finish()
 		}
 		
-		val actionRegister: TextView = findViewById(R.id.action_register)
-		actionRegister.setOnClickListener {
+		binding.actionRegister.setOnClickListener {
 			goRegister()
 		}
 		
-		val actionLogin: Button = findViewById(R.id.action_login)
-		actionLogin.setOnClickListener {
+		binding.actionLogin.setOnClickListener {
 			goLogin()
 		}
 	}
 	
 	private fun goLogin() {
-		val inputItemUsername: InputItemLayout = findViewById(R.id.input_item_username)
-		val inputItemPassword: InputItemLayout = findViewById(R.id.input_item_password)
-		val username = inputItemUsername.getText()
-		val password = inputItemPassword.getText()
+		val username = binding.inputItemUsername.getText()
+		val password = binding.inputItemPassword.getText()
 		if (username.isEmpty()) {
 			showToast(R.string.login_please_input_username)
 			return
@@ -73,7 +70,7 @@ class LoginActivity : CoBaseActivity() {
 		}
 		ApiFactory.create(AccountApi::class.java).login(username, password).enqueue(object : CoCallback<String> {
 			override fun onSuccess(response: CoResponse<String>) {
-				if (response.isSuccess()) {
+				if (response.isSuccessful()) {
 					showToast(R.string.login_success)
 					val data: String? = response.data
 					
@@ -82,15 +79,15 @@ class LoginActivity : CoBaseActivity() {
 					finishWithResultOk(Intent())
 					// TODO: 登录后的页面
 				} else {
-					showToast(getString(R.string.login_failure, response.msg))
-					inputItemPassword.setText("")
+					showToast(getString(R.string.login_failure, response.message))
+					binding.inputItemPassword.setText("")
 				}
 			}
 			
 			override fun onFailed(throwable: Throwable) {
 				CoLog.e(throwable.message)
 				showToast(getString(R.string.login_failure, throwable.message))
-				inputItemPassword.setText("")
+				binding.inputItemPassword.setText("")
 			}
 		})
 	}

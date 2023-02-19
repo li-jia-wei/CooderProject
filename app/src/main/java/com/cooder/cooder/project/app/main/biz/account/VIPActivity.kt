@@ -1,4 +1,4 @@
-package com.cooder.cooder.project.app.main.biz
+package com.cooder.cooder.project.app.main.biz.account
 
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.cooder.cooder.project.app.main.route.RouteFlag
@@ -12,9 +12,9 @@ import com.cooder.cooder.project.common.ui.component.CoBaseActivity
  *
  * 创建：2022/11/8 19:51
  *
- * 介绍：AuthenticationActivity
+ * 介绍：VIPActivity
  */
-@Route(path = RoutePath.ACTIVITY_PROFILE_AUTHENTICATION, extras = RouteFlag.FLAG_AUTHENTICATION)
-class AuthenticationActivity : CoBaseActivity() {
-	
+@Route(path = RoutePath.ACTIVITY_PROFILE_VIP, extras = RouteFlag.FLAG_VIP)
+class VIPActivity : CoBaseActivity() {
+
 }

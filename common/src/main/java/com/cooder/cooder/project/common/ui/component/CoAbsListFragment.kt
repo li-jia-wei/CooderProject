@@ -29,16 +29,22 @@ import java.util.concurrent.Executors
  *
  * 介绍：CoAbsListFragment
  */
-open class CoAbsListFragment : CoBaseFragment(), CoRefresh.CoRefreshListener {
+abstract class CoAbsListFragment : CoBaseFragment(), CoRefresh.CoRefreshListener {
 	
-	protected lateinit var refreshLayout: CoRefreshLayout
-	protected lateinit var recyclerView: CoRecyclerView
-	protected lateinit var emptyView: EmptyView
-	protected lateinit var loadingView: ContentLoadingProgressBar
-	
-	protected lateinit var adapter: CoAdapter
-	protected lateinit var refreshHeaderView: CoTextOverView
-	protected lateinit var layoutManager: RecyclerView.LayoutManager
+	lateinit var refreshLayout: CoRefreshLayout
+		private set
+	lateinit var recyclerView: CoRecyclerView
+		private set
+	lateinit var emptyView: EmptyView
+		private set
+	lateinit var loadingView: ContentLoadingProgressBar
+		private set
+	lateinit var adapter: CoAdapter
+		private set
+	lateinit var refreshHeaderView: CoTextOverView
+		private set
+	lateinit var layoutManager: RecyclerView.LayoutManager
+		private set
 	
 	private val executor = Executors.newCachedThreadPool()
 	private val handler = Handler(Looper.myLooper()!!)
@@ -91,7 +97,7 @@ open class CoAbsListFragment : CoBaseFragment(), CoRefresh.CoRefreshListener {
 		emptyView.setIcon(R.string.ic_help, R.color.abs_list_empty)
 		emptyView.setDesc(R.string.abs_list_desc)
 		emptyView.setRefreshButton(R.string.abs_list_refresh)
-		emptyView.setOnRefreshListener {
+		emptyView.setOnClickRefreshListener {
 			onRefresh()
 		}
 		
@@ -185,8 +191,7 @@ open class CoAbsListFragment : CoBaseFragment(), CoRefresh.CoRefreshListener {
 			if (refreshHeaderView.state == CoOverView.CoRefreshState.STATE_REFRESH) {
 				// 正处于刷新状态
 				recyclerView.loadFinished(false)
-				@Suppress("LABEL_NAME_CLASH")
-				return@enableLoadMore
+				@Suppress("LABEL_NAME_CLASH") return@enableLoadMore
 			}
 			pageIndex++
 			callback.invoke()

@@ -71,7 +71,7 @@ class HomePageTabFragment private constructor() : CoAbsListFragment() {
 	private fun queryTabCategoryList() {
 		ApiFactory.create(HomeApi::class.java).queryTabCategoryList(categoryId!!, pageIndex, 10).enqueue(object : CoCallback<HomeModel> {
 			override fun onSuccess(response: CoResponse<HomeModel>) {
-				if (response.isSuccess() && response.data != null) {
+				if (response.isSuccessful() && response.data != null) {
 					updateUI(response.data!!)
 				} else {
 					finishRefresh(null)

@@ -1,4 +1,4 @@
-package com.cooder.cooder.project.app.main.biz
+package com.cooder.cooder.project.app.main.biz.account
 
 import android.content.Intent
 import android.graphics.Color
@@ -6,7 +6,7 @@ import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.cooder.cooder.library.restful.CoCallback
 import com.cooder.cooder.library.restful.CoResponse
-import com.cooder.cooder.library.util.setStatusBar
+import com.cooder.cooder.library.util.expends.setStatusBar
 import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.app.main.http.ApiFactory
 import com.cooder.cooder.project.app.main.http.api.AccountApi
@@ -80,13 +80,13 @@ class RegisterActivity : CoBaseActivity() {
 		}
 		ApiFactory.create(AccountApi::class.java).register(username, password, moocId, courseOrderId).enqueue(object : CoCallback<String> {
 			override fun onSuccess(response: CoResponse<String>) {
-				if (response.isSuccess()) {
+				if (response.isSuccessful()) {
 					// 注册成功
 					val intent = Intent()
 					intent.putExtra("username", username)
 					finishWithResultOk(intent)
 				} else {
-					showToast(getString(R.string.register_failure, response.msg))
+					showToast(getString(R.string.register_failure, response.message))
 					inputItemPassword.setText("")
 					inputItemConfirmPassword.setText("")
 				}

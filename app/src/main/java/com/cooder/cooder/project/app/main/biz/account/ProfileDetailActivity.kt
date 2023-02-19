@@ -1,4 +1,4 @@
-package com.cooder.cooder.project.app.main.biz
+package com.cooder.cooder.project.app.main.biz.account
 
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.cooder.cooder.project.app.main.route.RouteFlag

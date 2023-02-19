@@ -39,7 +39,7 @@ class HttpCodeInterceptor : CoInterceptor {
 				ARouter.getInstance()
 					.build(RoutePath.ACTIVITY_DEGRADE_GLOBAL)
 					.withString(DegradeGlobalActivity.DEGRADE_TITLE, AppGlobals.getBaseContext().getString(R.string.token_degrade_title))
-					.withString(DegradeGlobalActivity.DEGRADE_DESC, response.msg)
+					.withString(DegradeGlobalActivity.DEGRADE_DESC, response.message)
 					.withString(DegradeGlobalActivity.DEGRADE_ACTION, helpUrl)
 					.navigation()
 			}

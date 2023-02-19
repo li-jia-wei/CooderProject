@@ -57,7 +57,7 @@ class DegradeGlobalActivity : CoBaseActivity() {
 			}
 		}
 		// 设置刷新点击事件
-		emptyView.setOnRefreshListener() {
+		emptyView.setOnClickRefreshListener() {
 		
 		}
 		

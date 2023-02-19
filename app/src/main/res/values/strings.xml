@@ -15,6 +15,9 @@
 	<!-- 分类 -->
 	<string name="category_title">分类</string>
 	<string name="category_icon_category">&#xe75d;</string>
+	<string name="categoru_empty_icon">@string/ic_prompt_fill</string>
+	<string name="category_empty_desc">未找到相关数据</string>
+	<string name="category_empty_refresh">刷新</string>
 
 	<!-- 推荐 -->
 	<string name="recommend_title">推荐</string>

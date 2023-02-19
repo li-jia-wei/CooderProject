@@ -9,6 +9,7 @@ import androidx.annotation.IdRes
 import androidx.fragment.app.FragmentManager
 import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.app.main.fragment.*
+import com.cooder.cooder.project.app.main.fragment.category.CategoryFragment
 import com.cooder.cooder.project.app.main.fragment.home.HomePageFragment
 import com.cooder.cooder.project.common.tab.CoFragmentTabView
 import com.cooder.cooder.project.common.tab.CoTabViewAdapter
