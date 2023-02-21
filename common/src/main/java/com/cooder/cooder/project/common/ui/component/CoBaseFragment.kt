@@ -63,4 +63,8 @@ abstract class CoBaseFragment : Fragment() {
 		}
 		return view as T
 	}
+	
+	fun addView(view: View) {
+		(root as ViewGroup).addView(view)
+	}
 }

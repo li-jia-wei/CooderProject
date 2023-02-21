@@ -1,6 +1,5 @@
 package com.cooder.cooder.project.common.ui.component
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
@@ -9,8 +8,6 @@ import android.util.SparseArray
 import android.view.View
 import android.widget.Toast
 import android.window.OnBackInvokedCallback
-import android.window.OnBackInvokedDispatcher
-import androidx.activity.OnBackPressedCallback
 import androidx.annotation.CallSuper
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
@@ -33,11 +30,6 @@ abstract class CoBaseActivity : AppCompatActivity(), CoBaseActionInterface {
 	@CallSuper
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		if (VERSION.SDK_INT >= VERSION_CODES.TIRAMISU) {
-			onBackInvokedCallback = OnBackInvokedCallback {
-				// ...
-			}
-		}
 	}
 	
 	protected fun showToast(text: String?) {
@@ -49,40 +41,21 @@ abstract class CoBaseActivity : AppCompatActivity(), CoBaseActionInterface {
 	}
 	
 	/**
-	 * 以 Ok 结果返回
-	 */
-	@JvmOverloads
-	protected fun finishWithResultOk(intent: Intent? = null) {
-		finishWithResult(Activity.RESULT_OK, intent)
-	}
-	
-	/**
 	 * 以 Canceled 结果返回
 	 */
 	@JvmOverloads
 	protected fun finishWithResultCanceled(intent: Intent? = null) {
-		finishWithResult(Activity.RESULT_CANCELED, intent)
+		onBackPressed(RESULT_CANCELED, intent)
 	}
 	
-	/**
-	 * 以 FirstUser 结果返回
-	 */
 	@JvmOverloads
-	protected fun finishWithResultFirstUser(intent: Intent? = null) {
-		finishWithResult(Activity.RESULT_FIRST_USER, intent)
+	protected fun onBackPressed(resultCode: Int, intent: Intent? = null) {
+		setResult(resultCode, intent)
+		onBackPressedDispatcher.onBackPressed()
 	}
 	
-	private fun finishWithResult(resultCode: Int, intent: Intent?) {
-		if (VERSION.SDK_INT >= VERSION_CODES.TIRAMISU) {
-			onBackInvokedDispatcher.registerOnBackInvokedCallback(OnBackInvokedDispatcher.PRIORITY_DEFAULT, onBackInvokedCallback!!)
-		}
-		// 执行返回操作
-		onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-			override fun handleOnBackPressed() {
-				setResult(resultCode, intent)
-				finish()
-			}
-		})
+	@Suppress("OVERRIDE_DEPRECATION")
+	override fun onBackPressed() {
 		onBackPressedDispatcher.onBackPressed()
 	}
 	

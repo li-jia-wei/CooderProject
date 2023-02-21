@@ -103,6 +103,10 @@ abstract class CoAbsListFragment : CoBaseFragment(), CoRefresh.CoRefreshListener
 		
 		loadingView.visibility = View.VISIBLE
 		pageIndex = 1
+		
+		enableLoadMore {
+			onEnableMore()
+		}
 	}
 	
 	/**
@@ -210,6 +214,10 @@ abstract class CoAbsListFragment : CoBaseFragment(), CoRefresh.CoRefreshListener
 	 */
 	open fun createLayoutManager(): RecyclerView.LayoutManager {
 		return LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+	}
+	
+	override fun onEnableMore() {
+	
 	}
 	
 	/**
