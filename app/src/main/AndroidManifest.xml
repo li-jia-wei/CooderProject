@@ -48,5 +48,11 @@
 			android:name=".biz.account.RegisterActivity"
 			android:screenOrientation="portrait"
 			tools:ignore="LockedOrientationActivity" />
+		
+		<activity
+			android:name=".biz.goods.GoodsListActivity"
+			android:exported="true"
+			android:screenOrientation="portrait"
+			tools:ignore="LockedOrientationActivity" />
 	</application>
 </manifest>

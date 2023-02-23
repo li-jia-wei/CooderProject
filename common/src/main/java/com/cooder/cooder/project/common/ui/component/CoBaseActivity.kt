@@ -1,51 +1,42 @@
 package com.cooder.cooder.project.common.ui.component
 
 import android.content.Intent
-import android.os.Build.VERSION
-import android.os.Build.VERSION_CODES
 import android.os.Bundle
-import android.util.SparseArray
-import android.view.View
+import android.view.LayoutInflater
 import android.widget.Toast
-import android.window.OnBackInvokedCallback
 import androidx.annotation.CallSuper
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewbinding.ViewBinding
 
 /**
  * 项目：CooderProject
  *
  * 作者：李佳伟
  *
- * 创建：2022/10/3 14:16
+ * 创建：2023/2/22 23:02:01
  *
- * 介绍：CoBaseActivity
+ * 介绍：CoBaseActivity，已适配ViewBinding
  */
-abstract class CoBaseActivity : AppCompatActivity(), CoBaseActionInterface {
+abstract class CoBaseActivity<VB : ViewBinding> : AppCompatActivity(), CoBaseActionInterface {
 	
-	private val viewCaches = SparseArray<View>()
+	lateinit var binding: VB
 	
-	private var onBackInvokedCallback: OnBackInvokedCallback? = null
+	abstract fun getViewBinding(inflater: LayoutInflater): VB
 	
 	@CallSuper
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+		binding = getViewBinding(layoutInflater)
+		setContentView(binding.root)
 	}
 	
-	protected fun showToast(text: String?) {
+	fun showToast(text: String?) {
 		Toast.makeText(this, text ?: "null", Toast.LENGTH_SHORT).show()
 	}
 	
-	protected fun showToast(@StringRes resId: Int) {
+	fun showToast(@StringRes resId: Int) {
 		Toast.makeText(this, resId, Toast.LENGTH_SHORT).show()
-	}
-	
-	/**
-	 * 以 Canceled 结果返回
-	 */
-	@JvmOverloads
-	protected fun finishWithResultCanceled(intent: Intent? = null) {
-		onBackPressed(RESULT_CANCELED, intent)
 	}
 	
 	@JvmOverloads
@@ -57,25 +48,5 @@ abstract class CoBaseActivity : AppCompatActivity(), CoBaseActionInterface {
 	@Suppress("OVERRIDE_DEPRECATION")
 	override fun onBackPressed() {
 		onBackPressedDispatcher.onBackPressed()
-	}
-	
-	@Suppress("UNCHECKED_CAST")
-	override fun <T : View> findViewById(id: Int): T {
-		var view = viewCaches[id]
-		if (view == null) {
-			view = super.findViewById(id)
-			viewCaches[id] = view
-		}
-		return view as T
-	}
-	
-	@CallSuper
-	override fun onDestroy() {
-		super.onDestroy()
-		if (VERSION.SDK_INT >= VERSION_CODES.TIRAMISU) {
-			onBackInvokedCallback?.let {
-				onBackInvokedDispatcher.unregisterOnBackInvokedCallback(it)
-			}
-		}
 	}
 }

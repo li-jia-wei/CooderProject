@@ -1,6 +1,8 @@
 package com.cooder.cooder.project.app.fragment
 
-import com.cooder.cooder.project.app.R
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import com.cooder.cooder.project.app.databinding.FragmentRecommendBinding
 import com.cooder.cooder.project.common.ui.component.CoBaseFragment
 
 /**
@@ -12,10 +14,9 @@ import com.cooder.cooder.project.common.ui.component.CoBaseFragment
  *
  * 介绍：推荐Fragment
  */
-class RecommendFragment : CoBaseFragment() {
+class RecommendFragment : CoBaseFragment<FragmentRecommendBinding>() {
 	
-	override fun getLayoutId(): Int {
-		return R.layout.fragment_recommend
+	override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecommendBinding {
+		return FragmentRecommendBinding.inflate(inflater, container, false)
 	}
-	
 }

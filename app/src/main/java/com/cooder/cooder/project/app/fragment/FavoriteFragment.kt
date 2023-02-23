@@ -1,6 +1,8 @@
 package com.cooder.cooder.project.app.fragment
 
-import com.cooder.cooder.project.app.R
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import com.cooder.cooder.project.app.databinding.FragmentFavoriteBinding
 import com.cooder.cooder.project.common.ui.component.CoBaseFragment
 
 /**
@@ -12,10 +14,8 @@ import com.cooder.cooder.project.common.ui.component.CoBaseFragment
  *
  * 介绍：喜欢Fragment
  */
-class FavoriteFragment : CoBaseFragment() {
-	
-	override fun getLayoutId(): Int {
-		return R.layout.fragment_favorite
+class FavoriteFragment : CoBaseFragment<FragmentFavoriteBinding>() {
+	override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentFavoriteBinding {
+		return FragmentFavoriteBinding.inflate(inflater, container, false)
 	}
-	
 }

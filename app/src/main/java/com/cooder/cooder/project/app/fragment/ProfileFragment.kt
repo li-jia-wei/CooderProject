@@ -9,17 +9,17 @@ import android.text.Spanned
 import android.text.style.AbsoluteSizeSpan
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.alibaba.android.arouter.launcher.ARouter
 import com.cooder.cooder.library.restful.CoCallback
 import com.cooder.cooder.library.restful.CoResponse
 import com.cooder.cooder.library.util.expends.dpInt
 import com.cooder.cooder.project.app.R
+import com.cooder.cooder.project.app.databinding.FragmentProfileBinding
 import com.cooder.cooder.project.app.http.ApiFactory
 import com.cooder.cooder.project.app.http.api.AccountApi
 import com.cooder.cooder.project.app.http.api.NoticeApi
@@ -32,7 +32,6 @@ import com.cooder.cooder.project.app.route.RoutePath
 import com.cooder.cooder.project.common.ui.component.CoBaseFragment
 import com.cooder.cooder.project.common.ui.view.expends.loadCircle
 import com.cooder.cooder.project.common.ui.view.expends.loadCorner
-import com.cooder.cooder.ui.banner.CoBanner
 import com.cooder.cooder.ui.banner.core.CoBannerMo
 
 /**
@@ -44,7 +43,7 @@ import com.cooder.cooder.ui.banner.core.CoBannerMo
  *
  * 介绍：配置Fragment
  */
-class ProfileFragment : CoBaseFragment() {
+class ProfileFragment : CoBaseFragment<FragmentProfileBinding>() {
 	
 	private companion object {
 		private const val REQUEST_CODE_LOGIN_PROFILE = 1001
@@ -52,46 +51,12 @@ class ProfileFragment : CoBaseFragment() {
 		private const val BANNER_CORNER = 10
 	}
 	
-	private lateinit var userAvatar: ImageView
-	private lateinit var username: TextView
-	private lateinit var loginDesc: TextView
-	
-	private lateinit var favorite: TextView
-	private lateinit var historyBrowsing: TextView
-	private lateinit var learnMinutes: TextView
-	
-	private lateinit var banner: CoBanner
-	
-	private lateinit var itemCourse: LinearLayout
-	private lateinit var itemCollect: LinearLayout
-	private lateinit var itemAddress: LinearLayout
-	private lateinit var itemHistory: LinearLayout
-	
-	private lateinit var courseNotice: TextView
-	
-	override fun getLayoutId(): Int {
-		return R.layout.fragment_profile
+	override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentProfileBinding {
+		return FragmentProfileBinding.inflate(inflater, container, false)
 	}
 	
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		
-		userAvatar = view.findViewById(R.id.profile_user_avatar)
-		username = view.findViewById(R.id.profile_username)
-		loginDesc = view.findViewById(R.id.profile_login_desc)
-		
-		favorite = view.findViewById(R.id.profile_favorite)
-		historyBrowsing = view.findViewById(R.id.profile_history_browsing)
-		learnMinutes = view.findViewById(R.id.profile_learn_minutes)
-		
-		banner = view.findViewById(R.id.profile_banner)
-		
-		itemCourse = view.findViewById(R.id.item_course)
-		itemCollect = view.findViewById(R.id.item_collect)
-		itemAddress = view.findViewById(R.id.item_address)
-		itemHistory = view.findViewById(R.id.item_history)
-		
-		courseNotice = view.findViewById(R.id.course_notice)
 		
 		queryLoginUserData()
 		queryCourseNotice()
@@ -108,11 +73,11 @@ class ProfileFragment : CoBaseFragment() {
 					val data = response.data
 					if (data != null) {
 						val total = data.total
-						courseNotice.visibility = if (total > 0) View.VISIBLE else View.GONE
+						binding.courseNotice.visibility = if (total > 0) View.VISIBLE else View.GONE
 						if (total > 99) {
-							courseNotice.text = getString(R.string.profile_course_notice_count_geature_99)
+							binding.courseNotice.text = getString(R.string.profile_course_notice_count_geature_99)
 						} else if (total > 0) {
-							courseNotice.text = String.format("%d", total)
+							binding.courseNotice.text = String.format("%d", total)
 						}
 					}
 				}
@@ -149,20 +114,21 @@ class ProfileFragment : CoBaseFragment() {
 	 */
 	private fun updateUI(userProfile: UserProfile) {
 		if (userProfile.isLogin) {
-			username.text = userProfile.userName
-			loginDesc.text = getString(R.string.profile_login_desc_welcome_back)
-			userAvatar.loadCircle(userProfile.userIcon)
+			binding.username.text = userProfile.userName
+			binding.loginDesc.text = getString(R.string.profile_login_desc_welcome_back)
+			binding.userAvatar.loadCircle(userProfile.userIcon)
 		} else {
-			username.text = getString(R.string.profile_please_login_first)
-			loginDesc.text = getString(R.string.profile_please_login_first)
-			userAvatar.loadCircle(R.drawable.ic_avatar_default)
-			username.setOnClickListener {
-				ARouter.getInstance().build(RoutePath.ACTIVITY_ACCOUNT_LOGIN).navigation(activity, REQUEST_CODE_LOGIN_PROFILE)
+			binding.username.text = getString(R.string.profile_please_login_first)
+			binding.loginDesc.text = getString(R.string.profile_please_login_first)
+			binding.userAvatar.loadCircle(R.drawable.ic_avatar_default)
+			binding.headerView.setOnClickListener {
+				if (isNotAlive()) return@setOnClickListener
+				CoRoute.startActivity(RoutePath.ACTIVITY_BIZ_ACCOUNT_LOGIN, context = requireContext(), requestCode = REQUEST_CODE_LOGIN_PROFILE)
 			}
 		}
-		favorite.text = spannableTabItem(userProfile.favoriteCount, getString(R.string.profile_favorite))
-		historyBrowsing.text = spannableTabItem(userProfile.browseCount, getString(R.string.profile_history_browsing))
-		learnMinutes.text = spannableTabItem(userProfile.learnMinutes, getString(R.string.profile_learn_minutes))
+		binding.favorite.text = spannableTabItem(userProfile.favoriteCount, getString(R.string.profile_favorite))
+		binding.historyBrowsing.text = spannableTabItem(userProfile.browseCount, getString(R.string.profile_history_browsing))
+		binding.learnMinutes.text = spannableTabItem(userProfile.learnMinutes, getString(R.string.profile_learn_minutes))
 		
 		updateBanner(userProfile.bannerNoticeList)
 	}
@@ -176,16 +142,16 @@ class ProfileFragment : CoBaseFragment() {
 		bannerNoticeList.forEach {
 			models += CoBannerMo(it.cover)
 		}
-		banner.setBannerData(R.layout.layout_profile_banner, models)
-		banner.setBindAdapter { viewHolder, mo: CoBannerMo, _: Int ->
+		binding.banner.setBannerData(R.layout.item_profile_banner, models)
+		binding.banner.setBindAdapter { viewHolder, mo: CoBannerMo, _: Int ->
 			val imageView = viewHolder.findViewById<ImageView>(R.id.banner_item_image_view)
 			imageView.loadCorner(mo.url, BANNER_CORNER.dpInt)
 		}
-		banner.setOnBannerClickListener { _, _, position ->
+		binding.banner.setOnBannerClickListener { _, _, position ->
 			val url = bannerNoticeList[position].url
 			CoRoute.startActivityForBrowser(url)
 		}
-		banner.visibility = View.VISIBLE
+		binding.banner.visibility = View.VISIBLE
 	}
 	
 	/**

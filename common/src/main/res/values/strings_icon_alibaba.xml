@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="ic_alibaba_path">font/alibaba_iconfont.ttf</string>
 	<string name="ic_auto">&#xe6eb;</string>
 	<string name="ic_all">&#xe6ef;</string>
 	<string name="ic_bussiness_man">&#xe6f0;</string>

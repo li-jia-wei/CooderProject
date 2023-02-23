@@ -7,23 +7,23 @@
 	android:background="@color/background"
 	android:orientation="vertical"
 	tools:context=".biz.account.RegisterActivity">
-
+	
 	<RelativeLayout
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/dp_45"
 		android:background="@color/white">
-
+		
 		<com.cooder.cooder.project.common.ui.view.IconFontTextView
 			android:id="@+id/action_back"
 			android:layout_width="@dimen/dp_45"
 			android:layout_height="@dimen/dp_45"
 			android:layout_alignParentStart="true"
 			android:layout_centerVertical="true"
+			android:layout_marginStart="@dimen/dp_6"
 			android:gravity="center"
 			android:text="@string/ic_arrow_left"
-			android:textSize="@dimen/sp_30"
-			app:typeface="@string/ic_alibaba_path" />
-
+			android:textSize="@dimen/sp_32" />
+		
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="match_parent"
@@ -32,16 +32,16 @@
 			android:text="@string/register_title"
 			android:textColor="@color/black"
 			android:textSize="@dimen/sp_16" />
-
+	
 	</RelativeLayout>
-
+	
 	<View
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/dp_0.5"
 		android:background="@color/lighter_gray" />
-
+	
 	<com.cooder.cooder.project.common.ui.view.input.InputItemLayout
-		android:id="@+id/input_item_course_order_id"
+		android:id="@+id/course_order_id"
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/dp_50"
 		android:layout_marginTop="@dimen/dp_10"
@@ -56,9 +56,9 @@
 		app:title="@string/register_course_order_id"
 		app:titleTextAppearance="@style/TitleTextAppearance"
 		app:topLineAppearance="@style/LineAppearance" />
-
+	
 	<com.cooder.cooder.project.common.ui.view.input.InputItemLayout
-		android:id="@+id/input_item_mooc_id"
+		android:id="@+id/mooc_id"
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/dp_50"
 		android:background="@color/white"
@@ -71,9 +71,9 @@
 		app:text="5733850"
 		app:title="@string/register_mooc_id"
 		app:titleTextAppearance="@style/TitleTextAppearance" />
-
+	
 	<com.cooder.cooder.project.common.ui.view.input.InputItemLayout
-		android:id="@+id/input_item_username"
+		android:id="@+id/username"
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/dp_50"
 		android:background="@color/white"
@@ -85,9 +85,9 @@
 		app:text="cooder"
 		app:title="@string/register_username"
 		app:titleTextAppearance="@style/TitleTextAppearance" />
-
+	
 	<com.cooder.cooder.project.common.ui.view.input.InputItemLayout
-		android:id="@+id/input_item_password"
+		android:id="@+id/password"
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/dp_50"
 		android:background="@color/white"
@@ -99,9 +99,9 @@
 		app:text="12345678"
 		app:title="@string/register_password"
 		app:titleTextAppearance="@style/TitleTextAppearance" />
-
+	
 	<com.cooder.cooder.project.common.ui.view.input.InputItemLayout
-		android:id="@+id/input_item_confirm_password"
+		android:id="@+id/confirm_password"
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/dp_50"
 		android:background="@color/white"
@@ -113,7 +113,7 @@
 		app:text="12345678"
 		app:title="@string/register_confirm_password"
 		app:titleTextAppearance="@style/TitleTextAppearance" />
-
+	
 	<com.google.android.material.button.MaterialButton
 		android:id="@+id/action_submit"
 		android:layout_width="match_parent"

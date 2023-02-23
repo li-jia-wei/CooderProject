@@ -2,7 +2,9 @@ package com.cooder.cooder.project.app.fragment.home
 
 import android.os.Bundle
 import android.util.SparseArray
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -11,12 +13,12 @@ import androidx.viewpager.widget.ViewPager
 import com.cooder.cooder.library.restful.CoCallback
 import com.cooder.cooder.library.restful.CoResponse
 import com.cooder.cooder.project.app.R
+import com.cooder.cooder.project.app.databinding.FragmentHomePageBinding
 import com.cooder.cooder.project.app.http.ApiFactory
 import com.cooder.cooder.project.app.http.api.CategoryApi
 import com.cooder.cooder.project.app.model.TabCategory
 import com.cooder.cooder.project.common.ui.component.CoBaseFragment
 import com.cooder.cooder.ui.tab.top.CoTabTopInfo
-import com.cooder.cooder.ui.tab.top.CoTabTopLayout
 
 /**
  * 项目：CooderProject
@@ -27,10 +29,7 @@ import com.cooder.cooder.ui.tab.top.CoTabTopLayout
  *
  * 介绍：主页Fragment
  */
-class HomePageFragment : CoBaseFragment() {
-	
-	private lateinit var tabTopLayout: CoTabTopLayout
-	private lateinit var viewPager: ViewPager
+class HomePageFragment : CoBaseFragment<FragmentHomePageBinding>() {
 	
 	private var tabTopSelectIndex = DEFAULT_TAB_TOP_SELECT_INDEX
 	
@@ -43,14 +42,12 @@ class HomePageFragment : CoBaseFragment() {
 		private const val DEFAULT_TAB_TOP_SELECT_INDEX = 0
 	}
 	
-	override fun getLayoutId(): Int {
-		return R.layout.fragment_home_page
+	override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentHomePageBinding {
+		return FragmentHomePageBinding.inflate(inflater, container, false)
 	}
 	
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		tabTopLayout = view.findViewById(R.id.tab_top_layout)
-		viewPager = view.findViewById(R.id.view_pager)
 		
 		queryTabList()
 	}
@@ -90,20 +87,20 @@ class HomePageFragment : CoBaseFragment() {
 			val tabTopInfo = CoTabTopInfo(tabCategory.categoryName, defaultColor, tintColor)
 			tabTopInfos += tabTopInfo
 		}
-		tabTopLayout.inflateInfo(tabTopInfos)
-		tabTopLayout.selectTabInfo(tabTopInfos[DEFAULT_TAB_TOP_SELECT_INDEX])
-		tabTopLayout.addTabSelectedChangeListener { index, prevInfo, nextInfo ->
-			if (viewPager.currentItem != index) {
-				viewPager.setCurrentItem(index, false)
+		binding.tabTopLayout.inflateInfo(tabTopInfos)
+		binding.tabTopLayout.selectTabInfo(tabTopInfos[DEFAULT_TAB_TOP_SELECT_INDEX])
+		binding.tabTopLayout.addTabSelectedChangeListener { index, prevInfo, nextInfo ->
+			if (binding.viewPager.currentItem != index) {
+				binding.viewPager.setCurrentItem(index, false)
 			}
 		}
-		viewPager.adapter = HomePagerAdapter(data)
-		viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
+		binding.viewPager.adapter = HomePagerAdapter(data)
+		binding.viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
 			override fun onPageSelected(position: Int) {
 				// 这个方法被触发有两种可能，第一种是切换顶部Tab，第二种是手动滑动翻页
 				// 如果是手动滑动翻页
 				if (position != tabTopSelectIndex) {
-					tabTopLayout.selectTabInfo(tabTopInfos[position])
+					binding.tabTopLayout.selectTabInfo(tabTopInfos[position])
 					tabTopSelectIndex = position
 				}
 			}

@@ -14,7 +14,7 @@ data class TabCategory(
  */
 data class HomeModel(
 	val bannerList: List<HomeBanner>?,
-	val goodsList: List<HomeGoods>?,
+	val goodsList: List<GoodsModel>?,
 	val subcategoryList: List<Subcategory>?
 )
 
@@ -35,7 +35,7 @@ data class HomeBanner(
 /**
  * 商品列表
  */
-data class HomeGoods(
+data class GoodsModel(
 	val categoryId: String,
 	val completedNumText: String,
 	val createTime: String,
@@ -65,4 +65,9 @@ data class Subcategory(
 data class SliderImage(
 	val type: Int,
 	val url: String
+)
+
+data class GoodsList(
+	val total: Int,
+	val list: List<GoodsModel>
 )

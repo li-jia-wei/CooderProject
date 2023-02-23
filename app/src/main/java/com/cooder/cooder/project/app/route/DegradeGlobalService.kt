@@ -4,7 +4,6 @@ import android.content.Context
 import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.facade.service.DegradeService
-import com.alibaba.android.arouter.launcher.ARouter
 
 /**
  * 项目：CooderProject
@@ -15,17 +14,14 @@ import com.alibaba.android.arouter.launcher.ARouter
  *
  * 介绍：全局降级服务，当路由的时候，目标页面不存在，此时定位到同意路由错误页面上
  */
-@Route(path = RoutePath.SERVICE_DEGRADE_GLOBAL)
-class DegradeServiceImpl : DegradeService {
+@Route(path = RoutePath.SERVICE_ROUTE_DEGRADE_GLOBAL)
+class DegradeGlobalService : DegradeService {
 	
 	override fun init(context: Context?) {
 	
 	}
 	
 	override fun onLost(context: Context?, postcard: Postcard?) {
-		ARouter.getInstance()
-			.build(RoutePath.ACTIVITY_DEGRADE_GLOBAL)
-			.greenChannel()
-			.navigation()
+		CoRoute.startActivity(RoutePath.ACTIVITY_ROUTE_DEGRADE_GLOBAL, greenChannel = true)
 	}
 }

@@ -4,18 +4,15 @@ package com.cooder.cooder.project.app.logic
 
 import android.content.Context
 import android.os.Bundle
-import android.view.View
-import androidx.annotation.IdRes
 import androidx.fragment.app.FragmentManager
 import com.cooder.cooder.project.app.R
+import com.cooder.cooder.project.app.databinding.ActivityMainBinding
 import com.cooder.cooder.project.app.fragment.*
 import com.cooder.cooder.project.app.fragment.ProfileFragment
 import com.cooder.cooder.project.app.fragment.category.CategoryFragment
 import com.cooder.cooder.project.app.fragment.home.HomePageFragment
-import com.cooder.cooder.project.common.tab.CoFragmentTabView
 import com.cooder.cooder.project.common.tab.CoTabViewAdapter
 import com.cooder.cooder.ui.tab.bottom.CoTabBottomInfo
-import com.cooder.cooder.ui.tab.bottom.CoTabBottomLayout
 import com.cooder.cooder.ui.tab.common.CoTabLayout
 
 /**
@@ -28,21 +25,17 @@ import com.cooder.cooder.ui.tab.common.CoTabLayout
  * 介绍：MainActivity逻辑层
  */
 class MainActivityLogic(
+	private val binding: ActivityMainBinding,
 	private val activityProvider: ActivityProvider,
 	savedInstanceState: Bundle?
 ) {
-	lateinit var fragmentTabView: CoFragmentTabView
-		private set
 	
-	lateinit var tabBottomLayout: CoTabBottomLayout
-		private set
-	
-	val infoList: MutableList<CoTabBottomInfo<*>> = ArrayList()
+	private val infoList: MutableList<CoTabBottomInfo<*>> = ArrayList()
 	
 	/**
 	 * 当前页面索引
 	 */
-	var currentItemIndex: Int = 0
+	private var currentItemIndex: Int = 0
 		private set
 	
 	companion object {
@@ -58,7 +51,6 @@ class MainActivityLogic(
 	}
 	
 	interface ActivityProvider {
-		fun <T : View> findViewById(@IdRes id: Int): T
 		
 		fun getContext(): Context
 		
@@ -76,10 +68,9 @@ class MainActivityLogic(
 	 * 初始化底部导航栏
 	 */
 	private fun initTabBottom() {
-		tabBottomLayout = activityProvider.findViewById(R.id.tab_bottom_layout)
-		tabBottomLayout.setTabAlpha(0.9F)
-		tabBottomLayout.setEnableSliding(false)
-		val iconFont = "font/alibaba_iconfont.ttf"
+		binding.tabBottomLayout.setTabAlpha(0.9F)
+		binding.tabBottomLayout.setEnableSliding(false)
+		val iconFont = "font/iconfont_default.ttf"
 		
 		// 首页
 		val homePageInfo = CoTabBottomInfo<Int>(
@@ -140,25 +131,17 @@ class MainActivityLogic(
 			ProfileFragment::class.java
 		)
 		infoList += profileInfo
-		tabBottomLayout.inflateInfo(infoList)
+		binding.tabBottomLayout.inflateInfo(infoList)
 		// 初始化FragmentTabView
 		val tabViewAdapter = CoTabViewAdapter(activityProvider.getSupportFragmentManager(), infoList)
-		fragmentTabView = activityProvider.findViewById(R.id.fragment_tab_view)
-		fragmentTabView.adapter = tabViewAdapter
+		binding.fragmentTabView.adapter = tabViewAdapter
 		
-		tabBottomLayout.addTabSelectedChangeListener(object : CoTabLayout.OnTabSelectedListener<CoTabBottomInfo<*>> {
+		binding.tabBottomLayout.addTabSelectedChangeListener(object : CoTabLayout.OnTabSelectedListener<CoTabBottomInfo<*>> {
 			override fun onTabSelectedChange(index: Int, prevInfo: CoTabBottomInfo<*>?, nextInfo: CoTabBottomInfo<*>) {
-				fragmentTabView.setCurrentItem(index)
+				binding.fragmentTabView.setCurrentItem(index)
 				currentItemIndex = index
 			}
 		})
-		tabBottomLayout.selectTabInfo(infoList[currentItemIndex])
-	}
-	
-	/**
-	 * 获取底部高度
-	 */
-	fun getTabBottomLayoutHeight(): Float {
-		return tabBottomLayout.getTabBottomLayoutHeight()
+		binding.tabBottomLayout.selectTabInfo(infoList[currentItemIndex])
 	}
 }

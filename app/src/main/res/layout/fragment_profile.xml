@@ -1,256 +1,253 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical"
-    android:paddingHorizontal="@dimen/dp_16"
-    android:scrollbars="none"
-    tools:context=".fragment.ProfileFragment">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_70"
-            android:layout_marginVertical="@dimen/dp_20">
-
-            <ImageView
-                android:id="@+id/profile_user_avatar"
-                android:layout_width="@dimen/dp_70"
-                android:layout_height="@dimen/dp_70"
-                tools:src="@drawable/ic_avatar_default" />
-
-            <TextView
-                android:id="@+id/profile_username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_marginEnd="70dp"
-                android:layout_toEndOf="@+id/profile_user_avatar"
-                android:ellipsize="end"
-                android:maxLength="10"
-                android:maxLines="1"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_18"
-                android:textStyle="bold"
-                tools:text="@string/profile_please_login_first" />
-
-            <TextView
-                android:id="@+id/profile_login_desc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/profile_username"
-                android:layout_marginStart="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_marginBottom="@dimen/dp_10"
-                android:layout_toEndOf="@id/profile_user_avatar"
-                android:ellipsize="end"
-                android:maxLength="10"
-                android:maxLines="1"
-                android:textColor="#757575"
-                android:textSize="@dimen/sp_12"
-                android:textStyle="bold"
-                tools:text="@string/profile_login_desc_welcome_back" />
-
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp_25"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/profile_favorite"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_3"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_14"
-                tools:text="14\n收藏" />
-
-            <TextView
-                android:id="@+id/profile_history_browsing"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_3"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_14"
-                tools:text="251\n历史浏览" />
-
-            <TextView
-                android:id="@+id/profile_learn_minutes"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_3"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_14"
-                tools:text="0\n学习时长" />
-
-        </LinearLayout>
-
-        <com.cooder.cooder.ui.banner.CoBanner
-            android:id="@+id/profile_banner"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_120"
-            android:layout_marginBottom="@dimen/dp_25"
-            android:visibility="gone"
-            app:autoPlay="true"
-            app:indicator="circle_small"
-            app:intervalTime="5000"
-            app:loop="true"
-            app:scrollDuration="500"
-            tools:background="@drawable/shape_view"
-            tools:visibility="visible" />
-
-        <LinearLayout
-            android:id="@+id/item_course"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_45"
-            android:layout_marginHorizontal="@dimen/dp_10"
-            android:gravity="center_vertical">
-
-            <com.cooder.cooder.project.common.ui.view.IconFontTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ic_atm_away_fill"
-                android:textColor="@color/darker_gray"
-                android:textSize="@dimen/sp_25"
-                app:typeface="@string/ic_alibaba_path" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dp_10"
-                android:layout_weight="1"
-                android:text="@string/profile_course_announcement"
-                android:textColor="@color/darker_gray"
-                android:textSize="@dimen/sp_16" />
-
-            <TextView
-                android:id="@+id/course_notice"
-                android:layout_width="@dimen/dp_16"
-                android:layout_height="@dimen/dp_16"
-                android:background="@drawable/ic_red_circle"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_9"
-                android:visibility="gone"
-                tools:text="99+"
-                tools:visibility="visible" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_0.5"
-            android:layout_marginHorizontal="@dimen/dp_10"
-            android:background="@color/lighter_gray" />
-
-        <LinearLayout
-            android:id="@+id/item_collect"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_45"
-            android:layout_marginHorizontal="@dimen/dp_10"
-            android:gravity="center_vertical">
-
-            <com.cooder.cooder.project.common.ui.view.IconFontTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ic_category_products_fill"
-                android:textColor="@color/darker_gray"
-                android:textSize="@dimen/sp_25"
-                app:typeface="@string/ic_alibaba_path" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dp_10"
-                android:layout_weight="1"
-                android:text="@string/profile_my_collect"
-                android:textColor="@color/darker_gray"
-                android:textSize="@dimen/sp_16" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_0.5"
-            android:layout_marginHorizontal="@dimen/dp_10"
-            android:background="@color/lighter_gray" />
-
-        <LinearLayout
-            android:id="@+id/item_address"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_45"
-            android:layout_marginHorizontal="@dimen/dp_10"
-            android:gravity="center_vertical">
-
-            <com.cooder.cooder.project.common.ui.view.IconFontTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ic_order_fill"
-                android:textColor="@color/darker_gray"
-                android:textSize="@dimen/sp_25"
-                app:typeface="@string/ic_alibaba_path" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dp_10"
-                android:layout_weight="1"
-                android:text="@string/profile_delivery_address"
-                android:textColor="@color/darker_gray"
-                android:textSize="@dimen/sp_16" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_0.5"
-            android:layout_marginHorizontal="@dimen/dp_10"
-            android:background="@color/lighter_gray" />
-
-        <LinearLayout
-            android:id="@+id/item_history"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_45"
-            android:layout_marginHorizontal="@dimen/dp_10"
-            android:gravity="center_vertical">
-
-            <com.cooder.cooder.project.common.ui.view.IconFontTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ic_contacts_fill"
-                android:textColor="@color/darker_gray"
-                android:textSize="@dimen/sp_25"
-                app:typeface="@string/ic_alibaba_path" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dp_10"
-                android:layout_weight="1"
-                android:text="@string/profile_browsing_history"
-                android:textColor="@color/darker_gray"
-                android:textSize="@dimen/sp_16" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/white"
+	android:orientation="vertical"
+	android:paddingHorizontal="@dimen/dp_16"
+	android:scrollbars="none"
+	tools:context=".fragment.ProfileFragment">
+	
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
+		
+		<RelativeLayout
+			android:id="@+id/header_view"
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/dp_70"
+			android:layout_marginVertical="@dimen/dp_20">
+			
+			<ImageView
+				android:id="@+id/user_avatar"
+				android:layout_width="@dimen/dp_70"
+				android:layout_height="@dimen/dp_70"
+				tools:src="@drawable/ic_avatar_default" />
+			
+			<TextView
+				android:id="@+id/username"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/dp_10"
+				android:layout_marginTop="@dimen/dp_10"
+				android:layout_marginEnd="70dp"
+				android:layout_toEndOf="@+id/user_avatar"
+				android:ellipsize="end"
+				android:maxLength="10"
+				android:maxLines="1"
+				android:textColor="@color/black"
+				android:textSize="@dimen/sp_18"
+				android:textStyle="bold"
+				tools:text="@string/profile_please_login_first" />
+			
+			<TextView
+				android:id="@+id/login_desc"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_below="@+id/username"
+				android:layout_marginStart="@dimen/dp_10"
+				android:layout_marginTop="@dimen/dp_10"
+				android:layout_marginBottom="@dimen/dp_10"
+				android:layout_toEndOf="@id/user_avatar"
+				android:ellipsize="end"
+				android:maxLength="10"
+				android:maxLines="1"
+				android:textColor="#757575"
+				android:textSize="@dimen/sp_12"
+				android:textStyle="bold"
+				tools:text="@string/profile_login_desc_welcome_back" />
+		
+		</RelativeLayout>
+		
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="@dimen/dp_25"
+			android:gravity="center"
+			android:orientation="horizontal">
+			
+			<TextView
+				android:id="@+id/favorite"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="@dimen/dp_3"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:textColor="@color/black"
+				android:textSize="@dimen/sp_14"
+				tools:text="14\n收藏" />
+			
+			<TextView
+				android:id="@+id/history_browsing"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="@dimen/dp_3"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:textColor="@color/black"
+				android:textSize="@dimen/sp_14"
+				tools:text="251\n历史浏览" />
+			
+			<TextView
+				android:id="@+id/learn_minutes"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="@dimen/dp_3"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:textColor="@color/black"
+				android:textSize="@dimen/sp_14"
+				tools:text="0\n学习时长" />
+		
+		</LinearLayout>
+		
+		<com.cooder.cooder.ui.banner.CoBanner
+			android:id="@+id/banner"
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/dp_120"
+			android:layout_marginBottom="@dimen/dp_25"
+			android:visibility="gone"
+			app:autoPlay="true"
+			app:indicator="circle_small"
+			app:intervalTime="5000"
+			app:loop="true"
+			app:scrollDuration="500"
+			tools:background="@drawable/shape_view"
+			tools:visibility="visible" />
+		
+		<LinearLayout
+			android:id="@+id/item_course"
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/dp_45"
+			android:layout_marginHorizontal="@dimen/dp_10"
+			android:gravity="center_vertical">
+			
+			<com.cooder.cooder.project.common.ui.view.IconFontTextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/ic_atm_away_fill"
+				android:textColor="@color/darker_gray"
+				android:textSize="@dimen/sp_25" />
+			
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="@dimen/dp_10"
+				android:layout_weight="1"
+				android:text="@string/profile_course_announcement"
+				android:textColor="@color/darker_gray"
+				android:textSize="@dimen/sp_16" />
+			
+			<TextView
+				android:id="@+id/course_notice"
+				android:layout_width="@dimen/dp_16"
+				android:layout_height="@dimen/dp_16"
+				android:background="@drawable/ic_red_circle"
+				android:gravity="center"
+				android:textColor="@color/white"
+				android:textSize="@dimen/sp_9"
+				android:visibility="gone"
+				tools:text="99+"
+				tools:visibility="visible" />
+		
+		</LinearLayout>
+		
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/dp_0.5"
+			android:layout_marginHorizontal="@dimen/dp_10"
+			android:background="@color/lighter_gray" />
+		
+		<LinearLayout
+			android:id="@+id/item_collect"
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/dp_45"
+			android:layout_marginHorizontal="@dimen/dp_10"
+			android:gravity="center_vertical">
+			
+			<com.cooder.cooder.project.common.ui.view.IconFontTextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/ic_category_products_fill"
+				android:textColor="@color/darker_gray"
+				android:textSize="@dimen/sp_25" />
+			
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="@dimen/dp_10"
+				android:layout_weight="1"
+				android:text="@string/profile_my_collect"
+				android:textColor="@color/darker_gray"
+				android:textSize="@dimen/sp_16" />
+		
+		</LinearLayout>
+		
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/dp_0.5"
+			android:layout_marginHorizontal="@dimen/dp_10"
+			android:background="@color/lighter_gray" />
+		
+		<LinearLayout
+			android:id="@+id/item_address"
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/dp_45"
+			android:layout_marginHorizontal="@dimen/dp_10"
+			android:gravity="center_vertical">
+			
+			<com.cooder.cooder.project.common.ui.view.IconFontTextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/ic_order_fill"
+				android:textColor="@color/darker_gray"
+				android:textSize="@dimen/sp_25" />
+			
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="@dimen/dp_10"
+				android:layout_weight="1"
+				android:text="@string/profile_delivery_address"
+				android:textColor="@color/darker_gray"
+				android:textSize="@dimen/sp_16" />
+		
+		</LinearLayout>
+		
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/dp_0.5"
+			android:layout_marginHorizontal="@dimen/dp_10"
+			android:background="@color/lighter_gray" />
+		
+		<LinearLayout
+			android:id="@+id/item_history"
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/dp_45"
+			android:layout_marginHorizontal="@dimen/dp_10"
+			android:gravity="center_vertical">
+			
+			<com.cooder.cooder.project.common.ui.view.IconFontTextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/ic_contacts_fill"
+				android:textColor="@color/darker_gray"
+				android:textSize="@dimen/sp_25" />
+			
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="@dimen/dp_10"
+				android:layout_weight="1"
+				android:text="@string/profile_browsing_history"
+				android:textColor="@color/darker_gray"
+				android:textSize="@dimen/sp_16" />
+		
+		</LinearLayout>
+	
+	</LinearLayout>
 
 </ScrollView>

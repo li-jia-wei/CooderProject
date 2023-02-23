@@ -4,8 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.LayoutInflater
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
 import com.cooder.cooder.library.log.CoLog
 import com.cooder.cooder.library.restful.CoCallback
 import com.cooder.cooder.library.restful.CoResponse
@@ -14,9 +14,9 @@ import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.app.databinding.ActivityLoginBinding
 import com.cooder.cooder.project.app.http.ApiFactory
 import com.cooder.cooder.project.app.http.api.AccountApi
+import com.cooder.cooder.project.app.route.CoRoute
 import com.cooder.cooder.project.app.route.RoutePath
 import com.cooder.cooder.project.common.ui.component.CoBaseActivity
-import com.cooder.cooder.project.common.ui.view.input.InputItemLayout
 import com.cooder.cooder.project.common.util.PreferencesUtil
 
 /**
@@ -28,19 +28,15 @@ import com.cooder.cooder.project.common.util.PreferencesUtil
  *
  * 介绍：AuthenticationActivity
  */
-@Route(path = RoutePath.ACTIVITY_ACCOUNT_LOGIN)
-class LoginActivity : CoBaseActivity() {
+@Route(path = RoutePath.ACTIVITY_BIZ_ACCOUNT_LOGIN)
+class LoginActivity : CoBaseActivity<ActivityLoginBinding>() {
 	
-	private lateinit var binding: ActivityLoginBinding
-	
-	companion object {
-		const val REQUEST_CODE_LOGIN = 1000
+	override fun getViewBinding(inflater: LayoutInflater): ActivityLoginBinding {
+		return ActivityLoginBinding.inflate(layoutInflater)
 	}
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		binding = ActivityLoginBinding.inflate(layoutInflater)
-		setContentView(binding.root)
 		
 		setStatusBar(true, Color.WHITE)
 		
@@ -58,8 +54,8 @@ class LoginActivity : CoBaseActivity() {
 	}
 	
 	private fun goLogin() {
-		val username = binding.inputItemUsername.getText()
-		val password = binding.inputItemPassword.getText()
+		val username = binding.username.getText()
+		val password = binding.password.getText()
 		if (username.isEmpty()) {
 			showToast(R.string.login_please_input_username)
 			return
@@ -79,14 +75,14 @@ class LoginActivity : CoBaseActivity() {
 					onBackPressed(Activity.RESULT_OK)
 				} else {
 					showToast(getString(R.string.login_failure, response.message))
-					binding.inputItemPassword.setText("")
+					binding.password.setText("")
 				}
 			}
 			
 			override fun onFailed(throwable: Throwable) {
 				CoLog.e(throwable.message)
 				showToast(getString(R.string.login_failure, throwable.message))
-				binding.inputItemPassword.setText("")
+				binding.password.setText("")
 			}
 		})
 	}
@@ -98,11 +94,9 @@ class LoginActivity : CoBaseActivity() {
 		if (requestCode == RegisterActivity.REQUEST_CODE_REGISTER && resultCode == Activity.RESULT_OK && data != null) {
 			// 将注册成功后的账号返回到登录页的用户名
 			val username = data.getStringExtra("username")
-			if (username != null && username.isNotEmpty()) {
-				val inputItemUsername: InputItemLayout = findViewById(R.id.input_item_username)
-				val inputItemPassword: InputItemLayout = findViewById(R.id.input_item_password)
-				inputItemUsername.setText(username)
-				inputItemPassword.setText("")
+			if (username.isNullOrEmpty()) {
+				binding.username.setText(username!!)
+				binding.password.setText("")
 			}
 		}
 	}
@@ -111,9 +105,11 @@ class LoginActivity : CoBaseActivity() {
 	 * 前往注册
 	 */
 	private fun goRegister() {
-		ARouter.getInstance()
-			.build(RoutePath.ACTIVITY_ACCOUNT_REGISTER)
-			.greenChannel()
-			.navigation(this, RegisterActivity.REQUEST_CODE_REGISTER)
+		CoRoute.startActivity(
+			destination = RoutePath.ACTIVITY_BIZ_ACCOUNT_REGISTER,
+			context = this,
+			requestCode = RegisterActivity.REQUEST_CODE_REGISTER,
+			greenChannel = true
+		)
 	}
 }

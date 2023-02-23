@@ -3,19 +3,18 @@ package com.cooder.cooder.project.common.ui.component
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.CallSuper
-import androidx.core.widget.ContentLoadingProgressBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cooder.cooder.project.common.R
-import com.cooder.cooder.project.common.ui.view.CoRecyclerView
-import com.cooder.cooder.project.common.ui.view.EmptyView
+import com.cooder.cooder.project.common.databinding.FragmentAbsListBinding
 import com.cooder.cooder.ui.item.CoAdapter
 import com.cooder.cooder.ui.item.CoDataItem
 import com.cooder.cooder.ui.refresh.CoRefresh
-import com.cooder.cooder.ui.refresh.CoRefreshLayout
 import com.cooder.cooder.ui.refresh.overview.CoOverView
 import com.cooder.cooder.ui.refresh.overview.CoTextOverView
 import java.util.concurrent.Executors
@@ -29,22 +28,15 @@ import java.util.concurrent.Executors
  *
  * 介绍：CoAbsListFragment
  */
-abstract class CoAbsListFragment : CoBaseFragment(), CoRefresh.CoRefreshListener {
+abstract class CoAbsListFragment : CoBaseFragment<FragmentAbsListBinding>(), CoRefresh.CoRefreshListener {
 	
-	lateinit var refreshLayout: CoRefreshLayout
-		private set
-	lateinit var recyclerView: CoRecyclerView
-		private set
-	lateinit var emptyView: EmptyView
-		private set
-	lateinit var loadingView: ContentLoadingProgressBar
-		private set
-	lateinit var adapter: CoAdapter
-		private set
-	lateinit var refreshHeaderView: CoTextOverView
-		private set
-	lateinit var layoutManager: RecyclerView.LayoutManager
-		private set
+	protected lateinit var adapter: CoAdapter
+	
+	protected var pageIndex = 1
+	
+	private lateinit var refreshHeaderView: CoTextOverView
+	
+	private lateinit var layoutManager: RecyclerView.LayoutManager
 	
 	private val executor = Executors.newCachedThreadPool()
 	private val handler = Handler(Looper.myLooper()!!)
@@ -52,7 +44,9 @@ abstract class CoAbsListFragment : CoBaseFragment(), CoRefresh.CoRefreshListener
 	private var refreshFailedDuration = 500L
 	private var loadFailedDuration = 500L
 	
-	protected var pageIndex = 1
+	override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentAbsListBinding {
+		return FragmentAbsListBinding.inflate(inflater, container, false)
+	}
 	
 	companion object {
 		const val PREFETCH_SIZE = 5
@@ -72,40 +66,32 @@ abstract class CoAbsListFragment : CoBaseFragment(), CoRefresh.CoRefreshListener
 		this.loadFailedDuration = duration
 	}
 	
-	override fun getLayoutId(): Int {
-		return R.layout.fragment_abs_list
-	}
-	
 	@CallSuper
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		this.refreshLayout = view.findViewById(R.id.refresh_layout)
-		this.recyclerView = view.findViewById(R.id.recycler_view)
-		this.emptyView = view.findViewById(R.id.empty_view)
-		this.loadingView = view.findViewById(R.id.content_loading)
 		
 		refreshHeaderView = CoTextOverView(requireContext())
-		refreshLayout.setRefreshOverView(refreshHeaderView)
-		refreshLayout.setRefreshListener(this)
+		binding.refreshLayout.setRefreshOverView(refreshHeaderView)
+		binding.refreshLayout.setRefreshListener(this)
 		layoutManager = createLayoutManager()
 		adapter = CoAdapter(requireContext())
 		
-		recyclerView.layoutManager = layoutManager
-		recyclerView.adapter = adapter
+		binding.recyclerView.layoutManager = layoutManager
+		binding.recyclerView.adapter = adapter
 		
-		emptyView.visibility = View.GONE
-		emptyView.setIcon(R.string.ic_help, R.color.abs_list_empty)
-		emptyView.setDesc(R.string.abs_list_desc)
-		emptyView.setRefreshButton(R.string.abs_list_refresh)
-		emptyView.setOnClickRefreshListener {
+		binding.emptyView.visibility = View.GONE
+		binding.emptyView.setIcon(R.string.ic_help, R.color.abs_list_empty)
+		binding.emptyView.setDesc(R.string.abs_list_desc)
+		binding.emptyView.setRefreshButton(R.string.abs_list_refresh)
+		binding.emptyView.setOnClickRefreshListener {
 			onRefresh()
 		}
 		
-		loadingView.visibility = View.VISIBLE
+		binding.loadView.visibility = View.VISIBLE
 		pageIndex = 1
 		
 		enableLoadMore {
-			onEnableMore()
+			onLoadMore()
 		}
 	}
 	
@@ -116,30 +102,30 @@ abstract class CoAbsListFragment : CoBaseFragment(), CoRefresh.CoRefreshListener
 		val success = dataItems != null && dataItems.isNotEmpty()
 		val refresh = pageIndex == 1
 		if (refresh) {
-			loadingView.visibility = View.GONE
+			binding.loadView.visibility = View.GONE
 			if (success) {
-				refreshLayout.refreshFinished()
-				emptyView.visibility = View.GONE
+				binding.refreshLayout.refreshFinished()
+				binding.emptyView.visibility = View.GONE
 				adapter.removeAll()
 				adapter.addItems(dataItems!!)
 			} else {
 				// 延迟0.5s，显示empty视图
 				delayInvoke(refreshFailedDuration) {
-					refreshLayout.refreshFinished()
+					binding.refreshLayout.refreshFinished()
 					Toast.makeText(requireContext(), R.string.abs_list_refresh_failure, Toast.LENGTH_SHORT).show()
 					if (adapter.isEmpty()) {
-						emptyView.visibility = View.VISIBLE
+						binding.emptyView.visibility = View.VISIBLE
 					}
 				}
 			}
 		} else {
 			if (success) {
 				adapter.addItems(dataItems!!)
-				recyclerView.loadFinished(true)
+				binding.recyclerView.loadFinished(true)
 			} else {
 				// 延迟0.5s
 				delayInvoke(loadFailedDuration) {
-					recyclerView.loadFinished(false)
+					binding.recyclerView.loadFinished(false)
 					Toast.makeText(requireContext(), R.string.abs_list_load_failure, Toast.LENGTH_SHORT).show()
 				}
 			}
@@ -191,10 +177,10 @@ abstract class CoAbsListFragment : CoBaseFragment(), CoRefresh.CoRefreshListener
 	 * 开启加载更多
 	 */
 	fun enableLoadMore(callback: () -> Unit) {
-		recyclerView.enableLoadMore(PREFETCH_SIZE) {
+		binding.recyclerView.enableLoadMore(PREFETCH_SIZE) {
 			if (refreshHeaderView.state == CoOverView.CoRefreshState.STATE_REFRESH) {
 				// 正处于刷新状态
-				recyclerView.loadFinished(false)
+				binding.recyclerView.loadFinished(false)
 				@Suppress("LABEL_NAME_CLASH") return@enableLoadMore
 			}
 			pageIndex++
@@ -206,7 +192,7 @@ abstract class CoAbsListFragment : CoBaseFragment(), CoRefresh.CoRefreshListener
 	 * 关闭加载更多
 	 */
 	private fun disableLoadMore() {
-		recyclerView.disableLoadMore()
+		binding.recyclerView.disableLoadMore()
 	}
 	
 	/**
@@ -216,7 +202,7 @@ abstract class CoAbsListFragment : CoBaseFragment(), CoRefresh.CoRefreshListener
 		return LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 	}
 	
-	override fun onEnableMore() {
+	override fun onLoadMore() {
 	
 	}
 	
@@ -225,9 +211,9 @@ abstract class CoAbsListFragment : CoBaseFragment(), CoRefresh.CoRefreshListener
 	 */
 	@CallSuper
 	override fun onRefresh() {
-		if (recyclerView.isLoading()) {
-			refreshLayout.post {
-				refreshLayout.refreshFinished()
+		if (binding.recyclerView.isLoading()) {
+			binding.refreshLayout.post {
+				binding.refreshLayout.refreshFinished()
 			}
 			return
 		}

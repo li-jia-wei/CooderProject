@@ -10,7 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.cooder.cooder.library.util.expends.dpInt
 import com.cooder.cooder.project.app.R
-import com.cooder.cooder.project.app.model.HomeGoods
+import com.cooder.cooder.project.app.model.GoodsModel
 import com.cooder.cooder.project.common.ui.view.expends.loadCorner
 import com.cooder.cooder.ui.item.CoDataItem
 
@@ -24,16 +24,16 @@ import com.cooder.cooder.ui.item.CoDataItem
  * 介绍：产品Item
  */
 class GoodsItem(
-	goods: HomeGoods,
+	goods: GoodsModel,
 	private val hotTab: Boolean
-) : CoDataItem<HomeGoods, RecyclerView.ViewHolder>(goods) {
+) : CoDataItem<GoodsModel, RecyclerView.ViewHolder>(goods) {
 	
 	companion object {
 		private const val IMAGE_CORNER = 10
 	}
 	
 	override fun getItemLayoutRes(): Int {
-		return if (hotTab) R.layout.layout_home_goods_list_item1 else R.layout.layout_home_goods_list_item2
+		return if (hotTab) R.layout.item_home_goods_list_1 else R.layout.item_home_goods_list_2
 	}
 	
 	override fun onBindData(holder: RecyclerView.ViewHolder, position: Int) {

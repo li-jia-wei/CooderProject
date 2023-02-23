@@ -4,18 +4,17 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.LayoutInflater
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.cooder.cooder.library.restful.CoCallback
 import com.cooder.cooder.library.restful.CoResponse
 import com.cooder.cooder.library.util.expends.setStatusBar
 import com.cooder.cooder.project.app.R
+import com.cooder.cooder.project.app.databinding.ActivityRegisterBinding
 import com.cooder.cooder.project.app.http.ApiFactory
 import com.cooder.cooder.project.app.http.api.AccountApi
 import com.cooder.cooder.project.app.route.RoutePath
 import com.cooder.cooder.project.common.ui.component.CoBaseActivity
-import com.cooder.cooder.project.common.ui.view.IconFontTextView
-import com.cooder.cooder.project.common.ui.view.input.InputItemLayout
-import com.google.android.material.button.MaterialButton
 
 /**
  * 项目：CooderProject
@@ -26,61 +25,57 @@ import com.google.android.material.button.MaterialButton
  *
  * 介绍：RegisterActivity
  */
-@Route(path = RoutePath.ACTIVITY_ACCOUNT_REGISTER)
-class RegisterActivity : CoBaseActivity() {
+@Route(path = RoutePath.ACTIVITY_BIZ_ACCOUNT_REGISTER)
+class RegisterActivity : CoBaseActivity<ActivityRegisterBinding>() {
 	
 	companion object {
 		const val REQUEST_CODE_REGISTER = 1001
 	}
 	
+	override fun getViewBinding(inflater: LayoutInflater): ActivityRegisterBinding {
+		return ActivityRegisterBinding.inflate(inflater)
+	}
+	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		setContentView(R.layout.activity_register)
 		
 		setStatusBar(true, Color.WHITE)
 		
-		val actionBack: IconFontTextView = findViewById(R.id.action_back)
-		actionBack.setOnClickListener {
+		binding.actionBack.setOnClickListener {
 			onBackPressed(Activity.RESULT_CANCELED)
 		}
 		
-		val actionSubmit: MaterialButton = findViewById(R.id.action_submit)
-		actionSubmit.setOnClickListener {
+		binding.actionSubmit.setOnClickListener {
 			goRegister()
 		}
 	}
 	
 	private fun goRegister() {
-		val inputItemCourseOrderId: InputItemLayout = findViewById(R.id.input_item_course_order_id)
-		val inputItemMoocId: InputItemLayout = findViewById(R.id.input_item_mooc_id)
-		val inputItemUsername: InputItemLayout = findViewById(R.id.input_item_username)
-		val inputItemPassword: InputItemLayout = findViewById(R.id.input_item_password)
-		val inputItemConfirmPassword: InputItemLayout = findViewById(R.id.input_item_confirm_password)
 		
-		val courseOrderId = inputItemCourseOrderId.getText()
+		val courseOrderId = binding.courseOrderId.getText()
 		if (courseOrderId.length < 4) {
 			showToast(R.string.register_please_input_course_order_id_last_4_digits)
 			return
 		}
-		val moocId = inputItemMoocId.getText()
+		val moocId = binding.moocId.getText()
 		if (moocId.isEmpty()) {
 			showToast(R.string.register_please_input_mooc_id)
 			return
 		}
-		val username = inputItemUsername.getText()
+		val username = binding.username.getText()
 		if (username.length < 6) {
 			showToast(R.string.register_username_last_6_digits)
 			return
 		}
-		val password = inputItemPassword.getText()
+		val password = binding.password.getText()
 		if (password.length < 6) {
 			showToast(R.string.register_password_last_6_digits)
 			return
 		}
-		val confirmPassword = inputItemConfirmPassword.getText()
+		val confirmPassword = binding.confirmPassword.getText()
 		if (password != confirmPassword) {
 			showToast(R.string.register_confirm_password_failure)
-			inputItemConfirmPassword.setText("")
+			binding.confirmPassword.setText("")
 			return
 		}
 		ApiFactory.create(AccountApi::class.java).register(username, password, moocId, courseOrderId).enqueue(object : CoCallback<String> {
@@ -89,18 +84,18 @@ class RegisterActivity : CoBaseActivity() {
 					// 注册成功
 					val intent = Intent()
 					intent.putExtra("username", username)
-					onBackPressed(Activity.RESULT_OK)
+					onBackPressed(Activity.RESULT_OK, intent)
 				} else {
 					showToast(getString(R.string.register_failure, response.message))
-					inputItemPassword.setText("")
-					inputItemConfirmPassword.setText("")
+					binding.password.setText("")
+					binding.confirmPassword.setText("")
 				}
 			}
 			
 			override fun onFailed(throwable: Throwable) {
 				showToast(getString(R.string.register_failure, throwable.message))
-				inputItemPassword.setText("")
-				inputItemConfirmPassword.setText("")
+				binding.password.setText("")
+				binding.confirmPassword.setText("")
 			}
 		})
 	}

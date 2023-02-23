@@ -23,21 +23,15 @@ class IconFontTextView @JvmOverloads constructor(
 	defStyleAttr: Int = 0
 ) : AppCompatTextView(context, attrs, defStyleAttr) {
 	
+	private companion object {
+		private const val TYPEFACE_DEFAULT = "font/iconfont_default.ttf"
+	}
+	
 	init {
 		val typedArray: TypedArray = context.obtainStyledAttributes(attrs, R.styleable.IconFontTextView)
-		var typefaceFilename = typedArray.getString(R.styleable.IconFontTextView_typeface)
-		if (typefaceFilename != null) {
-			if (!isFontFile(typefaceFilename)) {
-				typefaceFilename = null
-			}
-		}
-		if (typefaceFilename == null) {
-			typefaceFilename = getFirstFontFile(context)
-		}
-		if (typefaceFilename != null) {
-			typeface = Typeface.createFromAsset(context.assets, typefaceFilename)
-		}
+		val typefacePath = typedArray.getString(R.styleable.IconFontTextView_typeface) ?: TYPEFACE_DEFAULT
 		typedArray.recycle()
+		typeface = Typeface.createFromAsset(context.assets, typefacePath)
 	}
 	
 	fun setTypeface(@StringRes pathId: Int) {
@@ -46,33 +40,5 @@ class IconFontTextView @JvmOverloads constructor(
 	
 	fun setTypeface(path: String) {
 		typeface = Typeface.createFromAsset(context.assets, path)
-	}
-	
-	/**
-	 * 获取第一个字体文件
-	 */
-	private fun getFirstFontFile(context: Context): String? {
-		val ttfs = context.assets.list("font")
-		if (ttfs != null) {
-			for (ttf in ttfs) {
-				if (isFontFile(ttf)) {
-					return "font/$ttf"
-				}
-			}
-		}
-		return null
-	}
-	
-	/**
-	 * 查询是否是字体文件
-	 */
-	private fun isFontFile(filename: String): Boolean {
-		val fontTypes = listOf(".ttf", ".ttc")
-		for (type in fontTypes) {
-			if (filename.endsWith(type)) {
-				return true
-			}
-		}
-		return false
 	}
 }

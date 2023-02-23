@@ -52,7 +52,7 @@ class SubcategoryItem(
 		private val inflater = LayoutInflater.from(context)
 		
 		override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-			val view = inflater.inflate(R.layout.layout_home_op_grid_item, parent, false)
+			val view = inflater.inflate(R.layout.item_home_op_grid, parent, false)
 			return object : RecyclerView.ViewHolder(view) {}
 		}
 		

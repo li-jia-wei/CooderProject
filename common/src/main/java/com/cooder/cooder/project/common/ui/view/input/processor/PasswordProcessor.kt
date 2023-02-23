@@ -38,7 +38,6 @@ internal open class PasswordProcessor(
 	override fun process() {
 		val visibleView = IconFontTextView(context)
 		visibleView.textSize = 24F
-		visibleView.setTypeface(R.string.ic_alibaba_path)
 		visibleView.setText(icNotVisible)
 		visibleView.gravity = Gravity.CENTER
 		visibleView.setTextColor(ContextCompat.getColor(context, R.color.darker_gray))

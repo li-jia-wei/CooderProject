@@ -1,10 +1,10 @@
 package com.cooder.cooder.project.app.http.interceptor
 
-import com.alibaba.android.arouter.launcher.ARouter
+import android.os.Bundle
 import com.cooder.cooder.library.restful.CoInterceptor
 import com.cooder.cooder.library.restful.CoResponse
 import com.cooder.cooder.project.app.R
-import com.cooder.cooder.project.app.route.DegradeGlobalActivity
+import com.cooder.cooder.project.app.route.CoRoute
 import com.cooder.cooder.project.app.route.RoutePath
 import com.cooder.cooder.project.common.util.AppGlobals
 
@@ -27,22 +27,20 @@ class HttpCodeInterceptor : CoInterceptor {
 		val response = chain.response()
 		when (response.code) {
 			CoResponse.RC_NEED_LOGIN -> {
-				ARouter.getInstance()
-					.build(RoutePath.ACTIVITY_ACCOUNT_LOGIN)
-					.navigation()
+				CoRoute.startActivity(RoutePath.ACTIVITY_BIZ_ACCOUNT_LOGIN)
 				return true
 			}
+			
 			CoResponse.RC_AUTH_TOKEN_EXPIRED, CoResponse.RC_AUTH_TOKEN_INVALID -> {
 				var helpUrl: String? = null
 				if (response.errorData != null) {
 					helpUrl = response.errorData!!["helpUrl"]
 				}
-				ARouter.getInstance()
-					.build(RoutePath.ACTIVITY_DEGRADE_GLOBAL)
-					.withString(DegradeGlobalActivity.DEGRADE_TITLE, AppGlobals.getBaseContext().getString(R.string.token_degrade_title))
-					.withString(DegradeGlobalActivity.DEGRADE_DESC, response.message)
-					.withString(DegradeGlobalActivity.DEGRADE_ACTION, helpUrl)
-					.navigation()
+				val bundle = Bundle()
+				bundle.putString("degradeTitle", AppGlobals.getBaseContext().getString(R.string.token_degrade_title))
+				bundle.putString("degradeDesc", response.message)
+				bundle.putString("degradeAction", helpUrl)
+				CoRoute.startActivity(RoutePath.ACTIVITY_ROUTE_DEGRADE_GLOBAL, bundle)
 				return true
 			}
 		}

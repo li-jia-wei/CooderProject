@@ -2,11 +2,12 @@ package com.cooder.cooder.project.app.fragment.category
 
 import android.graphics.Color
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout.LayoutParams
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cooder.cooder.library.log.CoLog
 import com.cooder.cooder.library.restful.CoCallback
@@ -14,10 +15,13 @@ import com.cooder.cooder.library.restful.CoResponse
 import com.cooder.cooder.library.util.expends.dpInt
 import com.cooder.cooder.project.app.MainActivity
 import com.cooder.cooder.project.app.R
+import com.cooder.cooder.project.app.databinding.FragmentCategoryBinding
 import com.cooder.cooder.project.app.http.ApiFactory
 import com.cooder.cooder.project.app.http.api.CategoryApi
 import com.cooder.cooder.project.app.model.Subcategory
 import com.cooder.cooder.project.app.model.TabCategory
+import com.cooder.cooder.project.app.route.CoRoute
+import com.cooder.cooder.project.app.route.RoutePath
 import com.cooder.cooder.project.common.ui.component.CoBaseFragment
 import com.cooder.cooder.project.common.ui.view.EmptyView
 import com.cooder.cooder.project.common.ui.view.expends.load
@@ -35,10 +39,10 @@ import com.cooder.cooder.ui.R as R2
  *
  * 介绍：类别Fragment
  */
-class CategoryFragment : CoBaseFragment() {
+class CategoryFragment : CoBaseFragment<FragmentCategoryBinding>() {
 	
 	private var emptyView: EmptyView? = null
-	private lateinit var sliderView: CoSliderView
+	
 	private val layoutManager = GridLayoutManager(context, SPAN_COUNT)
 	
 	private val subcategoryListCache = mutableMapOf<String, List<Subcategory>>()
@@ -56,14 +60,13 @@ class CategoryFragment : CoBaseFragment() {
 		subcategoryListCache[currentCategoryId]!![it].groupName
 	}
 	
-	override fun getLayoutId(): Int {
-		return R.layout.fragment_category
+	override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentCategoryBinding {
+		return FragmentCategoryBinding.inflate(inflater, container, false)
 	}
 	
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		
-		sliderView = findViewById(R.id.slider_view)
 		queryCategoryList()
 	}
 	
@@ -86,12 +89,12 @@ class CategoryFragment : CoBaseFragment() {
 	private fun onQueryCategoryListSuccess(data: List<TabCategory>) {
 		if (isNotAlive()) return
 		emptyView?.visibility = View.GONE
-		sliderView.visibility = View.VISIBLE
-		sliderView.bindMenuView(itemCount = data.size, callback = object : CoSliderView.BindCallback {
+		binding.sliderView.visibility = View.VISIBLE
+		binding.sliderView.bindMenuView(itemCount = data.size, callback = object : CoSliderView.BindCallback {
 			override fun onBindView(holder: CoViewHolder, position: Int) {
 				val category = data[position]
 				val title = holder.findViewById<TextView>(R2.id.menu_title)
-				title?.text = category.categoryName
+				title.text = category.categoryName
 			}
 			
 			override fun onItemClick(holder: CoViewHolder, position: Int) {
@@ -104,7 +107,7 @@ class CategoryFragment : CoBaseFragment() {
 			}
 		})
 		val height = (requireActivity() as MainActivity).getTabBottomLayoutHeight().dpInt
-		CoTabBottomLayout.clipBottomPadding(sliderView.menuView, height)
+		CoTabBottomLayout.clipBottomPadding(binding.sliderView.menuView, height)
 	}
 	
 	private fun querySubcategoryList(categoryId: String) {
@@ -125,12 +128,12 @@ class CategoryFragment : CoBaseFragment() {
 	}
 	
 	private fun onQuerySubcategoryListSuccess(data: List<Subcategory>, categoryId: String) {
-		this.currentCategoryId =  categoryId
+		this.currentCategoryId = categoryId
 		spanSizeLookUp.clear()
 		if (layoutManager.spanSizeLookup != spanSizeLookUp) {
 			layoutManager.spanSizeLookup = spanSizeLookUp
 		}
-		sliderView.bindContentView(itemCount = data.size, itemDecoration = itemDecoration, layoutManager = layoutManager, callback = object : CoSliderView.BindCallback {
+		binding.sliderView.bindContentView(itemCount = data.size, itemDecoration = itemDecoration, layoutManager = layoutManager, callback = object : CoSliderView.BindCallback {
 			override fun onBindView(holder: CoViewHolder, position: Int) {
 				val subcategory = data[position]
 				val image = holder.findViewById<ImageView>(R2.id.content_image)
@@ -140,13 +143,17 @@ class CategoryFragment : CoBaseFragment() {
 			}
 			
 			override fun onItemClick(holder: CoViewHolder, position: Int) {
-				// 跳转到类目的商品列表页
+				if (isNotAlive()) return
 				val subcategory = data[position]
-				Toast.makeText(requireContext(), "${subcategory.groupName} : ${subcategory.subcategoryName}", Toast.LENGTH_SHORT).show()
+				val bundle = Bundle()
+				bundle.putString("categoryId", subcategory.categoryId)
+				bundle.putString("subcategoryId", subcategory.subcategoryId)
+				bundle.putString("subcategoryTitle", subcategory.subcategoryName)
+				CoRoute.startActivity(RoutePath.ACTIVITY_BIZ_GOODS_GOODS_LIST, bundle)
 			}
 		})
 		val height = (requireActivity() as MainActivity).getTabBottomLayoutHeight().dpInt
-		CoTabBottomLayout.clipBottomPadding(sliderView.contentView, height)
+		CoTabBottomLayout.clipBottomPadding(binding.sliderView.contentView, height)
 	}
 	
 	private fun showEmptyView() {
@@ -161,9 +168,9 @@ class CategoryFragment : CoBaseFragment() {
 				this.setBackgroundColor(Color.WHITE)
 				this.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
 			}
-			addView(emptyView!!)
+			binding.root.addView(emptyView!!)
 		}
-		sliderView.visibility = View.GONE
+		binding.sliderView.visibility = View.GONE
 		emptyView?.visibility = View.VISIBLE
 	}
 }

@@ -26,7 +26,7 @@
 		tools:visibility="visible" />
 	
 	<androidx.core.widget.ContentLoadingProgressBar
-		android:id="@+id/content_loading"
+		android:id="@+id/load_view"
 		style="@style/Widget.AppCompat.ProgressBar"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"

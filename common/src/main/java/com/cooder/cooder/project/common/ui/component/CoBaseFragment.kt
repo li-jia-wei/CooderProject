@@ -1,70 +1,47 @@
 package com.cooder.cooder.project.common.ui.component
 
 import android.os.Bundle
-import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.CallSuper
-import androidx.annotation.IdRes
-import androidx.annotation.LayoutRes
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 
 /**
  * 项目：CooderProject
  *
  * 作者：李佳伟
  *
- * 创建：2022/10/3 14:18
+ * 创建：2023/2/22 22:10:10
  *
- * 介绍：CoBaseFragment
+ * 介绍：CoBaseFragment，已适配ViewBinding
  */
-abstract class CoBaseFragment : Fragment() {
+abstract class CoBaseFragment<VB : ViewBinding> : Fragment() {
 	
-	private val viewCaches = SparseArray<View>()
+	lateinit var binding: VB
 	
-	lateinit var root: View
-		private set
+	abstract fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 	
-	@LayoutRes
-	protected abstract fun getLayoutId(): Int
-	
-	@CallSuper
-	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-		root = inflater.inflate(getLayoutId(), container, false)
-		return root
+	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+		binding = getViewBinding(inflater, container)
+		return binding.root
 	}
 	
-	/**
-	 * 判断是否存活
-	 */
-	protected open fun isAlive(): Boolean {
-		return !isNotAlive()
+	open fun isAlive(): Boolean {
+		return !isRemoving && !isDetached && activity != null
 	}
 	
-	/**
-	 * 判断是否不存活
-	 */
-	protected open fun isNotAlive(): Boolean {
+	open fun isNotAlive(): Boolean {
 		return isRemoving || isDetached || activity == null
 	}
 	
-	protected fun showToast(text: String?) {
+	fun showToast(text: String?) {
 		Toast.makeText(requireContext(), text ?: "null", Toast.LENGTH_SHORT).show()
 	}
 	
-	@Suppress("UNCHECKED_CAST")
-	fun <T : View> findViewById(@IdRes id: Int): T {
-		var view = viewCaches[id]
-		if (view == null) {
-			view = root.findViewById(id)
-			viewCaches[id] = view
-		}
-		return view as T
-	}
-	
-	fun addView(view: View) {
-		(root as ViewGroup).addView(view)
+	fun showToast(@StringRes resId: Int) {
+		Toast.makeText(requireContext(), getString(resId), Toast.LENGTH_SHORT).show()
 	}
 }
