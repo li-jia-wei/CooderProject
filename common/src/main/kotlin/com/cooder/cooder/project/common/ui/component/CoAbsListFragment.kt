@@ -202,7 +202,7 @@ abstract class CoAbsListFragment : CoBaseFragment<FragmentAbsListBinding>(), CoR
 		return LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 	}
 	
-	override fun onLoadMore() {
+	open fun onLoadMore() {
 	
 	}
 	

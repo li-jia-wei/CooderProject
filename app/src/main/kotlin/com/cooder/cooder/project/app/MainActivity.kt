@@ -47,7 +47,7 @@ class MainActivity : CoBaseActivity<ActivityMainBinding>(), ActivityProvider {
 	}
 	
 	@Deprecated("Deprecated in Java")
-	override fun startActivityForResult(intent: Intent?, requestCode: Int) {
+	override fun startActivityForResult(intent: Intent, requestCode: Int) {
 		@Suppress("DEPRECATION")
 		super.startActivityForResult(intent, requestCode)
 		val fragments = supportFragmentManager.fragments

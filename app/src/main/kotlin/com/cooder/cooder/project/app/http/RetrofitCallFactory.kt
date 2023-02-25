@@ -1,7 +1,11 @@
 package com.cooder.cooder.project.app.http
 
 import com.cooder.cooder.library.log.CoLog
-import com.cooder.cooder.library.restful.*
+import com.cooder.cooder.library.restful.CoCall
+import com.cooder.cooder.library.restful.CoCallback
+import com.cooder.cooder.library.restful.CoConvert
+import com.cooder.cooder.library.restful.CoRequest
+import com.cooder.cooder.library.restful.CoResponse
 import okhttp3.FormBody
 import okhttp3.MediaType
 import okhttp3.RequestBody
@@ -11,7 +15,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.HeaderMap
+import retrofit2.http.POST
+import retrofit2.http.QueryMap
+import retrofit2.http.Url
 
 /**
  * 项目：CooderProject

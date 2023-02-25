@@ -16,6 +16,7 @@ dependencyResolutionManagement {
 rootProject.name = "CooderProject"
 include ':app'
 include ':common'
+include ':cooder-debug'
 
 include ':cooder-ui'
 project(':cooder-ui').projectDir = '../CooderLibrary/cooder-ui' as File
