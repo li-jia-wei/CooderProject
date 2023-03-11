@@ -9,15 +9,15 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.cooder.cooder.library.restful.CoCallback
-import com.cooder.cooder.library.restful.CoResponse
 import com.cooder.cooder.project.app.R
+import com.cooder.cooder.project.app.biz.account.AccountManager
 import com.cooder.cooder.project.app.databinding.FragmentHomePageBinding
-import com.cooder.cooder.project.app.http.ApiFactory
-import com.cooder.cooder.project.app.http.api.CategoryApi
 import com.cooder.cooder.project.app.model.TabCategory
 import com.cooder.cooder.project.common.ui.component.CoBaseFragment
+import com.cooder.cooder.ui.tab.common.CoTabLayout
 import com.cooder.cooder.ui.tab.top.CoTabTopInfo
 
 /**
@@ -31,9 +31,11 @@ import com.cooder.cooder.ui.tab.top.CoTabTopInfo
  */
 class HomePageFragment : CoBaseFragment<FragmentHomePageBinding>() {
 	
-	private var tabTopSelectIndex = DEFAULT_TAB_TOP_SELECT_INDEX
+	private val viewModel by lazy {
+		ViewModelProvider(this)[HomePageViewModel::class.java]
+	}
 	
-	private var isSuccessful = false
+	private var tabTopSelectIndex = DEFAULT_TAB_TOP_SELECT_INDEX
 	
 	private companion object {
 		/**
@@ -50,28 +52,33 @@ class HomePageFragment : CoBaseFragment<FragmentHomePageBinding>() {
 		super.onViewCreated(view, savedInstanceState)
 		
 		queryTabList()
+		
+		AccountManager.loginSuccessObserver(requireContext()) {
+			queryTabList()
+		}
 	}
 	
 	/**
 	 * 查询顶部Tab
 	 */
 	private fun queryTabList() {
-		if (!isSuccessful) {
-			ApiFactory.create(CategoryApi::class.java).queryCategoryList().enqueue(object : CoCallback<List<TabCategory>> {
-				override fun onSuccess(response: CoResponse<List<TabCategory>>) {
-					val data: List<TabCategory>? = response.data
-					if (response.isSuccessful() && data != null) {
-						isSuccessful = true
-						updateUI(data)
-					} else {
-						Toast.makeText(requireContext(), response.message, Toast.LENGTH_SHORT).show()
-					}
-				}
-				
-				override fun onFailed(throwable: Throwable) {
-					Toast.makeText(requireContext(), throwable.message, Toast.LENGTH_SHORT).show()
-				}
-			})
+		viewModel.queryTabList().observe(viewLifecycleOwner) {
+			if (it.isSuccessful()) {
+				updateUI(it.data!!)
+			} else {
+				Toast.makeText(requireContext(), it.msg, Toast.LENGTH_SHORT).show()
+			}
+		}
+	}
+	
+	/**
+	 * Tab选中改变事件
+	 */
+	private val onTabSelectedChangeListener = object : CoTabLayout.OnTabSelectedListener<CoTabTopInfo<*>> {
+		override fun onTabSelectedChange(index: Int, prevInfo: CoTabTopInfo<*>?, nextInfo: CoTabTopInfo<*>) {
+			if (binding.viewPager.currentItem != index) {
+				binding.viewPager.setCurrentItem(index, false)
+			}
 		}
 	}
 	
@@ -89,41 +96,67 @@ class HomePageFragment : CoBaseFragment<FragmentHomePageBinding>() {
 		}
 		binding.tabTopLayout.inflateInfo(tabTopInfos)
 		binding.tabTopLayout.selectTabInfo(tabTopInfos[DEFAULT_TAB_TOP_SELECT_INDEX])
-		binding.tabTopLayout.addTabSelectedChangeListener { index, prevInfo, nextInfo ->
-			if (binding.viewPager.currentItem != index) {
-				binding.viewPager.setCurrentItem(index, false)
-			}
-		}
-		binding.viewPager.adapter = HomePagerAdapter(data)
-		binding.viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
-			override fun onPageSelected(position: Int) {
-				// 这个方法被触发有两种可能，第一种是切换顶部Tab，第二种是手动滑动翻页
-				// 如果是手动滑动翻页
-				if (position != tabTopSelectIndex) {
-					binding.tabTopLayout.selectTabInfo(tabTopInfos[position])
-					tabTopSelectIndex = position
+		binding.tabTopLayout.addTabSelectedChangeListener(onTabSelectedChangeListener)
+		val adapter = if (binding.viewPager.adapter == null) {
+			val homePagerAdapter = HomePagerAdapter()
+			binding.viewPager.adapter = homePagerAdapter
+			
+			binding.viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
+				override fun onPageSelected(position: Int) {
+					// 这个方法被触发有两种可能，第一种是切换顶部Tab，第二种是手动滑动翻页
+					// 如果是手动滑动翻页
+					if (position != tabTopSelectIndex) {
+						binding.tabTopLayout.selectTabInfo(tabTopInfos[position])
+						tabTopSelectIndex = position
+					}
 				}
-			}
-		})
+			})
+			homePagerAdapter
+		} else {
+			binding.viewPager.adapter as HomePagerAdapter
+		}
+		adapter.update(data)
 	}
 	
-	inner class HomePagerAdapter(
-		private val tabs: List<TabCategory>
-	) : FragmentPagerAdapter(childFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+	@Suppress("DEPRECATION")
+	inner class HomePagerAdapter : FragmentPagerAdapter(childFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+		
+		private val tabs = mutableListOf<TabCategory>()
 		
 		private val fragments = SparseArray<Fragment>(tabs.size)
 		
 		override fun getItem(position: Int): Fragment {
-			var fragment = fragments[position, null]
+			val categoryId = tabs[position].categoryId
+			val key = categoryId.toInt()
+			var fragment = fragments.get(key, null)
 			if (fragment == null) {
-				fragment = HomePageTabFragment.newInstance(tabs[position].categoryId)
-				fragments.put(position, fragment)
+				fragment = HomePageTabFragment.newInstance(categoryId)
+				fragments.put(key, fragment)
 			}
 			return fragment
 		}
 		
+		override fun getItemPosition(any: Any): Int {
+			// 判断刷新前后的两次Fragment在ViewPager中的位置是否一致
+			// 如果改变了返回POSITION_NONE，否则返回POSITION_UNCHANGED
+			// 兼顾刷新前后两次Fragment在不同位置和相同位置的情况
+			val indexOfValue = fragments.indexOfValue(any as Fragment)
+			val fragment = getItem(indexOfValue)
+			return if (fragment == any) PagerAdapter.POSITION_UNCHANGED else PagerAdapter.POSITION_NONE
+		}
+		
+		override fun getItemId(position: Int): Long {
+			return tabs[position].categoryId.toLong()
+		}
+		
 		override fun getCount(): Int {
 			return tabs.size
+		}
+		
+		fun update(tabs: List<TabCategory>) {
+			this.tabs.clear()
+			this.tabs += tabs
+			notifyDataSetChanged()
 		}
 	}
 }

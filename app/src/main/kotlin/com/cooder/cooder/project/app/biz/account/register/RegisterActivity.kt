@@ -1,18 +1,15 @@
-package com.cooder.cooder.project.app.biz.account
+package com.cooder.cooder.project.app.biz.account.register
 
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
+import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.cooder.cooder.library.restful.CoCallback
-import com.cooder.cooder.library.restful.CoResponse
 import com.cooder.cooder.library.util.expends.setStatusBar
 import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.app.databinding.ActivityRegisterBinding
-import com.cooder.cooder.project.app.http.ApiFactory
-import com.cooder.cooder.project.app.http.api.AccountApi
 import com.cooder.cooder.project.app.route.RoutePath
 import com.cooder.cooder.project.common.ui.component.CoBaseActivity
 
@@ -30,6 +27,10 @@ class RegisterActivity : CoBaseActivity<ActivityRegisterBinding>() {
 	
 	companion object {
 		const val REQUEST_CODE_REGISTER = 1001
+	}
+	
+	private val viewModel by lazy {
+		ViewModelProvider(this)[RegisterViewModel::class.java]
 	}
 	
 	override fun getViewBinding(inflater: LayoutInflater): ActivityRegisterBinding {
@@ -78,25 +79,17 @@ class RegisterActivity : CoBaseActivity<ActivityRegisterBinding>() {
 			binding.confirmPassword.setText("")
 			return
 		}
-		ApiFactory.create(AccountApi::class.java).register(username, password, moocId, courseOrderId).enqueue(object : CoCallback<String> {
-			override fun onSuccess(response: CoResponse<String>) {
-				if (response.isSuccessful()) {
-					// 注册成功
-					val intent = Intent()
-					intent.putExtra("username", username)
-					onBackPressed(Activity.RESULT_OK, intent)
-				} else {
-					showToast(getString(R.string.register_failure, response.message))
-					binding.password.setText("")
-					binding.confirmPassword.setText("")
-				}
-			}
-			
-			override fun onFailed(throwable: Throwable) {
-				showToast(getString(R.string.register_failure, throwable.message))
+		
+		viewModel.register(username, password, moocId, courseOrderId).observe(this) {
+			if (it == RegisterViewModel.LOGIN_SUCCESS) {
+				val intent = Intent()
+				intent.putExtra("username", username)
+				onBackPressed(Activity.RESULT_OK, intent)
+			} else {
+				showToast(getString(R.string.register_failure, it))
 				binding.password.setText("")
 				binding.confirmPassword.setText("")
 			}
-		})
+		}
 	}
 }

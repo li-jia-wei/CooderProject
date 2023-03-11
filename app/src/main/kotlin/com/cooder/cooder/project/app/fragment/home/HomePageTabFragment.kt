@@ -3,14 +3,12 @@ package com.cooder.cooder.project.app.fragment.home
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.cooder.cooder.library.restful.CoCallback
-import com.cooder.cooder.library.restful.CoResponse
+import com.cooder.cooder.library.restful.annotation.CacheStrategy
 import com.cooder.cooder.library.util.expends.dpInt
 import com.cooder.cooder.project.app.MainActivity
-import com.cooder.cooder.project.app.http.ApiFactory
-import com.cooder.cooder.project.app.http.api.HomeApi
 import com.cooder.cooder.project.app.model.HomeModel
 import com.cooder.cooder.project.common.ui.component.CoAbsListFragment
 import com.cooder.cooder.ui.item.CoDataItem
@@ -25,6 +23,10 @@ import com.cooder.cooder.ui.item.CoDataItem
  * 介绍：主页TabFragment
  */
 class HomePageTabFragment private constructor() : CoAbsListFragment() {
+	
+	private val viewModel by lazy {
+		ViewModelProvider(this)[HomePageViewModel::class.java]
+	}
 	
 	private var categoryId: String? = null
 	
@@ -50,17 +52,17 @@ class HomePageTabFragment private constructor() : CoAbsListFragment() {
 		super.onViewCreated(view, savedInstanceState)
 		
 		// 查询数据
-		queryTabCategoryList()
+		queryTabCategoryList(CacheStrategy.Type.CACHE_ONLY)
 		
 		enableLoadMore {
-			queryTabCategoryList()
+			queryTabCategoryList(CacheStrategy.Type.NET_CACHE)
 		}
 	}
 	
 	override fun onRefresh() {
 		super.onRefresh()
 		
-		queryTabCategoryList()
+		queryTabCategoryList(CacheStrategy.Type.NET_CACHE)
 	}
 	
 	override fun createLayoutManager(): RecyclerView.LayoutManager {
@@ -68,20 +70,15 @@ class HomePageTabFragment private constructor() : CoAbsListFragment() {
 		return if (isHotTab) super.createLayoutManager() else GridLayoutManager(context, 2)
 	}
 	
-	private fun queryTabCategoryList() {
-		ApiFactory.create(HomeApi::class.java).queryTabCategoryList(categoryId!!, pageIndex, 10).enqueue(object : CoCallback<HomeModel> {
-			override fun onSuccess(response: CoResponse<HomeModel>) {
-				if (response.isSuccessful() && response.data != null) {
-					updateUI(response.data!!)
-				} else {
-					finishRefresh(null)
-				}
-			}
-			
-			override fun onFailed(throwable: Throwable) {
+	private fun queryTabCategoryList(cacheStrategy: CacheStrategy.Type) {
+		viewModel.queryTabCategoryList(cacheStrategy, categoryId!!, pageIndex, 10).observe(viewLifecycleOwner) {
+			if (it.isSuccessful()) {
+				updateUI(it.data!!)
+			} else {
+				showToast(it.msg)
 				finishRefresh(null)
 			}
-		})
+		}
 	}
 	
 	/**

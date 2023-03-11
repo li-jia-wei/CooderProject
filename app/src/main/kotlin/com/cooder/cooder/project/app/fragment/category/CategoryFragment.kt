@@ -8,16 +8,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout.LayoutParams
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.cooder.cooder.library.log.CoLog
-import com.cooder.cooder.library.restful.CoCallback
-import com.cooder.cooder.library.restful.CoResponse
 import com.cooder.cooder.library.util.expends.dpInt
 import com.cooder.cooder.project.app.MainActivity
 import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.app.databinding.FragmentCategoryBinding
-import com.cooder.cooder.project.app.http.ApiFactory
-import com.cooder.cooder.project.app.http.api.CategoryApi
 import com.cooder.cooder.project.app.model.Subcategory
 import com.cooder.cooder.project.app.model.TabCategory
 import com.cooder.cooder.project.app.route.CoRoute
@@ -40,6 +36,8 @@ import com.cooder.cooder.ui.R as R2
  * 介绍：类别Fragment
  */
 class CategoryFragment : CoBaseFragment<FragmentCategoryBinding>() {
+	
+	private val viewModel by lazy { ViewModelProvider(this)[CategoryViewModel::class.java] }
 	
 	private var emptyView: EmptyView? = null
 	
@@ -71,19 +69,14 @@ class CategoryFragment : CoBaseFragment<FragmentCategoryBinding>() {
 	}
 	
 	private fun queryCategoryList() {
-		ApiFactory.create(CategoryApi::class.java).queryCategoryList().enqueue(object : CoCallback<List<TabCategory>> {
-			override fun onSuccess(response: CoResponse<List<TabCategory>>) {
-				if (response.isSuccessful() && response.data != null) {
-					onQueryCategoryListSuccess(response.data!!)
-				} else {
-					showEmptyView()
-				}
-			}
-			
-			override fun onFailed(throwable: Throwable) {
+		viewModel.queryCategoryList().observe(viewLifecycleOwner) {
+			if (it.isSuccessful()) {
+				onQueryCategoryListSuccess(it.data!!)
+			} else {
+				showToast(it.msg)
 				showEmptyView()
 			}
-		})
+		}
 	}
 	
 	private fun onQueryCategoryListSuccess(data: List<TabCategory>) {
@@ -111,20 +104,14 @@ class CategoryFragment : CoBaseFragment<FragmentCategoryBinding>() {
 	}
 	
 	private fun querySubcategoryList(categoryId: String) {
-		ApiFactory.create(CategoryApi::class.java).querySubcategoryList(categoryId).enqueue(object : CoCallback<List<Subcategory>> {
-			override fun onSuccess(response: CoResponse<List<Subcategory>>) {
-				if (response.isSuccessful() && response.data != null) {
-					subcategoryListCache[categoryId] = response.data!!
-					onQuerySubcategoryListSuccess(response.data!!, categoryId)
-				} else {
-					CoLog.i("What")
-				}
+		viewModel.querySubcategoryList(categoryId).observe(viewLifecycleOwner) {
+			if (it.isSuccessful()) {
+				subcategoryListCache[categoryId] = it.data!!
+				onQuerySubcategoryListSuccess(it.data!!, categoryId)
+			} else {
+				showToast(it.msg)
 			}
-			
-			override fun onFailed(throwable: Throwable) {
-				CoLog.e(throwable.message)
-			}
-		})
+		}
 	}
 	
 	private fun onQuerySubcategoryListSuccess(data: List<Subcategory>, categoryId: String) {

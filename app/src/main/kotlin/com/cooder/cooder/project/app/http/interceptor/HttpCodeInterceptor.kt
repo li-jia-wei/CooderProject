@@ -28,7 +28,6 @@ class HttpCodeInterceptor : CoInterceptor {
 		when (response.code) {
 			CoResponse.RC_NEED_LOGIN -> {
 				CoRoute.startActivity(RoutePath.ACTIVITY_BIZ_ACCOUNT_LOGIN)
-				return true
 			}
 			
 			CoResponse.RC_AUTH_TOKEN_EXPIRED, CoResponse.RC_AUTH_TOKEN_INVALID -> {
@@ -41,7 +40,6 @@ class HttpCodeInterceptor : CoInterceptor {
 				bundle.putString("degradeDesc", response.message)
 				bundle.putString("degradeAction", helpUrl)
 				CoRoute.startActivity(RoutePath.ACTIVITY_ROUTE_DEGRADE_GLOBAL, bundle)
-				return true
 			}
 		}
 		return false

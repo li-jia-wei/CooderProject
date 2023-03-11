@@ -1,5 +1,7 @@
 package com.cooder.cooder.project.app.model
 
+import java.io.Serializable
+
 /**
  * 主页顶部导航栏
  */
@@ -7,7 +9,7 @@ data class TabCategory(
 	val categoryId: String,
 	val categoryName: String,
 	val goodsCount: String
-)
+) : Serializable
 
 /**
  * 主页模型
@@ -16,7 +18,7 @@ data class HomeModel(
 	val bannerList: List<HomeBanner>?,
 	val goodsList: List<GoodsModel>?,
 	val subcategoryList: List<Subcategory>?
-)
+) : Serializable
 
 /**
  * 主页Banner
@@ -30,7 +32,7 @@ data class HomeBanner(
 	val title: String,
 	val type: String,
 	val url: String
-)
+) : Serializable
 
 /**
  * 商品列表
@@ -48,7 +50,7 @@ data class GoodsModel(
 	val sliderImage: String,
 	val sliderImages: List<SliderImage>,
 	val tags: String
-)
+) : Serializable
 
 /**
  * 子类别
@@ -60,14 +62,14 @@ data class Subcategory(
 	val subcategoryIcon: String,
 	val subcategoryId: String,
 	val subcategoryName: String
-)
+) : Serializable
 
 data class SliderImage(
 	val type: Int,
 	val url: String
-)
+) : Serializable
 
 data class GoodsList(
 	val total: Int,
 	val list: List<GoodsModel>
-)
+) : Serializable

@@ -12,7 +12,7 @@ import android.content.SharedPreferences
  *
  * 介绍：共享配置工具
  */
-object PreferencesUtil {
+object SPUtil {
 	
 	private const val CACHE_FILE = "cache_file"
 	

@@ -1,6 +1,5 @@
-package com.cooder.cooder.project.app.fragment
+package com.cooder.cooder.project.app.fragment.profile
 
-import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.SpannableString
@@ -13,22 +12,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.cooder.cooder.library.restful.CoCallback
-import com.cooder.cooder.library.restful.CoResponse
+import androidx.lifecycle.ViewModelProvider
 import com.cooder.cooder.library.util.expends.dpInt
 import com.cooder.cooder.project.app.R
+import com.cooder.cooder.project.app.biz.account.AccountManager
 import com.cooder.cooder.project.app.databinding.FragmentProfileBinding
-import com.cooder.cooder.project.app.http.ApiFactory
-import com.cooder.cooder.project.app.http.api.AccountApi
-import com.cooder.cooder.project.app.http.api.NoticeApi
-import com.cooder.cooder.project.app.http.interceptor.HttpCodeInterceptor
-import com.cooder.cooder.project.app.model.CourseNotice
 import com.cooder.cooder.project.app.model.Notice
 import com.cooder.cooder.project.app.model.UserProfile
 import com.cooder.cooder.project.app.route.CoRoute
-import com.cooder.cooder.project.app.route.RoutePath
 import com.cooder.cooder.project.common.ui.component.CoBaseFragment
 import com.cooder.cooder.project.common.ui.view.expends.loadCircle
 import com.cooder.cooder.project.common.ui.view.expends.loadCorner
@@ -41,13 +33,13 @@ import com.cooder.cooder.ui.banner.core.CoBannerMo
  *
  * 创建：2022/10/3 23:47
  *
- * 介绍：配置Fragment
+ * 介绍：个人中心Fragment
  */
 class ProfileFragment : CoBaseFragment<FragmentProfileBinding>() {
 	
+	private val viewModel by lazy { ViewModelProvider(this)[ProfileViewModel::class.java] }
+	
 	private companion object {
-		private const val REQUEST_CODE_LOGIN_PROFILE = 1001
-		
 		private const val BANNER_CORNER = 10
 	}
 	
@@ -66,47 +58,32 @@ class ProfileFragment : CoBaseFragment<FragmentProfileBinding>() {
 	 * 查询课程通知
 	 */
 	private fun queryCourseNotice() {
-		val ignoreInterceptor = listOf(HttpCodeInterceptor::class.java)
-		ApiFactory.create(NoticeApi::class.java, ignoreInterceptor).notice().enqueue(object : CoCallback<CourseNotice> {
-			override fun onSuccess(response: CoResponse<CourseNotice>) {
-				if (response.isSuccessful()) {
-					val data = response.data
-					if (data != null) {
-						val total = data.total
-						binding.courseNotice.visibility = if (total > 0) View.VISIBLE else View.GONE
-						if (total > 99) {
-							binding.courseNotice.text = getString(R.string.profile_course_notice_count_geature_99)
-						} else if (total > 0) {
-							binding.courseNotice.text = String.format("%d", total)
-						}
-					}
+		viewModel.queryCourseNotice().observe(viewLifecycleOwner) {
+			if (it.isSuccessful()) {
+				val total = it.data!!.total
+				binding.courseNotice.visibility = if (total > 0) View.VISIBLE else View.GONE
+				if (total > 99) {
+					binding.courseNotice.text = getString(R.string.profile_course_notice_count_geature_99)
+				} else if (total > 0) {
+					binding.courseNotice.text = String.format("%d", total)
 				}
+			} else {
+				showToast(it.msg)
 			}
-			
-			override fun onFailed(throwable: Throwable) {
-				Toast.makeText(requireContext(), throwable.message, Toast.LENGTH_SHORT).show()
-			}
-		})
+		}
 	}
 	
 	/**
 	 * 查询登录用户数据
 	 */
 	private fun queryLoginUserData() {
-		ApiFactory.create(AccountApi::class.java).profile().enqueue(object : CoCallback<UserProfile> {
-			override fun onSuccess(response: CoResponse<UserProfile>) {
-				val data = response.data
-				if (response.isSuccessful() && data != null) {
-					updateUI(data)
-				} else {
-					Toast.makeText(requireContext(), response.message, Toast.LENGTH_SHORT).show()
-				}
+		viewModel.queryProfile().observe(viewLifecycleOwner) {
+			if (it.isSuccessful()) {
+				updateUI(it.data!!)
+			} else {
+				showToast(it.msg)
 			}
-			
-			override fun onFailed(throwable: Throwable) {
-				Toast.makeText(requireContext(), throwable.message, Toast.LENGTH_SHORT).show()
-			}
-		})
+		}
 	}
 	
 	/**
@@ -117,13 +94,17 @@ class ProfileFragment : CoBaseFragment<FragmentProfileBinding>() {
 			binding.username.text = userProfile.userName
 			binding.loginDesc.text = getString(R.string.profile_login_desc_welcome_back)
 			binding.userAvatar.loadCircle(userProfile.userIcon)
+			binding.headerView.setOnClickListener(null)
 		} else {
 			binding.username.text = getString(R.string.profile_please_login_first)
 			binding.loginDesc.text = getString(R.string.profile_please_login_first)
 			binding.userAvatar.loadCircle(R.drawable.ic_avatar_default)
 			binding.headerView.setOnClickListener {
-				if (isNotAlive()) return@setOnClickListener
-				CoRoute.startActivity(RoutePath.ACTIVITY_BIZ_ACCOUNT_LOGIN, context = requireContext(), requestCode = REQUEST_CODE_LOGIN_PROFILE)
+				if (isAlive() && AccountManager.isNotLogin()) {
+					AccountManager.toLogin(requireContext()) {
+						queryLoginUserData()
+					}
+				}
 			}
 		}
 		binding.favorite.text = spannableTabItem(userProfile.favoriteCount, getString(R.string.profile_favorite))
@@ -137,7 +118,7 @@ class ProfileFragment : CoBaseFragment<FragmentProfileBinding>() {
 	 * 更新Banner
 	 */
 	private fun updateBanner(bannerNoticeList: List<Notice>?) {
-		if (bannerNoticeList == null || bannerNoticeList.isEmpty()) return
+		if (bannerNoticeList.isNullOrEmpty()) return
 		val models = mutableListOf<CoBannerMo>()
 		bannerNoticeList.forEach {
 			models += CoBannerMo(it.cover)
@@ -177,14 +158,5 @@ class ProfileFragment : CoBaseFragment<FragmentProfileBinding>() {
 		}
 		ssb.append(bottomText)
 		return ssb
-	}
-	
-	@Suppress("OVERRIDE_DEPRECATION")
-	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-		super.onActivityResult(requestCode, resultCode, data)
-		if (requestCode == REQUEST_CODE_LOGIN_PROFILE) {
-			queryLoginUserData()
-			queryCourseNotice()
-		}
 	}
 }

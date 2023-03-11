@@ -20,14 +20,16 @@ import androidx.viewbinding.ViewBinding
  */
 abstract class CoBaseFragment<VB : ViewBinding> : Fragment() {
 	
-	lateinit var binding: VB
+	private var _binding: VB? = null
 	
-	abstract fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): VB
+	val binding: VB get() = _binding!!
 	
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-		binding = getViewBinding(inflater, container)
+		_binding = getViewBinding(inflater, container)
 		return binding.root
 	}
+	
+	abstract fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 	
 	open fun isAlive(): Boolean {
 		return !isRemoving && !isDetached && activity != null
@@ -43,5 +45,10 @@ abstract class CoBaseFragment<VB : ViewBinding> : Fragment() {
 	
 	fun showToast(@StringRes resId: Int) {
 		Toast.makeText(requireContext(), getString(resId), Toast.LENGTH_SHORT).show()
+	}
+	
+	override fun onDestroy() {
+		super.onDestroy()
+		_binding = null
 	}
 }

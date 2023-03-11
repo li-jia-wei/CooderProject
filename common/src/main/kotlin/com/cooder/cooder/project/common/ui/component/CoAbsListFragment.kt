@@ -99,7 +99,7 @@ abstract class CoAbsListFragment : CoBaseFragment<FragmentAbsListBinding>(), CoR
 	 * 完成刷新
 	 */
 	fun finishRefresh(dataItems: List<CoDataItem<*, out RecyclerView.ViewHolder>>?) {
-		val success = dataItems != null && dataItems.isNotEmpty()
+		val success = !dataItems.isNullOrEmpty()
 		val refresh = pageIndex == 1
 		if (refresh) {
 			binding.loadView.visibility = View.GONE

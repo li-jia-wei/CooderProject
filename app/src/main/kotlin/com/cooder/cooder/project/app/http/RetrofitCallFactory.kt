@@ -1,6 +1,5 @@
 package com.cooder.cooder.project.app.http
 
-import com.cooder.cooder.library.log.CoLog
 import com.cooder.cooder.library.restful.CoCall
 import com.cooder.cooder.library.restful.CoCallback
 import com.cooder.cooder.library.restful.CoConvert
@@ -65,7 +64,6 @@ class RetrofitCallFactory(baseUrl: String) : CoCall.Factory {
 				}
 				
 				override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-					CoLog.e(t.message)
 					callback.onFailed(t)
 				}
 			})

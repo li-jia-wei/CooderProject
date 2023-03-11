@@ -8,9 +8,9 @@ import androidx.fragment.app.FragmentManager
 import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.app.databinding.ActivityMainBinding
 import com.cooder.cooder.project.app.fragment.*
-import com.cooder.cooder.project.app.fragment.ProfileFragment
 import com.cooder.cooder.project.app.fragment.category.CategoryFragment
 import com.cooder.cooder.project.app.fragment.home.HomePageFragment
+import com.cooder.cooder.project.app.fragment.profile.ProfileFragment
 import com.cooder.cooder.project.common.tab.CoTabViewAdapter
 import com.cooder.cooder.ui.tab.bottom.CoTabBottomInfo
 import com.cooder.cooder.ui.tab.common.CoTabLayout

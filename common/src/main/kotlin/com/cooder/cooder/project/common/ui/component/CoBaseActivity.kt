@@ -1,5 +1,6 @@
 package com.cooder.cooder.project.common.ui.component
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,14 +21,24 @@ import androidx.viewbinding.ViewBinding
  */
 abstract class CoBaseActivity<VB : ViewBinding> : AppCompatActivity(), CoBaseActionInterface {
 	
-	lateinit var binding: VB
+	companion object {
+		private val ALIVE_ACTIVITIES = mutableListOf<Class<out CoBaseActivity<*>>>()
+	}
+	
+	private var _binding: VB? = null
+	val binding: VB get() = _binding!!
 	
 	abstract fun getViewBinding(inflater: LayoutInflater): VB
 	
 	@CallSuper
 	override fun onCreate(savedInstanceState: Bundle?) {
+		if (ALIVE_ACTIVITIES.contains(this.javaClass)) {
+			onBackPressed(Activity.RESULT_CANCELED)
+		}
+		ALIVE_ACTIVITIES += this.javaClass
+		
 		super.onCreate(savedInstanceState)
-		binding = getViewBinding(layoutInflater)
+		_binding = getViewBinding(layoutInflater)
 		setContentView(binding.root)
 	}
 	
@@ -48,5 +59,12 @@ abstract class CoBaseActivity<VB : ViewBinding> : AppCompatActivity(), CoBaseAct
 	@Suppress("OVERRIDE_DEPRECATION")
 	override fun onBackPressed() {
 		onBackPressedDispatcher.onBackPressed()
+	}
+	
+	@CallSuper
+	override fun onDestroy() {
+		super.onDestroy()
+		ALIVE_ACTIVITIES -= this.javaClass
+		_binding = null
 	}
 }

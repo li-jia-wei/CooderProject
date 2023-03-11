@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config xmlns:tools="http://schemas.android.com/tools"
+	tools:ignore="MissingDefaultResource">
+	<base-config
+		cleartextTrafficPermitted="true"
+		tools:ignore="InsecureBaseConfiguration" />
+	<debug-overrides>
+		<trust-anchors tools:ignore="NetworkSecurityConfig">
+			<certificates src="@raw/charles" />
+		</trust-anchors>
+	</debug-overrides>
+</network-security-config>

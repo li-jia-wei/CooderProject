@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
+import androidx.fragment.app.DialogFragment
 import com.cooder.cooder.library.util.expends.setStatusBar
 import com.cooder.cooder.project.app.databinding.ActivityMainBinding
 import com.cooder.cooder.project.app.logic.MainActivityLogic
@@ -70,5 +72,27 @@ class MainActivity : CoBaseActivity<ActivityMainBinding>(), ActivityProvider {
 	
 	fun getTabBottomLayoutHeight(): Float {
 		return binding.tabBottomLayout.getTabBottomLayoutHeight()
+	}
+	
+	private var lastVolumeDownTime = 0L
+	
+	override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+		val time = System.currentTimeMillis()
+		if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+			if (time - lastVolumeDownTime <= 600) {
+				// 音量下键点击事件
+				if (BuildConfig.DEBUG) {
+					try {
+						val clazz: Class<*> = Class.forName("com.cooder.cooder.debug.tool.CoDebugToolDialogFragment")
+						val target = clazz.getConstructor().newInstance() as DialogFragment
+						target.show(supportFragmentManager, "debug_tool")
+					} catch (e: Exception) {
+						e.printStackTrace()
+					}
+				}
+			}
+		}
+		lastVolumeDownTime = time
+		return super.onKeyDown(keyCode, event)
 	}
 }

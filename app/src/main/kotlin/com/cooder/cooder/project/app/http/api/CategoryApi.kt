@@ -1,6 +1,7 @@
 package com.cooder.cooder.project.app.http.api
 
 import com.cooder.cooder.library.restful.CoCall
+import com.cooder.cooder.library.restful.annotation.CacheStrategy
 import com.cooder.cooder.library.restful.annotation.GET
 import com.cooder.cooder.library.restful.annotation.Path
 import com.cooder.cooder.project.app.model.Subcategory
@@ -17,12 +18,12 @@ import com.cooder.cooder.project.app.model.TabCategory
  */
 interface CategoryApi : Api {
 	
-	/**
-	 * 获取商品类别
-	 */
+	
 	@GET("category/categories")
+	@CacheStrategy(CacheStrategy.Type.NET_ONLY)
 	fun queryCategoryList(): CoCall<List<TabCategory>>
 	
 	@GET("category/subcategories/{categoryId}")
+	@CacheStrategy(CacheStrategy.Type.CACHE_NET_CACHE)
 	fun querySubcategoryList(@Path("categoryId") categoryId: String): CoCall<List<Subcategory>>
 }

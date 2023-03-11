@@ -5,6 +5,7 @@ import com.cooder.cooder.library.restful.CoRestful
 import com.cooder.cooder.project.app.http.api.Api
 import com.cooder.cooder.project.app.http.interceptor.BizInterceptor
 import com.cooder.cooder.project.app.http.interceptor.HttpCodeInterceptor
+import com.cooder.cooder.project.common.util.SPUtil
 
 /**
  * 项目：CooderProject
@@ -21,13 +22,21 @@ import com.cooder.cooder.project.app.http.interceptor.HttpCodeInterceptor
  */
 object ApiFactory {
 	
-	private const val baseUrl = "http://api.devio.org/as/"
+	private const val KEY_DEGRADE_HTTP = "degrade_http"
+	
+	private const val HTTPS = "https://api.devio.org/as/"
+	private const val HTTP = "http://api.devio.org/as/"
+	
+	private val degradeToHttp = SPUtil.getBoolean(KEY_DEGRADE_HTTP, false)
+	
+	private val baseUrl = if (degradeToHttp) HTTP else HTTPS
 	
 	private val cooderRestful = CoRestful(baseUrl, RetrofitCallFactory(baseUrl))
 	
 	init {
 		cooderRestful.addInterceptor(BizInterceptor())
 		cooderRestful.addInterceptor(HttpCodeInterceptor())
+		SPUtil.putBoolean(KEY_DEGRADE_HTTP, false)
 	}
 	
 	/**

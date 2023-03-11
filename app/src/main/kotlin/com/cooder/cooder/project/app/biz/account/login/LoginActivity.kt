@@ -1,23 +1,20 @@
-package com.cooder.cooder.project.app.biz.account
+package com.cooder.cooder.project.app.biz.account.login
 
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
+import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.cooder.cooder.library.log.CoLog
-import com.cooder.cooder.library.restful.CoCallback
-import com.cooder.cooder.library.restful.CoResponse
 import com.cooder.cooder.library.util.expends.setStatusBar
 import com.cooder.cooder.project.app.R
+import com.cooder.cooder.project.app.biz.account.AccountManager
+import com.cooder.cooder.project.app.biz.account.register.RegisterActivity
 import com.cooder.cooder.project.app.databinding.ActivityLoginBinding
-import com.cooder.cooder.project.app.http.ApiFactory
-import com.cooder.cooder.project.app.http.api.AccountApi
 import com.cooder.cooder.project.app.route.CoRoute
 import com.cooder.cooder.project.app.route.RoutePath
 import com.cooder.cooder.project.common.ui.component.CoBaseActivity
-import com.cooder.cooder.project.common.util.PreferencesUtil
 
 /**
  * 项目：CooderProject
@@ -30,6 +27,10 @@ import com.cooder.cooder.project.common.util.PreferencesUtil
  */
 @Route(path = RoutePath.ACTIVITY_BIZ_ACCOUNT_LOGIN)
 class LoginActivity : CoBaseActivity<ActivityLoginBinding>() {
+	
+	private val viewModel by lazy {
+		ViewModelProvider(this)[LoginViewModel::class.java]
+	}
 	
 	override fun getViewBinding(inflater: LayoutInflater): ActivityLoginBinding {
 		return ActivityLoginBinding.inflate(layoutInflater)
@@ -64,27 +65,16 @@ class LoginActivity : CoBaseActivity<ActivityLoginBinding>() {
 			showToast(R.string.login_please_input_password)
 			return
 		}
-		ApiFactory.create(AccountApi::class.java).login(username, password).enqueue(object : CoCallback<String> {
-			override fun onSuccess(response: CoResponse<String>) {
-				if (response.isSuccessful()) {
-					showToast(R.string.login_success)
-					val data: String? = response.data
-					
-					// user manager
-					PreferencesUtil.putString("boarding-pass", data)
-					onBackPressed(Activity.RESULT_OK)
-				} else {
-					showToast(getString(R.string.login_failure, response.message))
-					binding.password.setText("")
-				}
-			}
-			
-			override fun onFailed(throwable: Throwable) {
-				CoLog.e(throwable.message)
-				showToast(getString(R.string.login_failure, throwable.message))
+		viewModel.login(username, password).observe(this) {
+			if (it.isSuccessful()) {
+				showToast(R.string.login_success)
+				AccountManager.loginSuccess(it.data!!)
+				onBackPressed(Activity.RESULT_OK)
+			} else {
 				binding.password.setText("")
+				showToast(getString(R.string.login_failure, it.msg))
 			}
-		})
+		}
 	}
 	
 	@Suppress("DEPRECATION")

@@ -1,5 +1,7 @@
 package com.cooder.cooder.project.app.model
 
+import java.io.Serializable
+
 /**
  * UserProfile
  */
@@ -11,7 +13,7 @@ data class UserProfile(
 	val userName: String,
 	val userIcon: String,
 	val bannerNoticeList: List<Notice>
-)
+) : Serializable
 
 /**
  * Notice
@@ -25,7 +27,7 @@ data class Notice(
 	val url: String,
 	val cover: String,
 	val createTime: String
-)
+) : Serializable
 
 /**
  * CourseNotice
@@ -33,4 +35,4 @@ data class Notice(
 data class CourseNotice(
 	val total: Int,
 	val list: List<Notice>?
-)
+) : Serializable
