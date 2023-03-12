@@ -52,23 +52,30 @@ class GoodsListFragment : CoAbsListFragment() {
 		super.onViewCreated(view, savedInstanceState)
 		CoRoute.inject(this)
 		
-		loadData(CacheStrategy.Type.CACHE_ONLY)
+		queryGoodsListObserver()
+		queryGoodsList(CacheStrategy.Type.CACHE_ONLY)
 	}
 	
 	override fun onRefresh() {
 		super.onRefresh()
-		
-		loadData(CacheStrategy.Type.NET_CACHE)
+		queryGoodsList(CacheStrategy.Type.NET_CACHE)
 	}
 	
 	override fun onLoadMore() {
 		super.onLoadMore()
-		
-		loadData(CacheStrategy.Type.NET_CACHE)
+		queryGoodsList(CacheStrategy.Type.NET_CACHE)
 	}
 	
-	private fun loadData(cacheStrategyType: CacheStrategy.Type) {
-		viewModel.queryGoodsList(cacheStrategyType, categoryId, subcategoryId, 10, pageIndex).observe(viewLifecycleOwner) {
+	private fun queryGoodsList(cacheStrategyType: CacheStrategy.Type) {
+		val mo = GoodsListViewModel.GoodsListMo(cacheStrategyType, categoryId, subcategoryId, 10, pageIndex)
+		viewModel.queryGoodsList(mo)
+	}
+	
+	/**
+	 * 查询商品列表
+	 */
+	private fun queryGoodsListObserver() {
+		viewModel.goodsListLiveData.observe(viewLifecycleOwner) {
 			if (it.isSuccessful()) {
 				onQueryCategoryGoodsList(it.data!!)
 			} else {

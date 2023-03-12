@@ -50,7 +50,10 @@ class ProfileFragment : CoBaseFragment<FragmentProfileBinding>() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		
-		queryLoginUserData()
+		queryProfileObserver()
+		queryCourseNoticeObserver()
+		
+		queryProfile()
 		queryCourseNotice()
 	}
 	
@@ -58,7 +61,11 @@ class ProfileFragment : CoBaseFragment<FragmentProfileBinding>() {
 	 * 查询课程通知
 	 */
 	private fun queryCourseNotice() {
-		viewModel.queryCourseNotice().observe(viewLifecycleOwner) {
+		viewModel.queryCourseNotice()
+	}
+	
+	private fun queryCourseNoticeObserver() {
+		viewModel.courseNoticeLiveData.observe(viewLifecycleOwner) {
 			if (it.isSuccessful()) {
 				val total = it.data!!.total
 				binding.courseNotice.visibility = if (total > 0) View.VISIBLE else View.GONE
@@ -76,8 +83,12 @@ class ProfileFragment : CoBaseFragment<FragmentProfileBinding>() {
 	/**
 	 * 查询登录用户数据
 	 */
-	private fun queryLoginUserData() {
-		viewModel.queryProfile().observe(viewLifecycleOwner) {
+	private fun queryProfile() {
+		viewModel.queryProfile()
+	}
+	
+	private fun queryProfileObserver() {
+		viewModel.profileLiveData.observe(viewLifecycleOwner) {
 			if (it.isSuccessful()) {
 				updateUI(it.data!!)
 			} else {
@@ -102,7 +113,7 @@ class ProfileFragment : CoBaseFragment<FragmentProfileBinding>() {
 			binding.headerView.setOnClickListener {
 				if (isAlive() && AccountManager.isNotLogin()) {
 					AccountManager.toLogin(requireContext()) {
-						queryLoginUserData()
+						queryProfile()
 					}
 				}
 			}

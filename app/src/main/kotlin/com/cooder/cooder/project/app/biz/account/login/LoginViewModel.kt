@@ -20,26 +20,32 @@ import com.cooder.cooder.project.app.http.api.AccountApi
  */
 class LoginViewModel : ViewModel() {
 	
-	private val loginLiveData by lazy { MutableLiveData<CoResult<String>>() }
+	private val _loginLiveData by lazy { MutableLiveData<CoResult<String>>() }
+	
+	val loginLiveData: LiveData<CoResult<String>> = _loginLiveData
+	
+	data class LoginMo(
+		val username: String,
+		val password: String
+	)
 	
 	/**
 	 * 登录
 	 */
-	fun login(username: String, password: String): LiveData<CoResult<String>> {
-		ApiFactory.create(AccountApi::class.java).login(username, password).enqueue(object : CoCallback<String> {
+	fun login(mo: LoginMo) {
+		ApiFactory.create(AccountApi::class.java).login(mo.username, mo.password).enqueue(object : CoCallback<String> {
 			override fun onSuccess(response: CoResponse<String>) {
 				if (response.isSuccessful() && response.data != null) {
-					loginLiveData.value = CoResult(response.data!!)
+					_loginLiveData.value = CoResult(response.data!!)
 				} else {
-					loginLiveData.value = CoResult(null, false, response.message)
+					_loginLiveData.value = CoResult(null, false, response.message)
 				}
 			}
 			
 			override fun onFailed(throwable: Throwable) {
 				super.onFailed(throwable)
-				loginLiveData.value = CoResult(null, false, throwable.message)
+				_loginLiveData.value = CoResult(null, false, throwable.message)
 			}
 		})
-		return loginLiveData
 	}
 }

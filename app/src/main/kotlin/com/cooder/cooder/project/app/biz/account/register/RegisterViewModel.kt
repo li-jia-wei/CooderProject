@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cooder.cooder.library.restful.CoCallback
 import com.cooder.cooder.library.restful.CoResponse
+import com.cooder.cooder.library.restful.CoResult
 import com.cooder.cooder.project.app.http.ApiFactory
 import com.cooder.cooder.project.app.http.api.AccountApi
 
@@ -19,35 +20,33 @@ import com.cooder.cooder.project.app.http.api.AccountApi
  */
 class RegisterViewModel : ViewModel() {
 	
-	companion object {
-		const val LOGIN_SUCCESS = "<LOGIN_SUCCESS>"
-	}
+	private val _registerLiveData by lazy { MutableLiveData<RegisterMo>() }
 	
-	private val registerLiveData by lazy { MutableLiveData<String>() }
+	val registerLiveData: LiveData<RegisterMo> = _registerLiveData
+	
+	data class RegisterMo(
+		val result: CoResult<String>,
+		val username: String
+	)
 	
 	/**
 	 * 注册
 	 */
-	fun register(
-		username: String,
-		password: String,
-		moocId: String,
-		courseOrderId: String
-	): LiveData<String> {
-		ApiFactory.create(AccountApi::class.java).register(username, password, moocId, courseOrderId)
+	fun register(username: String, password: String, moocId: String, courseNotice: String) {
+		ApiFactory.create(AccountApi::class.java).register(username, password, moocId, courseNotice)
 			.enqueue(object : CoCallback<String> {
 				override fun onSuccess(response: CoResponse<String>) {
 					if (response.isSuccessful()) {
-						registerLiveData.value = LOGIN_SUCCESS
+						_registerLiveData.value = RegisterMo(CoResult(null), username)
 					} else {
-						registerLiveData.value = response.message
+						_registerLiveData.value = RegisterMo(CoResult(null, false, response.message), username)
 					}
 				}
 				
 				override fun onFailed(throwable: Throwable) {
-					registerLiveData.value = throwable.message
+					super.onFailed(throwable)
+					_registerLiveData.value = RegisterMo(CoResult(null, false, throwable.message), username)
 				}
 			})
-		return registerLiveData
 	}
 }

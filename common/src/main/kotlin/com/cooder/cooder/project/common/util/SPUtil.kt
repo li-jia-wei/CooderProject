@@ -18,13 +18,14 @@ object SPUtil {
 	
 	@JvmStatic
 	fun putString(key: String, value: String?) {
-		getPreferences()?.edit()?.putString(key, value)?.apply()
+		getPreferences()?.edit()?.putString(key, if (value != null) SafeUtil.encode(key, value) else null)?.apply()
 	}
 	
 	@JvmStatic
 	@JvmOverloads
 	fun getString(key: String, defValue: String? = null): String? {
-		return getPreferences()?.getString(key, defValue) ?: defValue
+		val str = getPreferences()?.getString(key, null)
+		return if (str != null) SafeUtil.decode(key, str) else defValue
 	}
 	
 	@JvmStatic

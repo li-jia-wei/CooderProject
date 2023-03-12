@@ -65,11 +65,15 @@ class CategoryFragment : CoBaseFragment<FragmentCategoryBinding>() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		
+		queryCategoryListObserver()
 		queryCategoryList()
 	}
 	
-	private fun queryCategoryList() {
-		viewModel.queryCategoryList().observe(viewLifecycleOwner) {
+	/**
+	 * 查询类别观察者
+	 */
+	private fun queryCategoryListObserver() {
+		viewModel.categoryListLiveData.observe(viewLifecycleOwner) {
 			if (it.isSuccessful()) {
 				onQueryCategoryListSuccess(it.data!!)
 			} else {
@@ -79,10 +83,18 @@ class CategoryFragment : CoBaseFragment<FragmentCategoryBinding>() {
 		}
 	}
 	
+	/**
+	 * 查询类别
+	 */
+	private fun queryCategoryList() {
+		viewModel.queryCategoryList()
+	}
+	
 	private fun onQueryCategoryListSuccess(data: List<TabCategory>) {
 		if (isNotAlive()) return
 		emptyView?.visibility = View.GONE
 		binding.sliderView.visibility = View.VISIBLE
+		querySubcategoryListObserver()
 		binding.sliderView.bindMenuView(itemCount = data.size, callback = object : CoSliderView.BindCallback {
 			override fun onBindView(holder: CoViewHolder, position: Int) {
 				val category = data[position]
@@ -103,17 +115,27 @@ class CategoryFragment : CoBaseFragment<FragmentCategoryBinding>() {
 		CoTabBottomLayout.clipBottomPadding(binding.sliderView.menuView, height)
 	}
 	
+	/**
+	 * 查询子类别
+	 */
 	private fun querySubcategoryList(categoryId: String) {
-		viewModel.querySubcategoryList(categoryId).observe(viewLifecycleOwner) {
-			if (it.isSuccessful()) {
-				subcategoryListCache[categoryId] = it.data!!
-				onQuerySubcategoryListSuccess(it.data!!, categoryId)
+		viewModel.querySubcategoryList(categoryId)
+	}
+	
+	private fun querySubcategoryListObserver() {
+		viewModel.subcategoryListLiveData.observe(viewLifecycleOwner) {
+			if (it.result.isSuccessful()) {
+				subcategoryListCache[it.categoryId] = it.result.data!!
+				onQuerySubcategoryListSuccess(it.result.data!!, it.categoryId)
 			} else {
-				showToast(it.msg)
+				showToast(it.result.msg)
 			}
 		}
 	}
 	
+	/**
+	 * 当子类别查询成功时
+	 */
 	private fun onQuerySubcategoryListSuccess(data: List<Subcategory>, categoryId: String) {
 		this.currentCategoryId = categoryId
 		spanSizeLookUp.clear()

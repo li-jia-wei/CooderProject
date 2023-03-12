@@ -24,50 +24,52 @@ import com.cooder.cooder.project.app.model.UserProfile
  */
 class ProfileViewModel : ViewModel() {
 	
-	private val courseNotice by lazy { MutableLiveData<CoResult<CourseNotice>>() }
+	private val _courseNoticeLiveData by lazy { MutableLiveData<CoResult<CourseNotice>>() }
+	
+	val courseNoticeLiveData: LiveData<CoResult<CourseNotice>> = _courseNoticeLiveData
 	
 	/**
 	 * 查询通知
 	 */
-	fun queryCourseNotice(): LiveData<CoResult<CourseNotice>> {
+	fun queryCourseNotice() {
 		val ignoreInterceptor = listOf(HttpCodeInterceptor::class.java)
 		ApiFactory.create(NoticeApi::class.java, ignoreInterceptor).notice().enqueue(object : CoCallback<CourseNotice> {
 			override fun onSuccess(response: CoResponse<CourseNotice>) {
 				if (response.isSuccessful() && response.data != null) {
-					courseNotice.value = CoResult(response.data)
+					_courseNoticeLiveData.value = CoResult(response.data)
 				} else {
-					courseNotice.value = CoResult(null, false, response.message)
+					_courseNoticeLiveData.value = CoResult(null, false, response.message)
 				}
 			}
 			
 			override fun onFailed(throwable: Throwable) {
 				super.onFailed(throwable)
-				courseNotice.value = CoResult(null, false, throwable.message)
+				_courseNoticeLiveData.value = CoResult(null, false, throwable.message)
 			}
 		})
-		return courseNotice
 	}
 	
-	private val profileLiveData by lazy { MutableLiveData<CoResult<UserProfile>>() }
+	private val _profileLiveData by lazy { MutableLiveData<CoResult<UserProfile>>() }
+	
+	val profileLiveData: LiveData<CoResult<UserProfile>> = _profileLiveData
 	
 	/**
 	 * 查询个人页面信息
 	 */
-	fun queryProfile(): LiveData<CoResult<UserProfile>> {
+	fun queryProfile() {
 		ApiFactory.create(AccountApi::class.java).profile().enqueue(object : CoCallback<UserProfile> {
 			override fun onSuccess(response: CoResponse<UserProfile>) {
 				if (response.isSuccessful() && response.data != null) {
-					profileLiveData.value = CoResult(response.data)
+					_profileLiveData.value = CoResult(response.data)
 				} else {
-					profileLiveData.value = CoResult(null, false, response.message)
+					_profileLiveData.value = CoResult(null, false, response.message)
 				}
 			}
 			
 			override fun onFailed(throwable: Throwable) {
 				super.onFailed(throwable)
-				profileLiveData.value = CoResult(null, false, throwable.message)
+				_profileLiveData.value = CoResult(null, false, throwable.message)
 			}
 		})
-		return profileLiveData
 	}
 }

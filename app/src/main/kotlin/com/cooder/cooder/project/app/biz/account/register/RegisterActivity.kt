@@ -39,8 +39,9 @@ class RegisterActivity : CoBaseActivity<ActivityRegisterBinding>() {
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		
 		setStatusBar(true, Color.WHITE)
+		
+		registerObserver()
 		
 		binding.actionBack.setOnClickListener {
 			onBackPressed(Activity.RESULT_CANCELED)
@@ -80,13 +81,24 @@ class RegisterActivity : CoBaseActivity<ActivityRegisterBinding>() {
 			return
 		}
 		
-		viewModel.register(username, password, moocId, courseOrderId).observe(this) {
-			if (it == RegisterViewModel.LOGIN_SUCCESS) {
+		register(username, password, moocId, courseOrderId)
+	}
+	
+	/**
+	 * 注册
+	 */
+	private fun register(username: String, password: String, moocId: String, courseOrderId: String) {
+		viewModel.register(username, password, moocId, courseOrderId)
+	}
+	
+	private fun registerObserver() {
+		viewModel.registerLiveData.observe(this) {
+			if (it.result.success) {
 				val intent = Intent()
-				intent.putExtra("username", username)
+				intent.putExtra("username", it.username)
 				onBackPressed(Activity.RESULT_OK, intent)
 			} else {
-				showToast(getString(R.string.register_failure, it))
+				showToast(getString(R.string.register_failure, it.result.msg))
 				binding.password.setText("")
 				binding.confirmPassword.setText("")
 			}

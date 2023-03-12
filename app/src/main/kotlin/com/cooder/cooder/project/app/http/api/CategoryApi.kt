@@ -24,6 +24,7 @@ interface CategoryApi : Api {
 	fun queryCategoryList(): CoCall<List<TabCategory>>
 	
 	@GET("category/subcategories/{categoryId}")
-	@CacheStrategy(CacheStrategy.Type.CACHE_NET_CACHE)
-	fun querySubcategoryList(@Path("categoryId") categoryId: String): CoCall<List<Subcategory>>
+	fun querySubcategoryList(
+		@Path("categoryId") categoryId: String
+	): CoCall<List<Subcategory>>
 }

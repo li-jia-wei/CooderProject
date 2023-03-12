@@ -22,50 +22,54 @@ import com.cooder.cooder.project.app.model.TabCategory
  */
 class CategoryViewModel : ViewModel() {
 	
-	private val categoryListLiveData by lazy { MutableLiveData<CoResult<List<TabCategory>>>() }
+	private val _categoryListLiveData by lazy { MutableLiveData<CoResult<List<TabCategory>>>() }
+	
+	val categoryListLiveData: LiveData<CoResult<List<TabCategory>>> = _categoryListLiveData
 	
 	/**
 	 * 查询类别
 	 */
-	fun queryCategoryList(): LiveData<CoResult<List<TabCategory>>> {
+	fun queryCategoryList() {
 		ApiFactory.create(CategoryApi::class.java).queryCategoryList().enqueue(object : CoCallback<List<TabCategory>> {
 			override fun onSuccess(response: CoResponse<List<TabCategory>>) {
 				val data = response.data
 				if (response.isSuccessful() && data != null) {
-					categoryListLiveData.value = CoResult(data)
+					_categoryListLiveData.value = CoResult(data)
 				} else {
-					categoryListLiveData.value = CoResult(null, false, response.message)
+					_categoryListLiveData.value = CoResult(null, false, response.message)
 				}
 			}
 			
 			override fun onFailed(throwable: Throwable) {
 				super.onFailed(throwable)
-				categoryListLiveData.value = CoResult(null, false, throwable.message)
+				_categoryListLiveData.value = CoResult(null, false, throwable.message)
 			}
 		})
-		return categoryListLiveData
 	}
 	
-	private val subcategoryListLiveData by lazy { MutableLiveData<CoResult<List<Subcategory>>>() }
+	private val _subcategoryListLiveData by lazy { MutableLiveData<SubcategoryListMo>() }
+	
+	val subcategoryListLiveData: LiveData<SubcategoryListMo> = _subcategoryListLiveData
+	
+	data class SubcategoryListMo(val result: CoResult<List<Subcategory>>, val categoryId: String)
 	
 	/**
 	 * 查询子类别
 	 */
-	fun querySubcategoryList(categoryId: String): LiveData<CoResult<List<Subcategory>>> {
+	fun querySubcategoryList(categoryId: String) {
 		ApiFactory.create(CategoryApi::class.java).querySubcategoryList(categoryId).enqueue(object : CoCallback<List<Subcategory>> {
 			override fun onSuccess(response: CoResponse<List<Subcategory>>) {
 				if (response.isSuccessful() && response.data != null) {
-					subcategoryListLiveData.value = CoResult(response.data)
+					_subcategoryListLiveData.value = SubcategoryListMo(CoResult(response.data), categoryId)
 				} else {
-					subcategoryListLiveData.value = CoResult(null, false, response.message)
+					_subcategoryListLiveData.value = SubcategoryListMo(CoResult(null, false, response.message), categoryId)
 				}
 			}
 			
 			override fun onFailed(throwable: Throwable) {
 				super.onFailed(throwable)
-				subcategoryListLiveData.value = CoResult(null, false, throwable.message)
+				_subcategoryListLiveData.value = SubcategoryListMo(CoResult(null, false, throwable.message), categoryId)
 			}
 		})
-		return subcategoryListLiveData
 	}
 }

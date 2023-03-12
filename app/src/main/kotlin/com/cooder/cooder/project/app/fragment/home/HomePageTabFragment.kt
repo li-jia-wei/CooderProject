@@ -24,9 +24,7 @@ import com.cooder.cooder.ui.item.CoDataItem
  */
 class HomePageTabFragment private constructor() : CoAbsListFragment() {
 	
-	private val viewModel by lazy {
-		ViewModelProvider(this)[HomePageViewModel::class.java]
-	}
+	private val viewModel by lazy { ViewModelProvider(this)[HomePageViewModel::class.java] }
 	
 	private var categoryId: String? = null
 	
@@ -51,18 +49,26 @@ class HomePageTabFragment private constructor() : CoAbsListFragment() {
 		
 		super.onViewCreated(view, savedInstanceState)
 		
+		viewModel.tabCategoryListLiveData.observe(viewLifecycleOwner) {
+			if (it.isSuccessful()) {
+				updateUI(it.data!!)
+			} else {
+				showToast(it.msg)
+				finishRefresh(null)
+			}
+		}
+		
 		// 查询数据
-		queryTabCategoryList(CacheStrategy.Type.CACHE_ONLY)
+		queryTabCategoryList(CacheStrategy.Type.NET_ONLY)
 		
 		enableLoadMore {
-			queryTabCategoryList(CacheStrategy.Type.NET_CACHE)
+			queryTabCategoryList(CacheStrategy.Type.NET_ONLY)
 		}
 	}
 	
 	override fun onRefresh() {
 		super.onRefresh()
-		
-		queryTabCategoryList(CacheStrategy.Type.NET_CACHE)
+		queryTabCategoryList(CacheStrategy.Type.NET_ONLY)
 	}
 	
 	override fun createLayoutManager(): RecyclerView.LayoutManager {
@@ -71,14 +77,8 @@ class HomePageTabFragment private constructor() : CoAbsListFragment() {
 	}
 	
 	private fun queryTabCategoryList(cacheStrategy: CacheStrategy.Type) {
-		viewModel.queryTabCategoryList(cacheStrategy, categoryId!!, pageIndex, 10).observe(viewLifecycleOwner) {
-			if (it.isSuccessful()) {
-				updateUI(it.data!!)
-			} else {
-				showToast(it.msg)
-				finishRefresh(null)
-			}
-		}
+		val mo = HomePageViewModel.TabCategoryListMo(cacheStrategy, categoryId!!, pageIndex, 10)
+		viewModel.queryTabCategoryList(mo)
 	}
 	
 	/**

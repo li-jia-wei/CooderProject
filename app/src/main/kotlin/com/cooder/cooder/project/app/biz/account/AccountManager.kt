@@ -77,7 +77,7 @@ object AccountManager {
 	}
 	
 	fun getBoardingPass(): String {
-		if (boardingPass != null && boardingPass!!.isNotEmpty()) {
+		if (!TextUtils.isEmpty(boardingPass)) {
 			return boardingPass!!
 		}
 		boardingPass = SPUtil.getString(KEY_BOARDING_PASS, "")

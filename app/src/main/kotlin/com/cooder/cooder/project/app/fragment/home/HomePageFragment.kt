@@ -31,9 +31,7 @@ import com.cooder.cooder.ui.tab.top.CoTabTopInfo
  */
 class HomePageFragment : CoBaseFragment<FragmentHomePageBinding>() {
 	
-	private val viewModel by lazy {
-		ViewModelProvider(this)[HomePageViewModel::class.java]
-	}
+	private val viewModel by lazy { ViewModelProvider(this)[HomePageViewModel::class.java] }
 	
 	private var tabTopSelectIndex = DEFAULT_TAB_TOP_SELECT_INDEX
 	
@@ -51,6 +49,7 @@ class HomePageFragment : CoBaseFragment<FragmentHomePageBinding>() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		
+		queryTabListObserver()
 		queryTabList()
 		
 		AccountManager.loginSuccessObserver(requireContext()) {
@@ -58,17 +57,18 @@ class HomePageFragment : CoBaseFragment<FragmentHomePageBinding>() {
 		}
 	}
 	
-	/**
-	 * 查询顶部Tab
-	 */
-	private fun queryTabList() {
-		viewModel.queryTabList().observe(viewLifecycleOwner) {
+	private fun queryTabListObserver() {
+		viewModel.tabListLiveData.observe(viewLifecycleOwner) {
 			if (it.isSuccessful()) {
 				updateUI(it.data!!)
 			} else {
 				Toast.makeText(requireContext(), it.msg, Toast.LENGTH_SHORT).show()
 			}
 		}
+	}
+	
+	private fun queryTabList() {
+		viewModel.queryTabList()
 	}
 	
 	/**
