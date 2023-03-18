@@ -5,8 +5,8 @@
 	android:layout_height="match_parent"
 	android:gravity="center"
 	android:orientation="vertical"
-	tools:context=".fragment.RecommendFragment">
-
+	tools:context=".fragment.recommond.RecommendFragment">
+	
 	<TextView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"

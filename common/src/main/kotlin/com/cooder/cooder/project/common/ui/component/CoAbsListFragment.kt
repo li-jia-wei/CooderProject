@@ -1,8 +1,6 @@
 package com.cooder.cooder.project.common.ui.component
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +8,8 @@ import android.widget.Toast
 import androidx.annotation.CallSuper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.cooder.cooder.library.executor.CoExecutor
+import com.cooder.cooder.library.util.CoMainHandler
 import com.cooder.cooder.project.common.R
 import com.cooder.cooder.project.common.databinding.FragmentAbsListBinding
 import com.cooder.cooder.ui.item.CoAdapter
@@ -17,7 +17,6 @@ import com.cooder.cooder.ui.item.CoDataItem
 import com.cooder.cooder.ui.refresh.CoRefresh
 import com.cooder.cooder.ui.refresh.overview.CoOverView
 import com.cooder.cooder.ui.refresh.overview.CoTextOverView
-import java.util.concurrent.Executors
 
 /**
  * 项目：CooderProject
@@ -38,11 +37,8 @@ abstract class CoAbsListFragment : CoBaseFragment<FragmentAbsListBinding>(), CoR
 	
 	private lateinit var layoutManager: RecyclerView.LayoutManager
 	
-	private val executor = Executors.newCachedThreadPool()
-	private val handler = Handler(Looper.myLooper()!!)
-	
-	private var refreshFailedDuration = 500L
-	private var loadFailedDuration = 500L
+	private var refreshFailedDuration = -1L
+	private var loadFailedDuration = -1L
 	
 	override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentAbsListBinding {
 		return FragmentAbsListBinding.inflate(inflater, container, false)
@@ -110,7 +106,7 @@ abstract class CoAbsListFragment : CoBaseFragment<FragmentAbsListBinding>(), CoR
 				adapter.addItems(dataItems!!)
 			} else {
 				// 延迟0.5s，显示empty视图
-				delayInvoke(refreshFailedDuration) {
+				loadFailureDelayInvoke(refreshFailedDuration) {
 					binding.refreshLayout.refreshFinished()
 					Toast.makeText(requireContext(), R.string.abs_list_refresh_failure, Toast.LENGTH_SHORT).show()
 					if (adapter.isEmpty()) {
@@ -124,7 +120,7 @@ abstract class CoAbsListFragment : CoBaseFragment<FragmentAbsListBinding>(), CoR
 				binding.recyclerView.loadFinished(true)
 			} else {
 				// 延迟0.5s
-				delayInvoke(loadFailedDuration) {
+				loadFailureDelayInvoke(loadFailedDuration) {
 					binding.recyclerView.loadFinished(false)
 					Toast.makeText(requireContext(), R.string.abs_list_load_failure, Toast.LENGTH_SHORT).show()
 				}
@@ -135,11 +131,15 @@ abstract class CoAbsListFragment : CoBaseFragment<FragmentAbsListBinding>(), CoR
 	/**
 	 * 延迟调用
 	 */
-	private fun delayInvoke(duration: Long, callback: () -> Unit) {
-		executor.execute {
-			Thread.sleep(duration)
-			handler.post {
-				callback.invoke()
+	private fun loadFailureDelayInvoke(duration: Long, callback: () -> Unit) {
+		if (duration <= 0L) {
+			callback.invoke()
+		} else {
+			CoExecutor.execute {
+				Thread.sleep(duration)
+				CoMainHandler.post {
+					callback.invoke()
+				}
 			}
 		}
 	}

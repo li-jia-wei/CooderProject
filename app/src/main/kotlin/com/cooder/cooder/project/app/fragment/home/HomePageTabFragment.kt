@@ -59,16 +59,16 @@ class HomePageTabFragment private constructor() : CoAbsListFragment() {
 		}
 		
 		// 查询数据
-		queryTabCategoryList(CacheStrategy.Type.NET_ONLY)
+		queryTabCategoryList(CacheStrategy.Type.CACHE_ONLY_NET_CACHE)
 		
 		enableLoadMore {
-			queryTabCategoryList(CacheStrategy.Type.NET_ONLY)
+			queryTabCategoryList(CacheStrategy.Type.NET_CACHE)
 		}
 	}
 	
 	override fun onRefresh() {
 		super.onRefresh()
-		queryTabCategoryList(CacheStrategy.Type.NET_ONLY)
+		queryTabCategoryList(CacheStrategy.Type.NET_CACHE)
 	}
 	
 	override fun createLayoutManager(): RecyclerView.LayoutManager {

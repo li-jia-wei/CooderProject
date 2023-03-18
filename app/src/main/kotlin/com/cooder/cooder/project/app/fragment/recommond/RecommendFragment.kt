@@ -1,7 +1,8 @@
-package com.cooder.cooder.project.app.fragment
+package com.cooder.cooder.project.app.fragment.recommond
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import com.cooder.cooder.project.app.databinding.FragmentRecommendBinding
 import com.cooder.cooder.project.common.ui.component.CoBaseFragment
 
@@ -15,6 +16,10 @@ import com.cooder.cooder.project.common.ui.component.CoBaseFragment
  * 介绍：推荐Fragment
  */
 class RecommendFragment : CoBaseFragment<FragmentRecommendBinding>() {
+	
+	private val viewModel by lazy {
+		ViewModelProvider(this)[RecommendViewModel::class.java]
+	}
 	
 	override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecommendBinding {
 		return FragmentRecommendBinding.inflate(inflater, container, false)
