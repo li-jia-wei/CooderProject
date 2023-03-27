@@ -50,12 +50,6 @@ class RetrofitCallFactory(baseUrl: String) : CoCall.Factory {
 		private val request: CoRequest
 	) : CoCall<T> {
 		
-		override fun execute(): CoResponse<T> {
-			val realCall = createRealCall(request)
-			val response = realCall.execute()
-			return parseResponse(response)
-		}
-		
 		override fun enqueue(callback: CoCallback<T>) {
 			val realCall = createRealCall(request)
 			realCall.enqueue(object : Callback<ResponseBody> {

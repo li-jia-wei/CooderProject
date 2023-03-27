@@ -6,6 +6,7 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.cooder.cooder.library.log.CoLog
 import com.cooder.cooder.library.restful.annotation.CacheStrategy
 import com.cooder.cooder.library.util.expends.dpInt
 import com.cooder.cooder.project.app.MainActivity
@@ -50,6 +51,7 @@ class HomePageTabFragment private constructor() : CoAbsListFragment() {
 		super.onViewCreated(view, savedInstanceState)
 		
 		viewModel.tabCategoryListLiveData.observe(viewLifecycleOwner) {
+			CoLog.i(it.isSuccessful())
 			if (it.isSuccessful()) {
 				updateUI(it.data!!)
 			} else {

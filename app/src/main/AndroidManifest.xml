@@ -52,7 +52,6 @@
 		
 		<activity
 			android:name=".biz.goods.GoodsListActivity"
-			android:exported="true"
 			android:screenOrientation="portrait"
 			tools:ignore="LockedOrientationActivity" />
 		

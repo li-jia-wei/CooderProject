@@ -21,6 +21,6 @@
 	<color name="home_tab_top_default">@color/color_333</color>
 	<color name="home_tab_top_tint">@color/primary</color>
 	<color name="home_price">#CF1321</color>
-	<color name="home_goods_label_font">#F98B15</color>
+	<color name="home_goods_label_font">#D36B07</color>
 	<color name="home_goods_label_bg">#FEF7E6</color>
 </resources>

@@ -34,6 +34,7 @@ abstract class CoBaseActivity<VB : ViewBinding> : AppCompatActivity(), CoBaseAct
 	override fun onCreate(savedInstanceState: Bundle?) {
 		if (ALIVE_ACTIVITIES.contains(this.javaClass)) {
 			onBackPressed(Activity.RESULT_CANCELED)
+			return
 		}
 		ALIVE_ACTIVITIES += this.javaClass
 		

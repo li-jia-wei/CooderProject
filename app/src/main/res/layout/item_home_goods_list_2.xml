@@ -41,7 +41,7 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@+id/item_title"
-		tools:background="@drawable/shape_view"
+		tools:background="@color/view"
 		tools:layout_height="@dimen/dp_10"
 		tools:layout_width="match_parent"
 		tools:visibility="visible" />
