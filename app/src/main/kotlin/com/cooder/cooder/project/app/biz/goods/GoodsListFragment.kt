@@ -50,7 +50,9 @@ class GoodsListFragment : CoAbsListFragment() {
 	
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
+		
 		CoRoute.inject(this)
+		
 		queryGoodsListObserver()
 		queryGoodsList(CacheStrategy.Type.CACHE_ONLY)
 	}

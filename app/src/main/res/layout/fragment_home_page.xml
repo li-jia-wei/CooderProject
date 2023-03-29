@@ -14,7 +14,7 @@
 		android:background="@drawable/shape_home_page_search"
 		android:gravity="center"
 		android:text="@string/home_search_hint"
-		android:textColor="@color/color_9fa"
+		android:textColor="@color/rgb_9fa"
 		android:textSize="@dimen/sp_14" />
 	
 	<com.cooder.cooder.ui.tab.top.CoTabTopLayout

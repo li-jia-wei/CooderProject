@@ -1,0 +1,63 @@
+# 版本
+[versions]
+
+# 插件版本
+com-android-application = "7.4.2"
+com-android-library = "7.4.2"
+org-jetbrains-kotlin-android = "1.8.10"
+org-jetbrains-kotlin-jvm = "1.8.10"
+com-google-devtools-ksp = "1.8.10-1.0.9"
+
+# 原生库版本
+core-kts = "1.9.0"
+appcompat = "1.6.1"
+material = "1.8.0"
+constraintlayout = "2.1.4"
+junit = "4.13.2"
+androidx-test-ext-junit = "1.1.5"
+espresso-core = "3.5.1"
+
+# 第三方库版本
+arouter-api = "1.5.2"
+arouter-compiler = "1.5.2"
+arouter-register = "1.0.2"
+retrofit = "2.9.0"
+gson = "2.10.1"
+glide = "4.15.0"
+
+
+#库
+[libraries]
+
+# 原生库
+core-kts = { group = "androidx.core", name = "core-ktx", version.ref = "core-kts" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+
+# 第三方库
+arouter-api = { group = "com.alibaba", name = "arouter-api", version.ref = "arouter-api" }
+arouter-compiler = { group = "com.alibaba", name = "arouter-compiler", version.ref = "arouter-compiler" }
+arouter-register = { group = "com.alibaba", name = "arouter-register", version.ref = "arouter-register" }
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+
+
+# 插件
+[plugins]
+
+# 原生插件
+com-android-application = { id = "com.android.application", version.ref = "com-android-application" }
+com-android-library = { id = "com.android.library", version.ref = "com-android-library" }
+
+# 第三方插件
+org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin-android" }
+org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
+com-google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "com-google-devtools-ksp" }
+
+
+[bundles]

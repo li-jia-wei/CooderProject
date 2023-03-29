@@ -38,13 +38,13 @@ class ProfileViewModel : ViewModel() {
 				if (response.isSuccessful() && response.data != null) {
 					_courseNoticeLiveData.value = CoResult(response.data)
 				} else {
-					_courseNoticeLiveData.value = CoResult(null, false, response.message)
+					_courseNoticeLiveData.value = CoResult(null, response.message)
 				}
 			}
 			
 			override fun onFailed(throwable: Throwable) {
 				super.onFailed(throwable)
-				_courseNoticeLiveData.value = CoResult(null, false, throwable.message)
+				_courseNoticeLiveData.value = CoResult(null, throwable.message)
 			}
 		})
 	}
@@ -62,13 +62,13 @@ class ProfileViewModel : ViewModel() {
 				if (response.isSuccessful() && response.data != null) {
 					_profileLiveData.value = CoResult(response.data)
 				} else {
-					_profileLiveData.value = CoResult(null, false, response.message)
+					_profileLiveData.value = CoResult(null, response.message)
 				}
 			}
 			
 			override fun onFailed(throwable: Throwable) {
 				super.onFailed(throwable)
-				_profileLiveData.value = CoResult(null, false, throwable.message)
+				_profileLiveData.value = CoResult(null, throwable.message)
 			}
 		})
 	}

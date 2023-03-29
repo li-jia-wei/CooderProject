@@ -17,8 +17,8 @@
 	<color name="profile_banner_bg">@color/view</color>
 	
 	<!-- 主页 -->
-	<color name="home_search_bg">@color/color_eae</color>
-	<color name="home_tab_top_default">@color/color_333</color>
+	<color name="home_search_bg">@color/rgb_eae</color>
+	<color name="home_tab_top_default">@color/rgb_333</color>
 	<color name="home_tab_top_tint">@color/primary</color>
 	<color name="home_price">#CF1321</color>
 	<color name="home_goods_label_font">#D36B07</color>

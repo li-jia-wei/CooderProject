@@ -22,6 +22,8 @@ object RoutePath {
 	
 	const val ACTIVITY_BIZ_GOODS_GOODS_LIST = "/biz/goods/goods/list/activity"
 	
+	const val ACTIVITY_BIZ_DETAIL_DETAIL = "/biz/detail/detail/activity"
+	
 	@StringDef(SERVICE_ROUTE_DEGRADE_GLOBAL)
 	annotation class ServiceDef
 	
@@ -29,7 +31,8 @@ object RoutePath {
 		ACTIVITY_ROUTE_DEGRADE_GLOBAL,
 		ACTIVITY_BIZ_ACCOUNT_LOGIN,
 		ACTIVITY_BIZ_ACCOUNT_REGISTER,
-		ACTIVITY_BIZ_GOODS_GOODS_LIST
+		ACTIVITY_BIZ_GOODS_GOODS_LIST,
+		ACTIVITY_BIZ_DETAIL_DETAIL
 	)
 	annotation class ActivityRef
 }

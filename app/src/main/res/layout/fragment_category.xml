@@ -24,14 +24,14 @@
 		android:background="@drawable/shape_home_page_search"
 		android:gravity="center"
 		android:text="@string/home_search_hint"
-		android:textColor="@color/color_9fa"
+		android:textColor="@color/rgb_9fa"
 		android:textSize="@dimen/sp_14" />
 	
 	<View
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/dp_2"
 		android:layout_marginTop="@dimen/dp_10"
-		android:background="@color/color_eee" />
+		android:background="@color/rgb_eee" />
 	
 	<com.cooder.cooder.ui.slider.CoSliderView
 		android:id="@+id/slider_view"

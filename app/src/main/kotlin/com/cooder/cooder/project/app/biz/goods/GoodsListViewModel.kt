@@ -3,7 +3,6 @@ package com.cooder.cooder.project.app.biz.goods
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.cooder.cooder.library.log.CoLog
 import com.cooder.cooder.library.restful.CoCallback
 import com.cooder.cooder.library.restful.CoResponse
 import com.cooder.cooder.library.restful.CoResult
@@ -39,7 +38,6 @@ class GoodsListViewModel : ViewModel() {
 	 * 查询商品列表
 	 */
 	fun queryGoodsList(mo: GoodsListMo) {
-		CoLog.i(mo.categoryId)
 		ApiFactory.create(GoodsApi::class.java)
 			.queryGoodsList(mo.cacheStrategyType, mo.categoryId, mo.subcategoryId, mo.pageSize, mo.pageIndex)
 			.enqueue(object : CoCallback<GoodsList> {
@@ -47,13 +45,13 @@ class GoodsListViewModel : ViewModel() {
 					if (response.isSuccessful() && response.data != null) {
 						_goodsListLiveData.value = CoResult(response.data)
 					} else {
-						_goodsListLiveData.value = CoResult(null, false, response.message)
+						_goodsListLiveData.value = CoResult(null, response.message)
 					}
 				}
 				
 				override fun onFailed(throwable: Throwable) {
 					super.onFailed(throwable)
-					_goodsListLiveData.value = CoResult(null, false, throwable.message)
+					_goodsListLiveData.value = CoResult(null, throwable.message)
 				}
 			})
 	}

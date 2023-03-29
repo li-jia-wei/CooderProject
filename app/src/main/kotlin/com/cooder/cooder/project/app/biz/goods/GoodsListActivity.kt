@@ -44,12 +44,10 @@ class GoodsListActivity : CoBaseActivity<ActivityGoodsListBinding>() {
 		return ActivityGoodsListBinding.inflate(inflater)
 	}
 	
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
+	override fun onCreateActivity(savedInstanceState: Bundle?) {
+		CoRoute.inject(this)
 		
 		setStatusBar(true, Color.WHITE)
-		
-		CoRoute.inject(this)
 		
 		binding.actionBack.setOnClickListener {
 			onBackPressed(Activity.RESULT_CANCELED)

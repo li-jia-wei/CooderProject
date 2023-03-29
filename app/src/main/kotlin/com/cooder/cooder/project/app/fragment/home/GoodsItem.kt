@@ -1,6 +1,7 @@
 package com.cooder.cooder.project.app.fragment.home
 
 import android.content.Context
+import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
@@ -11,8 +12,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cooder.cooder.library.util.expends.dpInt
 import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.app.model.GoodsModel
+import com.cooder.cooder.project.app.model.selectPrice
+import com.cooder.cooder.project.app.route.CoRoute
+import com.cooder.cooder.project.app.route.RoutePath
 import com.cooder.cooder.project.common.ui.view.expends.loadCorner
 import com.cooder.cooder.ui.item.CoDataItem
+import com.cooder.cooder.ui.item.CoViewHolder
 
 /**
  * 项目：CooderProject
@@ -26,7 +31,7 @@ import com.cooder.cooder.ui.item.CoDataItem
 class GoodsItem(
 	goods: GoodsModel,
 	private val hotTab: Boolean
-) : CoDataItem<GoodsModel, RecyclerView.ViewHolder>(goods) {
+) : CoDataItem<GoodsModel, CoViewHolder>(goods) {
 	
 	companion object {
 		private const val IMAGE_CORNER = 10
@@ -36,16 +41,16 @@ class GoodsItem(
 		return if (hotTab) R.layout.item_home_goods_list_1 else R.layout.item_home_goods_list_2
 	}
 	
-	override fun onBindData(holder: RecyclerView.ViewHolder, position: Int) {
-		val context = holder.itemView.context
-		val image: ImageView = holder.itemView.findViewById(R.id.item_image)
-		val title: TextView = holder.itemView.findViewById(R.id.item_title)
-		val labelContainer: LinearLayout = holder.itemView.findViewById(R.id.item_label_container)
-		val price: TextView = holder.itemView.findViewById(R.id.item_price)
-		val saleDesc: TextView = holder.itemView.findViewById(R.id.item_sale_desc)
+	override fun onBindData(holder: CoViewHolder, position: Int) {
+		val context = holder.context
+		val image: ImageView = holder.findViewById(R.id.item_image)
+		val title: TextView = holder.findViewById(R.id.item_title)
+		val labelContainer: LinearLayout = holder.findViewById(R.id.item_label_container)
+		val price: TextView = holder.findViewById(R.id.item_price)
+		val saleDesc: TextView = holder.findViewById(R.id.item_sale_desc)
 		image.loadCorner(data.sliderImage, IMAGE_CORNER)
 		title.text = data.goodsName
-		price.text = getRealPrice(data.marketPrice)
+		price.text = selectPrice(data.groupPrice, data.marketPrice)
 		saleDesc.text = data.completedNumText
 		
 		val tags = data.tags
@@ -78,17 +83,12 @@ class GoodsItem(
 			}
 			holder.itemView.layoutParams = param
 		}
-	}
-	
-	private fun getRealPrice(price: String): String {
-		var realPrice = price
-		if (realPrice == "") {
-			realPrice = "¥未知"
+		holder.itemView.setOnClickListener {
+			val bundle = Bundle()
+			bundle.putString("goodsId", data.goodsId)
+			bundle.putSerializable("goodsModel", data)
+			CoRoute.startActivity(RoutePath.ACTIVITY_BIZ_DETAIL_DETAIL, bundle)
 		}
-		if (!realPrice.startsWith("¥")) {
-			realPrice = "¥$realPrice"
-		}
-		return realPrice
 	}
 	
 	private fun createLabelView(context: Context, hasStartMargin: Boolean): TextView {

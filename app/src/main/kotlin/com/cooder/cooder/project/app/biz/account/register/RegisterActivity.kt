@@ -37,8 +37,7 @@ class RegisterActivity : CoBaseActivity<ActivityRegisterBinding>() {
 		return ActivityRegisterBinding.inflate(inflater)
 	}
 	
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
+	override fun onCreateActivity(savedInstanceState: Bundle?) {
 		setStatusBar(true, Color.WHITE)
 		
 		registerObserver()
@@ -93,7 +92,7 @@ class RegisterActivity : CoBaseActivity<ActivityRegisterBinding>() {
 	
 	private fun registerObserver() {
 		viewModel.registerLiveData.observe(this) {
-			if (it.result.success) {
+			if (it.success) {
 				val intent = Intent()
 				intent.putExtra("username", it.username)
 				onBackPressed(Activity.RESULT_OK, intent)

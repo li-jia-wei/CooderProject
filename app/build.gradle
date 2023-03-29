@@ -1,75 +1,74 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
+	alias(libs.plugins.com.android.application)
+	alias(libs.plugins.org.jetbrains.kotlin.android)
+	id("kotlin-kapt")
 }
 
 android {
-    compileSdk 33
-    namespace 'com.cooder.cooder.project.app'
-
-    defaultConfig {
-        applicationId "com.cooder.cooder.project.app"
-        minSdk 26
-        targetSdk 33
-        versionCode APP_VERSION_CODE as int
-        versionName APP_VERSION_NAME
-    
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
-    
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [AROUTER_MODULE_NAME: project.getName()]
-            }
-        }
-    }
-    buildTypes {
-	    release {
-		    minifyEnabled true
-		    zipAlignEnabled true
-		    shrinkResources true
-		    proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-	    }
-	    debug {
-		    minifyEnabled false
-	    }
-    }
-    compileOptions {
-	    sourceCompatibility JavaVersion.VERSION_17
-	    targetCompatibility JavaVersion.VERSION_17
-    }
-    kotlinOptions {
-	    jvmTarget = '17'
-    }
-    buildToolsVersion '33.0.2'
-    buildFeatures {
-        viewBinding true
-    }
+	compileSdk 33
+	namespace 'com.cooder.cooder.project.app'
+	
+	defaultConfig {
+		applicationId "com.cooder.cooder.project.app"
+		minSdk 26
+		targetSdk 33
+		versionCode APP_VERSION_CODE as int
+		versionName APP_VERSION_NAME
+		
+		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+		consumerProguardFiles "consumer-rules.pro"
+		
+		javaCompileOptions {
+			annotationProcessorOptions {
+				arguments = [AROUTER_MODULE_NAME: project.getName()]
+			}
+		}
+	}
+	buildTypes {
+		release {
+			minifyEnabled true
+			zipAlignEnabled true
+			shrinkResources true
+			proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+		}
+		debug {
+			minifyEnabled false
+		}
+	}
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_17
+		targetCompatibility JavaVersion.VERSION_17
+	}
+	kotlinOptions {
+		jvmTarget = '17'
+	}
+	buildToolsVersion '33.0.2'
+	buildFeatures {
+		viewBinding true
+	}
 }
 
 dependencies {
-    
-    implementation project(':common')
-    implementation project(':cooder-library')
-    implementation project(':cooder-ui')
+	
+	implementation project(':common')
+	implementation project(':cooder-library')
+	implementation project(':cooder-ui')
 	debugImplementation project(':cooder-debug')
-    
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    
-    // ARouter
-    implementation 'com.alibaba:arouter-api:1.5.2'
-    kapt 'com.alibaba:arouter-compiler:1.5.2'
-    
-    // Retrofit2
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    
-    // Gson
-    implementation 'com.google.code.gson:gson:2.10.1'
+	
+	implementation libs.core.kts
+	implementation libs.appcompat
+	implementation libs.material
+	implementation libs.constraintlayout
+	testImplementation libs.junit
+	androidTestImplementation libs.androidx.test.ext.junit
+	androidTestImplementation libs.espresso.core
+	
+	// ARouter
+	implementation libs.arouter.api
+	kapt libs.arouter.compiler
+	// Retrofit2
+	implementation libs.retrofit
+	
+	// Gson
+	implementation libs.gson
 }

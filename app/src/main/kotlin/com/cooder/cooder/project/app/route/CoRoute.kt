@@ -47,10 +47,10 @@ object CoRoute {
 		if (context == null) {
 			postcard.navigation()
 		} else {
-			if (requestCode != Int.MIN_VALUE || context !is Activity) {
-				postcard.navigation(context)
-			} else {
+			if (requestCode != Int.MIN_VALUE && context is Activity) {
 				postcard.navigation(context, requestCode)
+			} else {
+				postcard.navigation(context)
 			}
 		}
 	}

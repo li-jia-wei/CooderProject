@@ -63,7 +63,7 @@ object AccountManager {
 	}
 	
 	fun loginSuccess(boardingPass: String) {
-		SPUtil.putString(KEY_BOARDING_PASS, boardingPass)
+		SPUtil.putString(KEY_BOARDING_PASS, boardingPass, true)
 		this.boardingPass = boardingPass
 		loginLiveData.value = true
 		clearLoginForeverObservers()
@@ -80,7 +80,7 @@ object AccountManager {
 		if (!TextUtils.isEmpty(boardingPass)) {
 			return boardingPass!!
 		}
-		boardingPass = SPUtil.getString(KEY_BOARDING_PASS, "")
+		boardingPass = SPUtil.getString(KEY_BOARDING_PASS, "", true)
 		return boardingPass!!
 	}
 	

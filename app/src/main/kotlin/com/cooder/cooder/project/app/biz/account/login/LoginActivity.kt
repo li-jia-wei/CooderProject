@@ -36,8 +36,7 @@ class LoginActivity : CoBaseActivity<ActivityLoginBinding>() {
 		return ActivityLoginBinding.inflate(layoutInflater)
 	}
 	
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
+	override fun onCreateActivity(savedInstanceState: Bundle?) {
 		setStatusBar(true, Color.WHITE)
 		
 		loginObserver()

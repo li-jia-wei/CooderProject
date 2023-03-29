@@ -17,15 +17,17 @@ object SPUtil {
 	private const val CACHE_FILE = "cache_file"
 	
 	@JvmStatic
-	fun putString(key: String, value: String?) {
-		getPreferences()?.edit()?.putString(key, if (value != null) SafeUtil.encode(key, value) else null)?.apply()
+	fun putString(key: String, value: String?, safe: Boolean = false) {
+		val v = if (safe && value != null) SafeUtil.encode(key, value) else value
+		getPreferences()?.edit()?.putString(key, v)?.apply()
 	}
 	
 	@JvmStatic
 	@JvmOverloads
-	fun getString(key: String, defValue: String? = null): String? {
-		val str = getPreferences()?.getString(key, null)
-		return if (str != null) SafeUtil.decode(key, str) else defValue
+	fun getString(key: String, defValue: String? = null, safe: Boolean = false): String? {
+		val str = getPreferences()?.getString(key, defValue)
+		if (str == null || str == "null") return null
+		return if (safe) SafeUtil.decode(key, str) else str
 	}
 	
 	@JvmStatic

@@ -48,7 +48,7 @@ data class GoodsModel(
 	val joinedAvatars: List<SliderImage>?,
 	val marketPrice: String,
 	val sliderImage: String,
-	val sliderImages: List<SliderImage>,
+	val sliderImages: List<SliderImage>?,
 	val tags: String
 ) : Serializable
 
@@ -73,3 +73,16 @@ data class GoodsList(
 	val total: Int,
 	val list: List<GoodsModel>
 ) : Serializable
+
+/**
+ * 选择使用哪个金额
+ */
+fun selectPrice(groupPrice: String?, marketPrice: String?): String {
+	return if (!marketPrice.isNullOrBlank()) {
+		if (marketPrice.startsWith("¥")) marketPrice else "¥$marketPrice"
+	} else if (!groupPrice.isNullOrBlank()) {
+		if (groupPrice.startsWith("¥")) groupPrice else "¥$groupPrice"
+	} else {
+		"¥未知"
+	}
+}

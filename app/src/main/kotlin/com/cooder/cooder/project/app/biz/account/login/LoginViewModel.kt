@@ -38,13 +38,13 @@ class LoginViewModel : ViewModel() {
 				if (response.isSuccessful() && response.data != null) {
 					_loginLiveData.value = CoResult(response.data!!)
 				} else {
-					_loginLiveData.value = CoResult(null, false, response.message)
+					_loginLiveData.value = CoResult(null, response.message)
 				}
 			}
 			
 			override fun onFailed(throwable: Throwable) {
 				super.onFailed(throwable)
-				_loginLiveData.value = CoResult(null, false, throwable.message)
+				_loginLiveData.value = CoResult(null, throwable.message)
 			}
 		})
 	}

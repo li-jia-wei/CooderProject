@@ -36,13 +36,13 @@ class CategoryViewModel : ViewModel() {
 				if (response.isSuccessful() && data != null) {
 					_categoryListLiveData.value = CoResult(data)
 				} else {
-					_categoryListLiveData.value = CoResult(null, false, response.message)
+					_categoryListLiveData.value = CoResult(null, response.message)
 				}
 			}
 			
 			override fun onFailed(throwable: Throwable) {
 				super.onFailed(throwable)
-				_categoryListLiveData.value = CoResult(null, false, throwable.message)
+				_categoryListLiveData.value = CoResult(null, throwable.message)
 			}
 		})
 	}
@@ -62,13 +62,13 @@ class CategoryViewModel : ViewModel() {
 				if (response.isSuccessful() && response.data != null) {
 					_subcategoryListLiveData.value = SubcategoryListMo(CoResult(response.data), categoryId)
 				} else {
-					_subcategoryListLiveData.value = SubcategoryListMo(CoResult(null, false, response.message), categoryId)
+					_subcategoryListLiveData.value = SubcategoryListMo(CoResult(null, response.message), categoryId)
 				}
 			}
 			
 			override fun onFailed(throwable: Throwable) {
 				super.onFailed(throwable)
-				_subcategoryListLiveData.value = SubcategoryListMo(CoResult(null, false, throwable.message), categoryId)
+				_subcategoryListLiveData.value = SubcategoryListMo(CoResult(null, throwable.message), categoryId)
 			}
 		})
 	}

@@ -13,6 +13,7 @@ import com.cooder.cooder.ui.banner.CoBanner
 import com.cooder.cooder.ui.banner.core.CoBannerMo
 import com.cooder.cooder.ui.banner.indicator.CircleIndicator
 import com.cooder.cooder.ui.item.CoDataItem
+import com.cooder.cooder.ui.item.CoViewHolder
 
 /**
  * 项目：CooderProject
@@ -25,9 +26,9 @@ import com.cooder.cooder.ui.item.CoDataItem
  */
 class BannerItem(
 	bannerList: List<HomeBanner>
-) : CoDataItem<List<HomeBanner>, RecyclerView.ViewHolder>(bannerList) {
+) : CoDataItem<List<HomeBanner>, CoViewHolder>(bannerList) {
 	
-	override fun onBindData(holder: RecyclerView.ViewHolder, position: Int) {
+	override fun onBindData(holder: CoViewHolder, position: Int) {
 		val banner = holder.itemView as CoBanner
 		val models = mutableListOf<CoBannerMo>()
 		data.forEach {

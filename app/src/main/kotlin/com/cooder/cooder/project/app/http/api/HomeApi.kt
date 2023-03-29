@@ -6,7 +6,6 @@ import com.cooder.cooder.library.restful.annotation.Filed
 import com.cooder.cooder.library.restful.annotation.GET
 import com.cooder.cooder.library.restful.annotation.Path
 import com.cooder.cooder.project.app.model.HomeModel
-import com.cooder.cooder.project.app.model.TabCategory
 
 /**
  * 项目：CooderProject
@@ -18,13 +17,6 @@ import com.cooder.cooder.project.app.model.TabCategory
  * 介绍：首页模块接口
  */
 interface HomeApi : Api {
-	
-	/**
-	 * 查询首页顶部Tab
-	 */
-	@GET("category/categories")
-	@CacheStrategy(CacheStrategy.Type.NET_ONLY)
-	fun queryCategoryList(): CoCall<List<TabCategory>>
 	
 	/**
 	 * 查询顶部标题对应的数据

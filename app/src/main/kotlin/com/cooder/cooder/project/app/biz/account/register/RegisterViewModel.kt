@@ -25,6 +25,7 @@ class RegisterViewModel : ViewModel() {
 	val registerLiveData: LiveData<RegisterMo> = _registerLiveData
 	
 	data class RegisterMo(
+		val success: Boolean,
 		val result: CoResult<String>,
 		val username: String
 	)
@@ -37,15 +38,15 @@ class RegisterViewModel : ViewModel() {
 			.enqueue(object : CoCallback<String> {
 				override fun onSuccess(response: CoResponse<String>) {
 					if (response.isSuccessful()) {
-						_registerLiveData.value = RegisterMo(CoResult(null), username)
+						_registerLiveData.value = RegisterMo(true, CoResult(null), username)
 					} else {
-						_registerLiveData.value = RegisterMo(CoResult(null, false, response.message), username)
+						_registerLiveData.value = RegisterMo(false, CoResult(null, response.message), username)
 					}
 				}
 				
 				override fun onFailed(throwable: Throwable) {
 					super.onFailed(throwable)
-					_registerLiveData.value = RegisterMo(CoResult(null, false, throwable.message), username)
+					_registerLiveData.value = RegisterMo(false, CoResult(null, throwable.message), username)
 				}
 			})
 	}

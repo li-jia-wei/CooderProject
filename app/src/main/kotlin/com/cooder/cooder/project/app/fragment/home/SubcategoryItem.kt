@@ -15,6 +15,7 @@ import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.app.model.Subcategory
 import com.cooder.cooder.project.common.ui.view.expends.load
 import com.cooder.cooder.ui.item.CoDataItem
+import com.cooder.cooder.ui.item.CoViewHolder
 
 /**
  * 项目：CooderProject
@@ -27,15 +28,15 @@ import com.cooder.cooder.ui.item.CoDataItem
  */
 class SubcategoryItem(
 	subcategoryList: List<Subcategory>
-) : CoDataItem<List<Subcategory>, RecyclerView.ViewHolder>(subcategoryList) {
+) : CoDataItem<List<Subcategory>, CoViewHolder>(subcategoryList) {
 	
-	override fun onBindData(holder: RecyclerView.ViewHolder, position: Int) {
+	override fun onBindData(holder: CoViewHolder, position: Int) {
 		val context = holder.itemView.context
 		val gridView = holder.itemView as RecyclerView
 		gridView.adapter = GridAdapter(context)
 	}
 	
-	override fun getItemView(parent: ViewGroup): View? {
+	override fun getItemView(parent: ViewGroup): View {
 		val gridView = RecyclerView(parent.context)
 		val params = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT)
 		params.bottomMargin = 10.dpInt
@@ -47,18 +48,18 @@ class SubcategoryItem(
 	
 	inner class GridAdapter(
 		private val context: Context
-	) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+	) : RecyclerView.Adapter<CoViewHolder>() {
 		
 		private val inflater = LayoutInflater.from(context)
 		
-		override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+		override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoViewHolder {
 			val view = inflater.inflate(R.layout.item_home_op_grid, parent, false)
-			return object : RecyclerView.ViewHolder(view) {}
+			return CoViewHolder(view)
 		}
 		
-		override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-			val image: ImageView = holder.itemView.findViewById(R.id.item_image)
-			val title: TextView = holder.itemView.findViewById(R.id.item_title)
+		override fun onBindViewHolder(holder: CoViewHolder, position: Int) {
+			val image: ImageView = holder.findViewById(R.id.item_image)
+			val title: TextView = holder.findViewById(R.id.item_title)
 			val subcategory = data[position]
 			image.load(subcategory.subcategoryIcon)
 			title.text = subcategory.subcategoryName

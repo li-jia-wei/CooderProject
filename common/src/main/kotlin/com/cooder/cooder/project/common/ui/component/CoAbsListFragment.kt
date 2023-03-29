@@ -14,6 +14,7 @@ import com.cooder.cooder.project.common.R
 import com.cooder.cooder.project.common.databinding.FragmentAbsListBinding
 import com.cooder.cooder.ui.item.CoAdapter
 import com.cooder.cooder.ui.item.CoDataItem
+import com.cooder.cooder.ui.item.CoViewHolder
 import com.cooder.cooder.ui.refresh.CoRefresh
 import com.cooder.cooder.ui.refresh.overview.CoOverView
 import com.cooder.cooder.ui.refresh.overview.CoTextOverView
@@ -94,7 +95,7 @@ abstract class CoAbsListFragment : CoBaseFragment<FragmentAbsListBinding>(), CoR
 	/**
 	 * 完成刷新
 	 */
-	fun finishRefresh(dataItems: List<CoDataItem<*, out RecyclerView.ViewHolder>>?) {
+	protected fun finishRefresh(dataItems: List<CoDataItem<*, out CoViewHolder>>?) {
 		val success = !dataItems.isNullOrEmpty()
 		val refresh = pageIndex == 1
 		if (refresh) {
@@ -176,7 +177,7 @@ abstract class CoAbsListFragment : CoBaseFragment<FragmentAbsListBinding>(), CoR
 	/**
 	 * 开启加载更多
 	 */
-	fun enableLoadMore(callback: () -> Unit) {
+	protected fun enableLoadMore(callback: () -> Unit) {
 		binding.recyclerView.enableLoadMore(PREFETCH_SIZE) {
 			if (refreshHeaderView.state == CoOverView.CoRefreshState.STATE_REFRESH) {
 				// 正处于刷新状态
@@ -191,19 +192,26 @@ abstract class CoAbsListFragment : CoBaseFragment<FragmentAbsListBinding>(), CoR
 	/**
 	 * 关闭加载更多
 	 */
-	private fun disableLoadMore() {
+	protected fun disableLoadMore() {
 		binding.recyclerView.disableLoadMore()
 	}
 	
 	/**
 	 * 创建LayoutManager
 	 */
-	open fun createLayoutManager(): RecyclerView.LayoutManager {
+	protected open fun createLayoutManager(): RecyclerView.LayoutManager {
 		return LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 	}
 	
-	open fun onLoadMore() {
+	/**
+	 * 加载更多
+	 */
+	protected open fun onLoadMore() {
 	
+	}
+	
+	protected fun clearAnimation() {
+		this.adapter.clearAnimation()
 	}
 	
 	/**

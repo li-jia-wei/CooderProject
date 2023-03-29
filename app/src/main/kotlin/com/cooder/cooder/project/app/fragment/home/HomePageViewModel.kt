@@ -8,6 +8,7 @@ import com.cooder.cooder.library.restful.CoResponse
 import com.cooder.cooder.library.restful.CoResult
 import com.cooder.cooder.library.restful.annotation.CacheStrategy
 import com.cooder.cooder.project.app.http.ApiFactory
+import com.cooder.cooder.project.app.http.api.CategoryApi
 import com.cooder.cooder.project.app.http.api.HomeApi
 import com.cooder.cooder.project.app.model.HomeModel
 import com.cooder.cooder.project.app.model.TabCategory
@@ -31,18 +32,18 @@ class HomePageViewModel : ViewModel() {
 	 * 查询顶部Tab的类别
 	 */
 	fun queryTabList() {
-		ApiFactory.create(HomeApi::class.java).queryCategoryList().enqueue(object : CoCallback<List<TabCategory>> {
+		ApiFactory.create(CategoryApi::class.java).queryCategoryList().enqueue(object : CoCallback<List<TabCategory>> {
 			override fun onSuccess(response: CoResponse<List<TabCategory>>) {
 				if (response.isSuccessful() && response.data != null) {
 					_tabListLiveData.value = CoResult(response.data!!)
 				} else {
-					_tabListLiveData.value = CoResult(null, false, response.message)
+					_tabListLiveData.value = CoResult(null, response.message)
 				}
 			}
 			
 			override fun onFailed(throwable: Throwable) {
 				super.onFailed(throwable)
-				_tabListLiveData.value = CoResult(null, false, throwable.message)
+				_tabListLiveData.value = CoResult(null, throwable.message)
 			}
 		})
 	}
@@ -69,13 +70,13 @@ class HomePageViewModel : ViewModel() {
 				if (response.isSuccessful() && response.data != null) {
 					_tabCategoryListLiveData.value = CoResult(response.data)
 				} else {
-					_tabCategoryListLiveData.value = CoResult(null, false, response.message)
+					_tabCategoryListLiveData.value = CoResult(null, response.message)
 				}
 			}
 			
 			override fun onFailed(throwable: Throwable) {
 				super.onFailed(throwable)
-				_tabCategoryListLiveData.value = CoResult(null, false, throwable.message)
+				_tabCategoryListLiveData.value = CoResult(null, throwable.message)
 			}
 		})
 	}

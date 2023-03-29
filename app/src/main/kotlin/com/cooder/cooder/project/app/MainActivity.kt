@@ -30,10 +30,7 @@ class MainActivity : CoBaseActivity<ActivityMainBinding>(), ActivityProvider {
 		return ActivityMainBinding.inflate(inflater)
 	}
 	
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-		
-		// 设置状态栏
+	override fun onCreateActivity(savedInstanceState: Bundle?) {
 		setStatusBar(true, Color.WHITE)
 		
 		activityLogic = MainActivityLogic(binding, this, savedInstanceState)

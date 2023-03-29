@@ -36,9 +36,7 @@ class DegradeGlobalActivity : CoBaseActivity<ActivityDegradeGlobalBinding>() {
 		return ActivityDegradeGlobalBinding.inflate(inflater)
 	}
 	
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-		
+	override fun onCreateActivity(savedInstanceState: Bundle?) {
 		CoRoute.inject(this)
 		
 		binding.emptyView.setTitle(degradeTitle)
