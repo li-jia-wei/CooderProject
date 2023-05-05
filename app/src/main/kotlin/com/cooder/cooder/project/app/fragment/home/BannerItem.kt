@@ -25,13 +25,13 @@ import com.cooder.cooder.ui.item.CoViewHolder
  * 介绍：BannerItem
  */
 class BannerItem(
-	bannerList: List<HomeBanner>
-) : CoDataItem<List<HomeBanner>, CoViewHolder>(bannerList) {
+	private val bannerList: List<HomeBanner>
+) : CoDataItem<List<HomeBanner>, CoViewHolder>() {
 	
 	override fun onBindData(holder: CoViewHolder, position: Int) {
 		val banner = holder.itemView as CoBanner
 		val models = mutableListOf<CoBannerMo>()
-		data.forEach {
+		bannerList.forEach {
 			models += CoBannerMo(it.cover)
 		}
 		banner.setBannerData(models)
@@ -39,7 +39,7 @@ class BannerItem(
 			(viewHolder.rootView as ImageView).load(mo.url)
 		}
 		banner.setOnBannerClickListener { _, _, position1 ->
-			val url = data[position1].url
+			val url = bannerList[position1].url
 			CoRoute.startActivityForBrowser(url)
 		}
 	}

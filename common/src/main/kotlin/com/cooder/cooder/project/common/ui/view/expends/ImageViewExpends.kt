@@ -6,15 +6,20 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.annotation.FloatRange
 import androidx.annotation.IntRange
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.cooder.cooder.project.common.R
 import kotlin.math.min
 
@@ -24,6 +29,28 @@ import kotlin.math.min
 fun ImageView.load(url: String) {
 	Glide.with(this)
 		.load(url)
+		.error(R.drawable.ic_load_failed)
+		.into(this)
+}
+
+fun ImageView.load(url: String, callback: (Drawable) -> Unit) {
+	var isCallback = false
+	Glide.with(this)
+		.load(url)
+		.listener(object : RequestListener<Drawable> {
+			override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+				return false
+			}
+			
+			override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+				if (!isCallback) {
+					isCallback = true
+					resource?.let(callback)
+				}
+				return false
+			}
+			
+		})
 		.error(R.drawable.ic_load_failed)
 		.into(this)
 }

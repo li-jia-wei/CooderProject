@@ -3,15 +3,15 @@ package com.cooder.cooder.project.app.biz.detail
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.AbsoluteSizeSpan
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
-import com.cooder.cooder.project.app.R
+import com.cooder.cooder.project.app.databinding.ItemDetailHeaderBinding
 import com.cooder.cooder.project.app.model.DetailModel
 import com.cooder.cooder.project.app.model.SliderImage
 import com.cooder.cooder.project.common.ui.view.expends.load
-import com.cooder.cooder.ui.banner.CoBanner
 import com.cooder.cooder.ui.banner.core.CoBannerMo
-import com.cooder.cooder.ui.banner.indicator.NumberIndicator
 import com.cooder.cooder.ui.item.CoDataItem
 import com.cooder.cooder.ui.item.CoViewHolder
 
@@ -22,7 +22,7 @@ import com.cooder.cooder.ui.item.CoViewHolder
  *
  * 创建：2023/3/28 12:23
  *
- * 介绍：HeaderItem
+ * 介绍：商品详情 头部
  */
 class HeaderItem(
 	private val sliderImages: List<SliderImage>?,
@@ -31,30 +31,26 @@ class HeaderItem(
 	private val goodsName: String?
 ) : CoDataItem<DetailModel, CoViewHolder>() {
 	
-	override fun getItemLayoutRes(): Int {
-		return R.layout.item_detail_header
+	private lateinit var binding: ItemDetailHeaderBinding
+	
+	override fun getItemView(parent: ViewGroup): View {
+		binding = ItemDetailHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+		return binding.root
 	}
 	
 	override fun onBindData(holder: CoViewHolder, position: Int) {
-		val context = holder.itemView.context
 		val bannerMos = arrayListOf<CoBannerMo>()
 		sliderImages?.forEach {
 			bannerMos += CoBannerMo(it.url)
 		}
-		val banner: CoBanner = holder.findViewById(R.id.banner)
-		val price: TextView = holder.findViewById(R.id.price)
-		val saleDesc: TextView = holder.findViewById(R.id.sale_desc)
-		val title: TextView = holder.findViewById(R.id.title)
-		
-		banner.setBannerIndicator(NumberIndicator(context))
-		banner.setBannerData(bannerMos)
-		banner.setBindAdapter { viewHolder, mo, position ->
+		binding.banner.setBannerData(bannerMos)
+		binding.banner.setBindAdapter { viewHolder, mo, _ ->
 			val imageView = viewHolder.rootView as ImageView
 			imageView.load(mo.url)
 		}
-		price.text = spanPrice(this.price)
-		saleDesc.text = completedNumText
-		title.text = goodsName
+		binding.price.text = spanPrice(this.price)
+		binding.saleDesc.text = completedNumText
+		binding.title.text = goodsName
 	}
 	
 	private fun spanPrice(price: String): CharSequence {

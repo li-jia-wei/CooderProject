@@ -27,8 +27,8 @@ import com.cooder.cooder.ui.item.CoViewHolder
  * 介绍：子类别Item
  */
 class SubcategoryItem(
-	subcategoryList: List<Subcategory>
-) : CoDataItem<List<Subcategory>, CoViewHolder>(subcategoryList) {
+	private val subcategoryList: List<Subcategory>
+) : CoDataItem<List<Subcategory>, CoViewHolder>() {
 	
 	override fun onBindData(holder: CoViewHolder, position: Int) {
 		val context = holder.itemView.context
@@ -60,7 +60,7 @@ class SubcategoryItem(
 		override fun onBindViewHolder(holder: CoViewHolder, position: Int) {
 			val image: ImageView = holder.findViewById(R.id.item_image)
 			val title: TextView = holder.findViewById(R.id.item_title)
-			val subcategory = data[position]
+			val subcategory = subcategoryList[position]
 			image.load(subcategory.subcategoryIcon)
 			title.text = subcategory.subcategoryName
 			holder.itemView.setOnClickListener {
@@ -69,7 +69,7 @@ class SubcategoryItem(
 		}
 		
 		override fun getItemCount(): Int {
-			return data.size
+			return subcategoryList.size
 		}
 	}
 }

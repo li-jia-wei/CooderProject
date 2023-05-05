@@ -11,6 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.cooder.cooder.library.util.expends.hintNavigationBar
 import com.cooder.cooder.library.util.expends.immersiveStatusBar
 import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.app.databinding.ActivityDetailBinding
@@ -54,8 +55,9 @@ class DetailActivity : CoBaseActivity<ActivityDetailBinding>() {
 	
 	override fun onCreateActivity(savedInstanceState: Bundle?) {
 		CoRoute.inject(this)
-		
 		immersiveStatusBar(true)
+		
+		hintNavigationBar()
 		
 		assert(!TextUtils.isEmpty(goodsId)) { "goodsId must be not null or blank!" }
 		
@@ -135,10 +137,13 @@ class DetailActivity : CoBaseActivity<ActivityDetailBinding>() {
 		)
 		
 		// 评论Item
+		dataItems += CommentItem(model)
 		
 		// 店铺Item
+		dataItems += ShopItem(model)
 		
 		// 商品描述Item
+		dataItems += GoodsAttrItem(model)
 		
 		// 图库Item
 		

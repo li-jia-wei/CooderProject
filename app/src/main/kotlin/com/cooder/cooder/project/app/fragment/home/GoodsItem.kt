@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.cooder.cooder.library.log.CoLog
 import com.cooder.cooder.library.util.expends.dpInt
 import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.app.model.GoodsModel
@@ -26,12 +27,12 @@ import com.cooder.cooder.ui.item.CoViewHolder
  *
  * 创建：2022/12/14 20:53
  *
- * 介绍：产品Item
+ * 介绍：商品Item
  */
-class GoodsItem(
-	goods: GoodsModel,
+open class GoodsItem(
+	private val model: GoodsModel,
 	private val hotTab: Boolean
-) : CoDataItem<GoodsModel, CoViewHolder>(goods) {
+) : CoDataItem<GoodsModel, CoViewHolder>() {
 	
 	companion object {
 		private const val IMAGE_CORNER = 10
@@ -45,30 +46,32 @@ class GoodsItem(
 		val context = holder.context
 		val image: ImageView = holder.findViewById(R.id.item_image)
 		val title: TextView = holder.findViewById(R.id.item_title)
-		val labelContainer: LinearLayout = holder.findViewById(R.id.item_label_container)
 		val price: TextView = holder.findViewById(R.id.item_price)
 		val saleDesc: TextView = holder.findViewById(R.id.item_sale_desc)
-		image.loadCorner(data.sliderImage, IMAGE_CORNER)
-		title.text = data.goodsName
-		price.text = selectPrice(data.groupPrice, data.marketPrice)
-		saleDesc.text = data.completedNumText
+		val labelContainer: LinearLayout? = holder.findViewById(R.id.item_label_container)
+		image.loadCorner(model.sliderImage, IMAGE_CORNER)
+		title.text = model.goodsName
+		price.text = selectPrice(model.groupPrice, model.marketPrice)
+		saleDesc.text = model.completedNumText
 		
-		val tags = data.tags
-		if (tags.isNotEmpty()) {
-			labelContainer.visibility = View.VISIBLE
-			val split = tags.split(" ")
-			for ((index, tag) in split.withIndex()) {
-				val labelView: TextView = if (index > labelContainer.childCount - 1) {
-					val view = createLabelView(context, index != 0)
-					labelContainer.addView(view)
-					view
-				} else {
-					labelContainer.getChildAt(index) as TextView
+		if (labelContainer != null) {
+			val tags = model.tags
+			if (tags.isNotEmpty()) {
+				labelContainer.visibility = View.VISIBLE
+				val split = tags.split(" ")
+				for ((index, tag) in split.withIndex()) {
+					val labelView: TextView = if (index > labelContainer.childCount - 1) {
+						val view = createLabelView(context, index != 0)
+						labelContainer.addView(view)
+						view
+					} else {
+						labelContainer.getChildAt(index) as TextView
+					}
+					labelView.text = tag
 				}
-				labelView.text = tag
+			} else {
+				labelContainer.visibility = View.GONE
 			}
-		} else {
-			labelContainer.visibility = View.GONE
 		}
 		if (!hotTab) {
 			val margin = 2.dpInt
@@ -84,9 +87,10 @@ class GoodsItem(
 			holder.itemView.layoutParams = param
 		}
 		holder.itemView.setOnClickListener {
+			CoLog.i(model.goodsId)
 			val bundle = Bundle()
-			bundle.putString("goodsId", data.goodsId)
-			bundle.putSerializable("goodsModel", data)
+			bundle.putString("goodsId", model.goodsId)
+			bundle.putSerializable("goodsModel", model)
 			CoRoute.startActivity(RoutePath.ACTIVITY_BIZ_DETAIL_DETAIL, bundle)
 		}
 	}

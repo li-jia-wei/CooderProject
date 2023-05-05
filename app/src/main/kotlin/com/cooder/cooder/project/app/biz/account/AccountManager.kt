@@ -33,7 +33,7 @@ object AccountManager {
 	 * 登录
 	 */
 	@JvmOverloads
-	fun toLogin(context: Context = AppGlobals.getBaseContext(), observer: Observer<Boolean>) {
+	fun toLogin(context: Context = AppGlobals.getContext(), observer: Observer<Boolean>) {
 		if (context is LifecycleOwner) {
 			loginLiveData.observe(context, observer)
 		} else {
@@ -51,7 +51,7 @@ object AccountManager {
 	 * 登录成功回调
 	 */
 	fun loginSuccessObserver(
-		context: Context = AppGlobals.getBaseContext(),
+		context: Context = AppGlobals.getContext(),
 		observer: Observer<Boolean>
 	) {
 		if (context is LifecycleOwner) {

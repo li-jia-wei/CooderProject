@@ -7,7 +7,6 @@ import android.os.Bundle
 import androidx.fragment.app.FragmentManager
 import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.app.databinding.ActivityMainBinding
-import com.cooder.cooder.project.app.fragment.*
 import com.cooder.cooder.project.app.fragment.category.CategoryFragment
 import com.cooder.cooder.project.app.fragment.favorite.FavoriteFragment
 import com.cooder.cooder.project.app.fragment.home.HomePageFragment

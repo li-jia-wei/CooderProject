@@ -38,7 +38,7 @@ class GoodsListFragment : CoAbsListFragment() {
 	var subcategoryId = ""
 	
 	companion object {
-		fun newInstance(categoryId: String, subcategoryId: String): Fragment? {
+		fun newInstance(categoryId: String, subcategoryId: String): Fragment {
 			val args = Bundle()
 			args.putString("categoryId", categoryId)
 			args.putString("subcategoryId", subcategoryId)

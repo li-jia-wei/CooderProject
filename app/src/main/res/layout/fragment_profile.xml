@@ -111,7 +111,7 @@
 			android:layout_marginBottom="@dimen/dp_25"
 			android:visibility="gone"
 			app:autoPlay="true"
-			app:indicator="circle_small"
+			app:indicator="line"
 			app:intervalTime="5000"
 			app:loop="true"
 			app:scrollDuration="500"

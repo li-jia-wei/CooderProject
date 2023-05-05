@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.cooder.cooder.library.log.CoLog
 import com.cooder.cooder.library.util.expends.dpInt
 import com.cooder.cooder.project.app.R
 import com.cooder.cooder.project.app.biz.account.AccountManager
@@ -139,6 +140,7 @@ class ProfileFragment : CoBaseFragment<FragmentProfileBinding>() {
 			val imageView = viewHolder.findViewById<ImageView>(R.id.banner_item_image_view)
 			imageView.loadCorner(mo.url, BANNER_CORNER.dpInt)
 		}
+		CoLog.i("??????")
 		binding.banner.setOnBannerClickListener { _, _, position ->
 			val url = bannerNoticeList[position].url
 			CoRoute.startActivityForBrowser(url)

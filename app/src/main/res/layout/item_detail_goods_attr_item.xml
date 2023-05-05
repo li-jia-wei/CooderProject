@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginTop="@dimen/dp_10"
+	android:gravity="center_vertical"
+	tools:layout_width="@dimen/dp_359">
+	
+	<TextView
+		android:id="@+id/item_name"
+		android:layout_width="@dimen/dp_160"
+		android:layout_height="wrap_content"
+		android:ellipsize="end"
+		android:maxLines="1"
+		android:textColor="@color/rgb_999"
+		android:textSize="@dimen/sp_14"
+		tools:text="是否为有机食品" />
+	
+	<TextView
+		android:id="@+id/item_value"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/dp_20"
+		android:ellipsize="end"
+		android:maxLines="1"
+		android:textColor="@color/rgb_666"
+		android:textSize="@dimen/sp_14"
+		tools:text="否" />
+
+</LinearLayout>

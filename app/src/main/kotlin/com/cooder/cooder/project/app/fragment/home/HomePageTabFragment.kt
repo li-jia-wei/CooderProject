@@ -22,7 +22,7 @@ import com.cooder.cooder.ui.item.CoDataItem
  *
  * 介绍：主页TabFragment
  */
-class HomePageTabFragment private constructor() : CoAbsListFragment() {
+class HomePageTabFragment : CoAbsListFragment() {
 	
 	private val viewModel by lazy { ViewModelProvider(this)[HomePageViewModel::class.java] }
 	

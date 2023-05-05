@@ -44,10 +44,11 @@ class CoRecyclerView @JvmOverloads constructor(
 	 * 向下滑动，加载更多监听
 	 */
 	inner class LoadMoreScrollListener(
-		private val prefetchSize: Int, private val callback: () -> Unit
+		private val prefetchSize: Int,
+		private val callback: () -> Unit
 	) : OnScrollListener() {
 		
-		val coAdapter = adapter as CoAdapter
+		private val coAdapter = adapter as CoAdapter
 		
 		override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
 			// 根据当前的华东状态，决定要不要添加FooterView，要不要执行上拉加载分页动作
@@ -114,7 +115,6 @@ class CoRecyclerView @JvmOverloads constructor(
 			if (footerView == null) {
 				footerView = LayoutInflater.from(context).inflate(R.layout.layout_footer_loading, this@CoRecyclerView, false)
 				val params = footerView!!.layoutParams as LayoutParams
-//				params.bottomMargin = 52.dp.toInt()
 				footerView!!.layoutParams = params
 			}
 			return footerView!!

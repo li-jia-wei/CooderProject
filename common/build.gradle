@@ -8,13 +8,11 @@ android {
     compileSdk 33
 
     defaultConfig {
-        minSdk 26
-        targetSdk 33
-        versionCode APP_VERSION_CODE as int
-        versionName APP_VERSION_NAME
-    
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
+	    minSdk 26
+	    targetSdk 33
+	    
+	    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+	    consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {

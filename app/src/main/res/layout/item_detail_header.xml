@@ -5,14 +5,14 @@
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:layout_marginBottom="@dimen/dp_10"
-	android:background="@color/white"
-	android:paddingBottom="@dimen/dp_10">
+	android:background="@color/white">
 	
 	<com.cooder.cooder.ui.banner.CoBanner
 		android:id="@+id/banner"
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/dp_360"
 		app:autoPlay="true"
+		app:indicator="circle_medium"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
