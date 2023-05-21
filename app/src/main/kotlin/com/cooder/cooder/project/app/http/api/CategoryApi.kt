@@ -18,7 +18,6 @@ import com.cooder.cooder.project.app.model.TabCategory
  */
 interface CategoryApi : Api {
 	
-	
 	@GET("category/categories")
 	@CacheStrategy(CacheStrategy.Type.NET_ONLY)
 	fun queryCategoryList(): CoCall<List<TabCategory>>

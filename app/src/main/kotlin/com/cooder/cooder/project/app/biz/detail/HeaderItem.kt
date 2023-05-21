@@ -22,7 +22,7 @@ import com.cooder.cooder.ui.item.CoViewHolder
  *
  * 创建：2023/3/28 12:23
  *
- * 介绍：商品详情 头部
+ * 介绍：商品详情 - 顶部轮播图
  */
 class HeaderItem(
 	private val sliderImages: List<SliderImage>?,
@@ -33,15 +33,17 @@ class HeaderItem(
 	
 	private lateinit var binding: ItemDetailHeaderBinding
 	
-	override fun getItemView(parent: ViewGroup): View {
-		binding = ItemDetailHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+	override fun getItemView(inflater: LayoutInflater, parent: ViewGroup): View {
+		binding = ItemDetailHeaderBinding.inflate(inflater, parent, false)
 		return binding.root
 	}
 	
 	override fun onBindData(holder: CoViewHolder, position: Int) {
 		val bannerMos = arrayListOf<CoBannerMo>()
-		sliderImages?.forEach {
-			bannerMos += CoBannerMo(it.url)
+		sliderImages?.forEach { sliderImage ->
+			sliderImage.url?.let {
+				bannerMos += CoBannerMo(it)
+			}
 		}
 		binding.banner.setBannerData(bannerMos)
 		binding.banner.setBindAdapter { viewHolder, mo, _ ->

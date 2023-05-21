@@ -10,7 +10,7 @@ import android.widget.EditText
  *
  * 创建：2022/11/21 18:19
  *
- * 介绍：EmailWatcher
+ * 介绍：邮箱观察者
  */
 internal class EmailWatcher(
 	private val editText: EditText

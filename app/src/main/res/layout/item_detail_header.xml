@@ -5,7 +5,8 @@
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:layout_marginBottom="@dimen/dp_10"
-	android:background="@color/white">
+	android:background="@color/white"
+	android:paddingBottom="@dimen/dp_10">
 	
 	<com.cooder.cooder.ui.banner.CoBanner
 		android:id="@+id/banner"
@@ -14,6 +15,7 @@
 		app:autoPlay="true"
 		app:indicator="circle_medium"
 		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.0"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
 		app:loop="true"

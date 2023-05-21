@@ -9,12 +9,12 @@
 	
 	<TextView
 		android:id="@+id/item_name"
-		android:layout_width="@dimen/dp_160"
+		android:layout_width="@dimen/dp_140"
 		android:layout_height="wrap_content"
 		android:ellipsize="end"
 		android:maxLines="1"
 		android:textColor="@color/rgb_999"
-		android:textSize="@dimen/sp_14"
+		android:textSize="@dimen/sp_13"
 		tools:text="是否为有机食品" />
 	
 	<TextView
@@ -25,7 +25,7 @@
 		android:ellipsize="end"
 		android:maxLines="1"
 		android:textColor="@color/rgb_666"
-		android:textSize="@dimen/sp_14"
+		android:textSize="@dimen/sp_13"
 		tools:text="否" />
 
 </LinearLayout>

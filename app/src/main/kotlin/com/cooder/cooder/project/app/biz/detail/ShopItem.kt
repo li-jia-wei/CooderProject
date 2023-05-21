@@ -33,7 +33,7 @@ import com.cooder.cooder.ui.item.CoViewHolder
  *
  * 创建：2023/5/3 18:52
  *
- * 介绍：商品详情 店铺
+ * 介绍：商品详情 - 店铺
  */
 class ShopItem(private val model: DetailModel) : CoDataItem<DetailModel, CoViewHolder>() {
 	
@@ -43,8 +43,8 @@ class ShopItem(private val model: DetailModel) : CoDataItem<DetailModel, CoViewH
 		private const val SHOP_GOODS_ITEM_SPAN = 3
 	}
 	
-	override fun getItemView(parent: ViewGroup): View {
-		binding = ItemDetailShopBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+	override fun getItemView(inflater: LayoutInflater, parent: ViewGroup): View {
+		binding = ItemDetailShopBinding.inflate(inflater, parent, false)
 		return binding.root
 	}
 	

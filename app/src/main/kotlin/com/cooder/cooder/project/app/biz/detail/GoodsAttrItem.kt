@@ -16,7 +16,7 @@ import com.cooder.cooder.ui.item.CoViewHolder
  *
  * 创建：2023/5/4 16:59
  *
- * 介绍：商品详情 商品属性
+ * 介绍：商品详情 - 商品属性
  */
 class GoodsAttrItem(
 	private val model: DetailModel
@@ -24,8 +24,8 @@ class GoodsAttrItem(
 	
 	private lateinit var binding: ItemDetailGoodsAttrBinding
 	
-	override fun getItemView(parent: ViewGroup): View? {
-		binding = ItemDetailGoodsAttrBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+	override fun getItemView(inflater: LayoutInflater, parent: ViewGroup): View {
+		binding = ItemDetailGoodsAttrBinding.inflate(inflater, parent, false)
 		return binding.root
 	}
 	

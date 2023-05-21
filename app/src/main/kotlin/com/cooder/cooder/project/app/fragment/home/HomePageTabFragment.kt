@@ -61,13 +61,13 @@ class HomePageTabFragment : CoAbsListFragment() {
 		queryTabCategoryList(CacheStrategy.Type.CACHE_ONLY_NET_CACHE)
 		
 		enableLoadMore {
-			queryTabCategoryList(CacheStrategy.Type.NET_CACHE)
+			queryTabCategoryList(CacheStrategy.Type.NET_ONLY)
 		}
 	}
 	
 	override fun onRefresh() {
 		super.onRefresh()
-		queryTabCategoryList(CacheStrategy.Type.NET_CACHE)
+		queryTabCategoryList(CacheStrategy.Type.NET_ONLY)
 	}
 	
 	override fun createLayoutManager(): RecyclerView.LayoutManager {

@@ -1,6 +1,7 @@
 package com.cooder.cooder.project.app.fragment.home
 
 import android.graphics.Color
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -44,7 +45,7 @@ class BannerItem(
 		}
 	}
 	
-	override fun getItemView(parent: ViewGroup): View {
+	override fun getItemView(inflater: LayoutInflater, parent: ViewGroup): View {
 		val context = parent.context
 		val banner = CoBanner(context)
 		val params = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, 170.dpInt)

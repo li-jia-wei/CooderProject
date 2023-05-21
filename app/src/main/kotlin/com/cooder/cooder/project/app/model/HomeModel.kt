@@ -66,7 +66,7 @@ data class Subcategory(
 
 data class SliderImage(
 	val type: Int,
-	val url: String
+	val url: String?
 ) : Serializable
 
 data class GoodsList(

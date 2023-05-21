@@ -26,7 +26,7 @@ import java.lang.reflect.Method
  *
  * 创建：2023/2/26 20:41
  *
- * 介绍：DebugToolDialogFragment
+ * 介绍：Debug工具对话框
  */
 class CoDebugToolDialogFragment : CoBaseDialog<FragmentCoDebugToolDialogBinding>() {
 	

@@ -20,6 +20,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.cooder.cooder.library.util.CoViewUtil
 import com.cooder.cooder.project.common.R
 import kotlin.math.min
 
@@ -27,14 +28,20 @@ import kotlin.math.min
  * 加载图片
  */
 fun ImageView.load(url: String) {
+	if (CoViewUtil.isActivityDestroy(context)) return
 	Glide.with(this)
 		.load(url)
 		.error(R.drawable.ic_load_failed)
 		.into(this)
 }
 
-fun ImageView.load(url: String, callback: (Drawable) -> Unit) {
-	var isCallback = false
+/**
+ * 加载图片
+ * @param callback 回调一个Drawable，
+ */
+fun ImageView.load(url: String, callback: (Drawable) -> Boolean) {
+	if (CoViewUtil.isActivityDestroy(context)) return
+	var canCallback = true
 	Glide.with(this)
 		.load(url)
 		.listener(object : RequestListener<Drawable> {
@@ -43,13 +50,13 @@ fun ImageView.load(url: String, callback: (Drawable) -> Unit) {
 			}
 			
 			override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-				if (!isCallback) {
-					isCallback = true
-					resource?.let(callback)
+				if (canCallback) {
+					resource?.let {
+						canCallback = callback.invoke(it)
+					}
 				}
 				return false
 			}
-			
 		})
 		.error(R.drawable.ic_load_failed)
 		.into(this)
@@ -59,6 +66,7 @@ fun ImageView.load(url: String, callback: (Drawable) -> Unit) {
  * 加载图片
  */
 fun ImageView.load(@DrawableRes resId: Int) {
+	if (CoViewUtil.isActivityDestroy(context)) return
 	Glide.with(this)
 		.load(resId)
 		.error(R.drawable.ic_load_failed)
@@ -80,6 +88,7 @@ fun ImageView.load(url: String, width: Int, height: Int) {
  * 加载图片
  */
 fun ImageView.load(@DrawableRes resId: Int, width: Int, height: Int) {
+	if (CoViewUtil.isActivityDestroy(context)) return
 	Glide.with(this)
 		.load(resId)
 		.override(width, height)
@@ -91,6 +100,7 @@ fun ImageView.load(@DrawableRes resId: Int, width: Int, height: Int) {
  * 加载圆形图片
  */
 fun ImageView.loadCircle(url: String) {
+	if (CoViewUtil.isActivityDestroy(context)) return
 	Glide.with(this)
 		.load(url)
 		.transform(CircleCrop())
@@ -102,6 +112,7 @@ fun ImageView.loadCircle(url: String) {
  * 加载圆形图片
  */
 fun ImageView.loadCircle(@DrawableRes resId: Int) {
+	if (CoViewUtil.isActivityDestroy(context)) return
 	Glide.with(this)
 		.load(resId)
 		.transform(CircleCrop())
@@ -113,6 +124,7 @@ fun ImageView.loadCircle(@DrawableRes resId: Int) {
  * 加载圆形图片
  */
 fun ImageView.loadCircle(url: String, width: Int, height: Int) {
+	if (CoViewUtil.isActivityDestroy(context)) return
 	Glide.with(this)
 		.load(url)
 		.transform(CircleCrop())
@@ -125,6 +137,7 @@ fun ImageView.loadCircle(url: String, width: Int, height: Int) {
  * 加载圆形图片
  */
 fun ImageView.loadCircle(@DrawableRes resId: Int, width: Int, height: Int) {
+	if (CoViewUtil.isActivityDestroy(context)) return
 	Glide.with(this)
 		.load(resId)
 		.transform(CircleCrop())
@@ -137,6 +150,7 @@ fun ImageView.loadCircle(@DrawableRes resId: Int, width: Int, height: Int) {
  * 加载圆角图片
  */
 fun ImageView.loadCorner(url: String, @IntRange(from = 0) corner: Int) {
+	if (CoViewUtil.isActivityDestroy(context)) return
 	// fix: 需要先裁剪再设置圆角，否则可能会导致被设置的圆角被裁剪
 	Glide.with(this)
 		.load(url)
@@ -149,6 +163,7 @@ fun ImageView.loadCorner(url: String, @IntRange(from = 0) corner: Int) {
  * 加载圆角图片
  */
 fun ImageView.loadCorner(@DrawableRes resId: Int, @IntRange(from = 0) corner: Int) {
+	if (CoViewUtil.isActivityDestroy(context)) return
 	Glide.with(this)
 		.load(resId)
 		.transform(CenterCrop(), RoundedCorners(corner))
@@ -160,6 +175,7 @@ fun ImageView.loadCorner(@DrawableRes resId: Int, @IntRange(from = 0) corner: In
  * 加载圆角图片
  */
 fun ImageView.loadCorner(url: String, @IntRange(from = 0) corner: Int, width: Int, height: Int) {
+	if (CoViewUtil.isActivityDestroy(context)) return
 	// fix: 需要先裁剪再设置圆角，否则可能会导致被设置的圆角被裁剪
 	Glide.with(this)
 		.load(url)
@@ -173,6 +189,7 @@ fun ImageView.loadCorner(url: String, @IntRange(from = 0) corner: Int, width: In
  * 加载圆角图片
  */
 fun ImageView.loadCorner(@DrawableRes resId: Int, @IntRange(from = 0) corner: Int, width: Int, height: Int) {
+	if (CoViewUtil.isActivityDestroy(context)) return
 	Glide.with(this)
 		.load(resId)
 		.transform(CenterCrop(), RoundedCorners(corner))
@@ -186,6 +203,7 @@ fun ImageView.loadCorner(@DrawableRes resId: Int, @IntRange(from = 0) corner: In
  */
 @JvmOverloads
 fun ImageView.loadCircleBorder(url: String, @FloatRange(from = 0.0) borderWidth: Float = 0F, borderColor: Int = Color.WHITE) {
+	if (CoViewUtil.isActivityDestroy(context)) return
 	Glide.with(this)
 		.load(url)
 		.transform(CircleBorderCrop(borderWidth, borderColor))
@@ -198,6 +216,7 @@ fun ImageView.loadCircleBorder(url: String, @FloatRange(from = 0.0) borderWidth:
  */
 @JvmOverloads
 fun ImageView.loadCircleBorder(@DrawableRes resId: Int, @FloatRange(from = 0.0) borderWidth: Float = 0F, borderColor: Int = Color.WHITE) {
+	if (CoViewUtil.isActivityDestroy(context)) return
 	Glide.with(this)
 		.load(resId)
 		.transform(CircleBorderCrop(borderWidth, borderColor))
@@ -210,6 +229,7 @@ fun ImageView.loadCircleBorder(@DrawableRes resId: Int, @FloatRange(from = 0.0) 
  */
 @JvmOverloads
 fun ImageView.loadCircleBorder(url: String, width: Int, height: Int, @FloatRange(from = 0.0) borderWidth: Float = 0F, borderColor: Int = Color.WHITE) {
+	if (CoViewUtil.isActivityDestroy(context)) return
 	Glide.with(this)
 		.load(url)
 		.transform(CircleBorderCrop(borderWidth, borderColor))
@@ -223,6 +243,7 @@ fun ImageView.loadCircleBorder(url: String, width: Int, height: Int, @FloatRange
  */
 @JvmOverloads
 fun ImageView.loadCircleBorder(@DrawableRes resId: Int, width: Int, height: Int, @FloatRange(from = 0.0) borderWidth: Float = 0F, borderColor: Int = Color.WHITE) {
+	if (CoViewUtil.isActivityDestroy(context)) return
 	Glide.with(this)
 		.load(resId)
 		.transform(CircleBorderCrop(borderWidth, borderColor))

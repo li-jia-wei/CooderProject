@@ -18,12 +18,15 @@
 		app:layout_constraintTop_toTopOf="parent" />
 	
 	<FrameLayout
+		android:id="@+id/title_bar"
 		android:layout_width="match_parent"
-		android:layout_height="@dimen/dp_100"
-		android:fitsSystemWindows="true"
+		android:layout_height="@dimen/dp_90"
+		android:background="@color/white"
+		android:translationZ="@dimen/dp_5"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent">
+		app:layout_constraintTop_toTopOf="parent"
+		tools:alpha="0">
 		
 		<com.cooder.cooder.project.common.ui.view.IconFontTextView
 			android:id="@+id/action_back"
@@ -34,7 +37,7 @@
 			android:paddingHorizontal="@dimen/dp_12"
 			android:paddingVertical="@dimen/dp_5"
 			android:text="@string/ic_arrow_left"
-			android:textSize="@dimen/sp_32" />
+			android:textSize="@dimen/sp_34" />
 		
 		<com.cooder.cooder.project.common.ui.view.IconFontTextView
 			android:id="@+id/action_share"
@@ -45,7 +48,7 @@
 			android:paddingHorizontal="@dimen/dp_12"
 			android:paddingVertical="@dimen/dp_5"
 			android:text="@string/ic_share"
-			android:textSize="@dimen/sp_32" />
+			android:textSize="@dimen/sp_34" />
 	
 	</FrameLayout>
 	
@@ -66,20 +69,21 @@
 			android:layout_weight="1"
 			android:background="@color/white"
 			android:gravity="center"
-			android:text="&#xe8a8;\n收藏"
+			android:text="@string/detail_favorite"
 			android:textColor="@color/gray"
 			android:textSize="@dimen/sp_16" />
 		
 		<TextView
+			android:id="@+id/action_price"
 			android:layout_width="0dp"
 			android:layout_height="match_parent"
 			android:layout_weight="1"
 			android:background="@color/red"
 			android:gravity="center"
-			android:text="¥520\n立即购买"
+			android:text="@string/detail_default_price"
 			android:textColor="@color/white"
 			android:textSize="16sp"
-			tools:text="¥520\n立即购买" />
+			tools:text="@string/detail_default_price" />
 	
 	</LinearLayout>
 

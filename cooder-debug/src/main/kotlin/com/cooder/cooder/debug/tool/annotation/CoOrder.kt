@@ -7,7 +7,7 @@ package com.cooder.cooder.debug.tool.annotation
  *
  * 创建：2023/2/28 10:31
  *
- * 介绍：CoOrder
+ * 介绍：CoOrder，用于给Debug工具排序
  *
  * @param id 排序序号，请设置不相同的值
  */

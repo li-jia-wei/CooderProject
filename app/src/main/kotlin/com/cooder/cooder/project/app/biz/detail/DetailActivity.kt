@@ -14,7 +14,9 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.cooder.cooder.library.util.expends.hintNavigationBar
 import com.cooder.cooder.library.util.expends.immersiveStatusBar
 import com.cooder.cooder.project.app.R
+import com.cooder.cooder.project.app.biz.account.AccountManager
 import com.cooder.cooder.project.app.databinding.ActivityDetailBinding
+import com.cooder.cooder.project.app.fragment.home.GoodsItem
 import com.cooder.cooder.project.app.model.DetailModel
 import com.cooder.cooder.project.app.model.GoodsModel
 import com.cooder.cooder.project.app.model.selectPrice
@@ -32,7 +34,7 @@ import com.cooder.cooder.ui.item.CoDataItem
  *
  * 创建：2023/3/29 21:13
  *
- * 介绍：DetailActivity
+ * 介绍：商品详情页
  */
 @Route(path = RoutePath.ACTIVITY_BIZ_DETAIL_DETAIL)
 class DetailActivity : CoBaseActivity<ActivityDetailBinding>() {
@@ -83,6 +85,15 @@ class DetailActivity : CoBaseActivity<ActivityDetailBinding>() {
 		val adapter = CoAdapter(this)
 		binding.recyclerView.adapter = adapter
 		adapter.clearAnimation()
+		
+		binding.recyclerView.addOnScrollListener(TitleScrollListener {
+			if (it == 0F) {
+				binding.titleBar.visibility = View.GONE
+			} else {
+				binding.titleBar.visibility = View.VISIBLE
+				binding.titleBar.alpha = it
+			}
+		})
 	}
 	
 	private fun showEmptyView() {
@@ -120,36 +131,95 @@ class DetailActivity : CoBaseActivity<ActivityDetailBinding>() {
 		}
 	}
 	
-	private fun bindData(model: DetailModel) {
+	private fun bindData(detailModel: DetailModel) {
 		binding.recyclerView.visibility = View.VISIBLE
 		binding.bottomLayout.visibility = View.VISIBLE
 		emptyView?.visibility = View.GONE
 		
 		val adapter = binding.recyclerView.adapter as CoAdapter
+		
 		val dataItems = mutableListOf<CoDataItem<*, *>>()
 		
 		// 头部Item
 		dataItems += HeaderItem(
-			model.sliderImages,
-			selectPrice(model.groupPrice, model.marketPrice),
-			model.completedNumText,
-			model.goodsName
+			detailModel.sliderImages,
+			selectPrice(detailModel.groupPrice, detailModel.marketPrice),
+			detailModel.completedNumText,
+			detailModel.goodsName
 		)
 		
 		// 评论Item
-		dataItems += CommentItem(model)
+		dataItems += CommentItem(detailModel)
 		
 		// 店铺Item
-		dataItems += ShopItem(model)
+		dataItems += ShopItem(detailModel)
 		
 		// 商品描述Item
-		dataItems += GoodsAttrItem(model)
+		dataItems += GoodsAttrItem(detailModel)
 		
 		// 图库Item
-		
+		detailModel.sliderImages?.forEach {
+			dataItems += GalleryItem(it)
+		}
 		// 相似商品
+		detailModel.similarGoods?.let { models ->
+			dataItems += SimilarTitleItem()
+			models.forEach {
+				dataItems += GoodsItem(it, false)
+			}
+		}
 		
 		adapter.removeAllItems()
 		adapter.addItems(dataItems, true)
+		
+		updateFavoriteActionFace(detailModel.isFavorite)
+		updateOrderActionFace(detailModel)
+	}
+	
+	/**
+	 * 更新价格
+	 */
+	private fun updateOrderActionFace(detailModel: DetailModel) {
+		binding.actionPrice.text = getString(R.string.detail_price, selectPrice(detailModel.groupPrice, detailModel.marketPrice))
+		// 购买的点击事件 => 20230520
+	}
+	
+	/**
+	 * 更新是否收藏
+	 */
+	private fun updateFavoriteActionFace(favorite: Boolean) {
+		if (!binding.actionFavorite.hasOnClickListeners()) {
+			binding.actionFavorite.setOnClickListener {
+				toggleFavorite()
+			}
+		}
+		if (favorite) {
+			binding.actionFavorite.setText(R.string.detail_already_favorite)
+			binding.actionFavorite.setTextColor(getColor(R.color.detail_favorite))
+		} else {
+			binding.actionFavorite.setText(R.string.detail_favorite)
+			binding.actionFavorite.setTextColor(getColor(R.color.detail_unfavorite))
+		}
+	}
+	
+	private fun toggleFavorite() {
+		if (AccountManager.isNotLogin()) {
+			AccountManager.loginSuccessObserver(this) { loginSuccess ->
+				if (loginSuccess) {
+					toggleFavorite()
+				}
+			}
+		} else {
+			binding.actionFavorite.isClickable = false
+			viewModel.toggleFavorite().observe(this) {
+				if (it.isSuccessful()) {
+					val success = it.data!!
+					updateFavoriteActionFace(success)
+					val message = if (success) R.string.detail_success_favorite else R.string.detail_success_cancel_favorite
+					showToast(message)
+				}
+				binding.actionFavorite.isClickable = true
+			}
+		}
 	}
 }

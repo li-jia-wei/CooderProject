@@ -36,7 +36,7 @@ class SubcategoryItem(
 		gridView.adapter = GridAdapter(context)
 	}
 	
-	override fun getItemView(parent: ViewGroup): View {
+	override fun getItemView(inflater: LayoutInflater, parent: ViewGroup): View {
 		val gridView = RecyclerView(parent.context)
 		val params = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT)
 		params.bottomMargin = 10.dpInt

@@ -9,8 +9,10 @@ import com.cooder.cooder.library.restful.CoCallback
 import com.cooder.cooder.library.restful.CoResponse
 import com.cooder.cooder.library.restful.CoResult
 import com.cooder.cooder.project.app.http.ApiFactory
+import com.cooder.cooder.project.app.http.api.FavoriteApi
 import com.cooder.cooder.project.app.http.api.GoodsApi
 import com.cooder.cooder.project.app.model.DetailModel
+import com.cooder.cooder.project.app.model.Favorite
 
 /**
  * 项目：CooderProject
@@ -19,7 +21,7 @@ import com.cooder.cooder.project.app.model.DetailModel
  *
  * 创建：2023/3/27 20:41
  *
- * 介绍：DetailViewModel
+ * 介绍：商品详情 ViewModel
  */
 class DetailViewModel(
 	private val goodsId: String?
@@ -64,5 +66,26 @@ class DetailViewModel(
 				}
 			})
 		}
+	}
+	
+	fun toggleFavorite(): LiveData<CoResult<Boolean>> {
+		val favoriteLiveData = MutableLiveData<CoResult<Boolean>>()
+		if (goodsId != null) {
+			ApiFactory.create(FavoriteApi::class.java).favorite(goodsId).enqueue(object : CoCallback<Favorite> {
+				override fun onSuccess(response: CoResponse<Favorite>) {
+					if (response.isSuccessful() && response.data != null) {
+						favoriteLiveData.postValue(CoResult(response.data!!.isFavorite))
+					} else {
+						favoriteLiveData.value = CoResult(null, response.message)
+					}
+				}
+				
+				override fun onFailed(throwable: Throwable) {
+					super.onFailed(throwable)
+					favoriteLiveData.value = CoResult(null, throwable.message)
+				}
+			})
+		}
+		return favoriteLiveData
 	}
 }

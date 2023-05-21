@@ -26,7 +26,7 @@ import kotlin.math.min
  *
  * 创建：2023/5/2 16:51
  *
- * 介绍：商品详情 评价
+ * 介绍：商品详情 - 评价
  */
 class CommentItem(
 	private val model: DetailModel
@@ -34,12 +34,16 @@ class CommentItem(
 	
 	private lateinit var binding: ItemDetailCommentBinding
 	
-	override fun getItemView(parent: ViewGroup): View {
-		binding = ItemDetailCommentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+	override fun getItemView(inflater: LayoutInflater, parent: ViewGroup): View {
+		binding = ItemDetailCommentBinding.inflate(inflater, parent, false)
 		return binding.root
 	}
 	
 	override fun onBindData(holder: CoViewHolder, position: Int) {
+		if (model.commentCountTitle.isBlank()) {
+			binding.root.visibility = View.GONE
+			return
+		}
 		binding.commentTitle.text = model.commentCountTitle
 		model.commentTags?.let { bindCommentTags(holder.context, it) }
 		model.commentModels?.let { bindCommentArea(holder.context, it) }
@@ -49,6 +53,7 @@ class CommentItem(
 	 * 绑定评论标签
 	 */
 	private fun bindCommentTags(context: Context, commentTags: String) {
+		binding.root.visibility = View.VISIBLE
 		binding.chipGroup.visibility = View.VISIBLE
 		commentTags.split(' ').forEachIndexed { index, tag ->
 			val chipLabel = if (index < binding.chipGroup.childCount) {
@@ -78,6 +83,7 @@ class CommentItem(
 	 * 绑定评论区
 	 */
 	private fun bindCommentArea(context: Context, commentModels: List<CommentModel>) {
+		binding.root.visibility = View.VISIBLE
 		for (index in 0 until min(commentModels.size, 4)) {
 			val comment = commentModels[index]
 			val areaBinding = if (index < binding.commentArea.childCount) {

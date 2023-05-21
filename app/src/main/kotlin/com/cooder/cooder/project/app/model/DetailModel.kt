@@ -48,3 +48,5 @@ data class Shop(
 	val logo: String,
 	val name: String
 ) : Serializable
+
+data class Favorite(val goodsId: String, val isFavorite: Boolean) : Serializable

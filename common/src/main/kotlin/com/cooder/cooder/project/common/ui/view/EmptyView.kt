@@ -22,7 +22,7 @@ import com.cooder.cooder.project.common.R
  *
  * 创建：2022/11/8 20:30
  *
- * 介绍：EmptyView
+ * 介绍：空视图
  */
 class EmptyView @JvmOverloads constructor(
 	context: Context,

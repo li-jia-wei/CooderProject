@@ -15,7 +15,7 @@ import com.cooder.cooder.project.common.util.SPUtil
  *
  * 创建：2023/2/26 01:07
  *
- * 介绍：DebugTools
+ * 介绍：Debug工具
  */
 class DebugTools {
 	

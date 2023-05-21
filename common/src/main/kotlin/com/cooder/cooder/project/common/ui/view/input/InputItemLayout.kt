@@ -28,7 +28,7 @@ import com.cooder.cooder.project.common.ui.view.input.watcher.*
  *
  * 创建：2022/11/16 12:40
  *
- * 介绍：InputItemLayout
+ * 介绍：输入Item
  */
 class InputItemLayout @JvmOverloads constructor(
 	context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
