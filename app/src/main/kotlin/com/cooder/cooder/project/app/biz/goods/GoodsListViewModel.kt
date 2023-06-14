@@ -22,10 +22,6 @@ import com.cooder.cooder.project.app.model.GoodsList
  */
 class GoodsListViewModel : ViewModel() {
 	
-	private val _goodsListLiveData by lazy { MutableLiveData<CoResult<GoodsList>>() }
-	
-	val goodsListLiveData: LiveData<CoResult<GoodsList>> = _goodsListLiveData
-	
 	data class GoodsListMo(
 		val cacheStrategyType: CacheStrategy.Type,
 		val categoryId: String,
@@ -37,22 +33,24 @@ class GoodsListViewModel : ViewModel() {
 	/**
 	 * 查询商品列表
 	 */
-	fun queryGoodsList(mo: GoodsListMo) {
+	fun queryGoodsList(mo: GoodsListMo): LiveData<CoResult<GoodsList>> {
+		val liveData = MutableLiveData<CoResult<GoodsList>>()
 		ApiFactory.create(GoodsApi::class.java)
 			.queryGoodsList(mo.cacheStrategyType, mo.categoryId, mo.subcategoryId, mo.pageSize, mo.pageIndex)
 			.enqueue(object : CoCallback<GoodsList> {
 				override fun onSuccess(response: CoResponse<GoodsList>) {
 					if (response.isSuccessful() && response.data != null) {
-						_goodsListLiveData.value = CoResult(response.data)
+						liveData.value = CoResult.success(response.data)
 					} else {
-						_goodsListLiveData.value = CoResult(null, response.message)
+						liveData.value = CoResult.failure(response.message)
 					}
 				}
 				
 				override fun onFailed(throwable: Throwable) {
 					super.onFailed(throwable)
-					_goodsListLiveData.value = CoResult(null, throwable.message)
+					liveData.value = CoResult.failure(throwable.message)
 				}
 			})
+		return liveData
 	}
 }

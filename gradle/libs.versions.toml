@@ -1,7 +1,7 @@
 [versions]
 
-com-android-application = "8.0.0"
-com-android-library = "8.0.0"
+com-android-application = "8.0.1"
+com-android-library = "8.0.1"
 org-jetbrains-kotlin-android = "1.8.10"
 org-jetbrains-kotlin-jvm = "1.8.10"
 com-google-devtools-ksp = "1.8.10-1.0.9"

@@ -11,8 +11,6 @@ android {
 		minSdk 26
 		targetSdk 33
 		
-		versionCode APP_VERSION_CODE as int
-		versionName APP_VERSION_NAME
 		
 		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 		consumerProguardFiles "consumer-rules.pro"

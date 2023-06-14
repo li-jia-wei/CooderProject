@@ -64,16 +64,15 @@ class CategoryFragment : CoBaseFragment<FragmentCategoryBinding>() {
 	
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		
-		queryCategoryListObserver()
+
 		queryCategoryList()
 	}
 	
 	/**
-	 * 查询类别观察者
+	 * 查询类别
 	 */
-	private fun queryCategoryListObserver() {
-		viewModel.categoryListLiveData.observe(viewLifecycleOwner) {
+	private fun queryCategoryList() {
+		viewModel.queryTabCategoryList().observe(viewLifecycleOwner) {
 			if (it.isSuccessful()) {
 				onQueryCategoryListSuccess(it.data!!)
 			} else {
@@ -83,18 +82,10 @@ class CategoryFragment : CoBaseFragment<FragmentCategoryBinding>() {
 		}
 	}
 	
-	/**
-	 * 查询类别
-	 */
-	private fun queryCategoryList() {
-		viewModel.queryCategoryList()
-	}
-	
 	private fun onQueryCategoryListSuccess(data: List<TabCategory>) {
 		if (isNotAlive()) return
 		emptyView?.visibility = View.GONE
 		binding.sliderView.visibility = View.VISIBLE
-		querySubcategoryListObserver()
 		binding.sliderView.bindMenuView(itemCount = data.size, callback = object : CoSliderView.BindCallback {
 			override fun onBindView(holder: CoViewHolder, position: Int) {
 				val category = data[position]
@@ -119,11 +110,7 @@ class CategoryFragment : CoBaseFragment<FragmentCategoryBinding>() {
 	 * 查询子类别
 	 */
 	private fun querySubcategoryList(categoryId: String) {
-		viewModel.querySubcategoryList(categoryId)
-	}
-	
-	private fun querySubcategoryListObserver() {
-		viewModel.subcategoryListLiveData.observe(viewLifecycleOwner) {
+		viewModel.querySubcategoryList(categoryId).observe(viewLifecycleOwner) {
 			if (it.result.isSuccessful()) {
 				subcategoryListCache[it.categoryId] = it.result.data!!
 				onQuerySubcategoryListSuccess(it.result.data!!, it.categoryId)

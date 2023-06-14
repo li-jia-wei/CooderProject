@@ -20,10 +20,6 @@ import com.cooder.cooder.project.app.http.api.AccountApi
  */
 class RegisterViewModel : ViewModel() {
 	
-	private val _registerLiveData by lazy { MutableLiveData<RegisterMo>() }
-	
-	val registerLiveData: LiveData<RegisterMo> = _registerLiveData
-	
 	data class RegisterMo(
 		val success: Boolean,
 		val result: CoResult<String>,
@@ -33,21 +29,23 @@ class RegisterViewModel : ViewModel() {
 	/**
 	 * 注册
 	 */
-	fun register(username: String, password: String, moocId: String, courseNotice: String) {
+	fun register(username: String, password: String, moocId: String, courseNotice: String): LiveData<RegisterMo> {
+		val liveData = MutableLiveData<RegisterMo>()
 		ApiFactory.create(AccountApi::class.java).register(username, password, moocId, courseNotice)
 			.enqueue(object : CoCallback<String> {
 				override fun onSuccess(response: CoResponse<String>) {
 					if (response.isSuccessful()) {
-						_registerLiveData.value = RegisterMo(true, CoResult(null), username)
+						liveData.value = RegisterMo(true, CoResult.success(null), username)
 					} else {
-						_registerLiveData.value = RegisterMo(false, CoResult(null, response.message), username)
+						liveData.value = RegisterMo(false, CoResult.failure(response.message), username)
 					}
 				}
 				
 				override fun onFailed(throwable: Throwable) {
 					super.onFailed(throwable)
-					_registerLiveData.value = RegisterMo(false, CoResult(null, throwable.message), username)
+					liveData.value = RegisterMo(false, CoResult.failure(throwable.message), username)
 				}
 			})
+		return liveData
 	}
 }

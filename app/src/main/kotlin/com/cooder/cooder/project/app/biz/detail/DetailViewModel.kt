@@ -45,27 +45,25 @@ class DetailViewModel(
 		}
 	}
 	
-	private val _detailLiveData = MutableLiveData<CoResult<DetailModel>>()
-	
-	val detailLiveData: LiveData<CoResult<DetailModel>> = _detailLiveData
-	
-	fun queryDetail() {
+	fun queryDetail(): LiveData<CoResult<DetailModel>> {
+		val liveData = MutableLiveData<CoResult<DetailModel>>()
 		if (goodsId != null) {
 			ApiFactory.create(GoodsApi::class.java).queryDetail(goodsId).enqueue(object : CoCallback<DetailModel> {
 				override fun onSuccess(response: CoResponse<DetailModel>) {
 					if (response.isSuccessful() && response.data != null) {
-						_detailLiveData.value = CoResult(response.data)
+						liveData.value = CoResult.success(response.data)
 					} else {
-						_detailLiveData.value = CoResult(null, response.message)
+						liveData.value = CoResult.failure(response.message)
 					}
 				}
 				
 				override fun onFailed(throwable: Throwable) {
 					super.onFailed(throwable)
-					_detailLiveData.value = CoResult(null, throwable.message)
+					liveData.value = CoResult.failure(throwable.message)
 				}
 			})
 		}
+		return liveData
 	}
 	
 	fun toggleFavorite(): LiveData<CoResult<Boolean>> {
@@ -74,15 +72,15 @@ class DetailViewModel(
 			ApiFactory.create(FavoriteApi::class.java).favorite(goodsId).enqueue(object : CoCallback<Favorite> {
 				override fun onSuccess(response: CoResponse<Favorite>) {
 					if (response.isSuccessful() && response.data != null) {
-						favoriteLiveData.postValue(CoResult(response.data!!.isFavorite))
+						favoriteLiveData.postValue(CoResult.success(response.data!!.isFavorite))
 					} else {
-						favoriteLiveData.value = CoResult(null, response.message)
+						favoriteLiveData.value = CoResult.failure(response.message)
 					}
 				}
 				
 				override fun onFailed(throwable: Throwable) {
 					super.onFailed(throwable)
-					favoriteLiveData.value = CoResult(null, throwable.message)
+					favoriteLiveData.value = CoResult.failure(throwable.message)
 				}
 			})
 		}

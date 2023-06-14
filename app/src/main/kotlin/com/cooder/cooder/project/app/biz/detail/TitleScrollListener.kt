@@ -23,7 +23,7 @@ class TitleScrollListener @JvmOverloads constructor(
 	private var lastAlpha = 0F
 	
 	private companion object {
-		private const val FINISH_ALPHA = 0.92F
+		private const val FINISH_ALPHA = 0.95F
 	}
 	
 	override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

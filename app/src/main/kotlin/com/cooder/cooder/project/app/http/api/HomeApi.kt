@@ -23,9 +23,9 @@ interface HomeApi : Api {
 	 */
 	@GET("home/{categoryId}")
 	fun queryTabCategoryList(
-		@CacheStrategy type: CacheStrategy.Type,
 		@Path("categoryId") categoryId: String,
 		@Filed("pageIndex") pageIndex: Int,
-		@Filed("pageSize") pageSize: Int
+		@Filed("pageSize") pageSize: Int,
+		@CacheStrategy type: CacheStrategy.Type
 	): CoCall<HomeModel>
 }

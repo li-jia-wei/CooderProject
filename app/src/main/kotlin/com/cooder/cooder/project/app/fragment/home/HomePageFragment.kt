@@ -49,7 +49,6 @@ class HomePageFragment : CoBaseFragment<FragmentHomePageBinding>() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		
-		queryTabListObserver()
 		queryTabList()
 		
 		AccountManager.loginSuccessObserver(requireContext()) {
@@ -57,18 +56,14 @@ class HomePageFragment : CoBaseFragment<FragmentHomePageBinding>() {
 		}
 	}
 	
-	private fun queryTabListObserver() {
-		viewModel.tabListLiveData.observe(viewLifecycleOwner) {
+	private fun queryTabList() {
+		viewModel.queryTabCategoryList().observe(viewLifecycleOwner) {
 			if (it.isSuccessful()) {
 				updateUI(it.data!!)
 			} else {
 				Toast.makeText(requireContext(), it.msg, Toast.LENGTH_SHORT).show()
 			}
 		}
-	}
-	
-	private fun queryTabList() {
-		viewModel.queryTabList()
 	}
 	
 	/**

@@ -39,8 +39,6 @@ class LoginActivity : CoBaseActivity<ActivityLoginBinding>() {
 	override fun onCreateActivity(savedInstanceState: Bundle?) {
 		setStatusBar(true, Color.WHITE)
 		
-		loginObserver()
-		
 		binding.actionBack.setOnClickListener {
 			onBackPressed(Activity.RESULT_CANCELED)
 		}
@@ -69,11 +67,7 @@ class LoginActivity : CoBaseActivity<ActivityLoginBinding>() {
 	}
 	
 	private fun login(username: String, password: String) {
-		viewModel.login(LoginViewModel.LoginMo(username, password))
-	}
-	
-	private fun loginObserver() {
-		viewModel.loginLiveData.observe(this) {
+		viewModel.login(LoginViewModel.LoginMo(username, password)).observe(this) {
 			if (it.isSuccessful()) {
 				showToast(R.string.login_success)
 				AccountManager.loginSuccess(it.data!!)

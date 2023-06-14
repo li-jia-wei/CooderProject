@@ -20,10 +20,6 @@ import com.cooder.cooder.project.app.http.api.AccountApi
  */
 class LoginViewModel : ViewModel() {
 	
-	private val _loginLiveData by lazy { MutableLiveData<CoResult<String>>() }
-	
-	val loginLiveData: LiveData<CoResult<String>> = _loginLiveData
-	
 	data class LoginMo(
 		val username: String,
 		val password: String
@@ -32,20 +28,22 @@ class LoginViewModel : ViewModel() {
 	/**
 	 * 登录
 	 */
-	fun login(mo: LoginMo) {
+	fun login(mo: LoginMo): LiveData<CoResult<String>> {
+		val liveData = MutableLiveData<CoResult<String>>()
 		ApiFactory.create(AccountApi::class.java).login(mo.username, mo.password).enqueue(object : CoCallback<String> {
 			override fun onSuccess(response: CoResponse<String>) {
 				if (response.isSuccessful() && response.data != null) {
-					_loginLiveData.value = CoResult(response.data!!)
+					liveData.value = CoResult.success(response.data)
 				} else {
-					_loginLiveData.value = CoResult(null, response.message)
+					liveData.value = CoResult.success(response.message)
 				}
 			}
 			
 			override fun onFailed(throwable: Throwable) {
 				super.onFailed(throwable)
-				_loginLiveData.value = CoResult(null, throwable.message)
+				liveData.value = CoResult.failure(throwable.message)
 			}
 		})
+		return liveData
 	}
 }

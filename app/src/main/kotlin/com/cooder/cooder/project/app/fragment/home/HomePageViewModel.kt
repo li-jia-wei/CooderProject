@@ -2,6 +2,7 @@ package com.cooder.cooder.project.app.fragment.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.cooder.cooder.library.restful.CoCallback
 import com.cooder.cooder.library.restful.CoResponse
@@ -22,62 +23,58 @@ import com.cooder.cooder.project.app.model.TabCategory
  *
  * 介绍：HomeViewModel
  */
-class HomePageViewModel : ViewModel() {
-	
-	private val _tabListLiveData by lazy { MutableLiveData<CoResult<List<TabCategory>>>() }
-	
-	val tabListLiveData: LiveData<CoResult<List<TabCategory>>> = _tabListLiveData
+class HomePageViewModel(private val savedState: SavedStateHandle) : ViewModel() {
 	
 	/**
 	 * 查询顶部Tab的类别
 	 */
-	fun queryTabList() {
+	fun queryTabCategoryList(): LiveData<CoResult<List<TabCategory>>> {
+		val liveData = MutableLiveData<CoResult<List<TabCategory>>>()
+		val memCache: CoResult<List<TabCategory>>? = savedState["tabCategories"]
+		if (memCache != null) {
+			liveData.value = memCache
+			return liveData
+		}
 		ApiFactory.create(CategoryApi::class.java).queryCategoryList().enqueue(object : CoCallback<List<TabCategory>> {
 			override fun onSuccess(response: CoResponse<List<TabCategory>>) {
 				if (response.isSuccessful() && response.data != null) {
-					_tabListLiveData.value = CoResult(response.data!!)
+					val result = CoResult.success(response.data)
+					liveData.value = result
+					savedState["tabCategories"] = result
 				} else {
-					_tabListLiveData.value = CoResult(null, response.message)
+					liveData.value = CoResult.failure(response.message)
 				}
 			}
 			
 			override fun onFailed(throwable: Throwable) {
 				super.onFailed(throwable)
-				_tabListLiveData.value = CoResult(null, throwable.message)
+				liveData.value = CoResult.failure(throwable.message)
 			}
 		})
+		return liveData
 	}
-	
-	private val _tabCategoryListLiveData by lazy { MutableLiveData<CoResult<HomeModel>>() }
-	
-	val tabCategoryListLiveData: LiveData<CoResult<HomeModel>> = _tabCategoryListLiveData
-	
-	data class TabCategoryListMo(
-		val cacheStrategyType: CacheStrategy.Type,
-		val categoryId: String,
-		val pageIndex: Int,
-		val pageSize: Int
-	)
 	
 	/**
 	 * 查询当前tab页的数据
 	 */
-	fun queryTabCategoryList(mo: TabCategoryListMo) {
+	fun queryTabCategoryList(categoryId: String, pageIndex: Int, pageSize: Int, cacheStrategyType: CacheStrategy.Type): LiveData<CoResult<HomeModel>> {
+		val liveData = MutableLiveData<CoResult<HomeModel>>()
 		ApiFactory.create(HomeApi::class.java).queryTabCategoryList(
-			mo.cacheStrategyType, mo.categoryId, mo.pageIndex, mo.pageSize
+			categoryId, pageIndex, pageSize, cacheStrategyType
 		).enqueue(object : CoCallback<HomeModel> {
 			override fun onSuccess(response: CoResponse<HomeModel>) {
 				if (response.isSuccessful() && response.data != null) {
-					_tabCategoryListLiveData.value = CoResult(response.data)
+					liveData.value = CoResult.success(response.data)
 				} else {
-					_tabCategoryListLiveData.value = CoResult(null, response.message)
+					liveData.value = CoResult.failure(response.message)
 				}
 			}
 			
 			override fun onFailed(throwable: Throwable) {
 				super.onFailed(throwable)
-				_tabCategoryListLiveData.value = CoResult(null, throwable.message)
+				liveData.value = CoResult.failure(throwable.message)
 			}
 		})
+		return liveData
 	}
 }

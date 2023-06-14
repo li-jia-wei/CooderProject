@@ -48,15 +48,6 @@ class HomePageTabFragment : CoAbsListFragment() {
 		categoryId = arguments?.getString("categoryId", DEFAULT_HOT_TAB_CATEGORY_ID)
 		super.onViewCreated(view, savedInstanceState)
 		
-		viewModel.tabCategoryListLiveData.observe(viewLifecycleOwner) {
-			if (it.isSuccessful()) {
-				updateUI(it.data!!)
-			} else {
-				showToast(it.msg)
-				finishRefresh(null)
-			}
-		}
-		
 		// 查询数据
 		queryTabCategoryList(CacheStrategy.Type.CACHE_ONLY_NET_CACHE)
 		
@@ -75,9 +66,15 @@ class HomePageTabFragment : CoAbsListFragment() {
 		return if (isHotTab) super.createLayoutManager() else GridLayoutManager(context, 2)
 	}
 	
-	private fun queryTabCategoryList(cacheStrategy: CacheStrategy.Type) {
-		val mo = HomePageViewModel.TabCategoryListMo(cacheStrategy, categoryId!!, pageIndex, 10)
-		viewModel.queryTabCategoryList(mo)
+	private fun queryTabCategoryList(cacheStrategyType: CacheStrategy.Type) {
+		viewModel.queryTabCategoryList(categoryId!!, pageIndex, 10, cacheStrategyType).observe(viewLifecycleOwner) {
+			if (it.isSuccessful()) {
+				updateUI(it.data!!)
+			} else {
+				showToast(it.msg)
+				finishRefresh(null)
+			}
+		}
 	}
 	
 	/**

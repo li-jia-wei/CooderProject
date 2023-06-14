@@ -2,6 +2,7 @@ package com.cooder.cooder.project.app.fragment.category
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.cooder.cooder.library.restful.CoCallback
 import com.cooder.cooder.library.restful.CoResponse
@@ -20,56 +21,58 @@ import com.cooder.cooder.project.app.model.TabCategory
  *
  * 介绍：CategoryViewModel
  */
-class CategoryViewModel : ViewModel() {
-	
-	private val _categoryListLiveData by lazy { MutableLiveData<CoResult<List<TabCategory>>>() }
-	
-	val categoryListLiveData: LiveData<CoResult<List<TabCategory>>> = _categoryListLiveData
+class CategoryViewModel(private val savedState: SavedStateHandle) : ViewModel() {
 	
 	/**
 	 * 查询类别
 	 */
-	fun queryCategoryList() {
+	fun queryTabCategoryList(): LiveData<CoResult<List<TabCategory>>> {
+		val liveData = MutableLiveData<CoResult<List<TabCategory>>>()
+		val memCache: CoResult<List<TabCategory>>? = savedState["tabCategories"]
+		if (memCache != null) {
+			liveData.value = memCache
+			return liveData
+		}
 		ApiFactory.create(CategoryApi::class.java).queryCategoryList().enqueue(object : CoCallback<List<TabCategory>> {
 			override fun onSuccess(response: CoResponse<List<TabCategory>>) {
-				val data = response.data
-				if (response.isSuccessful() && data != null) {
-					_categoryListLiveData.value = CoResult(data)
+				if (response.isSuccessful() && response.data != null) {
+					val result = CoResult.success(response.data)
+					liveData.value = result
+					savedState["tabCategories"] = result
 				} else {
-					_categoryListLiveData.value = CoResult(null, response.message)
+					liveData.value = CoResult.failure(response.message)
 				}
 			}
 			
 			override fun onFailed(throwable: Throwable) {
 				super.onFailed(throwable)
-				_categoryListLiveData.value = CoResult(null, throwable.message)
+				liveData.value = CoResult.failure(throwable.message)
 			}
 		})
+		return liveData
 	}
-	
-	private val _subcategoryListLiveData by lazy { MutableLiveData<SubcategoryListMo>() }
-	
-	val subcategoryListLiveData: LiveData<SubcategoryListMo> = _subcategoryListLiveData
 	
 	data class SubcategoryListMo(val result: CoResult<List<Subcategory>>, val categoryId: String)
 	
 	/**
 	 * 查询子类别
 	 */
-	fun querySubcategoryList(categoryId: String) {
+	fun querySubcategoryList(categoryId: String): LiveData<SubcategoryListMo> {
+		val liveData = MutableLiveData<SubcategoryListMo>()
 		ApiFactory.create(CategoryApi::class.java).querySubcategoryList(categoryId).enqueue(object : CoCallback<List<Subcategory>> {
 			override fun onSuccess(response: CoResponse<List<Subcategory>>) {
 				if (response.isSuccessful() && response.data != null) {
-					_subcategoryListLiveData.value = SubcategoryListMo(CoResult(response.data), categoryId)
+					liveData.value = SubcategoryListMo(CoResult.success(response.data), categoryId)
 				} else {
-					_subcategoryListLiveData.value = SubcategoryListMo(CoResult(null, response.message), categoryId)
+					liveData.value = SubcategoryListMo(CoResult.failure(response.message), categoryId)
 				}
 			}
 			
 			override fun onFailed(throwable: Throwable) {
 				super.onFailed(throwable)
-				_subcategoryListLiveData.value = SubcategoryListMo(CoResult(null, throwable.message), categoryId)
+				liveData.value = SubcategoryListMo(CoResult.failure(throwable.message), categoryId)
 			}
 		})
+		return liveData
 	}
 }

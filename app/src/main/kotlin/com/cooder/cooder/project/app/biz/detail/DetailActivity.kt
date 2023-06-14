@@ -67,14 +67,17 @@ class DetailActivity : CoBaseActivity<ActivityDetailBinding>() {
 		
 		preBindData()
 		
-		viewModel.detailLiveData.observe(this) {
+		queryDetail()
+	}
+	
+	private fun queryDetail() {
+		viewModel.queryDetail().observe(this) {
 			if (it.isSuccessful()) {
 				bindData(it.data!!)
 			} else {
 				showEmptyView()
 			}
 		}
-		viewModel.queryDetail()
 	}
 	
 	private fun initView() {
@@ -103,7 +106,7 @@ class DetailActivity : CoBaseActivity<ActivityDetailBinding>() {
 				this.setIcon(R.string.categoru_empty_icon)
 				this.setDesc(R.string.category_empty_desc)
 				this.setRefreshButton(R.string.category_empty_refresh)
-				this.setOnClickRefreshListener { viewModel.queryDetail() }
+				this.setOnClickRefreshListener { queryDetail() }
 				this.setBackgroundColor(Color.WHITE)
 				this.layoutParams = ConstraintLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
 			}

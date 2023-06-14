@@ -32,7 +32,6 @@ class MainActivity : CoBaseActivity<ActivityMainBinding>(), ActivityProvider {
 	
 	override fun onCreateActivity(savedInstanceState: Bundle?) {
 		setStatusBar(true, Color.WHITE)
-		
 		activityLogic = MainActivityLogic(binding, this, savedInstanceState)
 	}
 	
