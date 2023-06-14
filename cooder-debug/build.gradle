@@ -38,7 +38,7 @@ android {
 	buildFeatures {
 		viewBinding true
 	}
-	buildToolsVersion '33.0.2'
+	buildToolsVersion = '33.0.2'
 }
 
 dependencies {

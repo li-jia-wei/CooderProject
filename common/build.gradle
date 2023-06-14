@@ -28,7 +28,7 @@ android {
     kotlinOptions {
 	    jvmTarget = '17'
     }
-    buildToolsVersion '33.0.2'
+    buildToolsVersion = '33.0.2'
     buildFeatures {
         viewBinding true
     }

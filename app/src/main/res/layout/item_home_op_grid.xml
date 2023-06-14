@@ -1,28 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:layout_marginBottom="@dimen/dp_10"
-	android:gravity="center"
-	android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools">
 	
-	<ImageView
-		android:id="@+id/item_image"
-		android:layout_width="@dimen/dp_45"
-		android:layout_height="@dimen/dp_45"
-		tools:src="@drawable/shape_view" />
+	<data>
+		
+		<variable
+			name="subCategory"
+			type="com.cooder.cooder.project.app.model.Subcategory" />
+	</data>
 	
-	<TextView
-		android:id="@+id/item_title"
-		android:layout_width="wrap_content"
+	<LinearLayout
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="@dimen/dp_10"
-		android:ellipsize="end"
-		android:maxWidth="@dimen/dp_70"
-		android:maxLines="1"
-		android:textColor="@color/font"
-		android:textSize="@dimen/sp_12"
-		tools:text="天天领现金" />
-
-</LinearLayout>
+		android:layout_marginBottom="@dimen/dp_10"
+		android:gravity="center"
+		android:orientation="vertical">
+		
+		<ImageView
+			android:id="@+id/item_image"
+			android:layout_width="@dimen/dp_45"
+			android:layout_height="@dimen/dp_45"
+			tools:src="@drawable/shape_view" />
+		
+		<TextView
+			android:id="@+id/item_title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/dp_10"
+			android:ellipsize="end"
+			android:maxWidth="@dimen/dp_70"
+			android:maxLines="1"
+			android:textColor="@color/font"
+			android:textSize="@dimen/sp_12"
+			tools:text="天天领现金" />
+	
+	</LinearLayout>
+</layout>

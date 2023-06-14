@@ -5,13 +5,12 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cooder.cooder.library.util.expends.dpInt
 import com.cooder.cooder.project.app.R
+import com.cooder.cooder.project.app.databinding.ItemHomeOpGridBinding
 import com.cooder.cooder.project.app.model.Subcategory
 import com.cooder.cooder.project.common.ui.view.expends.load
 import com.cooder.cooder.ui.item.CoDataItem
@@ -58,11 +57,12 @@ class SubcategoryItem(
 		}
 		
 		override fun onBindViewHolder(holder: CoViewHolder, position: Int) {
-			val image: ImageView = holder.findViewById(R.id.item_image)
-			val title: TextView = holder.findViewById(R.id.item_title)
+			val binding = ItemHomeOpGridBinding.bind(holder.itemView)
+//			val image: ImageView = holder.findViewById(R.id.item_image)
+//			val title: TextView = holder.findViewById(R.id.item_title)
 			val subcategory = subcategoryList[position]
-			image.load(subcategory.subcategoryIcon)
-			title.text = subcategory.subcategoryName
+			binding.itemImage.load(subcategory.subcategoryIcon)
+			binding.itemTitle.text = subcategory.subcategoryName
 			holder.itemView.setOnClickListener {
 				Toast.makeText(context, subcategory.subcategoryName, Toast.LENGTH_SHORT).show()
 			}

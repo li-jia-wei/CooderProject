@@ -41,9 +41,10 @@ android {
 	kotlinOptions {
 		jvmTarget = '17'
 	}
-	buildToolsVersion '33.0.2'
+	buildToolsVersion = "33.0.2"
 	buildFeatures {
 		viewBinding true
+		dataBinding true
 	}
 }
 
@@ -65,6 +66,7 @@ dependencies {
 	// ARouter
 	implementation libs.arouter.api
 	kapt libs.arouter.compiler
+	
 	// Retrofit2
 	implementation libs.retrofit
 	

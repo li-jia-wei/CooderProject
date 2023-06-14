@@ -28,9 +28,8 @@ class CategoryViewModel(private val savedState: SavedStateHandle) : ViewModel() 
 	 */
 	fun queryTabCategoryList(): LiveData<CoResult<List<TabCategory>>> {
 		val liveData = MutableLiveData<CoResult<List<TabCategory>>>()
-		val memCache: CoResult<List<TabCategory>>? = savedState["tabCategories"]
-		if (memCache != null) {
-			liveData.value = memCache
+		savedState.get<CoResult<List<TabCategory>>>("tabCategories")?.let {
+			liveData.value = it
 			return liveData
 		}
 		ApiFactory.create(CategoryApi::class.java).queryCategoryList().enqueue(object : CoCallback<List<TabCategory>> {
