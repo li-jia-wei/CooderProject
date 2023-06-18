@@ -3,20 +3,22 @@ package com.cooder.cooder.project.app.fragment.home
 import android.content.Context
 import android.os.Bundle
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import com.cooder.cooder.library.log.CoLog
 import com.cooder.cooder.library.util.expends.dpInt
+import com.cooder.cooder.project.app.BR
 import com.cooder.cooder.project.app.R
+import com.cooder.cooder.project.app.databinding.ItemHomeGoodsList1Binding
+import com.cooder.cooder.project.app.databinding.ItemHomeGoodsList2Binding
 import com.cooder.cooder.project.app.model.GoodsModel
-import com.cooder.cooder.project.app.model.selectPrice
 import com.cooder.cooder.project.app.route.CoRoute
 import com.cooder.cooder.project.app.route.RoutePath
-import com.cooder.cooder.project.common.ui.view.expends.loadCorner
 import com.cooder.cooder.ui.item.CoDataItem
 import com.cooder.cooder.ui.item.CoViewHolder
 
@@ -30,33 +32,34 @@ import com.cooder.cooder.ui.item.CoViewHolder
  * 介绍：商品Item
  */
 open class GoodsItem(
-	private val model: GoodsModel,
+	private val goodsModel: GoodsModel,
 	private val hotTab: Boolean
-) : CoDataItem<GoodsModel, CoViewHolder>() {
+) : CoDataItem<GoodsModel, GoodsItem.GoodsItemViewHolder>() {
+	
+	private lateinit var binding: ViewDataBinding
 	
 	companion object {
-		private const val IMAGE_CORNER = 10
+		const val IMAGE_CORNER = 10
 	}
 	
-	override fun getItemLayoutRes(): Int {
-		return if (hotTab) R.layout.item_home_goods_list_1 else R.layout.item_home_goods_list_2
+	override fun onCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): GoodsItemViewHolder? {
+		binding = if (hotTab) {
+			ItemHomeGoodsList1Binding.inflate(inflater, parent, false)
+		} else {
+			ItemHomeGoodsList2Binding.inflate(inflater, parent, false)
+		}
+		return GoodsItemViewHolder(binding)
 	}
 	
-	override fun onBindData(holder: CoViewHolder, position: Int) {
+	override fun onBindData(holder: GoodsItemViewHolder, position: Int) {
 		val context = holder.context
-		val image: ImageView = holder.findViewById(R.id.item_image)
-		val title: TextView = holder.findViewById(R.id.item_title)
-		val price: TextView = holder.findViewById(R.id.item_price)
-		val saleDesc: TextView = holder.findViewById(R.id.item_sale_desc)
-		val labelContainer: LinearLayout? = holder.findViewById(R.id.item_label_container)
-		image.loadCorner(model.sliderImage, IMAGE_CORNER)
-		title.text = model.goodsName
-		price.text = selectPrice(model.groupPrice, model.marketPrice)
-		saleDesc.text = model.completedNumText
 		
+		holder.binding.setVariable(BR.goodsModel, goodsModel)
+		
+		val labelContainer: LinearLayout? = holder.findViewById(R.id.item_label_container)
 		if (labelContainer != null) {
-			val tags = model.tags
-			if (tags.isNotEmpty()) {
+			val tags = goodsModel.tags
+			if (!tags.isNullOrBlank()) {
 				labelContainer.visibility = View.VISIBLE
 				val split = tags.split(" ")
 				for ((index, tag) in split.withIndex()) {
@@ -87,10 +90,9 @@ open class GoodsItem(
 			holder.itemView.layoutParams = param
 		}
 		holder.itemView.setOnClickListener {
-			CoLog.i(model.goodsId)
 			val bundle = Bundle()
-			bundle.putString("goodsId", model.goodsId)
-			bundle.putSerializable("goodsModel", model)
+			bundle.putString("goodsId", goodsModel.goodsId)
+			bundle.putSerializable("goodsModel", goodsModel)
 			CoRoute.startActivity(RoutePath.ACTIVITY_BIZ_DETAIL_DETAIL, bundle)
 		}
 	}
@@ -112,4 +114,6 @@ open class GoodsItem(
 	override fun getSpanSize(): Int {
 		return 1
 	}
+	
+	class GoodsItemViewHolder(val binding: ViewDataBinding) : CoViewHolder(binding.root)
 }

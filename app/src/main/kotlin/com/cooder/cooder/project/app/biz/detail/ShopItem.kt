@@ -108,7 +108,7 @@ class ShopItem(private val model: DetailModel) : CoDataItem<DetailModel, CoViewH
 			return R.layout.item_detail_shop_goods
 		}
 		
-		override fun onViewAttachedToWindow(holder: CoViewHolder) {
+		override fun onViewAttachedToWindow(holder: GoodsItemViewHolder) {
 			super.onViewAttachedToWindow(holder)
 			val image: ImageView = holder.findViewById(R.id.item_image)
 			val parent = holder.parent

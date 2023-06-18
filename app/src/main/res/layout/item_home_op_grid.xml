@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools">
 	
 	<data>
@@ -20,6 +21,7 @@
 			android:id="@+id/item_image"
 			android:layout_width="@dimen/dp_45"
 			android:layout_height="@dimen/dp_45"
+			app:url="@{subCategory.subcategoryIcon}"
 			tools:src="@drawable/shape_view" />
 		
 		<TextView
@@ -30,6 +32,7 @@
 			android:ellipsize="end"
 			android:maxWidth="@dimen/dp_70"
 			android:maxLines="1"
+			android:text="@{subCategory.subcategoryName}"
 			android:textColor="@color/font"
 			android:textSize="@dimen/sp_12"
 			tools:text="天天领现金" />

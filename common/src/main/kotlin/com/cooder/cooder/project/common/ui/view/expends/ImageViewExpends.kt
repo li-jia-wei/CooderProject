@@ -11,6 +11,7 @@ import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.annotation.FloatRange
 import androidx.annotation.IntRange
+import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -149,14 +150,19 @@ fun ImageView.loadCircle(@DrawableRes resId: Int, width: Int, height: Int) {
 /**
  * 加载圆角图片
  */
+@BindingAdapter(value = ["url", "corner"], requireAll = false)
 fun ImageView.loadCorner(url: String, @IntRange(from = 0) corner: Int) {
-	if (CoViewUtil.isActivityDestroy(context)) return
-	// fix: 需要先裁剪再设置圆角，否则可能会导致被设置的圆角被裁剪
-	Glide.with(this)
-		.load(url)
-		.transform(CenterCrop(), RoundedCorners(corner))
-		.error(R.drawable.ic_load_failed)
-		.into(this)
+	if (corner > 0) {
+		if (CoViewUtil.isActivityDestroy(context)) return
+		// fix: 需要先裁剪再设置圆角，否则可能会导致被设置的圆角被裁剪
+		Glide.with(this)
+			.load(url)
+			.transform(CenterCrop(), RoundedCorners(corner))
+			.error(R.drawable.ic_load_failed)
+			.into(this)
+	} else {
+		this.load(url)
+	}
 }
 
 /**

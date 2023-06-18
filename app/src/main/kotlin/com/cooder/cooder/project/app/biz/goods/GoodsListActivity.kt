@@ -60,7 +60,7 @@ class GoodsListActivity : CoBaseActivity<ActivityGoodsListBinding>() {
 			fragment = GoodsListFragment.newInstance(categoryId, subcategoryId)
 		}
 		val ft = supportFragmentManager.beginTransaction()
-		if (!fragment!!.isAdded) {
+		if (!fragment.isAdded) {
 			ft.add(binding.container.id, fragment, TAG_GOODS_LIST_FRAGMENT)
 		}
 		ft.show(fragment).commitNowAllowingStateLoss()

@@ -1,6 +1,7 @@
 plugins {
 	alias(libs.plugins.com.android.application)
 	alias(libs.plugins.org.jetbrains.kotlin.android)
+	alias(libs.plugins.com.google.devtools.ksp)
 	id("kotlin-kapt")
 }
 
@@ -42,9 +43,11 @@ android {
 		jvmTarget = '17'
 	}
 	buildToolsVersion = "33.0.2"
-	buildFeatures {
-		viewBinding true
-		dataBinding true
+	viewBinding {
+		enable true
+	}
+	dataBinding {
+		enable true
 	}
 }
 

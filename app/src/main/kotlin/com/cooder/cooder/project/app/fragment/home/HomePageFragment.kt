@@ -85,7 +85,7 @@ class HomePageFragment : CoBaseFragment<FragmentHomePageBinding>() {
 		val defaultColor = ContextCompat.getColor(requireContext(), R.color.home_tab_top_default)
 		val tintColor = ContextCompat.getColor(requireContext(), R.color.home_tab_top_tint)
 		val tabTopInfos = mutableListOf<CoTabTopInfo<Int>>()
-		data.forEachIndexed { index, tabCategory ->
+		data.forEachIndexed { _, tabCategory ->
 			val tabTopInfo = CoTabTopInfo(tabCategory.categoryName, defaultColor, tintColor)
 			tabTopInfos += tabTopInfo
 		}
