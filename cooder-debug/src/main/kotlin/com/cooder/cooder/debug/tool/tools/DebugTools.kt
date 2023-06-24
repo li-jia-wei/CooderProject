@@ -2,11 +2,11 @@ package com.cooder.cooder.debug.tool.tools
 
 import android.content.Intent
 import android.os.Process
+import com.cooder.cooder.common.util.AppGlobals
+import com.cooder.cooder.common.util.SPUtil
 import com.cooder.cooder.debug.BuildConfig
 import com.cooder.cooder.debug.tool.annotation.CoDebug
 import com.cooder.cooder.debug.tool.annotation.CoOrder
-import com.cooder.cooder.project.common.util.AppGlobals
-import com.cooder.cooder.project.common.util.SPUtil
 
 /**
  * 项目：CooderLibrary

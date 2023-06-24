@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 颜色 -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="gray">#777777</color>
+    <color name="blue">#1790FE</color>
+
+    <!-- 商品详情 -->
+    <color name="detail_comment_container_label_bg">#FAF0EE</color>
+    <color name="detail_shop_tag_level_fg">#C61B00</color>
+    <color name="detail_shop_tag_level_bg">#F8E6E6</color>
+    <color name="detail_unfavorite">@color/gray</color>
+    <color name="detail_favorite">@color/rgb_dd2</color>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- GoodsItem -->
+    <color name="home_goods_label_font">#D36B07</color>
+    <color name="home_goods_label_bg">#FEF7E6</color>
+
+    <color name="home_price">#CF1321</color>
+</resources>

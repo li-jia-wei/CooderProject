@@ -1,4 +1,4 @@
-package com.cooder.cooder.project.common
+package com.cooder.cooder.common
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

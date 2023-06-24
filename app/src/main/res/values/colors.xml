@@ -9,26 +9,4 @@
 	<color name="white">#FFFFFFFF</color>
 	<color name="gray">#777777</color>
 	<color name="blue">#1790FE</color>
-	
-	<!-- Tab -->
-	<color name="tab_default">#434343</color>
-	<color name="tab_tint">@color/primary</color>
-	
-	<!-- 个人中心 -->
-	<color name="profile_banner_bg">@color/view</color>
-	
-	<!-- 主页 -->
-	<color name="home_search_bg">@color/rgb_eae</color>
-	<color name="home_tab_top_default">@color/rgb_333</color>
-	<color name="home_tab_top_tint">@color/primary</color>
-	<color name="home_price">#CF1321</color>
-	<color name="home_goods_label_font">#D36B07</color>
-	<color name="home_goods_label_bg">#FEF7E6</color>
-	
-	<!-- 商品详情 -->
-	<color name="detail_comment_container_label_bg">#FAF0EE</color>
-	<color name="detail_shop_tag_level_fg">#C61B00</color>
-	<color name="detail_shop_tag_level_bg">#F8E6E6</color>
-	<color name="detail_unfavorite">@color/gray</color>
-	<color name="detail_favorite">@color/rgb_dd2</color>
 </resources>

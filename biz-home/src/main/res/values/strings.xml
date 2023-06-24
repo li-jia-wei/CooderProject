@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 首页 -->
+    <string name="home_title">首页</string>
+    <string name="home_icon_home">&#xe89a;</string>
+    <string name="home_icon_home_fill">&#xe8a0;</string>
+    <string name="home_search_hint">&#xe8aa; 搜索你想要的商品</string>
+
+    <!-- 收藏 -->
+    <string name="favorite_title">收藏</string>
+    <string name="favorite_icon_collection">&#xe882;</string>
+    <string name="favorite_icon_collection_fill">&#xe884;</string>
+
+    <!-- 分类 -->
+    <string name="category_title">分类</string>
+    <string name="category_icon_category">&#xe75d;</string>
+    <string name="categoru_empty_icon">@string/ic_prompt_fill</string>
+    <string name="category_empty_desc">未找到相关数据</string>
+    <string name="category_empty_refresh">刷新</string>
+
+    <!-- 推荐 -->
+    <string name="recommend_title">推荐</string>
+    <string name="recommend_icon_good">&#xe789;</string>
+    <string name="recommend_icon_good_fill">&#xe831;</string>
+
+    <!-- 我的 -->
+    <string name="profile_title">我的</string>
+    <string name="profile_icon_account">&#xe8a5;</string>
+    <string name="profile_icon_account_fill">&#xe89d;</string>
+    <string name="profile_please_login_first">请先登录</string>
+    <string name="profile_login_desc_welcome_back">Hi，欢迎回来</string>
+    <string name="profile_login_desc_unlock_all_features">解锁全部功能，畅想架构师专属福利</string>
+    <string name="profile_favorite">收藏</string>
+    <string name="profile_history_browsing">历史浏览</string>
+    <string name="profile_learn_minutes">学习时长</string>
+    <string name="profile_course_announcement">课程公告</string>
+    <string name="profile_my_collect">我的收藏</string>
+    <string name="profile_delivery_address">收货地址</string>
+    <string name="profile_browsing_history">浏览历史</string>
+    <string name="profile_course_notice_count_geature_99">99+</string>
+
+</resources>

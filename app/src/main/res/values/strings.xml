@@ -1,97 +1,16 @@
 <resources>
-	<string name="app_name">CP</string>
-	
-	<!-- 首页 -->
-	<string name="home_title">首页</string>
-	<string name="home_icon_home">&#xe89a;</string>
-	<string name="home_icon_home_fill">&#xe8a0;</string>
-	<string name="home_search_hint">&#xe8aa; 搜索你想要的商品</string>
-	
-	<!-- 收藏 -->
-	<string name="favorite_title">收藏</string>
-	<string name="favorite_icon_collection">&#xe882;</string>
-	<string name="favorite_icon_collection_fill">&#xe884;</string>
-	
-	<!-- 分类 -->
-	<string name="category_title">分类</string>
-	<string name="category_icon_category">&#xe75d;</string>
-	<string name="categoru_empty_icon">@string/ic_prompt_fill</string>
-	<string name="category_empty_desc">未找到相关数据</string>
-	<string name="category_empty_refresh">刷新</string>
-	
-	<!-- 推荐 -->
-	<string name="recommend_title">推荐</string>
-	<string name="recommend_icon_good">&#xe789;</string>
-	<string name="recommend_icon_good_fill">&#xe831;</string>
-	
-	<!-- 我的 -->
-	<string name="profile_title">我的</string>
-	<string name="profile_icon_account">&#xe8a5;</string>
-	<string name="profile_icon_account_fill">&#xe89d;</string>
-	<string name="profile_please_login_first">请先登录</string>
-	<string name="profile_login_desc_welcome_back">Hi，欢迎回来</string>
-	<string name="profile_login_desc_unlock_all_features">解锁全部功能，畅想架构师专属福利</string>
-	<string name="profile_favorite">收藏</string>
-	<string name="profile_history_browsing">历史浏览</string>
-	<string name="profile_learn_minutes">学习时长</string>
-	<string name="profile_course_announcement">课程公告</string>
-	<string name="profile_my_collect">我的收藏</string>
-	<string name="profile_delivery_address">收货地址</string>
-	<string name="profile_browsing_history">浏览历史</string>
-	<string name="profile_course_notice_count_geature_99">99+</string>
-	
-	<!-- 路由 -->
-	<string name="route_profile_detail">个人中心</string>
-	<string name="route_profile_vip">会员权益</string>
-	<string name="route_profile_authentication">账户充值</string>
-	<string name="route_profile_unknown">全局降级策略</string>
-	<string name="route_url_is_empty">无法获取到网址</string>
-	
-	<!-- 登录 -->
-	<string name="login_title">登录</string>
-	<string name="login_register">注册</string>
-	<string name="login_username">用户名</string>
-	<string name="login_please_input_username">请输入用户名</string>
-	<string name="login_password">密码</string>
-	<string name="login_please_input_password">请输入密码</string>
-	<string name="login_hint">提示：如您忘记密码，重新注册即可</string>
-	<string name="login_success">登录成功</string>
-	<string name="login_failure">登录失败，%1$s</string>
-	
-	<!-- 注册 -->
-	<string name="register_title">注册</string>
-	<string name="register_course_order_id">课程订单号</string>
-	<string name="register_please_input_course_order_id_last_4_digits">请输入课程订单号后4位</string>
-	<string name="register_mooc_id">慕课网ID</string>
-	<string name="register_please_input_mooc_id">请输入慕课网用户ID</string>
-	<string name="register_username">用户名</string>
-	<string name="register_please_input_username">请输入用户名</string>
-	<string name="register_password">密码</string>
-	<string name="register_please_input_password">请输入密码</string>
-	<string name="register_confirm_password">确认密码</string>
-	<string name="register_please_confirm_password_again">请再次确认密码</string>
-	<string name="register_submit">提交</string>
-	<string name="register_username_last_6_digits">用户名长度规则：6–12位</string>
-	<string name="register_password_last_6_digits">密码长度规则：6–20位</string>
-	<string name="register_confirm_password_failure">密码验证失败</string>
-	<string name="register_success">注册成功</string>
-	<string name="register_failure">注册失败：%1$s</string>
-	
-	<!-- 商品详情 -->
-	<string name="detail_shop_desc">商品数量：%1$s 已拼：%2$s</string>
-	<string name="detail_goods_attr_title">商品详情</string>
-	<string name="detail_similar_title_icon">@string/ic_new_user_zone_fill</string>
-	<string name="detail_similar_title">相似商品</string>
-	<string name="detail_success_favorite">收藏成功</string>
-	<string name="detail_success_cancel_favorite">取消收藏成功</string>
-	<string name="detail_favorite">&#xe8a8;\n收藏</string>
-	<string name="detail_already_favorite">&#xe721;\n已收藏</string>
-	<string name="detail_default_price">¥0\n立即购买</string>
-	<string name="detail_price">%1$s\n立即购买</string>
-	
-	<!-- Token过期 -->
-	<string name="token_degrade_title">非法访问</string>
-	
-	<!-- 拦截器 -->
-	<string name="interceptor_please_login_first">请先登录</string>
+    <string name="app_name">CP</string>
+
+    <!-- 路由 -->
+    <string name="route_profile_detail">个人中心</string>
+    <string name="route_profile_vip">会员权益</string>
+    <string name="route_profile_authentication">账户充值</string>
+    <string name="route_profile_unknown">全局降级策略</string>
+    <string name="route_url_is_empty">无法获取到网址</string>
+
+    <!-- Token过期 -->
+    <string name="token_degrade_title">非法访问</string>
+
+    <!-- 拦截器 -->
+    <string name="interceptor_please_login_first">请先登录</string>
 </resources>

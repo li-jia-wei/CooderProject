@@ -14,16 +14,16 @@
 		android:visibility="gone"
 		tools:ignore="ContentDescription" />
 	
-	<com.cooder.cooder.project.common.ui.view.IconFontTextView
-		android:id="@+id/empty_icon"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginBottom="@dimen/dp_20"
-		android:text="@string/empty_view_icon"
-		android:textColor="@color/primary"
-		android:textSize="@dimen/sp_70"
-		android:visibility="gone"
-		tools:visibility="visible" />
+	<com.cooder.cooder.common.ui.view.IconFontTextView
+        android:id="@+id/empty_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:text="@string/empty_view_icon"
+        android:textColor="@color/primary"
+        android:textSize="@dimen/sp_70"
+        android:visibility="gone"
+        tools:visibility="visible" />
 	
 	<TextView
 		android:id="@+id/empty_title"
@@ -49,18 +49,18 @@
 			android:text="@string/empty_view_text"
 			android:textColor="@color/darker_gray"
 			android:textSize="@dimen/sp_14" />
-		
-		<com.cooder.cooder.project.common.ui.view.IconFontTextView
-			android:id="@+id/empty_help_action"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="@dimen/dp_6"
-			android:gravity="center"
-			android:text="@string/ic_prompt"
-			android:textColor="@color/primary"
-			android:textSize="@dimen/sp_20"
-			android:visibility="gone"
-			tools:visibility="visible" />
+
+        <com.cooder.cooder.common.ui.view.IconFontTextView
+            android:id="@+id/empty_help_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_6"
+            android:gravity="center"
+            android:text="@string/ic_prompt"
+            android:textColor="@color/primary"
+            android:textSize="@dimen/sp_20"
+            android:visibility="gone"
+            tools:visibility="visible" />
 		
 	</LinearLayout>
 	

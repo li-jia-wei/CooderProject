@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    tools:context=".register.RegisterActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:background="@color/white">
+
+        <com.cooder.cooder.common.ui.view.IconFontTextView
+            android:id="@+id/action_back"
+            android:layout_width="@dimen/dp_45"
+            android:layout_height="@dimen/dp_45"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_6"
+            android:gravity="center"
+            android:text="@string/ic_arrow_left"
+            android:textSize="@dimen/sp_32" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="@string/register_title"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_16" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0.5"
+        android:background="@color/lighter_gray" />
+
+    <com.cooder.cooder.common.ui.view.input.InputItemLayout
+        android:id="@+id/course_order_id"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/white"
+        android:paddingHorizontal="@dimen/dp_16"
+        app:bottomLineAppearance="@style/MarginStartLineAppearance"
+        app:hint="@string/register_please_input_course_order_id_last_4_digits"
+        app:inputTextAppearance="@style/InputTextAppearance"
+        app:inputType="number"
+        app:maxLength="4"
+        app:text="3359"
+        app:title="@string/register_course_order_id"
+        app:titleTextAppearance="@style/TitleTextAppearance"
+        app:topLineAppearance="@style/LineAppearance" />
+
+    <com.cooder.cooder.common.ui.view.input.InputItemLayout
+        android:id="@+id/mooc_id"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:background="@color/white"
+        android:paddingHorizontal="@dimen/dp_16"
+        app:bottomLineAppearance="@style/MarginStartLineAppearance"
+        app:hint="@string/register_please_input_mooc_id"
+        app:inputTextAppearance="@style/InputTextAppearance"
+        app:inputType="number"
+        app:maxLength="8"
+        app:text="5733850"
+        app:title="@string/register_mooc_id"
+        app:titleTextAppearance="@style/TitleTextAppearance" />
+
+    <com.cooder.cooder.common.ui.view.input.InputItemLayout
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:background="@color/white"
+        android:paddingHorizontal="@dimen/dp_16"
+        app:bottomLineAppearance="@style/MarginStartLineAppearance"
+        app:hint="@string/register_please_input_username"
+        app:inputTextAppearance="@style/InputTextAppearance"
+        app:inputType="username"
+        app:text="cooder"
+        app:title="@string/register_username"
+        app:titleTextAppearance="@style/TitleTextAppearance" />
+
+    <com.cooder.cooder.common.ui.view.input.InputItemLayout
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:background="@color/white"
+        android:paddingHorizontal="@dimen/dp_16"
+        app:bottomLineAppearance="@style/MarginStartLineAppearance"
+        app:hint="@string/register_please_input_password"
+        app:inputTextAppearance="@style/InputTextAppearance"
+        app:inputType="register_password"
+        app:text="12345678"
+        app:title="@string/register_password"
+        app:titleTextAppearance="@style/TitleTextAppearance" />
+
+    <com.cooder.cooder.common.ui.view.input.InputItemLayout
+        android:id="@+id/confirm_password"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:background="@color/white"
+        android:paddingHorizontal="@dimen/dp_16"
+        app:bottomLineAppearance="@style/LineAppearance"
+        app:hint="@string/register_please_confirm_password_again"
+        app:inputTextAppearance="@style/InputTextAppearance"
+        app:inputType="register_password"
+        app:text="12345678"
+        app:title="@string/register_confirm_password"
+        app:titleTextAppearance="@style/TitleTextAppearance" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/action_submit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_55"
+        android:layout_marginHorizontal="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="@string/register_submit"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_16"
+        app:cornerRadius="@dimen/dp_6" />
+
+</LinearLayout>

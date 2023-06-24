@@ -1,16 +1,16 @@
 plugins {
-	alias(libs.plugins.com.android.application)
-	alias(libs.plugins.org.jetbrains.kotlin.android)
-	alias(libs.plugins.com.google.devtools.ksp)
-	id("kotlin-kapt")
+    alias(libs.plugins.com.android.application)
+    alias(libs.plugins.org.jetbrains.kotlin.android)
+    alias(libs.plugins.ksp)
+    id('kotlin-kapt')
 }
 
 android {
 	compileSdk 33
-	namespace 'com.cooder.cooder.project.app'
+    namespace 'com.cooder.cooder.app'
 	
 	defaultConfig {
-		applicationId "com.cooder.cooder.project.app"
+        applicationId "com.cooder.cooder.app"
 		minSdk 26
 		targetSdk 33
 		versionCode APP_VERSION_CODE as int
@@ -27,7 +27,6 @@ android {
 	buildTypes {
 		release {
 			minifyEnabled true
-			zipAlignEnabled true
 			shrinkResources true
 			proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 		}
@@ -43,7 +42,8 @@ android {
 		jvmTarget = '17'
 	}
 	buildToolsVersion = "33.0.2"
-	viewBinding {
+
+    viewBinding {
 		enable true
 	}
 	dataBinding {
@@ -52,19 +52,20 @@ android {
 }
 
 dependencies {
-	
-	implementation project(':common')
-	implementation project(':cooder-library')
-	implementation project(':cooder-ui')
-	debugImplementation project(':cooder-debug')
-	
-	implementation libs.core.kts
-	implementation libs.appcompat
-	implementation libs.material
-	implementation libs.constraintlayout
-	testImplementation libs.junit
-	androidTestImplementation libs.androidx.test.ext.junit
-	androidTestImplementation libs.espresso.core
+
+    implementation project(':biz-home')
+    implementation project(':biz-detail')
+    implementation project(':biz-login')
+    implementation project(':common')
+    debugImplementation project(':cooder-debug')
+
+    implementation libs.core.kts
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.constraintlayout
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.test.ext.junit
+    androidTestImplementation libs.espresso.core
 	
 	// ARouter
 	implementation libs.arouter.api

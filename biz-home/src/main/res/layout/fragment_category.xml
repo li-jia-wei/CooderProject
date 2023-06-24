@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	tools:context=".fragment.category.CategoryFragment">
+	
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/dp_45"
+		android:gravity="center"
+		android:text="@string/category_title"
+		android:textColor="@color/black"
+		android:textSize="16sp"
+		android:textStyle="bold" />
+	
+	<com.cooder.cooder.common.ui.view.IconFontTextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_35"
+        android:layout_marginHorizontal="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:background="@drawable/shape_home_page_search"
+        android:gravity="center"
+        android:text="@string/home_search_hint"
+        android:textColor="@color/rgb_9fa"
+        android:textSize="@dimen/sp_14" />
+	
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/dp_2"
+		android:layout_marginTop="@dimen/dp_10"
+		android:background="@color/rgb_eee" />
+	
+	<com.cooder.cooder.ui.slider.CoSliderView
+		android:id="@+id/slider_view"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent" />
+
+</LinearLayout>

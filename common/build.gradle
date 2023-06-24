@@ -1,11 +1,11 @@
 plugins {
 	alias(libs.plugins.com.android.library)
 	alias(libs.plugins.org.jetbrains.kotlin.android)
-	id("kotlin-kapt")
+    id('kotlin-kapt')
 }
 
 android {
-    namespace 'com.cooder.cooder.project.common'
+    namespace 'com.cooder.cooder.common'
     compileSdk 33
 
     defaultConfig {
@@ -18,8 +18,11 @@ android {
 
     buildTypes {
         release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
             minifyEnabled false
-	        proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 	compileOptions {
@@ -30,7 +33,8 @@ android {
 		jvmTarget = '17'
 	}
 	buildToolsVersion = '33.0.2'
-	viewBinding {
+
+    viewBinding {
 		enable true
 	}
 	dataBinding {
@@ -39,17 +43,28 @@ android {
 }
 
 dependencies {
-	
-	implementation project(':cooder-library')
-	implementation project(':cooder-ui')
-	
-	implementation libs.core.kts
-	implementation libs.appcompat
-	implementation libs.material
-	testImplementation libs.junit
-	androidTestImplementation libs.androidx.test.ext.junit
-	androidTestImplementation libs.espresso.core
-	
-	// Glide
-	implementation libs.glide
+
+    api project(':cooder-library')
+    api project(':cooder-ui')
+    api project(':service-login')
+
+    implementation libs.core.kts
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.constraintlayout
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.test.ext.junit
+    androidTestImplementation libs.espresso.core
+
+    // Glide
+    implementation libs.glide
+
+    // Retrofit2
+    implementation libs.retrofit
+
+    // Gson
+    implementation libs.gson
+
+    // ARouter
+    implementation libs.arouter.api
 }

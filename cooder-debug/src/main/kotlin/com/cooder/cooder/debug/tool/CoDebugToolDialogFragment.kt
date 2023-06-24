@@ -11,12 +11,12 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.cooder.cooder.common.ui.component.CoBaseDialog
 import com.cooder.cooder.debug.R
 import com.cooder.cooder.debug.databinding.FragmentCoDebugToolDialogBinding
 import com.cooder.cooder.debug.tool.annotation.CoDebug
 import com.cooder.cooder.debug.tool.annotation.CoOrder
 import com.cooder.cooder.debug.tool.tools.DebugTools
-import com.cooder.cooder.project.common.ui.component.CoBaseDialog
 import java.lang.reflect.Method
 
 /**

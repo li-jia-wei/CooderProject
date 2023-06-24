@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	tools:context=".route.DegradeGlobalActivity">
-	
-	<com.cooder.cooder.project.common.ui.view.IconFontTextView
-		android:id="@+id/action_back"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginStart="@dimen/dp_20"
-		android:layout_marginTop="@dimen/dp_20"
-		android:text="@string/ic_left_button_fill"
-		android:textColor="@color/lighter_gray"
-		android:textSize="@dimen/sp_45" />
-	
-	<com.cooder.cooder.project.common.ui.view.EmptyView
-		android:id="@+id/empty_view"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_centerInParent="true" />
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.cooder.cooder.app.route.DegradeGlobalActivity">
+
+    <com.cooder.cooder.common.ui.view.IconFontTextView
+        android:id="@+id/action_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_20"
+        android:text="@string/ic_left_button_fill"
+        android:textColor="@color/lighter_gray"
+        android:textSize="@dimen/sp_45" />
+
+    <com.cooder.cooder.common.ui.view.EmptyView
+        android:id="@+id/empty_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>
