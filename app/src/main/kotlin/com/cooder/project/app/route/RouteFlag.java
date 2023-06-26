@@ -1,4 +1,4 @@
-package com.cooder.cooder.app.route;
+package com.cooder.project.app.route;
 
 /**
  * 为目标页扩展属性

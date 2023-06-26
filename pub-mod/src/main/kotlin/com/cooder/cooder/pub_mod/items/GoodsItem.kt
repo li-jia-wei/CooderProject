@@ -20,7 +20,7 @@ import com.cooder.cooder.pub_mod.databinding.ItemHomeGoodsList1Binding
 import com.cooder.cooder.pub_mod.databinding.ItemHomeGoodsList2Binding
 import com.cooder.cooder.pub_mod.model.GoodsModel
 import com.cooder.cooder.ui.item.CoDataItem
-import com.cooder.cooder.ui.item.CoViewHolder
+import com.cooder.cooder.ui.item.CoViewDataBindingHolder
 
 /**
  * 项目：CooderProject
@@ -33,25 +33,28 @@ import com.cooder.cooder.ui.item.CoViewHolder
  */
 open class GoodsItem(
     private val goodsModel: GoodsModel,
-    private val hotTab: Boolean
-) : CoDataItem<GoodsModel, GoodsItem.GoodsItemViewHolder>() {
+    private val hotTab: Boolean,
+    private val span: Int,
+    private val index: Int
+) : CoDataItem<GoodsModel, CoViewDataBindingHolder<ViewDataBinding>>() {
 
     private lateinit var binding: ViewDataBinding
 
     companion object {
         const val IMAGE_CORNER = 10
+        private val MARGIN = 3.dpInt
     }
 
-    override fun onCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): GoodsItemViewHolder? {
+    override fun onCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): CoViewDataBindingHolder<ViewDataBinding> {
         binding = if (hotTab) {
             ItemHomeGoodsList1Binding.inflate(inflater, parent, false)
         } else {
             ItemHomeGoodsList2Binding.inflate(inflater, parent, false)
         }
-        return GoodsItemViewHolder(binding)
+        return CoViewDataBindingHolder(binding)
     }
 
-    override fun onBindData(holder: GoodsItemViewHolder, position: Int) {
+    override fun onBindData(holder: CoViewDataBindingHolder<ViewDataBinding>, position: Int) {
         val context = holder.context
 
         holder.binding.setVariable(BR.goodsModel, goodsModel)
@@ -77,16 +80,23 @@ open class GoodsItem(
             }
         }
         if (!hotTab) {
-            val margin = 2.dpInt
             val param = holder.itemView.layoutParams as RecyclerView.LayoutParams
-            val parentLeft = coAdapter?.getAttachRecyclerView()?.left ?: 0
-            val parentPaddingLeft = coAdapter?.getAttachRecyclerView()?.paddingLeft ?: 0
-            val itemLeft = holder.itemView.left
-            if (itemLeft == parentLeft + parentPaddingLeft) {   // 处于列表左边
-                param.rightMargin = margin
+            if (index % span == 0) {
+                param.rightMargin = MARGIN
+                param.leftMargin = MARGIN * 2
+            } else if (index % span == span - 1) {
+                param.leftMargin = MARGIN
+                param.rightMargin = MARGIN * 2
             } else {
-                param.leftMargin = margin
+                param.leftMargin = MARGIN
+                param.rightMargin = MARGIN
             }
+            if (index / span == 0) {
+                param.topMargin = MARGIN * 2
+            } else {
+                param.topMargin = MARGIN
+            }
+            param.bottomMargin = MARGIN
             holder.itemView.layoutParams = param
         }
         holder.itemView.setOnClickListener {
@@ -114,6 +124,4 @@ open class GoodsItem(
     override fun getSpanSize(): Int {
         return 1
     }
-
-    class GoodsItemViewHolder(val binding: ViewDataBinding) : CoViewHolder(binding.root)
 }

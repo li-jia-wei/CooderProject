@@ -20,27 +20,22 @@ import com.cooder.cooder.library.restful.CoResult
  */
 class LoginViewModel : ViewModel() {
 	
-	data class LoginMo(
-		val username: String,
-		val password: String
-	)
-	
 	/**
-	 * 登录
-	 */
-	fun login(mo: LoginMo): LiveData<CoResult<String>> {
-		val liveData = MutableLiveData<CoResult<String>>()
-		ApiFactory.create(AccountApi::class.java).login(mo.username, mo.password).enqueue(object : CoCallback<String> {
-			override fun onSuccess(response: CoResponse<String>) {
-				if (response.isSuccessful() && response.data != null) {
-					liveData.value = CoResult.success(response.data)
-				} else {
-					liveData.value = CoResult.success(response.message)
-				}
-			}
-			
-			override fun onFailed(throwable: Throwable) {
-				super.onFailed(throwable)
+     * 登录
+     */
+    fun login(username: String, password: String): LiveData<CoResult<String>> {
+        val liveData = MutableLiveData<CoResult<String>>()
+        ApiFactory.create(AccountApi::class.java).login(username, password).enqueue(object : CoCallback<String> {
+            override fun onSuccess(response: CoResponse<String>) {
+                if (response.isSuccessful() && response.data != null) {
+                    liveData.value = CoResult.success(response.data)
+                } else {
+                    liveData.value = CoResult.success(response.message)
+                }
+            }
+
+            override fun onFailed(throwable: Throwable) {
+                super.onFailed(throwable)
 				liveData.value = CoResult.failure(throwable.message)
 			}
 		})

@@ -23,7 +23,7 @@ import com.cooder.cooder.service_login.LoginServiceProvider
  *
  * 创建：2022/11/8 19:51
  *
- * 介绍：AuthenticationActivity
+ * 介绍：登录页
  */
 @Route(path = RoutePath.BizLogin.ACTIVITY_LOGIN)
 class LoginActivity : CoBaseActivity<ActivityLoginBinding>() {
@@ -36,14 +36,16 @@ class LoginActivity : CoBaseActivity<ActivityLoginBinding>() {
         return ActivityLoginBinding.inflate(layoutInflater)
     }
 
-    override fun onCreateActivity(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setStatusBar(true, Color.WHITE)
 
-        binding.actionBack.setOnClickListener {
+        binding.navigationBar.setNavigationListener {
             onBackPressed(Activity.RESULT_CANCELED)
         }
 
-        binding.actionRegister.setOnClickListener {
+        val actionRegister = binding.navigationBar.addRightTextButton(R.string.login_register, R.color.blue)
+        actionRegister.setOnClickListener {
             toRegister()
         }
 
@@ -67,7 +69,7 @@ class LoginActivity : CoBaseActivity<ActivityLoginBinding>() {
     }
 
     private fun login(username: String, password: String) {
-        viewModel.login(LoginViewModel.LoginMo(username, password)).observe(this) {
+        viewModel.login(username, password).observe(this) {
             if (it.isSuccessful()) {
                 showToast(R.string.login_success)
                 LoginServiceProvider.loginSuccess(it.data!!)

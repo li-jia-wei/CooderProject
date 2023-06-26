@@ -29,121 +29,125 @@ import java.lang.reflect.Method
  * 介绍：Debug工具对话框
  */
 class CoDebugToolDialogFragment : CoBaseDialog<FragmentCoDebugToolDialogBinding>() {
-	
-	private val debugTools = arrayOf(DebugTools::class.java)
-	override fun getViewBinding(inflater: LayoutInflater, parent: ViewGroup?): FragmentCoDebugToolDialogBinding {
-		return FragmentCoDebugToolDialogBinding.inflate(inflater, parent, false)
-	}
-	
-	override fun onCreateViewInit(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) {
-		super.onCreateViewInit(inflater, container, savedInstanceState)
-		dialog?.window?.setBackgroundDrawableResource(R.drawable.shape_co_debug_tool)
-	}
-	
-	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		super.onViewCreated(view, savedInstanceState)
-		
-		val itemDecoration = DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL)
-		itemDecoration.setDrawable(ContextCompat.getDrawable(view.context, R.drawable.shape_co_debug_divider)!!)
-		
-		val functions = mutableListOf<DebugFunction>()
-		debugTools.forEach {
-			val target = it.getConstructor().newInstance()
-			target.javaClass.declaredMethods.forEach { method ->
-				var order: Int = Int.MAX_VALUE
-				val title: String
-				var desc = ""
-				var hint = ""
-				var enable = false
-				val debugAnnotation = method.getAnnotation(CoDebug::class.java)
-				val orderAnnotation = method.getAnnotation(CoOrder::class.java)
-				if (debugAnnotation != null) {
-					title = debugAnnotation.name
-					desc = debugAnnotation.desc
-					hint = debugAnnotation.hint
-					enable = true
-				} else {
-					method.isAccessible = true
-					title = method.invoke(target) as String
-				}
-				if (orderAnnotation != null) {
-					order = orderAnnotation.order
-				}
-				functions += DebugFunction(order, title, hint, desc, method, enable, target)
-			}
-		}
-		functions.sortBy { it.order }
-		binding.recyclerView.addItemDecoration(itemDecoration)
-		binding.recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-		binding.recyclerView.adapter = DebugToolAdapter(functions)
-	}
-	
-	data class DebugFunction(
-		val order: Int,
-		val name: String,
-		val hint: String,
-		val desc: String,
-		val method: Method,
-		val enable: Boolean,
-		val target: Any
-	) {
-		
-		fun invoke() {
-			method.invoke(target)
-		}
-	}
-	
-	inner class DebugToolAdapter(
-		private val functions: List<DebugFunction>
-	) : RecyclerView.Adapter<DebugToolAdapter.DebugToolViewHolder>() {
-		override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DebugToolViewHolder {
-			val itemView = layoutInflater.inflate(R.layout.item_co_debug_tool, parent, false)
-			return DebugToolViewHolder(itemView.rootView)
-		}
-		
-		override fun getItemCount(): Int {
-			return functions.size
-		}
-		
-		override fun onBindViewHolder(holder: DebugToolViewHolder, position: Int) {
-			val title = holder.findViewById<TextView>(R.id.item_title)
-			val itemDesc = holder.findViewById<TextView>(R.id.item_desc)
-			val itemHint = holder.findViewById<TextView>(R.id.item_hint)
-			val function = functions[position]
-			title.text = function.name
-			if (function.desc.isNotEmpty()) {
-				itemDesc.text = function.desc
-				itemDesc.visibility = View.VISIBLE
-			} else {
-				itemDesc.visibility = View.GONE
-			}
-			if (function.hint.isNotEmpty()) {
-				itemHint.text = function.hint
-				itemHint.visibility = View.VISIBLE
-			} else {
-				itemHint.visibility = View.GONE
-			}
-			if (function.enable) {
-				holder.itemView.setOnClickListener {
-					function.invoke()
-					this@CoDebugToolDialogFragment.dialog?.cancel()
-				}
-			}
-		}
-		
-		inner class DebugToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-			
-			private val views = SparseArray<View>()
-			
-			@Suppress("UNCHECKED_CAST")
-			fun <T : View> findViewById(@IdRes id: Int): T {
-				var view = views[id]
-				if (view == null) {
-					view = itemView.findViewById(id)
-					views[id] = view
-				}
-				return view as T
-			}
-		}
-	}
+
+    private val debugTools = arrayOf(DebugTools::class.java)
+    override fun getViewBinding(inflater: LayoutInflater, parent: ViewGroup?): FragmentCoDebugToolDialogBinding {
+        return FragmentCoDebugToolDialogBinding.inflate(inflater, parent, false)
+    }
+
+    override fun onCreateViewInit(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) {
+        super.onCreateViewInit(inflater, container, savedInstanceState)
+        dialog?.window?.setBackgroundDrawableResource(R.drawable.shape_co_debug_tool)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val itemDecoration = DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL)
+        itemDecoration.setDrawable(ContextCompat.getDrawable(view.context, R.drawable.shape_co_debug_divider)!!)
+
+        val functions = mutableListOf<DebugFunction>()
+        debugTools.forEach {
+            val target = it.getConstructor().newInstance()
+            target.javaClass.declaredMethods.forEach { method ->
+                var order: Int = Int.MAX_VALUE
+                var title = ""
+                var desc = ""
+                var hint = ""
+                var enable = false
+                val debugAnnotation = method.getAnnotation(CoDebug::class.java)
+                val orderAnnotation = method.getAnnotation(CoOrder::class.java)
+                if (debugAnnotation != null) {
+                    title = debugAnnotation.name
+                    desc = debugAnnotation.desc
+                    hint = debugAnnotation.hint
+                    enable = true
+                } else {
+                    if (method.returnType == String::class.java) {
+                        method.isAccessible = true
+                        title = method.invoke(target) as String
+                    }
+                }
+                if (orderAnnotation != null) {
+                    order = orderAnnotation.order
+                }
+                if (title.isNotEmpty()) {
+                    functions += DebugFunction(order, title, hint, desc, method, enable, target)
+                }
+            }
+        }
+        functions.sortBy { it.order }
+        binding.recyclerView.addItemDecoration(itemDecoration)
+        binding.recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.recyclerView.adapter = DebugToolAdapter(functions)
+    }
+
+    data class DebugFunction(
+        val order: Int,
+        val name: String,
+        val hint: String,
+        val desc: String,
+        val method: Method,
+        val enable: Boolean,
+        val target: Any
+    ) {
+
+        fun invoke() {
+            method.invoke(target)
+        }
+    }
+
+    inner class DebugToolAdapter(
+        private val functions: List<DebugFunction>
+    ) : RecyclerView.Adapter<DebugToolAdapter.DebugToolViewHolder>() {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DebugToolViewHolder {
+            val itemView = layoutInflater.inflate(R.layout.item_co_debug_tool, parent, false)
+            return DebugToolViewHolder(itemView.rootView)
+        }
+
+        override fun getItemCount(): Int {
+            return functions.size
+        }
+
+        override fun onBindViewHolder(holder: DebugToolViewHolder, position: Int) {
+            val title = holder.findViewById<TextView>(R.id.item_title)
+            val itemDesc = holder.findViewById<TextView>(R.id.item_desc)
+            val itemHint = holder.findViewById<TextView>(R.id.item_hint)
+            val function = functions[position]
+            title.text = function.name
+            if (function.desc.isNotBlank()) {
+                itemDesc.text = function.desc
+                itemDesc.visibility = View.VISIBLE
+            } else {
+                itemDesc.visibility = View.GONE
+            }
+            if (function.hint.isNotBlank()) {
+                itemHint.text = function.hint
+                itemHint.visibility = View.VISIBLE
+            } else {
+                itemHint.visibility = View.GONE
+            }
+            if (function.enable) {
+                holder.itemView.setOnClickListener {
+                    function.invoke()
+                    this@CoDebugToolDialogFragment.dialog?.cancel()
+                }
+            }
+        }
+
+        inner class DebugToolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+            private val views = SparseArray<View>()
+
+            @Suppress("UNCHECKED_CAST")
+            fun <T : View> findViewById(@IdRes id: Int): T {
+                var view = views[id]
+                if (view == null) {
+                    view = itemView.findViewById(id)
+                    views[id] = view
+                }
+                return view as T
+            }
+        }
+    }
 }

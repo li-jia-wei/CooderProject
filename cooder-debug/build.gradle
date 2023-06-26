@@ -71,7 +71,7 @@ class Build {
 	 */
 	static def buildTime() {
 		def date = new Date()
-		return date.format("EE HH:mm:ss", TimeZone.getTimeZone("GMT+08:00"))
+		return date.format("HH:mm:ss", TimeZone.getTimeZone("GMT+08:00"))
 	}
 	
 	/**

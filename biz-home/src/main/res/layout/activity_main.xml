@@ -4,7 +4,7 @@
     android:id="@+id/tab_bottom_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cooder.cooder.app.MainActivity">
+    tools:context=".MainActivity">
 
     <com.cooder.cooder.common.tab.CoFragmentTabView
         android:id="@+id/fragment_tab_view"

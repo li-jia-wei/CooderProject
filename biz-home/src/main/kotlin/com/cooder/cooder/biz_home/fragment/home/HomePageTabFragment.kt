@@ -32,6 +32,7 @@ class HomePageTabFragment : CoAbsListFragment() {
     companion object {
 
         private const val DEFAULT_HOT_TAB_CATEGORY_ID = "1"
+        private const val GOODS_ITEM_SPAN = 2
 
         /**
          * 获取实例
@@ -90,8 +91,8 @@ class HomePageTabFragment : CoAbsListFragment() {
         data.subcategoryList?.let {
             dataItems += SubcategoryItem(it)
         }
-        data.goodsList?.forEach {
-            dataItems += GoodsItem(it, categoryId == DEFAULT_HOT_TAB_CATEGORY_ID)
+        data.goodsList?.forEachIndexed { index, goodsModel ->
+            dataItems += GoodsItem(goodsModel, categoryId == DEFAULT_HOT_TAB_CATEGORY_ID, GOODS_ITEM_SPAN, index)
         }
         finishRefresh(dataItems)
         fixTabBottomPadding()

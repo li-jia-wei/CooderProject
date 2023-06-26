@@ -4,9 +4,9 @@ import android.os.Bundle
 import com.cooder.cooder.common.R
 import com.cooder.cooder.common.route.CoRoute
 import com.cooder.cooder.common.route.RoutePath
-import com.cooder.cooder.common.util.AppGlobals
 import com.cooder.cooder.library.restful.CoInterceptor
 import com.cooder.cooder.library.restful.CoResponse
+import com.cooder.cooder.library.util.AppGlobals
 
 /**
  * 项目：CooderProject

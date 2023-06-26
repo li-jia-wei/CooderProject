@@ -10,6 +10,7 @@ import com.cooder.cooder.biz_home.databinding.ActivityGoodsListBinding
 import com.cooder.cooder.common.route.CoRoute
 import com.cooder.cooder.common.route.RoutePath
 import com.cooder.cooder.common.ui.component.CoBaseActivity
+import com.cooder.cooder.library.util.expends.hintNavigationBar
 import com.cooder.cooder.library.util.expends.setStatusBar
 
 /**
@@ -44,16 +45,18 @@ class GoodsListActivity : CoBaseActivity<ActivityGoodsListBinding>() {
         return ActivityGoodsListBinding.inflate(inflater)
     }
 
-    override fun onCreateActivity(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         CoRoute.inject(this)
 
         setStatusBar(true, Color.WHITE)
+        hintNavigationBar()
 
-        binding.actionBack.setOnClickListener {
+        binding.navigationBar.setNavigationListener {
             onBackPressed(Activity.RESULT_CANCELED)
         }
 
-        binding.subcategoryTitle.text = subcategoryTitle
+        binding.navigationBar.setTitle(subcategoryTitle)
 
         var fragment = supportFragmentManager.findFragmentByTag(TAG_GOODS_LIST_FRAGMENT)
         if (fragment == null) {

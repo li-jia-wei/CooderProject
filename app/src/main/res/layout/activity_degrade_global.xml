@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cooder.cooder.app.route.DegradeGlobalActivity">
+    tools:context=".route.DegradeGlobalActivity">
 
-    <com.cooder.cooder.common.ui.view.IconFontTextView
+    <com.cooder.cooder.ui.view.IconFontTextView
         android:id="@+id/action_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

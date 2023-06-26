@@ -8,37 +8,11 @@
     android:orientation="vertical"
     tools:context=".register.RegisterActivity">
 
-    <RelativeLayout
+    <com.cooder.cooder.ui.navigation.CoNavigationBar
+        android:id="@+id/navigation_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_45"
-        android:background="@color/white">
-
-        <com.cooder.cooder.common.ui.view.IconFontTextView
-            android:id="@+id/action_back"
-            android:layout_width="@dimen/dp_45"
-            android:layout_height="@dimen/dp_45"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/dp_6"
-            android:gravity="center"
-            android:text="@string/ic_arrow_left"
-            android:textSize="@dimen/sp_32" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:text="@string/register_title"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_16" />
-
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_0.5"
-        android:background="@color/lighter_gray" />
+        android:layout_height="@dimen/dp_48"
+        app:titleText="@string/register_title" />
 
     <com.cooder.cooder.common.ui.view.input.InputItemLayout
         android:id="@+id/course_order_id"

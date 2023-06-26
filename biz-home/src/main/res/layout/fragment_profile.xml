@@ -125,7 +125,7 @@
 			android:layout_marginHorizontal="@dimen/dp_10"
 			android:gravity="center_vertical">
 			
-			<com.cooder.cooder.common.ui.view.IconFontTextView
+			<com.cooder.cooder.ui.view.IconFontTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ic_atm_away_fill"
@@ -168,7 +168,7 @@
 			android:layout_marginHorizontal="@dimen/dp_10"
 			android:gravity="center_vertical">
 
-            <com.cooder.cooder.common.ui.view.IconFontTextView
+            <com.cooder.cooder.ui.view.IconFontTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ic_category_products_fill"
@@ -199,7 +199,7 @@
 			android:layout_marginHorizontal="@dimen/dp_10"
 			android:gravity="center_vertical">
 
-            <com.cooder.cooder.common.ui.view.IconFontTextView
+            <com.cooder.cooder.ui.view.IconFontTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ic_order_fill"
@@ -230,7 +230,7 @@
 			android:layout_marginHorizontal="@dimen/dp_10"
 			android:gravity="center_vertical">
 
-            <com.cooder.cooder.common.ui.view.IconFontTextView
+            <com.cooder.cooder.ui.view.IconFontTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ic_contacts_fill"

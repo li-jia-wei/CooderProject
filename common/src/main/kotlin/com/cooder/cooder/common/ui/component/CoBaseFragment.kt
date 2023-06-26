@@ -46,8 +46,8 @@ abstract class CoBaseFragment<VB : ViewBinding> : Fragment() {
 	fun showToast(@StringRes resId: Int) {
 		Toast.makeText(requireContext(), getString(resId), Toast.LENGTH_SHORT).show()
 	}
-	
-	override fun onDestroy() {
+
+    override fun onDestroy() {
 		super.onDestroy()
 		_binding = null
 	}

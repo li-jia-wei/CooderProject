@@ -6,7 +6,7 @@
 	android:background="@color/white"
 	android:gravity="center">
 	
-	<com.cooder.cooder.common.ui.view.IconFontTextView
+	<com.cooder.cooder.ui.view.IconFontTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/detail_similar_title_icon"
@@ -18,8 +18,8 @@
 		android:layout_height="wrap_content"
 		android:layout_marginStart="@dimen/dp_5"
 		android:text="@string/detail_similar_title"
-		android:textColor="@color/rgb_dd2"
-		android:textSize="@dimen/sp_16"
-		android:textStyle="bold" />
+        android:textColor="@color/rgb_dd2"
+        android:textSize="@dimen/sp_15"
+        android:textStyle="bold" />
 
 </LinearLayout>

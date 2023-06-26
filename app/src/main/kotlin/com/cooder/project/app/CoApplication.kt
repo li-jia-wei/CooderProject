@@ -1,9 +1,8 @@
-package com.cooder.cooder.app
+package com.cooder.project.app
 
 import com.alibaba.android.arouter.BuildConfig
 import com.alibaba.android.arouter.launcher.ARouter
 import com.cooder.cooder.common.ui.component.CoBaseApplication
-import com.cooder.cooder.library.log.CoLog
 import com.cooder.cooder.library.log.CoLogConfig
 import com.cooder.cooder.library.log.CoLogManager
 import com.cooder.cooder.library.log.printer.CoConsolePrinter
@@ -43,6 +42,5 @@ class CoApplication : CoBaseApplication() {
             ARouter.openDebug()
         }
         ARouter.init(this)
-        CoLog.i("0. Init")
     }
 }

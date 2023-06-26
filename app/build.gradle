@@ -7,7 +7,7 @@ plugins {
 
 android {
 	compileSdk 33
-    namespace 'com.cooder.cooder.app'
+    namespace 'com.cooder.project.app'
 	
 	defaultConfig {
         applicationId "com.cooder.cooder.app"
@@ -57,7 +57,6 @@ dependencies {
     implementation project(':biz-detail')
     implementation project(':biz-login')
     implementation project(':common')
-    debugImplementation project(':cooder-debug')
 
     implementation libs.core.kts
     implementation libs.appcompat

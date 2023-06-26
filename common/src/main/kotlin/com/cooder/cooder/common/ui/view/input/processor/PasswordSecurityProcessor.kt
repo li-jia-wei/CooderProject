@@ -8,8 +8,8 @@ import android.widget.LinearLayout
 import androidx.core.view.setPadding
 import androidx.core.widget.addTextChangedListener
 import com.cooder.cooder.common.R
-import com.cooder.cooder.common.ui.view.IconFontTextView
 import com.cooder.cooder.library.util.expends.dp
+import com.cooder.cooder.ui.view.IconFontTextView
 import java.util.regex.Pattern
 
 /**

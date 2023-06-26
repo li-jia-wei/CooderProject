@@ -52,6 +52,7 @@ dependencies {
 
     implementation project(':common')
     implementation project(':pub-mod')
+    debugImplementation project(':cooder-debug')
 
     implementation libs.core.kts
     implementation libs.appcompat

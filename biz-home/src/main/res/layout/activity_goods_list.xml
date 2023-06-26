@@ -4,41 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.cooder.cooder.biz_home.ui.goods.GoodsListActivity">
+    tools:context=".ui.goods.GoodsListActivity">
 
-    <RelativeLayout
+    <com.cooder.cooder.ui.navigation.CoNavigationBar
+        android:id="@+id/navigation_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_45">
+        android:layout_height="@dimen/dp_48" />
 
-        <com.cooder.cooder.common.ui.view.IconFontTextView
-            android:id="@+id/action_back"
-            android:layout_width="@dimen/dp_45"
-            android:layout_height="@dimen/dp_45"
-            android:layout_marginStart="@dimen/dp_6"
-            android:gravity="center"
-            android:text="@string/ic_arrow_left"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_32" />
-		
-		<TextView
-			android:id="@+id/subcategory_title"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_centerInParent="true"
-			android:textColor="@color/black"
-			android:textSize="@dimen/sp_18"
-			tools:text="热搜" />
-	
-	</RelativeLayout>
-	
-	<View
-		android:layout_width="match_parent"
-		android:layout_height="@dimen/dp_2"
-		android:background="@color/rgb_eee" />
-	
-	<FrameLayout
-		android:id="@+id/container"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent" />
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

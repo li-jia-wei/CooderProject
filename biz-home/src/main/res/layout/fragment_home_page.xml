@@ -7,7 +7,7 @@
 	android:orientation="vertical"
 	tools:context=".fragment.home.HomePageFragment">
 	
-	<com.cooder.cooder.common.ui.view.IconFontTextView
+	<com.cooder.cooder.ui.view.IconFontTextView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_35"
         android:layout_margin="@dimen/dp_16"

@@ -14,6 +14,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import com.cooder.cooder.common.R
+import com.cooder.cooder.ui.view.IconFontTextView
 
 /**
  * 项目：CooderProject

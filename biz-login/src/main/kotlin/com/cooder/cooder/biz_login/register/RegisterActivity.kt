@@ -27,27 +27,28 @@ class RegisterActivity : CoBaseActivity<ActivityRegisterBinding>() {
 	
 	companion object {
 		const val REQUEST_CODE_REGISTER = 1001
-	}
-	
-	private val viewModel by lazy {
-		ViewModelProvider(this)[RegisterViewModel::class.java]
-	}
-	
-	override fun getViewBinding(inflater: LayoutInflater): ActivityRegisterBinding {
-		return ActivityRegisterBinding.inflate(inflater)
-	}
-	
-	override fun onCreateActivity(savedInstanceState: Bundle?) {
-		setStatusBar(true, Color.WHITE)
-		
-		binding.actionBack.setOnClickListener {
-			onBackPressed(Activity.RESULT_CANCELED)
-		}
-		
-		binding.actionSubmit.setOnClickListener {
-			goRegister()
-		}
-	}
+    }
+
+    private val viewModel by lazy {
+        ViewModelProvider(this)[RegisterViewModel::class.java]
+    }
+
+    override fun getViewBinding(inflater: LayoutInflater): ActivityRegisterBinding {
+        return ActivityRegisterBinding.inflate(inflater)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStatusBar(true, Color.WHITE)
+
+        binding.navigationBar.setNavigationListener {
+            onBackPressed(Activity.RESULT_CANCELED)
+        }
+
+        binding.actionSubmit.setOnClickListener {
+            goRegister()
+        }
+    }
 	
 	private fun goRegister() {
 		

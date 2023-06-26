@@ -7,14 +7,15 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.cooder.cooder.biz_detail.databinding.ActivityDetailBinding
+import com.cooder.cooder.biz_detail.items.AttrItem
 import com.cooder.cooder.biz_detail.items.CommentItem
 import com.cooder.cooder.biz_detail.items.GalleryItem
-import com.cooder.cooder.biz_detail.items.GoodsAttrItem
 import com.cooder.cooder.biz_detail.items.HeaderItem
 import com.cooder.cooder.biz_detail.items.ShopItem
 import com.cooder.cooder.biz_detail.items.SimilarTitleItem
@@ -31,6 +32,7 @@ import com.cooder.cooder.pub_mod.model.selectPrice
 import com.cooder.cooder.service_login.LoginServiceProvider
 import com.cooder.cooder.ui.item.CoAdapter
 import com.cooder.cooder.ui.item.CoDataItem
+import com.cooder.cooder.ui.R as RUi
 
 /**
  * 项目：CooderProject
@@ -52,6 +54,10 @@ class DetailActivity : CoBaseActivity<ActivityDetailBinding>() {
     @Autowired
     var goodsModel: GoodsModel? = null
 
+    private companion object {
+        private const val SIMILAR_GOODS_ITEM_SPAN = 2
+    }
+
     private val viewModel by lazy { DetailViewModel.get(goodsId!!, this) }
 
     private var emptyView: EmptyView? = null
@@ -60,7 +66,8 @@ class DetailActivity : CoBaseActivity<ActivityDetailBinding>() {
         return ActivityDetailBinding.inflate(inflater)
     }
 
-    override fun onCreateActivity(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         CoRoute.inject(this)
         immersiveStatusBar(true)
 
@@ -86,8 +93,12 @@ class DetailActivity : CoBaseActivity<ActivityDetailBinding>() {
     }
 
     private fun initView() {
-        binding.actionBack.setOnClickListener {
+        binding.navigationBar.setNavigationListener {
             onBackPressed(Activity.RESULT_CANCELED)
+        }
+        val share = binding.navigationBar.addRightIconButton(RUi.string.ic_share)
+        share.setOnClickListener {
+            Toast.makeText(this, "分享商品功能暂未开发...", Toast.LENGTH_SHORT).show()
         }
         binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
         val adapter = CoAdapter(this)
@@ -96,10 +107,10 @@ class DetailActivity : CoBaseActivity<ActivityDetailBinding>() {
 
         binding.recyclerView.addOnScrollListener(TitleScrollListener {
             if (it == 0F) {
-                binding.titleBar.visibility = View.GONE
+                binding.navigationBar.visibility = View.GONE
             } else {
-                binding.titleBar.visibility = View.VISIBLE
-                binding.titleBar.alpha = it
+                binding.navigationBar.visibility = View.VISIBLE
+                binding.navigationBar.alpha = it
             }
         })
     }
@@ -163,20 +174,23 @@ class DetailActivity : CoBaseActivity<ActivityDetailBinding>() {
         dataItems += CommentItem(detailModel)
 
         // 店铺Item
-        dataItems += ShopItem(detailModel)
+        if (!detailModel.flowGoods.isNullOrEmpty()) {
+            dataItems += ShopItem(detailModel)
+        }
 
-        // 商品描述Item
-        dataItems += GoodsAttrItem(detailModel)
+        // 商品详情Item
+        dataItems += AttrItem(detailModel)
 
         // 图库Item
         detailModel.sliderImages?.forEach {
             dataItems += GalleryItem(it)
         }
+
         // 相似商品
         detailModel.similarGoods?.let { models ->
             dataItems += SimilarTitleItem()
-            models.forEach {
-                dataItems += GoodsItem(it, false)
+            models.forEachIndexed { index, goodsModel ->
+                dataItems += GoodsItem(goodsModel, false, SIMILAR_GOODS_ITEM_SPAN, index)
             }
         }
 
@@ -195,7 +209,7 @@ class DetailActivity : CoBaseActivity<ActivityDetailBinding>() {
             R.string.detail_price,
             selectPrice(detailModel.groupPrice, detailModel.marketPrice)
         )
-        // 购买的点击事件 => 20230520
+        // 购买的点击事件 => 20230520 => 20230625
     }
 
     /**

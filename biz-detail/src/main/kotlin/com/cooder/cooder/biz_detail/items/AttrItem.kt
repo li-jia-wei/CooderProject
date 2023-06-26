@@ -18,7 +18,7 @@ import com.cooder.cooder.ui.item.CoViewHolder
  *
  * 介绍：商品详情 - 商品属性
  */
-class GoodsAttrItem(
+class AttrItem(
     private val model: DetailModel
 ) : CoDataItem<DetailModel, CoViewHolder>() {
 

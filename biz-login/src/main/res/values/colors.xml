@@ -1,2 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <color name="primary">#1790FE</color>
+    <color name="primary_variant">#40A9FE</color>
+    <color name="status_bar_color">#1790FE</color>
+    <color name="background">#F4F4F4</color>
+
+    <!-- 颜色 -->
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="lighter_gray">#BBBBBB</color>
+    <color name="gray">#777777</color>
+    <color name="darker_gray">#333333</color>
+    <color name="red">#F5212C</color>
+    <color name="yellow">#F9DB13</color>
+    <color name="green">#52C41A</color>
+    <color name="blue">#1790FE</color>
+</resources>

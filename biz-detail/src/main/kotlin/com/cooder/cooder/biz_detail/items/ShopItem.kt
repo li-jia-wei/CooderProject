@@ -10,20 +10,21 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cooder.cooder.biz_detail.R
 import com.cooder.cooder.biz_detail.databinding.ItemDetailShopBinding
+import com.cooder.cooder.biz_detail.databinding.ItemDetailShopGoodsBinding
 import com.cooder.cooder.common.ui.view.expends.load
-import com.cooder.cooder.library.log.CoLog
 import com.cooder.cooder.pub_mod.items.GoodsItem
 import com.cooder.cooder.pub_mod.model.DetailModel
 import com.cooder.cooder.pub_mod.model.GoodsModel
 import com.cooder.cooder.ui.item.CoAdapter
 import com.cooder.cooder.ui.item.CoDataItem
+import com.cooder.cooder.ui.item.CoViewDataBindingHolder
 import com.cooder.cooder.ui.item.CoViewHolder
 
 /**
@@ -87,16 +88,15 @@ class ShopItem(private val model: DetailModel) : CoDataItem<DetailModel, CoViewH
         }
 
         // 商品栏
-        CoLog.i(model.flowGoods == null)
         model.flowGoods?.let { goods ->
             binding.shopGoods.visibility = View.VISIBLE
             if (binding.shopGoods.adapter == null) {
                 binding.shopGoods.layoutManager = GridLayoutManager(context, SHOP_GOODS_ITEM_SPAN)
                 binding.shopGoods.adapter = CoAdapter(context)
             }
-            val dataItem = mutableListOf<ShopGoodItem>()
-            goods.forEach {
-                dataItem += ShopGoodItem(it)
+            val dataItem = mutableListOf<ShopGoodsItem>()
+            goods.forEachIndexed { index, goodsModel ->
+                dataItem += ShopGoodsItem(goodsModel, index)
             }
             val adapter = binding.shopGoods.adapter as CoAdapter
             adapter.removeAllItems()
@@ -104,15 +104,15 @@ class ShopItem(private val model: DetailModel) : CoDataItem<DetailModel, CoViewH
         }
     }
 
-    private class ShopGoodItem(model: GoodsModel) : GoodsItem(model, false) {
+    private class ShopGoodsItem(model: GoodsModel, index: Int) : GoodsItem(model, false, SHOP_GOODS_ITEM_SPAN, index) {
 
-        override fun getItemLayoutRes(): Int {
-            return R.layout.item_detail_shop_goods
+        override fun onCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): CoViewDataBindingHolder<ViewDataBinding> {
+            return CoViewDataBindingHolder(ItemDetailShopGoodsBinding.inflate(inflater, parent, false))
         }
 
-        override fun onViewAttachedToWindow(holder: GoodsItemViewHolder) {
+        override fun onViewAttachedToWindow(holder: CoViewDataBindingHolder<ViewDataBinding>) {
             super.onViewAttachedToWindow(holder)
-            val image: ImageView = holder.findViewById(R.id.item_image)
+            val image = (holder.binding as ItemDetailShopGoodsBinding).itemImage
             val parent = holder.parent
             val availableWidth = parent.measuredWidth - parent.paddingStart - parent.paddingEnd
             val imageWidth = availableWidth / SHOP_GOODS_ITEM_SPAN

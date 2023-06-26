@@ -9,7 +9,7 @@ import android.widget.Toast
 import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.launcher.ARouter
 import com.cooder.cooder.common.R
-import com.cooder.cooder.common.util.AppGlobals
+import com.cooder.cooder.library.util.AppGlobals
 
 object CoRoute {
 

@@ -14,7 +14,7 @@
 		android:visibility="gone"
 		tools:ignore="ContentDescription" />
 	
-	<com.cooder.cooder.common.ui.view.IconFontTextView
+	<com.cooder.cooder.ui.view.IconFontTextView
         android:id="@+id/empty_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
 			android:textColor="@color/darker_gray"
 			android:textSize="@dimen/sp_14" />
 
-        <com.cooder.cooder.common.ui.view.IconFontTextView
+        <com.cooder.cooder.ui.view.IconFontTextView
             android:id="@+id/empty_help_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

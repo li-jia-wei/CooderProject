@@ -21,6 +21,7 @@ import com.cooder.cooder.common.ui.view.expends.load
 import com.cooder.cooder.library.util.expends.dpInt
 import com.cooder.cooder.pub_mod.model.Subcategory
 import com.cooder.cooder.pub_mod.model.TabCategory
+import com.cooder.cooder.service_login.LoginServiceProvider
 import com.cooder.cooder.ui.item.CoViewHolder
 import com.cooder.cooder.ui.slider.CoSliderView
 import com.cooder.cooder.ui.tab.bottom.CoTabBottomLayout
@@ -63,10 +64,14 @@ class CategoryFragment : CoBaseFragment<FragmentCategoryBinding>() {
 	}
 	
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		super.onViewCreated(view, savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
 
         queryCategoryList()
-	}
+
+        LoginServiceProvider.loginSuccessObserver(requireContext()) {
+            queryCategoryList()
+        }
+    }
 	
 	/**
 	 * 查询类别
