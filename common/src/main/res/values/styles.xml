@@ -6,14 +6,14 @@
 		<item name="titleSize">@dimen/sp_15</item>
 		<item name="minWidth">@dimen/dp_100</item>
 	</style>
-
+	
 	<!-- InputItemLayout - 输入文本外观 -->
 	<style name="InputTextAppearance">
 		<item name="hintColor">@color/gray</item>
 		<item name="inputColor">@color/darker_gray</item>
 		<item name="textSize">@dimen/sp_14</item>
 	</style>
-
+	
 	<!-- InputItemLayout - 线条外观 -->
 	<style name="LineAppearance">
 		<item name="color">@color/lighter_gray</item>
@@ -22,7 +22,7 @@
 		<item name="marginEnd">@dimen/dp_0</item>
 		<item name="enable">true</item>
 	</style>
-
+	
 	<style name="MarginStartLineAppearance" parent="LineAppearance">
 		<item name="marginStart">@dimen/dp_16</item>
 	</style>

@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- 空页面 -->
-    <string name="empty_view_back">@string/ic_left_button_fill</string>
-    <string name="empty_view_icon">@string/ic_prompt</string>
-    <string name="empty_view_text">页面跑远了，开发小哥正在加急抢修……</string>
-    <string name="empty_view_refresh">刷新</string>
-    <string name="empty_view_info">@string/ic_prompt</string>
-    <string name="empty_view_title">标题</string>
-
-    <!-- CoAbsListFragment -->
-    <string name="abs_list_desc">小朋友，你是否有很多问号？</string>
-    <string name="abs_list_refresh">刷新</string>
-    <string name="abs_list_refresh_failure">刷新失败</string>
-    <string name="abs_list_load_failure">加载更多失败</string>
-
-    <!-- 路由 -->
-    <string name="route_profile_detail">个人中心</string>
-    <string name="route_profile_vip">会员权益</string>
-    <string name="route_profile_authentication">账户充值</string>
-    <string name="route_profile_unknown">全局降级策略</string>
-    <string name="route_url_is_empty">无法获取到网址</string>
-
-    <!-- Token过期 -->
-    <string name="token_degrade_title">非法访问</string>
+	<!-- 空页面 -->
+	<string name="empty_view_back">@string/ic_left_button_fill</string>
+	<string name="empty_view_icon">@string/ic_prompt</string>
+	<string name="empty_view_text">页面跑远了，开发小哥正在加急抢修……</string>
+	<string name="empty_view_refresh">刷新</string>
+	<string name="empty_view_info">@string/ic_prompt</string>
+	<string name="empty_view_title">标题</string>
+	
+	<!-- CoAbsListFragment -->
+	<string name="abs_list_desc">小朋友，你是否有很多问号？</string>
+	<string name="abs_list_refresh">刷新</string>
+	<string name="abs_list_refresh_failure">刷新失败</string>
+	<string name="abs_list_load_failure">加载更多失败</string>
+	
+	<!-- 路由 -->
+	<string name="route_profile_detail">个人中心</string>
+	<string name="route_profile_vip">会员权益</string>
+	<string name="route_profile_authentication">账户充值</string>
+	<string name="route_profile_unknown">全局降级策略</string>
+	<string name="route_url_is_empty">无法获取到网址</string>
+	
+	<!-- Token过期 -->
+	<string name="token_degrade_title">非法访问</string>
 
 </resources>

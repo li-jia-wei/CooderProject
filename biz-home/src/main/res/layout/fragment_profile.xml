@@ -104,7 +104,7 @@
 		
 		</LinearLayout>
 		
-		<com.cooder.cooder.ui.banner.CoBanner
+		<com.cooder.library.ui.banner.CoBanner
 			android:id="@+id/banner"
 			android:layout_width="match_parent"
 			android:layout_height="@dimen/dp_120"
@@ -125,12 +125,12 @@
 			android:layout_marginHorizontal="@dimen/dp_10"
 			android:gravity="center_vertical">
 			
-			<com.cooder.cooder.ui.view.IconFontTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ic_atm_away_fill"
-                android:textColor="@color/darker_gray"
-                android:textSize="@dimen/sp_25" />
+			<com.cooder.library.ui.view.IconFontTextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/ic_atm_away_fill"
+				android:textColor="@color/darker_gray"
+				android:textSize="@dimen/sp_25" />
 			
 			<TextView
 				android:layout_width="0dp"
@@ -167,13 +167,13 @@
 			android:layout_height="@dimen/dp_45"
 			android:layout_marginHorizontal="@dimen/dp_10"
 			android:gravity="center_vertical">
-
-            <com.cooder.cooder.ui.view.IconFontTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ic_category_products_fill"
-                android:textColor="@color/darker_gray"
-                android:textSize="@dimen/sp_25" />
+			
+			<com.cooder.library.ui.view.IconFontTextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/ic_category_products_fill"
+				android:textColor="@color/darker_gray"
+				android:textSize="@dimen/sp_25" />
 			
 			<TextView
 				android:layout_width="0dp"
@@ -198,13 +198,13 @@
 			android:layout_height="@dimen/dp_45"
 			android:layout_marginHorizontal="@dimen/dp_10"
 			android:gravity="center_vertical">
-
-            <com.cooder.cooder.ui.view.IconFontTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ic_order_fill"
-                android:textColor="@color/darker_gray"
-                android:textSize="@dimen/sp_25" />
+			
+			<com.cooder.library.ui.view.IconFontTextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/ic_order_fill"
+				android:textColor="@color/darker_gray"
+				android:textSize="@dimen/sp_25" />
 			
 			<TextView
 				android:layout_width="0dp"
@@ -229,13 +229,13 @@
 			android:layout_height="@dimen/dp_45"
 			android:layout_marginHorizontal="@dimen/dp_10"
 			android:gravity="center_vertical">
-
-            <com.cooder.cooder.ui.view.IconFontTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ic_contacts_fill"
-                android:textColor="@color/darker_gray"
-                android:textSize="@dimen/sp_25" />
+			
+			<com.cooder.library.ui.view.IconFontTextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/ic_contacts_fill"
+				android:textColor="@color/darker_gray"
+				android:textSize="@dimen/sp_25" />
 			
 			<TextView
 				android:layout_width="0dp"

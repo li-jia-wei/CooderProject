@@ -1,13 +1,13 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="Theme.CooderProject" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryVariant">@color/primary_variant</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/status_bar_color</item>
-        <!-- Customize your theme here. -->
-        <item name="android:textColor">@color/font</item>
-    </style>
+	<!-- Base application theme. -->
+	<style name="Theme.CooderProject" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+		<!-- Primary brand color. -->
+		<item name="colorPrimary">@color/primary</item>
+		<item name="colorPrimaryVariant">@color/primary_variant</item>
+		<item name="colorOnPrimary">@color/white</item>
+		<!-- Status bar color. -->
+		<item name="android:statusBarColor">@color/status_bar_color</item>
+		<!-- Customize your theme here. -->
+		<item name="android:textColor">@color/font</item>
+	</style>
 </resources>

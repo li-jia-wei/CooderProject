@@ -1,16 +1,16 @@
 plugins {
-    alias(libs.plugins.com.android.application)
-    alias(libs.plugins.org.jetbrains.kotlin.android)
-    alias(libs.plugins.ksp)
-    id('kotlin-kapt')
+	alias(libs.plugins.com.android.application)
+	alias(libs.plugins.org.jetbrains.kotlin.android)
+	alias(libs.plugins.ksp)
+	id('kotlin-kapt')
 }
 
 android {
 	compileSdk 33
-    namespace 'com.cooder.project.app'
+	namespace 'com.cooder.project.app'
 	
 	defaultConfig {
-        applicationId "com.cooder.cooder.app"
+		applicationId "com.cooder.project.app"
 		minSdk 26
 		targetSdk 33
 		versionCode APP_VERSION_CODE as int
@@ -42,8 +42,8 @@ android {
 		jvmTarget = '17'
 	}
 	buildToolsVersion = "33.0.2"
-
-    viewBinding {
+	
+	viewBinding {
 		enable true
 	}
 	dataBinding {
@@ -52,19 +52,19 @@ android {
 }
 
 dependencies {
-
-    implementation project(':biz-home')
-    implementation project(':biz-detail')
-    implementation project(':biz-login')
-    implementation project(':common')
-
-    implementation libs.core.kts
-    implementation libs.appcompat
-    implementation libs.material
-    implementation libs.constraintlayout
-    testImplementation libs.junit
-    androidTestImplementation libs.androidx.test.ext.junit
-    androidTestImplementation libs.espresso.core
+	
+	implementation project(':biz-home')
+	implementation project(':biz-detail')
+	implementation project(':biz-login')
+	implementation project(':common')
+	
+	implementation libs.core.kts
+	implementation libs.appcompat
+	implementation libs.material
+	implementation libs.constraintlayout
+	testImplementation libs.junit
+	androidTestImplementation libs.androidx.test.ext.junit
+	androidTestImplementation libs.espresso.core
 	
 	// ARouter
 	implementation libs.arouter.api

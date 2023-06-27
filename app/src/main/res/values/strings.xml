@@ -1,16 +1,16 @@
 <resources>
-    <string name="app_name">CP</string>
-
-    <!-- 路由 -->
-    <string name="route_profile_detail">个人中心</string>
-    <string name="route_profile_vip">会员权益</string>
-    <string name="route_profile_authentication">账户充值</string>
-    <string name="route_profile_unknown">全局降级策略</string>
-    <string name="route_url_is_empty">无法获取到网址</string>
-
-    <!-- Token过期 -->
-    <string name="token_degrade_title">非法访问</string>
-
-    <!-- 拦截器 -->
-    <string name="interceptor_please_login_first">请先登录</string>
+	<string name="app_name">CP</string>
+	
+	<!-- 路由 -->
+	<string name="route_profile_detail">个人中心</string>
+	<string name="route_profile_vip">会员权益</string>
+	<string name="route_profile_authentication">账户充值</string>
+	<string name="route_profile_unknown">全局降级策略</string>
+	<string name="route_url_is_empty">无法获取到网址</string>
+	
+	<!-- Token过期 -->
+	<string name="token_degrade_title">非法访问</string>
+	
+	<!-- 拦截器 -->
+	<string name="interceptor_please_login_first">请先登录</string>
 </resources>

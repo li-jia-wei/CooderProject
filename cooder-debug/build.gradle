@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-	namespace 'com.cooder.cooder.debug'
+	namespace 'com.cooder.project.debug'
 	compileSdk 33
 	
 	defaultConfig {
@@ -17,18 +17,18 @@ android {
 	}
 	
 	buildTypes {
-        release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-        debug {
-            minifyEnabled false
-            buildConfigField("int", "VERSION_CODE", "${APP_VERSION_CODE}")
-            buildConfigField("String", "VERSION_NAME", "\"${APP_VERSION_NAME}\"")
-            buildConfigField("String", "BUILD_TIME", "\"${Build.buildTime()}\"")
-            buildConfigField("String", "BUILD_DATE", "\"${Build.buildDate()}\"")
-        }
-    }
+		release {
+			minifyEnabled true
+			proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+		}
+		debug {
+			minifyEnabled false
+			buildConfigField("int", "VERSION_CODE", "${APP_VERSION_CODE}")
+			buildConfigField("String", "VERSION_NAME", "\"${APP_VERSION_NAME}\"")
+			buildConfigField("String", "BUILD_TIME", "\"${Build.buildTime()}\"")
+			buildConfigField("String", "BUILD_DATE", "\"${Build.buildDate()}\"")
+		}
+	}
 	compileOptions {
 		sourceCompatibility JavaVersion.VERSION_17
 		targetCompatibility JavaVersion.VERSION_17
@@ -37,8 +37,8 @@ android {
 		jvmTarget = '17'
 	}
 	buildToolsVersion = '33.0.2'
-
-    viewBinding {
+	
+	viewBinding {
 		enable true
 	}
 	dataBinding {
@@ -54,7 +54,7 @@ dependencies {
 	implementation libs.core.kts
 	implementation libs.appcompat
 	implementation libs.material
-    implementation libs.constraintlayout
+	implementation libs.constraintlayout
 	testImplementation libs.junit
 	androidTestImplementation libs.androidx.test.ext.junit
 	androidTestImplementation libs.espresso.core

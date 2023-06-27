@@ -5,9 +5,9 @@ import android.os.Bundle
 import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.facade.service.DegradeService
-import com.cooder.cooder.common.route.CoRoute
-import com.cooder.cooder.common.route.RoutePath
-import com.cooder.cooder.library.log.CoLog
+import com.cooder.library.library.log.CoLog
+import com.cooder.project.common.route.CoRoute
+import com.cooder.project.common.route.RoutePath
 
 /**
  * 项目：CooderProject
@@ -20,17 +20,17 @@ import com.cooder.cooder.library.log.CoLog
  */
 @Route(path = RoutePath.App.SERVICE_ROUTE_DEGRADE_GLOBAL)
 class DegradeGlobalService : DegradeService {
-
-    override fun init(context: Context?) {
-
-    }
-
-    override fun onLost(context: Context?, postcard: Postcard?) {
-        CoLog.i(postcard)
-        val bundle = Bundle()
-        bundle.putString("degradeTitle", "页面不存在")
-        bundle.putString("degradeDesc", "当前页面被程序员吃了，正在催吐中～")
-        bundle.putString("degradeAction", null)
-        CoRoute.startActivity(RoutePath.App.ACTIVITY_ROUTE_DEGRADE_GLOBAL, bundle, greenChannel = true)
-    }
+	
+	override fun init(context: Context?) {
+	
+	}
+	
+	override fun onLost(context: Context?, postcard: Postcard?) {
+		CoLog.i(postcard)
+		val bundle = Bundle()
+		bundle.putString("degradeTitle", "页面不存在")
+		bundle.putString("degradeDesc", "当前页面被程序员吃了，正在催吐中～")
+		bundle.putString("degradeAction", null)
+		CoRoute.startActivity(RoutePath.App.ACTIVITY_ROUTE_DEGRADE_GLOBAL, bundle, greenChannel = true)
+	}
 }

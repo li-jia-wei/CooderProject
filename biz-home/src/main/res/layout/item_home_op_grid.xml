@@ -6,8 +6,8 @@
 	<data>
 		
 		<variable
-            name="subCategory"
-            type="com.cooder.cooder.pub_mod.model.Subcategory" />
+			name="subCategory"
+			type="com.cooder.project.pub_mod.model.Subcategory" />
 	</data>
 	
 	<LinearLayout

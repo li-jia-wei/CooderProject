@@ -1,46 +1,46 @@
 plugins {
-    alias(libs.plugins.com.android.library)
-    alias(libs.plugins.org.jetbrains.kotlin.android)
+	alias(libs.plugins.com.android.library)
+	alias(libs.plugins.org.jetbrains.kotlin.android)
 }
 
 android {
-    namespace 'com.cooder.cooder.service_login'
-    compileSdk 33
-
-    defaultConfig {
-        minSdk 26
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
-        targetSdk 33
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
-    }
-    kotlinOptions {
-        jvmTarget = '17'
-    }
-    buildToolsVersion = '33.0.2'
+	namespace 'com.cooder.project.service_login'
+	compileSdk 33
+	
+	defaultConfig {
+		minSdk 26
+		
+		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+		consumerProguardFiles "consumer-rules.pro"
+		targetSdk 33
+	}
+	
+	buildTypes {
+		release {
+			minifyEnabled false
+			proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+		}
+	}
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_17
+		targetCompatibility JavaVersion.VERSION_17
+	}
+	kotlinOptions {
+		jvmTarget = '17'
+	}
+	buildToolsVersion = '33.0.2'
 }
 
 dependencies {
-
-    implementation libs.core.kts
-    implementation libs.appcompat
-    implementation libs.material
-    implementation libs.constraintlayout
-    testImplementation libs.junit
-    androidTestImplementation libs.androidx.test.ext.junit
-    androidTestImplementation libs.espresso.core
-
-    // ARouter
-    implementation libs.arouter.api
+	
+	implementation libs.core.kts
+	implementation libs.appcompat
+	implementation libs.material
+	implementation libs.constraintlayout
+	testImplementation libs.junit
+	androidTestImplementation libs.androidx.test.ext.junit
+	androidTestImplementation libs.espresso.core
+	
+	// ARouter
+	implementation libs.arouter.api
 }

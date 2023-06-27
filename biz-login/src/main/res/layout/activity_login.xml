@@ -1,71 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background"
-    android:orientation="vertical"
-    tools:context=".login.LoginActivity">
-
-    <com.cooder.cooder.ui.navigation.CoNavigationBar
-        android:id="@+id/navigation_bar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_48"
-        app:titleText="@string/login_title" />
-
-    <com.cooder.cooder.common.ui.view.input.InputItemLayout
-        android:id="@+id/username"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
-        android:layout_marginTop="@dimen/dp_10"
-        android:background="@color/white"
-        android:paddingHorizontal="@dimen/dp_16"
-        app:bottomLineAppearance="@style/MarginStartLineAppearance"
-        app:hint="@string/login_please_input_username"
-        app:inputTextAppearance="@style/InputTextAppearance"
-        app:inputType="username"
-        app:text="imooc"
-        app:title="@string/login_username"
-        app:titleTextAppearance="@style/TitleTextAppearance"
-        app:topLineAppearance="@style/LineAppearance" />
-
-    <com.cooder.cooder.common.ui.view.input.InputItemLayout
-        android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
-        android:background="@color/white"
-        android:paddingHorizontal="@dimen/dp_16"
-        app:bottomLineAppearance="@style/LineAppearance"
-        app:hint="@string/login_please_input_password"
-        app:inputTextAppearance="@style/InputTextAppearance"
-        app:inputType="password"
-        app:text="123456"
-        app:title="@string/login_password"
-        app:titleTextAppearance="@style/TitleTextAppearance" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/action_login"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_55"
-        android:layout_marginHorizontal="@dimen/dp_16"
-        android:layout_marginTop="@dimen/dp_10"
-        android:text="@string/login_title"
-        android:textColor="@color/white"
-        android:textSize="@dimen/sp_16"
-        app:cornerRadius="@dimen/dp_6" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/dp_16"
-        android:layout_marginTop="@dimen/dp_6"
-        android:text="@string/login_hint"
-        android:textColor="@color/gray"
-        android:textSize="@dimen/sp_11" />
-
-    <com.cooder.cooder.common.ui.view.input.InputItemLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/background"
+	android:orientation="vertical"
+	tools:context=".login.LoginActivity">
+	
+	<com.cooder.library.ui.navigation.CoNavigationBar
+		android:id="@+id/navigation_bar"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/dp_48"
+		app:titleText="@string/login_title" />
+	
+	<com.cooder.project.common.ui.view.input.InputItemLayout
+		android:id="@+id/username"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/dp_50"
+		android:layout_marginTop="@dimen/dp_10"
+		android:background="@color/white"
+		android:paddingHorizontal="@dimen/dp_16"
+		app:bottomLineAppearance="@style/MarginStartLineAppearance"
+		app:hint="@string/login_please_input_username"
+		app:inputTextAppearance="@style/InputTextAppearance"
+		app:inputType="username"
+		app:text="imooc"
+		app:title="@string/login_username"
+		app:titleTextAppearance="@style/TitleTextAppearance"
+		app:topLineAppearance="@style/LineAppearance" />
+	
+	<com.cooder.project.common.ui.view.input.InputItemLayout
+		android:id="@+id/password"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/dp_50"
+		android:background="@color/white"
+		android:paddingHorizontal="@dimen/dp_16"
+		app:bottomLineAppearance="@style/LineAppearance"
+		app:hint="@string/login_please_input_password"
+		app:inputTextAppearance="@style/InputTextAppearance"
+		app:inputType="password"
+		app:text="123456"
+		app:title="@string/login_password"
+		app:titleTextAppearance="@style/TitleTextAppearance" />
+	
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/action_login"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/dp_55"
+		android:layout_marginHorizontal="@dimen/dp_16"
+		android:layout_marginTop="@dimen/dp_10"
+		android:text="@string/login_title"
+		android:textColor="@color/white"
+		android:textSize="@dimen/sp_16"
+		app:cornerRadius="@dimen/dp_6" />
+	
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginHorizontal="@dimen/dp_16"
+		android:layout_marginTop="@dimen/dp_6"
+		android:text="@string/login_hint"
+		android:textColor="@color/gray"
+		android:textSize="@dimen/sp_11" />
+	
+	<com.cooder.project.common.ui.view.input.InputItemLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" />
 
 </LinearLayout>

@@ -5,13 +5,13 @@
 	
 	<data>
 		
-		<import type="com.cooder.cooder.pub_mod.model.HomeModelKt" />
-
-        <import type="com.cooder.cooder.pub_mod.items.GoodsItem" />
-
-        <variable
-            name="goodsModel"
-            type="com.cooder.cooder.pub_mod.model.GoodsModel" />
+		<import type="com.cooder.project.pub_mod.model.HomeModelKt" />
+		
+		<import type="com.cooder.project.pub_mod.items.GoodsItem" />
+		
+		<variable
+			name="goodsModel"
+			type="com.cooder.project.pub_mod.model.GoodsModel" />
 	</data>
 	
 	<androidx.constraintlayout.widget.ConstraintLayout

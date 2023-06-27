@@ -1,67 +1,67 @@
 plugins {
-    alias(libs.plugins.com.android.library)
-    alias(libs.plugins.org.jetbrains.kotlin.android)
-    id('kotlin-kapt')
+	alias(libs.plugins.com.android.library)
+	alias(libs.plugins.org.jetbrains.kotlin.android)
+	id('kotlin-kapt')
 }
 
 android {
-    namespace 'com.cooder.cooder.biz_detail'
-    compileSdk 33
-
-    defaultConfig {
-        minSdk 26
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
-        targetSdk 33
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [AROUTER_MODULE_NAME: project.getName()]
-            }
-        }
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-        debug {
-            minifyEnabled false
-        }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
-    }
-    kotlinOptions {
-        jvmTarget = '17'
-    }
-    buildToolsVersion = '33.0.2'
-
-    viewBinding {
-        enable true
-    }
-    dataBinding {
-        enable true
-    }
+	namespace 'com.cooder.project.biz_detail'
+	compileSdk 33
+	
+	defaultConfig {
+		minSdk 26
+		
+		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+		consumerProguardFiles "consumer-rules.pro"
+		targetSdk 33
+		
+		javaCompileOptions {
+			annotationProcessorOptions {
+				arguments = [AROUTER_MODULE_NAME: project.getName()]
+			}
+		}
+	}
+	
+	buildTypes {
+		release {
+			minifyEnabled true
+			proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+		}
+		debug {
+			minifyEnabled false
+		}
+	}
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_17
+		targetCompatibility JavaVersion.VERSION_17
+	}
+	kotlinOptions {
+		jvmTarget = '17'
+	}
+	buildToolsVersion = '33.0.2'
+	
+	viewBinding {
+		enable true
+	}
+	dataBinding {
+		enable true
+	}
 }
 
 dependencies {
-
-    implementation project(':common')
-    implementation project(':pub-mod')
-
-    implementation libs.core.kts
-    implementation libs.appcompat
-    implementation libs.material
-    implementation libs.constraintlayout
-    testImplementation libs.junit
-    androidTestImplementation libs.androidx.test.ext.junit
-    androidTestImplementation libs.espresso.core
-
-    // ARouter
-    implementation libs.arouter.api
-    kapt libs.arouter.compiler
+	
+	implementation project(':common')
+	implementation project(':pub-mod')
+	
+	implementation libs.core.kts
+	implementation libs.appcompat
+	implementation libs.material
+	implementation libs.constraintlayout
+	testImplementation libs.junit
+	androidTestImplementation libs.androidx.test.ext.junit
+	androidTestImplementation libs.espresso.core
+	
+	// ARouter
+	implementation libs.arouter.api
+	kapt libs.arouter.compiler
 }

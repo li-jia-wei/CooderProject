@@ -1,77 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-
-        <import type="com.cooder.cooder.pub_mod.model.HomeModelKt" />
-
-        <import type="com.cooder.cooder.pub_mod.items.GoodsItem" />
-
-        <variable
-            name="goodsModel"
-            type="com.cooder.cooder.pub_mod.model.GoodsModel" />
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:paddingVertical="@dimen/dp_5"
-        tools:layout_width="@dimen/dp_126">
-
-        <ImageView
-            android:id="@+id/item_image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            app:corner="@{GoodsItem.IMAGE_CORNER}"
-            app:layout_constraintTop_toTopOf="parent"
-            app:url="@{goodsModel.sliderImage}"
-            tools:background="@color/view"
-            tools:layout_height="@dimen/dp_126" />
-
-        <TextView
-            android:id="@+id/item_title"
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="@{goodsModel.goodsName}"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_14"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/item_image"
-            tools:text="商品标题商品标题商品标题商品标题" />
-
-        <TextView
-            android:id="@+id/item_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginBottom="@dimen/dp_5"
-            android:text="@{HomeModelKt.selectPrice(goodsModel.groupPrice, goodsModel.marketPrice)}"
-            android:textColor="@color/home_price"
-            android:textSize="@dimen/sp_14"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/item_title"
-            tools:text="¥100" />
-
-        <TextView
-            android:id="@+id/item_sale_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_10"
-            android:textColor="@color/lighter_gray"
-            android:textSize="@dimen/sp_12"
-            app:layout_constraintBottom_toBottomOf="@+id/item_price"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/item_price"
-            tools:text="已拼1000件" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
+	
+	<data>
+		
+		<import type="com.cooder.project.pub_mod.model.HomeModelKt" />
+		
+		<import type="com.cooder.project.pub_mod.items.GoodsItem" />
+		
+		<variable
+			name="goodsModel"
+			type="com.cooder.project.pub_mod.model.GoodsModel" />
+	</data>
+	
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/white"
+		android:paddingVertical="@dimen/dp_5"
+		tools:layout_width="@dimen/dp_126">
+		
+		<ImageView
+			android:id="@+id/item_image"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:scaleType="centerCrop"
+			app:corner="@{GoodsItem.IMAGE_CORNER}"
+			app:layout_constraintTop_toTopOf="parent"
+			app:url="@{goodsModel.sliderImage}"
+			tools:background="@color/view"
+			tools:layout_height="@dimen/dp_126" />
+		
+		<TextView
+			android:id="@+id/item_title"
+			android:layout_width="@dimen/dp_0"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/dp_10"
+			android:ellipsize="end"
+			android:maxLines="1"
+			android:text="@{goodsModel.goodsName}"
+			android:textColor="@color/black"
+			android:textSize="@dimen/sp_14"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/item_image"
+			tools:text="商品标题商品标题商品标题商品标题" />
+		
+		<TextView
+			android:id="@+id/item_price"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/dp_10"
+			android:layout_marginBottom="@dimen/dp_5"
+			android:text="@{HomeModelKt.selectPrice(goodsModel.groupPrice, goodsModel.marketPrice)}"
+			android:textColor="@color/home_price"
+			android:textSize="@dimen/sp_14"
+			android:textStyle="bold"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/item_title"
+			tools:text="¥100" />
+		
+		<TextView
+			android:id="@+id/item_sale_desc"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/dp_10"
+			android:textColor="@color/lighter_gray"
+			android:textSize="@dimen/sp_12"
+			app:layout_constraintBottom_toBottomOf="@+id/item_price"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="@+id/item_price"
+			tools:text="已拼1000件" />
+	
+	</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

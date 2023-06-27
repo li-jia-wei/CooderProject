@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_30"
-    android:gravity="center">
-
-    <androidx.core.widget.ContentLoadingProgressBar
-        android:id="@+id/footer_loading"
-        style="@style/Widget.AppCompat.ProgressBar"
-        android:layout_width="@dimen/dp_25"
-        android:layout_height="@dimen/dp_25"
-        android:indeterminateTint="@color/gray" />
-
-    <TextView
-        android:id="@+id/footer_loading_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_10"
-        android:textColor="@color/gray"
-        android:textSize="@dimen/sp_12"
-        tools:text="正在加载..." />
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="@dimen/dp_30"
+	android:gravity="center">
+	
+	<androidx.core.widget.ContentLoadingProgressBar
+		android:id="@+id/footer_loading"
+		style="@style/Widget.AppCompat.ProgressBar"
+		android:layout_width="@dimen/dp_25"
+		android:layout_height="@dimen/dp_25"
+		android:indeterminateTint="@color/gray" />
+	
+	<TextView
+		android:id="@+id/footer_loading_text"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/dp_10"
+		android:textColor="@color/gray"
+		android:textSize="@dimen/sp_12"
+		tools:text="正在加载..." />
 
 </LinearLayout>
