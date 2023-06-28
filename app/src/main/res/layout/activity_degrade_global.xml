@@ -11,7 +11,7 @@
 		android:layout_height="wrap_content"
 		android:layout_marginStart="@dimen/dp_20"
 		android:layout_marginTop="@dimen/dp_20"
-		android:text="@string/ic_left_button_fill"
+		android:text="@string/ic_left_btn_fill"
 		android:textColor="@color/lighter_gray"
 		android:textSize="@dimen/sp_45" />
 	

@@ -128,9 +128,9 @@
 			<com.cooder.library.ui.view.IconFontTextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="@string/ic_atm_away_fill"
+				android:text="@string/ic_atm_away"
 				android:textColor="@color/darker_gray"
-				android:textSize="@dimen/sp_25" />
+				android:textSize="@dimen/sp_24" />
 			
 			<TextView
 				android:layout_width="0dp"
@@ -171,9 +171,9 @@
 			<com.cooder.library.ui.view.IconFontTextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="@string/ic_category_products_fill"
+				android:text="@string/ic_favorites"
 				android:textColor="@color/darker_gray"
-				android:textSize="@dimen/sp_25" />
+				android:textSize="@dimen/sp_24" />
 			
 			<TextView
 				android:layout_width="0dp"
@@ -202,9 +202,9 @@
 			<com.cooder.library.ui.view.IconFontTextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="@string/ic_order_fill"
+				android:text="@string/ic_logistics_data"
 				android:textColor="@color/darker_gray"
-				android:textSize="@dimen/sp_25" />
+				android:textSize="@dimen/sp_24" />
 			
 			<TextView
 				android:layout_width="0dp"
@@ -233,15 +233,14 @@
 			<com.cooder.library.ui.view.IconFontTextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="@string/ic_contacts_fill"
+				android:text="@string/ic_time_history"
 				android:textColor="@color/darker_gray"
-				android:textSize="@dimen/sp_25" />
+				android:textSize="@dimen/sp_24" />
 			
 			<TextView
-				android:layout_width="0dp"
+				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginHorizontal="@dimen/dp_10"
-				android:layout_weight="1"
 				android:text="@string/profile_browsing_history"
 				android:textColor="@color/darker_gray"
 				android:textSize="@dimen/sp_16" />

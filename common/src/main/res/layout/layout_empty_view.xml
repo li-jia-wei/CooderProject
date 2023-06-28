@@ -56,9 +56,9 @@
 			android:layout_height="wrap_content"
 			android:layout_marginStart="@dimen/dp_6"
 			android:gravity="center"
-			android:text="@string/ic_prompt"
+			android:text="@string/ic_info"
 			android:textColor="@color/primary"
-			android:textSize="@dimen/sp_20"
+			android:textSize="@dimen/sp_22"
 			android:visibility="gone"
 			tools:visibility="visible" />
 	

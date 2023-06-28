@@ -1,4 +1,4 @@
-package com.cooder.project.biz_home.goods
+package com.cooder.project.biz_home.ui.goods
 
 import android.os.Bundle
 import android.view.View

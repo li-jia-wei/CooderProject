@@ -1,14 +1,14 @@
-package com.cooder.debug.tool.tools
+package com.cooder.project.debug.tool.tools
 
 import android.content.Intent
 import android.os.Process
 import android.widget.Toast
-import com.cooder.debug.tool.annotation.CoDebug
-import com.cooder.debug.tool.annotation.CoOrder
 import com.cooder.library.library.cache.CoStorage
 import com.cooder.library.library.log.CoLog
 import com.cooder.library.library.util.AppGlobals
 import com.cooder.project.debug.BuildConfig
+import com.cooder.project.debug.tool.annotation.CoDebug
+import com.cooder.project.debug.tool.annotation.CoOrder
 import java.io.File
 
 /**

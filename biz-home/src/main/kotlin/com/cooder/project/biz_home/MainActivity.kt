@@ -6,7 +6,8 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import androidx.fragment.app.DialogFragment
-import com.cooder.library.library.log.CoLog
+import com.cooder.library.library.util.CoDisplayUtil
+import com.cooder.library.library.util.expends.immersiveStatusBar
 import com.cooder.library.library.util.expends.setStatusBar
 import com.cooder.project.biz_home.databinding.ActivityMainBinding
 import com.cooder.project.biz_home.logic.MainActivityLogic
@@ -32,7 +33,12 @@ class MainActivity : CoBaseActivity<ActivityMainBinding>(), MainActivityLogic.Ac
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setStatusBar(true, Color.WHITE)
+		immersiveStatusBar(true)
+		
 		activityLogic = MainActivityLogic(binding, this, savedInstanceState)
+		
+		val statusBarsHeight = CoDisplayUtil.getStatusBarsHeight(CoDisplayUtil.Unit.PX)
+		binding.fragmentTabView.setPadding(0, statusBarsHeight, 0, 0)
 	}
 	
 	override fun getContext(): Context {
@@ -61,8 +67,7 @@ class MainActivity : CoBaseActivity<ActivityMainBinding>(), MainActivityLogic.Ac
 						val target = clazz.getConstructor().newInstance() as DialogFragment
 						target.show(supportFragmentManager, "debug_tool")
 					} catch (e: Exception) {
-						e.printStackTrace()
-						CoLog.i(e.message)
+					
 					}
 				}
 			}

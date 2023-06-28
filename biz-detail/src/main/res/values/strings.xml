@@ -4,19 +4,19 @@
 	<!-- 商品详情 -->
 	<string name="detail_shop_desc">商品数量：%1$s 已拼：%2$s</string>
 	<string name="detail_goods_attr_title">商品详情</string>
-	<string name="detail_similar_title_icon">@string/ic_new_user_zone_fill</string>
+	<string name="detail_similar_title_icon">@string/ic_shopping_fill</string>
 	<string name="detail_similar_title">相似商品</string>
 	<string name="detail_success_favorite">收藏成功</string>
 	<string name="detail_success_cancel_favorite">取消收藏成功</string>
-	<string name="detail_favorite">&#xe8a8;\n收藏</string>
-	<string name="detail_already_favorite">&#xe721;\n已收藏</string>
+	<string name="detail_favorite">&#xe901;\n收藏</string>
+	<string name="detail_already_favorite">&#xe8fb;\n已收藏</string>
 	<string name="detail_default_price">¥0\n立即购买</string>
 	<string name="detail_price">%1$s\n立即购买</string>
 	
 	<!-- 分类 -->
 	<string name="category_title">分类</string>
 	<string name="category_icon_category">&#xe75d;</string>
-	<string name="categoru_empty_icon">@string/ic_prompt_fill</string>
+	<string name="categoru_empty_icon">@string/ic_info_fill</string>
 	<string name="category_empty_desc">未找到相关数据</string>
 	<string name="category_empty_refresh">刷新</string>
 </resources>

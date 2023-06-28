@@ -1,13 +1,12 @@
-package com.cooder.project.biz_home.goods
+package com.cooder.project.biz_home.ui.goods
 
 import android.app.Activity
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.cooder.library.library.util.expends.hintNavigationBar
-import com.cooder.library.library.util.expends.setStatusBar
+import com.cooder.library.library.util.CoDisplayUtil
+import com.cooder.library.library.util.expends.immersiveStatusBar
 import com.cooder.project.biz_home.databinding.ActivityGoodsListBinding
 import com.cooder.project.common.route.CoRoute
 import com.cooder.project.common.route.RoutePath
@@ -49,13 +48,13 @@ class GoodsListActivity : CoBaseActivity<ActivityGoodsListBinding>() {
 		super.onCreate(savedInstanceState)
 		CoRoute.inject(this)
 		
-		setStatusBar(true, Color.WHITE)
-		hintNavigationBar()
+		immersiveStatusBar(true)
 		
 		binding.navigationBar.setNavigationListener {
 			onBackPressed(Activity.RESULT_CANCELED)
 		}
-		
+		val statusBarsHeight = CoDisplayUtil.getStatusBarsHeight()
+		binding.navigationBar.setTopPadding(statusBarsHeight)
 		binding.navigationBar.setTitle(subcategoryTitle)
 		
 		var fragment = supportFragmentManager.findFragmentByTag(TAG_GOODS_LIST_FRAGMENT)

@@ -12,7 +12,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.cooder.library.library.util.expends.hintNavigationBar
+import com.cooder.library.library.util.CoDisplayUtil
+import com.cooder.library.library.util.expends.hideNavigationBar
 import com.cooder.library.library.util.expends.immersiveStatusBar
 import com.cooder.library.ui.item.CoAdapter
 import com.cooder.library.ui.item.CoDataItem
@@ -70,8 +71,7 @@ class DetailActivity : CoBaseActivity<ActivityDetailBinding>() {
 		super.onCreate(savedInstanceState)
 		CoRoute.inject(this)
 		immersiveStatusBar(true)
-		
-		hintNavigationBar()
+		hideNavigationBar()
 		
 		assert(!TextUtils.isEmpty(goodsId)) { "goodsId must be not null or blank!" }
 		
@@ -93,6 +93,8 @@ class DetailActivity : CoBaseActivity<ActivityDetailBinding>() {
 	}
 	
 	private fun initView() {
+		val statusBarsHeight = CoDisplayUtil.getStatusBarsHeight()
+		binding.navigationBar.setTopPadding(statusBarsHeight)
 		binding.navigationBar.setNavigationListener {
 			onBackPressed(Activity.RESULT_CANCELED)
 		}

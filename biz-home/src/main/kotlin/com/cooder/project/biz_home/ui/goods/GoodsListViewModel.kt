@@ -1,4 +1,4 @@
-package com.cooder.project.biz_home.goods
+package com.cooder.project.biz_home.ui.goods
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

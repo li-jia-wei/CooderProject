@@ -14,7 +14,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import com.cooder.library.library.log.CoLog
 import com.cooder.library.library.util.expends.dpInt
 import com.cooder.library.ui.banner.core.CoBannerMo
 import com.cooder.project.biz_home.R
@@ -91,7 +90,6 @@ class ProfileFragment : CoBaseFragment<FragmentProfileBinding>() {
 	 * 更新UI
 	 */
 	private fun updateUI(userProfile: UserProfile) {
-		CoLog.i("??????")
 		if (userProfile.isLogin) {
 			binding.username.text = userProfile.userName
 			binding.loginDesc.text = getString(R.string.profile_login_desc_welcome_back)

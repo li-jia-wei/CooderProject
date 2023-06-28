@@ -1,10 +1,9 @@
-@file:Suppress("MemberVisibilityCanBePrivate")
-
 package com.cooder.project.biz_home.logic
 
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.FragmentManager
+import com.cooder.library.library.util.CoDisplayUtil
 import com.cooder.library.ui.tab.bottom.CoTabBottomInfo
 import com.cooder.library.ui.tab.common.CoTabLayout
 import com.cooder.project.biz_home.R
@@ -68,9 +67,11 @@ class MainActivityLogic(
 	 * 初始化底部导航栏
 	 */
 	private fun initTabBottom() {
-		binding.tabBottomLayout.setTabAlpha(0.9F)
+		binding.tabBottomLayout.setTabAlpha(0.96F)
 		binding.tabBottomLayout.setEnableSliding(false)
-		val iconFont = "font/iconfont_default.ttf"
+		val bottomPadding = CoDisplayUtil.getNavigationBarsHeight()
+		binding.tabBottomLayout.setBottomPadding(bottomPadding)
+		val iconFont = "iconfont/alibaba.ttf"
 		
 		// 首页
 		val homePageInfo = CoTabBottomInfo<Int>(
@@ -100,8 +101,8 @@ class MainActivityLogic(
 		val categoryInfo = CoTabBottomInfo<Int>(
 			R.string.category_title,
 			iconFont,
-			R.string.category_icon_category,
-			R.string.category_icon_category,
+			R.string.category_icon_category_products,
+			R.string.category_icon_category_products_fill,
 			R.color.tab_default,
 			R.color.tab_tint,
 			CategoryFragment::class.java

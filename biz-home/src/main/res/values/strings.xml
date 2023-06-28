@@ -3,31 +3,32 @@
 	
 	<!-- 首页 -->
 	<string name="home_title">首页</string>
-	<string name="home_icon_home">&#xe89a;</string>
-	<string name="home_icon_home_fill">&#xe8a0;</string>
-	<string name="home_search_hint">&#xe8aa; 搜索你想要的商品</string>
+	<string name="home_icon_home">@string/ic_home</string>
+	<string name="home_icon_home_fill">@string/ic_home_fill</string>
+	<string name="home_search_hint">&#xe941; 搜索你想要的商品</string>
 	
 	<!-- 收藏 -->
 	<string name="favorite_title">收藏</string>
-	<string name="favorite_icon_collection">&#xe882;</string>
-	<string name="favorite_icon_collection_fill">&#xe884;</string>
+	<string name="favorite_icon_collection">@string/ic_favorites</string>
+	<string name="favorite_icon_collection_fill">@string/ic_favorites_fill</string>
 	
 	<!-- 分类 -->
 	<string name="category_title">分类</string>
-	<string name="category_icon_category">&#xe75d;</string>
-	<string name="categoru_empty_icon">@string/ic_prompt_fill</string>
+	<string name="category_icon_category_products">@string/ic_layers</string>
+	<string name="category_icon_category_products_fill">@string/ic_layers_fill</string>
+	<string name="categoru_empty_icon">@string/ic_info_fill</string>
 	<string name="category_empty_desc">未找到相关数据</string>
 	<string name="category_empty_refresh">刷新</string>
 	
 	<!-- 推荐 -->
 	<string name="recommend_title">推荐</string>
-	<string name="recommend_icon_good">&#xe789;</string>
-	<string name="recommend_icon_good_fill">&#xe831;</string>
+	<string name="recommend_icon_good">@string/ic_good</string>
+	<string name="recommend_icon_good_fill">@string/ic_good_fill</string>
 	
 	<!-- 我的 -->
 	<string name="profile_title">我的</string>
-	<string name="profile_icon_account">&#xe8a5;</string>
-	<string name="profile_icon_account_fill">&#xe89d;</string>
+	<string name="profile_icon_account">@string/ic_customer</string>
+	<string name="profile_icon_account_fill">@string/ic_customer_fill</string>
 	<string name="profile_please_login_first">请先登录</string>
 	<string name="profile_login_desc_welcome_back">Hi，欢迎回来</string>
 	<string name="profile_login_desc_unlock_all_features">解锁全部功能，畅想架构师专属福利</string>

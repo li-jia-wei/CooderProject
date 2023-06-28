@@ -30,10 +30,10 @@ internal open class PasswordProcessor(
 	private var hidden = true
 	
 	@StringRes
-	private val icVisible = R.string.ic_visible
+	private val icVisible = R.string.ic_view
 	
 	@StringRes
-	private val icNotVisible = R.string.ic_not_visible
+	private val icNotVisible = R.string.ic_hide
 	
 	override fun process() {
 		val visibleView = IconFontTextView(context)

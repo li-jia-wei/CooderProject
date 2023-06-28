@@ -1,4 +1,4 @@
-package com.cooder.debug.tool
+package com.cooder.project.debug.tool
 
 import android.os.Bundle
 import android.util.SparseArray
@@ -11,12 +11,12 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.cooder.debug.tool.annotation.CoDebug
-import com.cooder.debug.tool.annotation.CoOrder
-import com.cooder.debug.tool.tools.DebugTools
 import com.cooder.project.common.ui.component.CoBaseDialog
 import com.cooder.project.debug.R
 import com.cooder.project.debug.databinding.FragmentCoDebugToolDialogBinding
+import com.cooder.project.debug.tool.annotation.CoDebug
+import com.cooder.project.debug.tool.annotation.CoOrder
+import com.cooder.project.debug.tool.tools.DebugTools
 import java.lang.reflect.Method
 
 /**
