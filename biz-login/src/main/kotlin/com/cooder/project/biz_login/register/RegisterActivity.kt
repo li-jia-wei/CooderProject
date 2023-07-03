@@ -1,6 +1,5 @@
 package com.cooder.project.biz_login.register
 
-import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -41,8 +40,8 @@ class RegisterActivity : CoBaseActivity<ActivityRegisterBinding>() {
 		super.onCreate(savedInstanceState)
 		setStatusBar(true, Color.WHITE)
 		
-		binding.navigationBar.setNavigationListener {
-			onBackPressed(Activity.RESULT_CANCELED)
+		binding.navigationBar.setOnClickNavListener {
+			onBackPressedResultCanceled()
 		}
 		
 		binding.actionSubmit.setOnClickListener {
@@ -90,7 +89,7 @@ class RegisterActivity : CoBaseActivity<ActivityRegisterBinding>() {
 			if (it.success) {
 				val intent = Intent()
 				intent.putExtra("username", it.username)
-				onBackPressed(Activity.RESULT_OK, intent)
+				onBackPressedResultOk(intent)
 			} else {
 				showToast(getString(R.string.register_failure, it.result.msg))
 				binding.password.setText("")

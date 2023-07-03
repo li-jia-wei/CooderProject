@@ -8,8 +8,9 @@ import com.cooder.library.library.restful.CoResponse
 import com.cooder.library.library.restful.CoResult
 import com.cooder.project.biz_home.api.AccountApi
 import com.cooder.project.biz_home.api.NoticeApi
-import com.cooder.project.pub_mod.model.CourseNotice
-import com.cooder.project.pub_mod.model.UserProfile
+import com.cooder.project.biz_home.model.CourseNoticeMo
+import com.cooder.project.biz_home.model.UserProfileMo
+import com.cooder.project.common.http.ApiFactory
 
 /**
  * 项目：CooderProject
@@ -25,12 +26,12 @@ class ProfileViewModel : ViewModel() {
 	/**
 	 * 查询通知
 	 */
-	fun queryCourseNotice(): LiveData<CoResult<CourseNotice>> {
-		val liveData = MutableLiveData<CoResult<CourseNotice>>()
+	fun queryCourseNotice(): LiveData<CoResult<CourseNoticeMo>> {
+		val liveData = MutableLiveData<CoResult<CourseNoticeMo>>()
 		val ignoreInterceptor = listOf(com.cooder.project.common.http.HttpCodeInterceptor::class.java)
-		com.cooder.project.common.http.ApiFactory.create(NoticeApi::class.java, ignoreInterceptor).notice().enqueue(object : CoCallback<CourseNotice> {
-			override fun onSuccess(response: CoResponse<CourseNotice>) {
-				if (response.isSuccessful() && response.data != null) {
+		ApiFactory.create(NoticeApi::class.java, ignoreInterceptor).notice().enqueue(object : CoCallback<CourseNoticeMo> {
+			override fun onSuccess(response: CoResponse<CourseNoticeMo>) {
+				if (response.isSuccessful()) {
 					liveData.value = CoResult.success(response.data)
 				} else {
 					liveData.value = CoResult.failure(response.message)
@@ -48,11 +49,11 @@ class ProfileViewModel : ViewModel() {
 	/**
 	 * 查询个人页面信息
 	 */
-	fun queryProfile(): LiveData<CoResult<UserProfile>> {
-		val liveData = MutableLiveData<CoResult<UserProfile>>()
-		com.cooder.project.common.http.ApiFactory.create(AccountApi::class.java).profile().enqueue(object : CoCallback<UserProfile> {
-			override fun onSuccess(response: CoResponse<UserProfile>) {
-				if (response.isSuccessful() && response.data != null) {
+	fun queryProfile(): LiveData<CoResult<UserProfileMo>> {
+		val liveData = MutableLiveData<CoResult<UserProfileMo>>()
+		ApiFactory.create(AccountApi::class.java).profile().enqueue(object : CoCallback<UserProfileMo> {
+			override fun onSuccess(response: CoResponse<UserProfileMo>) {
+				if (response.isSuccessful()) {
 					liveData.value = CoResult.success(response.data)
 				} else {
 					liveData.value = CoResult.failure(response.message)

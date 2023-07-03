@@ -1,8 +1,6 @@
 package com.cooder.project.biz_home.fragment.favorite
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.cooder.project.biz_home.databinding.FragmentFavoriteBinding
@@ -27,7 +25,4 @@ class FavoriteFragment : CoBaseFragment<FragmentFavoriteBinding>() {
 		return FragmentFavoriteBinding.inflate(inflater, container, false)
 	}
 	
-	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		super.onViewCreated(view, savedInstanceState)
-	}
 }

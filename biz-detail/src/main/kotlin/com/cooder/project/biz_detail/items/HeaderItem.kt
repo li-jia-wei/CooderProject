@@ -4,15 +4,14 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.AbsoluteSizeSpan
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.cooder.library.ui.banner.core.CoBannerMo
 import com.cooder.library.ui.item.CoDataItem
-import com.cooder.library.ui.item.CoViewHolder
+import com.cooder.library.ui.item.CoViewBindingHolder
 import com.cooder.project.biz_detail.databinding.ItemDetailHeaderBinding
+import com.cooder.project.biz_detail.model.DetailMo
 import com.cooder.project.common.ui.view.expends.load
-import com.cooder.project.pub_mod.model.DetailModel
 import com.cooder.project.pub_mod.model.SliderImage
 
 /**
@@ -29,16 +28,15 @@ class HeaderItem(
 	private val price: String,
 	private val completedNumText: String?,
 	private val goodsName: String?
-) : CoDataItem<DetailModel, CoViewHolder>() {
+) : CoDataItem<DetailMo, CoViewBindingHolder<ItemDetailHeaderBinding>>() {
 	
-	private lateinit var binding: ItemDetailHeaderBinding
-	
-	override fun getItemView(inflater: LayoutInflater, parent: ViewGroup): View {
-		binding = ItemDetailHeaderBinding.inflate(inflater, parent, false)
-		return binding.root
+	override fun getViewHolder(inflater: LayoutInflater, parent: ViewGroup): CoViewBindingHolder<ItemDetailHeaderBinding>? {
+		val binding = ItemDetailHeaderBinding.inflate(inflater, parent, false)
+		return CoViewBindingHolder(binding)
 	}
 	
-	override fun onBindData(holder: CoViewHolder, position: Int) {
+	override fun onBindData(holder: CoViewBindingHolder<ItemDetailHeaderBinding>, position: Int) {
+		val binding = holder.binding
 		val bannerMos = arrayListOf<CoBannerMo>()
 		sliderImages?.forEach { sliderImage ->
 			sliderImage.url?.let {

@@ -66,7 +66,7 @@ class MainActivity : CoBaseActivity<ActivityMainBinding>(), MainActivityLogic.Ac
 						val clazz: Class<*> = Class.forName("com.cooder.project.debug.tool.CoDebugToolDialogFragment")
 						val target = clazz.getConstructor().newInstance() as DialogFragment
 						target.show(supportFragmentManager, "debug_tool")
-					} catch (e: Exception) {
+					} finally {
 					
 					}
 				}

@@ -3,8 +3,8 @@ package com.cooder.project.biz_detail.api
 import com.cooder.library.library.restful.CoCall
 import com.cooder.library.library.restful.annotation.POST
 import com.cooder.library.library.restful.annotation.Path
+import com.cooder.project.biz_detail.model.FavoriteMo
 import com.cooder.project.common.http.Api
-import com.cooder.project.pub_mod.model.Favorite
 
 /**
  * 项目：CooderProject
@@ -17,6 +17,7 @@ import com.cooder.project.pub_mod.model.Favorite
  */
 interface FavoriteApi : Api {
 	
-	@POST("favorites/{goodsId}")
-	fun favorite(@Path("goodsId") goodsId: String): CoCall<Favorite>
+	@POST("/favorites/{goodsId}")
+	fun favorite(@Path("goodsId") goodsId: String): CoCall<FavoriteMo>
+	
 }

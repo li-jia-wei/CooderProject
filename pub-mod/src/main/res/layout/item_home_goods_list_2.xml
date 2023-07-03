@@ -5,7 +5,7 @@
 	
 	<data>
 		
-		<import type="com.cooder.project.pub_mod.model.HomeModelKt" />
+		<import type="com.cooder.project.pub_mod.model.GoodsModelsKt" />
 		
 		<import type="com.cooder.project.pub_mod.items.GoodsItem" />
 		
@@ -37,7 +37,7 @@
 			android:layout_marginHorizontal="@dimen/dp_10"
 			android:layout_marginTop="@dimen/dp_5"
 			android:ellipsize="end"
-			android:maxLines="1"
+			android:singleLine="true"
 			android:text="@{goodsModel.goodsName}"
 			android:textColor="@color/black"
 			android:textSize="@dimen/sp_14"
@@ -69,7 +69,7 @@
 			android:layout_height="wrap_content"
 			android:layout_marginStart="@dimen/dp_10"
 			android:layout_marginBottom="@dimen/dp_10"
-			android:text="@{HomeModelKt.selectPrice(goodsModel.groupPrice, goodsModel.marketPrice)}"
+			android:text="@{GoodsModelsKt.selectPrice(goodsModel.groupPrice, goodsModel.marketPrice)}"
 			android:textColor="@color/home_price"
 			android:textSize="@dimen/sp_14"
 			android:textStyle="bold"

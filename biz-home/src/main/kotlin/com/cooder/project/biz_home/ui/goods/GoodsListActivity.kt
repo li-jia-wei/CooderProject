@@ -1,6 +1,5 @@
 package com.cooder.project.biz_home.ui.goods
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import com.alibaba.android.arouter.facade.annotation.Autowired
@@ -50,8 +49,8 @@ class GoodsListActivity : CoBaseActivity<ActivityGoodsListBinding>() {
 		
 		immersiveStatusBar(true)
 		
-		binding.navigationBar.setNavigationListener {
-			onBackPressed(Activity.RESULT_CANCELED)
+		binding.navigationBar.setOnClickNavListener {
+			onBackPressedResultCanceled()
 		}
 		val statusBarsHeight = CoDisplayUtil.getStatusBarsHeight()
 		binding.navigationBar.setTopPadding(statusBarsHeight)

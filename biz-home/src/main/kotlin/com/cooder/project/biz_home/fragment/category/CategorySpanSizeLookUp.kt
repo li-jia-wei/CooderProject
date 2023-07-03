@@ -2,7 +2,7 @@ package com.cooder.project.biz_home.fragment.category
 
 import android.util.SparseIntArray
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
-import com.cooder.project.pub_mod.model.Subcategory
+import com.cooder.project.biz_home.model.SubcategoryMo
 
 /**
  * 项目：CooderProject
@@ -15,7 +15,7 @@ import com.cooder.project.pub_mod.model.Subcategory
  */
 class CategorySpanSizeLookUp(
 	private val spanSize: Int,
-	private val subcategoryListCallback: () -> List<Subcategory>?
+	private val subcategoryListCallback: () -> List<SubcategoryMo>?
 ) : SpanSizeLookup() {
 	
 	private val groupSpanSizeOffset = SparseIntArray()

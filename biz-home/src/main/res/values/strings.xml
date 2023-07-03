@@ -5,7 +5,7 @@
 	<string name="home_title">首页</string>
 	<string name="home_icon_home">@string/ic_home</string>
 	<string name="home_icon_home_fill">@string/ic_home_fill</string>
-	<string name="home_search_hint">&#xe941; 搜索你想要的商品</string>
+	<string name="home_search_hint">搜索商品</string>
 	
 	<!-- 收藏 -->
 	<string name="favorite_title">收藏</string>

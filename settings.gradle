@@ -29,3 +29,4 @@ project(':cooder-ui').projectDir = '../CooderLibrary/cooder-ui' as File
 include ':cooder-library'
 project(':cooder-library').projectDir = '../CooderLibrary/cooder-library' as File
 
+include ':biz-search'

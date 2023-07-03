@@ -12,7 +12,7 @@ import com.cooder.library.library.restful.annotation.CacheStrategy
 import com.cooder.project.common.route.CoRoute
 import com.cooder.project.common.ui.component.CoAbsListFragment
 import com.cooder.project.pub_mod.items.GoodsItem
-import com.cooder.project.pub_mod.model.GoodsList
+import com.cooder.project.pub_mod.model.GoodsListMo
 
 /**
  * 项目：CooderProject
@@ -73,7 +73,7 @@ class GoodsListFragment : CoAbsListFragment() {
 	private fun queryGoodsList(cacheStrategyType: CacheStrategy.Type) {
 		val mo = GoodsListViewModel.GoodsListMo(cacheStrategyType, categoryId, subcategoryId, 10, pageIndex)
 		viewModel.queryGoodsList(mo).observe(viewLifecycleOwner) {
-			if (it.isSuccessful()) {
+			if (it.hasData()) {
 				onQueryCategoryGoodsList(it.data!!)
 			} else {
 				Toast.makeText(requireContext(), it.msg, Toast.LENGTH_SHORT).show()
@@ -82,7 +82,7 @@ class GoodsListFragment : CoAbsListFragment() {
 		}
 	}
 	
-	private fun onQueryCategoryGoodsList(data: GoodsList) {
+	private fun onQueryCategoryGoodsList(data: GoodsListMo) {
 		val dataItems = mutableListOf<GoodsItem>()
 		data.list.forEachIndexed { index, goodsModel ->
 			dataItems += GoodsItem(goodsModel, false, GOODS_ITEM_SPAN, goodsSize + index)

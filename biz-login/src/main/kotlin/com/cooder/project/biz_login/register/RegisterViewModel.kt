@@ -33,7 +33,7 @@ class RegisterViewModel : ViewModel() {
 		com.cooder.project.common.http.ApiFactory.create(AccountApi::class.java).register(username, password, moocId, courseNotice)
 			.enqueue(object : CoCallback<String> {
 				override fun onSuccess(response: CoResponse<String>) {
-					if (response.isSuccessful()) {
+					if (response.isSuccessful(false)) {
 						liveData.value = RegisterMo(true, CoResult.success(null), username)
 					} else {
 						liveData.value = RegisterMo(false, CoResult.failure(response.message), username)

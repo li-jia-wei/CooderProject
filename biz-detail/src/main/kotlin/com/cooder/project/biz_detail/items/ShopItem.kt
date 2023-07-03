@@ -16,15 +16,15 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cooder.library.ui.item.CoAdapter
+import com.cooder.library.ui.item.CoDataBindingHolder
 import com.cooder.library.ui.item.CoDataItem
-import com.cooder.library.ui.item.CoViewDataBindingHolder
-import com.cooder.library.ui.item.CoViewHolder
+import com.cooder.library.ui.item.CoViewBindingHolder
 import com.cooder.project.biz_detail.R
 import com.cooder.project.biz_detail.databinding.ItemDetailShopBinding
 import com.cooder.project.biz_detail.databinding.ItemDetailShopGoodsBinding
+import com.cooder.project.biz_detail.model.DetailMo
 import com.cooder.project.common.ui.view.expends.load
 import com.cooder.project.pub_mod.items.GoodsItem
-import com.cooder.project.pub_mod.model.DetailModel
 import com.cooder.project.pub_mod.model.GoodsModel
 
 /**
@@ -37,29 +37,26 @@ import com.cooder.project.pub_mod.model.GoodsModel
  * 介绍：商品详情 - 店铺
  */
 class ShopItem(
-	private val model: DetailModel
-) : CoDataItem<DetailModel, CoViewHolder>() {
-	
-	private lateinit var binding: ItemDetailShopBinding
+	private val model: DetailMo
+) : CoDataItem<DetailMo, CoViewBindingHolder<ItemDetailShopBinding>>() {
 	
 	private companion object {
 		private const val SHOP_GOODS_ITEM_SPAN = 3
 	}
 	
-	override fun getItemView(inflater: LayoutInflater, parent: ViewGroup): View {
-		binding = ItemDetailShopBinding.inflate(inflater, parent, false)
-		return binding.root
+	override fun getViewHolder(inflater: LayoutInflater, parent: ViewGroup): CoViewBindingHolder<ItemDetailShopBinding> {
+		val binding = ItemDetailShopBinding.inflate(inflater, parent, false)
+		return CoViewBindingHolder(binding)
 	}
 	
-	override fun onBindData(holder: CoViewHolder, position: Int) {
+	override fun onBindData(holder: CoViewBindingHolder<ItemDetailShopBinding>, position: Int) {
+		val binding = holder.binding
 		val context = holder.context
-		
 		// 商品logo
 		val shop = model.shop
 		binding.shopLogo.load(shop.logo)
 		binding.shopTitle.text = shop.name
-		binding.shopDesc.text =
-			context.getString(R.string.detail_shop_desc, shop.goodsNum, shop.completedNum)
+		binding.shopDesc.text = context.getString(R.string.detail_shop_desc, shop.goodsNum, shop.completedNum)
 		
 		// 商品标签
 		val tags = shop.evaluation.split(' ')
@@ -108,11 +105,12 @@ class ShopItem(
 	
 	private class ShopGoodsItem(model: GoodsModel, index: Int) : GoodsItem(model, false, SHOP_GOODS_ITEM_SPAN, index) {
 		
-		override fun onCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): CoViewDataBindingHolder<ViewDataBinding> {
-			return CoViewDataBindingHolder(ItemDetailShopGoodsBinding.inflate(inflater, parent, false))
+		override fun getViewHolder(inflater: LayoutInflater, parent: ViewGroup): CoDataBindingHolder<ViewDataBinding> {
+			val binding = ItemDetailShopGoodsBinding.inflate(inflater, parent, false)
+			return CoDataBindingHolder(binding)
 		}
 		
-		override fun onViewAttachedToWindow(holder: CoViewDataBindingHolder<ViewDataBinding>) {
+		override fun onViewAttachedToWindow(holder: CoDataBindingHolder<ViewDataBinding>) {
 			super.onViewAttachedToWindow(holder)
 			val image = (holder.binding as ItemDetailShopGoodsBinding).itemImage
 			val parent = holder.parent

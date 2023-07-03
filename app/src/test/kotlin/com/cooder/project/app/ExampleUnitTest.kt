@@ -1,6 +1,7 @@
 package com.cooder.project.app
 
 import org.junit.Test
+import java.util.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -3224,7 +3225,7 @@ class ExampleUnitTest {
 					if (Regex("[\\u4e00-\\u9fa5]+").containsMatchIn(it)) {
 						it
 					} else {
-						it.toLowerCase().replace(Regex("[^a-z0-9]+"), "_").replace(Regex("^_+|_+$"), "")
+						it.lowercase(Locale.getDefault()).replace(Regex("[^a-z0-9]+"), "_").replace(Regex("^_+|_+$"), "")
 					}
 				} ?: ""
 				val code = "&#x${codeMatch?.groupValues?.get(1) ?: ""};"

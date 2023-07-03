@@ -12,9 +12,9 @@ import com.cooder.library.library.util.expends.dpInt
 import com.cooder.library.ui.item.CoDataItem
 import com.cooder.library.ui.item.CoViewHolder
 import com.cooder.project.biz_home.databinding.ItemHomeOpGridBinding
+import com.cooder.project.biz_home.model.SubcategoryMo
 import com.cooder.project.common.route.CoRoute
 import com.cooder.project.common.route.RoutePath
-import com.cooder.project.pub_mod.model.Subcategory
 
 /**
  * 项目：CooderProject
@@ -26,8 +26,8 @@ import com.cooder.project.pub_mod.model.Subcategory
  * 介绍：子类别Item
  */
 class SubcategoryItem(
-	private val subcategoryList: List<Subcategory>
-) : CoDataItem<List<Subcategory>, CoViewHolder>() {
+	private val subcategoryList: List<SubcategoryMo>
+) : CoDataItem<List<SubcategoryMo>, CoViewHolder>() {
 	
 	override fun onBindData(holder: CoViewHolder, position: Int) {
 		val context = holder.itemView.context
@@ -48,9 +48,7 @@ class SubcategoryItem(
 		return gridView
 	}
 	
-	inner class GridAdapter(
-		private val context: Context
-	) : RecyclerView.Adapter<GridAdapter.GridViewHolder>() {
+	inner class GridAdapter(context: Context) : RecyclerView.Adapter<GridAdapter.GridViewHolder>() {
 		
 		private val inflater = LayoutInflater.from(context)
 		
@@ -76,8 +74,6 @@ class SubcategoryItem(
 		}
 		
 		inner class GridViewHolder(val binding: ItemHomeOpGridBinding) :
-			CoViewHolder(binding.root) {
-			
-		}
+			CoViewHolder(binding.root)
 	}
 }

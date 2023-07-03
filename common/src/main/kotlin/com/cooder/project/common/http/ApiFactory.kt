@@ -24,20 +24,16 @@ object ApiFactory {
 	private const val HTTPS = "https://api.devio.org/as/"
 	private const val HTTP = "http://api.devio.org/as/"
 	
-	val degradeToHttp = CoStorage.getCache(com.cooder.project.common.http.ApiFactory.KEY_DEGRADE_HTTP, false)!!
+	val degradeToHttp = CoStorage.getCache(KEY_DEGRADE_HTTP, false)!!
 	
-	private val baseUrl =
-		if (com.cooder.project.common.http.ApiFactory.degradeToHttp) com.cooder.project.common.http.ApiFactory.HTTP else com.cooder.project.common.http.ApiFactory.HTTPS
+	private val baseUrl = if (degradeToHttp) HTTP else HTTPS
 	
-	private val cooderRestful = CoRestful(
-		com.cooder.project.common.http.ApiFactory.baseUrl,
-		com.cooder.project.common.http.RetrofitCallFactory(com.cooder.project.common.http.ApiFactory.baseUrl)
-	)
+	private val restful = CoRestful(baseUrl, RetrofitCallFactory(baseUrl))
 	
 	init {
-		com.cooder.project.common.http.ApiFactory.cooderRestful.addInterceptor(com.cooder.project.common.http.BizInterceptor())
-		com.cooder.project.common.http.ApiFactory.cooderRestful.addInterceptor(com.cooder.project.common.http.HttpCodeInterceptor())
-		CoStorage.saveCache(com.cooder.project.common.http.ApiFactory.KEY_DEGRADE_HTTP, false)
+		restful.addInterceptor(BizInterceptor())
+		restful.addInterceptor(HttpCodeInterceptor())
+		CoStorage.saveCache(KEY_DEGRADE_HTTP, false)
 	}
 	
 	/**
@@ -46,11 +42,11 @@ object ApiFactory {
 	 */
 	@JvmStatic
 	@JvmOverloads
-	fun <T : com.cooder.project.common.http.Api> create(
+	fun <T : Api> create(
 		service: Class<T>,
 		ignoreInterceptors: List<Class<out CoInterceptor>>? = null,
 		extraInterceptors: List<Class<out CoInterceptor>>? = null
 	): T {
-		return com.cooder.project.common.http.ApiFactory.cooderRestful.create(service, ignoreInterceptors, extraInterceptors)
+		return restful.create(service, ignoreInterceptors, extraInterceptors)
 	}
 }

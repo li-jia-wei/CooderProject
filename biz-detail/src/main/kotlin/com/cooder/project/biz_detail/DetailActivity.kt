@@ -1,6 +1,5 @@
 package com.cooder.project.biz_detail
 
-import android.app.Activity
 import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
@@ -18,18 +17,13 @@ import com.cooder.library.library.util.expends.immersiveStatusBar
 import com.cooder.library.ui.item.CoAdapter
 import com.cooder.library.ui.item.CoDataItem
 import com.cooder.project.biz_detail.databinding.ActivityDetailBinding
-import com.cooder.project.biz_detail.items.AttrItem
-import com.cooder.project.biz_detail.items.CommentItem
-import com.cooder.project.biz_detail.items.GalleryItem
-import com.cooder.project.biz_detail.items.HeaderItem
-import com.cooder.project.biz_detail.items.ShopItem
-import com.cooder.project.biz_detail.items.SimilarTitleItem
+import com.cooder.project.biz_detail.items.*
+import com.cooder.project.biz_detail.model.DetailMo
 import com.cooder.project.common.route.CoRoute
 import com.cooder.project.common.route.RoutePath
 import com.cooder.project.common.ui.component.CoBaseActivity
 import com.cooder.project.common.ui.view.EmptyView
 import com.cooder.project.pub_mod.items.GoodsItem
-import com.cooder.project.pub_mod.model.DetailModel
 import com.cooder.project.pub_mod.model.GoodsModel
 import com.cooder.project.pub_mod.model.selectPrice
 import com.cooder.project.service_login.LoginServiceProvider
@@ -84,7 +78,7 @@ class DetailActivity : CoBaseActivity<ActivityDetailBinding>() {
 	
 	private fun queryDetail() {
 		viewModel.queryDetail().observe(this) {
-			if (it.isSuccessful()) {
+			if (it.hasData()) {
 				bindData(it.data!!)
 			} else {
 				showEmptyView()
@@ -95,8 +89,8 @@ class DetailActivity : CoBaseActivity<ActivityDetailBinding>() {
 	private fun initView() {
 		val statusBarsHeight = CoDisplayUtil.getStatusBarsHeight()
 		binding.navigationBar.setTopPadding(statusBarsHeight)
-		binding.navigationBar.setNavigationListener {
-			onBackPressed(Activity.RESULT_CANCELED)
+		binding.navigationBar.setOnClickNavListener {
+			onBackPressedResultCanceled()
 		}
 		val share = binding.navigationBar.addRightIconButton(RUi.string.ic_share)
 		share.setOnClickListener {
@@ -127,8 +121,7 @@ class DetailActivity : CoBaseActivity<ActivityDetailBinding>() {
 				this.setOnClickRefreshListener { queryDetail() }
 				this.setBackgroundColor(Color.WHITE)
 				this.layoutParams = ConstraintLayout.LayoutParams(
-					LinearLayout.LayoutParams.MATCH_PARENT,
-					LinearLayout.LayoutParams.MATCH_PARENT
+					LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT
 				)
 			}
 			binding.root.addView(emptyView!!)
@@ -146,16 +139,13 @@ class DetailActivity : CoBaseActivity<ActivityDetailBinding>() {
 		val adapter = binding.recyclerView.adapter as CoAdapter
 		if (adapter.itemCount == 0) {
 			val headerItem = HeaderItem(
-				goodsModel!!.sliderImages,
-				selectPrice(goodsModel!!.groupPrice, goodsModel!!.marketPrice),
-				goodsModel!!.completedNumText,
-				goodsModel!!.goodsName
+				goodsModel!!.sliderImages, selectPrice(goodsModel!!.groupPrice, goodsModel!!.marketPrice), goodsModel!!.completedNumText, goodsModel!!.goodsName
 			)
 			adapter.addItem(headerItem, false)
 		}
 	}
 	
-	private fun bindData(detailModel: DetailModel) {
+	private fun bindData(detailModel: DetailMo) {
 		binding.recyclerView.visibility = View.VISIBLE
 		binding.bottomLayout.visibility = View.VISIBLE
 		emptyView?.visibility = View.GONE
@@ -166,10 +156,7 @@ class DetailActivity : CoBaseActivity<ActivityDetailBinding>() {
 		
 		// 头部Item
 		dataItems += HeaderItem(
-			detailModel.sliderImages,
-			selectPrice(detailModel.groupPrice, detailModel.marketPrice),
-			detailModel.completedNumText,
-			detailModel.goodsName
+			detailModel.sliderImages, selectPrice(detailModel.groupPrice, detailModel.marketPrice), detailModel.completedNumText, detailModel.goodsName
 		)
 		
 		// 评论Item
@@ -206,10 +193,9 @@ class DetailActivity : CoBaseActivity<ActivityDetailBinding>() {
 	/**
 	 * 更新价格
 	 */
-	private fun updateOrderActionFace(detailModel: DetailModel) {
+	private fun updateOrderActionFace(detailModel: DetailMo) {
 		binding.actionPrice.text = getString(
-			R.string.detail_price,
-			selectPrice(detailModel.groupPrice, detailModel.marketPrice)
+			R.string.detail_price, selectPrice(detailModel.groupPrice, detailModel.marketPrice)
 		)
 		// 购买的点击事件 => 20230520 => 20230625
 	}
@@ -242,11 +228,10 @@ class DetailActivity : CoBaseActivity<ActivityDetailBinding>() {
 		} else {
 			binding.actionFavorite.isClickable = false
 			viewModel.toggleFavorite().observe(this) {
-				if (it.isSuccessful()) {
+				if (it.hasData()) {
 					val success = it.data!!
 					updateFavoriteActionFace(success)
-					val message =
-						if (success) R.string.detail_success_favorite else R.string.detail_success_cancel_favorite
+					val message = if (success) R.string.detail_success_favorite else R.string.detail_success_cancel_favorite
 					showToast(message)
 				}
 				binding.actionFavorite.isClickable = true

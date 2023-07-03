@@ -45,7 +45,7 @@
 			android:layout_marginStart="@dimen/dp_10"
 			android:layout_marginBottom="@dimen/dp_6"
 			android:ellipsize="end"
-			android:maxLines="1"
+			android:singleLine="true"
 			android:textColor="@color/gray"
 			android:textSize="@dimen/sp_14"
 			app:layout_constraintBottom_toBottomOf="parent"

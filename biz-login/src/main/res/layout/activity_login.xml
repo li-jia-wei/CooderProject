@@ -64,8 +64,4 @@
 		android:textColor="@color/gray"
 		android:textSize="@dimen/sp_11" />
 	
-	<com.cooder.project.common.ui.view.input.InputItemLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content" />
-
 </LinearLayout>

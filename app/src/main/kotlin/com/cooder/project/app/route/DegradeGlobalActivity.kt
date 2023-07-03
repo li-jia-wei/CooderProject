@@ -1,6 +1,5 @@
 package com.cooder.project.app.route
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import com.alibaba.android.arouter.facade.annotation.Autowired
@@ -57,7 +56,7 @@ class DegradeGlobalActivity : CoBaseActivity<ActivityDegradeGlobalBinding>() {
 		}
 		
 		binding.actionBack.setOnClickListener {
-			onBackPressed(Activity.RESULT_CANCELED)
+			onBackPressedResultCanceled()
 		}
 	}
 }

@@ -10,9 +10,9 @@ import com.cooder.library.library.restful.annotation.CacheStrategy
 import com.cooder.library.library.util.expends.dpInt
 import com.cooder.library.ui.item.CoDataItem
 import com.cooder.project.biz_home.MainActivity
+import com.cooder.project.biz_home.model.HomeMo
 import com.cooder.project.common.ui.component.CoAbsListFragment
 import com.cooder.project.pub_mod.items.GoodsItem
-import com.cooder.project.pub_mod.model.HomeModel
 
 /**
  * 项目：CooderProject
@@ -70,7 +70,7 @@ class HomePageTabFragment : CoAbsListFragment() {
 	
 	private fun queryTabCategoryList(cacheStrategyType: CacheStrategy.Type) {
 		viewModel.queryTabCategoryList(categoryId!!, pageIndex, 10, cacheStrategyType).observe(viewLifecycleOwner) {
-			if (it.isSuccessful()) {
+			if (it.hasData()) {
 				updateUI(it.data!!)
 			} else {
 				showToast(it.msg)
@@ -82,7 +82,7 @@ class HomePageTabFragment : CoAbsListFragment() {
 	/**
 	 * 更新UI
 	 */
-	private fun updateUI(data: HomeModel) {
+	private fun updateUI(data: HomeMo) {
 		if (isNotAlive()) return
 		val dataItems = mutableListOf<CoDataItem<*, *>>()
 		data.bannerList?.let {

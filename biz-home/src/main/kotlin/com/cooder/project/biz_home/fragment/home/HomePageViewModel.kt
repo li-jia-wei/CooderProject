@@ -10,8 +10,9 @@ import com.cooder.library.library.restful.CoResult
 import com.cooder.library.library.restful.annotation.CacheStrategy
 import com.cooder.project.biz_home.api.CategoryApi
 import com.cooder.project.biz_home.api.HomeApi
-import com.cooder.project.pub_mod.model.HomeModel
-import com.cooder.project.pub_mod.model.TabCategory
+import com.cooder.project.biz_home.model.HomeMo
+import com.cooder.project.biz_home.model.TabCategoryMo
+import com.cooder.project.common.http.ApiFactory
 
 /**
  * 项目：CooderProject
@@ -27,15 +28,15 @@ class HomePageViewModel(private val savedState: SavedStateHandle) : ViewModel() 
 	/**
 	 * 查询顶部Tab的类别
 	 */
-	fun queryTabCategoryList(): LiveData<CoResult<List<TabCategory>>> {
-		val liveData = MutableLiveData<CoResult<List<TabCategory>>>()
-		savedState.get<CoResult<List<TabCategory>>>("tabCategories")?.let {
+	fun queryTabCategoryList(): LiveData<CoResult<List<TabCategoryMo>>> {
+		val liveData = MutableLiveData<CoResult<List<TabCategoryMo>>>()
+		savedState.get<CoResult<List<TabCategoryMo>>>("tabCategories")?.let {
 			liveData.value = it
 			return liveData
 		}
-		com.cooder.project.common.http.ApiFactory.create(CategoryApi::class.java).queryCategoryList().enqueue(object : CoCallback<List<TabCategory>> {
-			override fun onSuccess(response: CoResponse<List<TabCategory>>) {
-				if (response.isSuccessful() && response.data != null) {
+		ApiFactory.create(CategoryApi::class.java).queryCategoryList().enqueue(object : CoCallback<List<TabCategoryMo>> {
+			override fun onSuccess(response: CoResponse<List<TabCategoryMo>>) {
+				if (response.isSuccessful()) {
 					val result = CoResult.success(response.data)
 					liveData.value = result
 					savedState["tabCategories"] = result
@@ -55,13 +56,13 @@ class HomePageViewModel(private val savedState: SavedStateHandle) : ViewModel() 
 	/**
 	 * 查询当前tab页的数据
 	 */
-	fun queryTabCategoryList(categoryId: String, pageIndex: Int, pageSize: Int, cacheStrategyType: CacheStrategy.Type): LiveData<CoResult<HomeModel>> {
-		val liveData = MutableLiveData<CoResult<HomeModel>>()
-		com.cooder.project.common.http.ApiFactory.create(HomeApi::class.java).queryTabCategoryList(
+	fun queryTabCategoryList(categoryId: String, pageIndex: Int, pageSize: Int, cacheStrategyType: CacheStrategy.Type): LiveData<CoResult<HomeMo>> {
+		val liveData = MutableLiveData<CoResult<HomeMo>>()
+		ApiFactory.create(HomeApi::class.java).queryTabCategoryList(
 			categoryId, pageIndex, pageSize, cacheStrategyType
-		).enqueue(object : CoCallback<HomeModel> {
-			override fun onSuccess(response: CoResponse<HomeModel>) {
-				if (response.isSuccessful() && response.data != null) {
+		).enqueue(object : CoCallback<HomeMo> {
+			override fun onSuccess(response: CoResponse<HomeMo>) {
+				if (response.isSuccessful()) {
 					liveData.value = CoResult.success(response.data)
 				} else {
 					liveData.value = CoResult.failure(response.message)

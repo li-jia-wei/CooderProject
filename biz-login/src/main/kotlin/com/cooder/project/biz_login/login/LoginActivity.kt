@@ -40,8 +40,8 @@ class LoginActivity : CoBaseActivity<ActivityLoginBinding>() {
 		super.onCreate(savedInstanceState)
 		setStatusBar(true, Color.WHITE)
 		
-		binding.navigationBar.setNavigationListener {
-			onBackPressed(Activity.RESULT_CANCELED)
+		binding.navigationBar.setOnClickNavListener {
+			onBackPressedResultCanceled()
 		}
 		
 		val actionRegister = binding.navigationBar.addRightTextButton(R.string.login_register, R.color.blue)
@@ -70,10 +70,10 @@ class LoginActivity : CoBaseActivity<ActivityLoginBinding>() {
 	
 	private fun login(username: String, password: String) {
 		viewModel.login(username, password).observe(this) {
-			if (it.isSuccessful()) {
+			if (it.hasData()) {
 				showToast(R.string.login_success)
 				LoginServiceProvider.loginSuccess(it.data!!)
-				onBackPressed(Activity.RESULT_OK)
+				onBackPressedResultOk()
 			} else {
 				binding.password.setText("")
 				showToast(getString(R.string.login_failure, it.msg))

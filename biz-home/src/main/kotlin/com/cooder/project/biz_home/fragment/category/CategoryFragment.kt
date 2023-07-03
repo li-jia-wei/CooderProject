@@ -17,13 +17,13 @@ import com.cooder.library.ui.tab.bottom.CoTabBottomLayout
 import com.cooder.project.biz_home.MainActivity
 import com.cooder.project.biz_home.R
 import com.cooder.project.biz_home.databinding.FragmentCategoryBinding
+import com.cooder.project.biz_home.model.SubcategoryMo
+import com.cooder.project.biz_home.model.TabCategoryMo
 import com.cooder.project.common.route.CoRoute
 import com.cooder.project.common.route.RoutePath
 import com.cooder.project.common.ui.component.CoBaseFragment
 import com.cooder.project.common.ui.view.EmptyView
 import com.cooder.project.common.ui.view.expends.load
-import com.cooder.project.pub_mod.model.Subcategory
-import com.cooder.project.pub_mod.model.TabCategory
 import com.cooder.project.service_login.LoginServiceProvider
 import com.cooder.library.ui.R as RUi
 
@@ -44,7 +44,7 @@ class CategoryFragment : CoBaseFragment<FragmentCategoryBinding>() {
 	
 	private val layoutManager = GridLayoutManager(context, SPAN_COUNT)
 	
-	private val subcategoryListCache = mutableMapOf<String, List<Subcategory>>()
+	private val subcategoryListCache = mutableMapOf<String, List<SubcategoryMo>>()
 	private var currentCategoryId = ""
 	
 	private companion object {
@@ -66,6 +66,10 @@ class CategoryFragment : CoBaseFragment<FragmentCategoryBinding>() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		
+		binding.searchView.setOnClickListener {
+			CoRoute.startActivity(RoutePath.BizSearch.ACTIVITY_SEARCH)
+		}
+		
 		queryCategoryList()
 		
 		LoginServiceProvider.loginSuccessObserver(requireContext()) {
@@ -78,7 +82,7 @@ class CategoryFragment : CoBaseFragment<FragmentCategoryBinding>() {
 	 */
 	private fun queryCategoryList() {
 		viewModel.queryTabCategoryList().observe(viewLifecycleOwner) {
-			if (it.isSuccessful()) {
+			if (it.hasData()) {
 				onQueryCategoryListSuccess(it.data!!)
 			} else {
 				showToast(it.msg)
@@ -87,7 +91,7 @@ class CategoryFragment : CoBaseFragment<FragmentCategoryBinding>() {
 		}
 	}
 	
-	private fun onQueryCategoryListSuccess(data: List<TabCategory>) {
+	private fun onQueryCategoryListSuccess(data: List<TabCategoryMo>) {
 		if (isNotAlive()) return
 		emptyView?.visibility = View.GONE
 		binding.sliderView.visibility = View.VISIBLE
@@ -116,7 +120,7 @@ class CategoryFragment : CoBaseFragment<FragmentCategoryBinding>() {
 	 */
 	private fun querySubcategoryList(categoryId: String) {
 		viewModel.querySubcategoryList(categoryId).observe(viewLifecycleOwner) {
-			if (it.result.isSuccessful()) {
+			if (it.result.hasData()) {
 				subcategoryListCache[it.categoryId] = it.result.data!!
 				onQuerySubcategoryListSuccess(it.result.data!!, it.categoryId)
 			} else {
@@ -128,7 +132,7 @@ class CategoryFragment : CoBaseFragment<FragmentCategoryBinding>() {
 	/**
 	 * 当子类别查询成功时
 	 */
-	private fun onQuerySubcategoryListSuccess(data: List<Subcategory>, categoryId: String) {
+	private fun onQuerySubcategoryListSuccess(data: List<SubcategoryMo>, categoryId: String) {
 		this.currentCategoryId = categoryId
 		spanSizeLookUp.clear()
 		if (layoutManager.spanSizeLookup != spanSizeLookUp) {

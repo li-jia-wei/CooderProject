@@ -7,7 +7,7 @@
 		
 		<variable
 			name="subCategory"
-			type="com.cooder.project.pub_mod.model.Subcategory" />
+			type="com.cooder.project.biz_home.model.SubcategoryMo" />
 	</data>
 	
 	<LinearLayout
@@ -31,7 +31,7 @@
 			android:layout_marginTop="@dimen/dp_10"
 			android:ellipsize="end"
 			android:maxWidth="@dimen/dp_70"
-			android:maxLines="1"
+			android:singleLine="true"
 			android:text="@{subCategory.subcategoryName}"
 			android:textColor="@color/font"
 			android:textSize="@dimen/sp_12"

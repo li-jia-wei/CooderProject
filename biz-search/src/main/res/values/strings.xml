@@ -1,0 +1,6 @@
+<resources>
+	<string name="search_hint">搜索商品</string>
+	<string name="search_empty_desc">请输入想搜索的商品名称</string>
+	<string name="search_empty_icon">@string/ic_shopping</string>
+	<string name="search_no_quick_search_hint">未找到相关快搜词条</string>
+</resources>

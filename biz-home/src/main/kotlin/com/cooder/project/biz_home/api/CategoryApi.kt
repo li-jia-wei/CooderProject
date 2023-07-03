@@ -4,9 +4,9 @@ import com.cooder.library.library.restful.CoCall
 import com.cooder.library.library.restful.annotation.CacheStrategy
 import com.cooder.library.library.restful.annotation.GET
 import com.cooder.library.library.restful.annotation.Path
+import com.cooder.project.biz_home.model.SubcategoryMo
+import com.cooder.project.biz_home.model.TabCategoryMo
 import com.cooder.project.common.http.Api
-import com.cooder.project.pub_mod.model.Subcategory
-import com.cooder.project.pub_mod.model.TabCategory
 
 /**
  * 项目：CooderProject
@@ -19,12 +19,12 @@ import com.cooder.project.pub_mod.model.TabCategory
  */
 interface CategoryApi : Api {
 	
-	@GET("category/categories")
+	@GET("/category/categories")
 	@CacheStrategy(CacheStrategy.Type.NET_ONLY)
-	fun queryCategoryList(): CoCall<List<TabCategory>>
+	fun queryCategoryList(): CoCall<List<TabCategoryMo>>
 	
-	@GET("category/subcategories/{categoryId}")
+	@GET("/category/subcategories/{categoryId}")
 	fun querySubcategoryList(
 		@Path("categoryId") categoryId: String
-	): CoCall<List<Subcategory>>
+	): CoCall<List<SubcategoryMo>>
 }

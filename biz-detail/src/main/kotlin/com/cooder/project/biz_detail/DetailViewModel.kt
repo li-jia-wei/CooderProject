@@ -1,18 +1,14 @@
 package com.cooder.project.biz_detail
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.*
 import com.cooder.library.library.restful.CoCallback
 import com.cooder.library.library.restful.CoResponse
 import com.cooder.library.library.restful.CoResult
 import com.cooder.project.biz_detail.api.FavoriteApi
 import com.cooder.project.biz_detail.api.GoodsApi
+import com.cooder.project.biz_detail.model.DetailMo
+import com.cooder.project.biz_detail.model.FavoriteMo
 import com.cooder.project.common.http.ApiFactory
-import com.cooder.project.pub_mod.model.DetailModel
-import com.cooder.project.pub_mod.model.Favorite
 
 /**
  * 项目：CooderProject
@@ -49,13 +45,13 @@ class DetailViewModel(
 		}
 	}
 	
-	fun queryDetail(): LiveData<CoResult<DetailModel>> {
-		val liveData = MutableLiveData<CoResult<DetailModel>>()
+	fun queryDetail(): LiveData<CoResult<DetailMo>> {
+		val liveData = MutableLiveData<CoResult<DetailMo>>()
 		if (goodsId != null) {
 			ApiFactory.create(GoodsApi::class.java).queryDetail(goodsId)
-				.enqueue(object : CoCallback<DetailModel> {
-					override fun onSuccess(response: CoResponse<DetailModel>) {
-						if (response.isSuccessful() && response.data != null) {
+				.enqueue(object : CoCallback<DetailMo> {
+					override fun onSuccess(response: CoResponse<DetailMo>) {
+						if (response.isSuccessful()) {
 							liveData.value = CoResult.success(response.data)
 						} else {
 							liveData.value = CoResult.failure(response.message)
@@ -74,10 +70,10 @@ class DetailViewModel(
 	fun toggleFavorite(): LiveData<CoResult<Boolean>> {
 		val favoriteLiveData = MutableLiveData<CoResult<Boolean>>()
 		if (goodsId != null) {
-			com.cooder.project.common.http.ApiFactory.create(FavoriteApi::class.java).favorite(goodsId)
-				.enqueue(object : CoCallback<Favorite> {
-					override fun onSuccess(response: CoResponse<Favorite>) {
-						if (response.isSuccessful() && response.data != null) {
+			ApiFactory.create(FavoriteApi::class.java).favorite(goodsId)
+				.enqueue(object : CoCallback<FavoriteMo> {
+					override fun onSuccess(response: CoResponse<FavoriteMo>) {
+						if (response.isSuccessful()) {
 							favoriteLiveData.postValue(CoResult.success(response.data!!.isFavorite))
 						} else {
 							favoriteLiveData.value = CoResult.failure(response.message)

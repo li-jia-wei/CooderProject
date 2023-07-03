@@ -22,7 +22,9 @@ import java.util.regex.Pattern
  * 介绍：密码安全处理
  */
 internal class PasswordSecurityProcessor(
-	private val context: Context, private val viewGroup: ViewGroup, private val editText: EditText
+	private val context: Context,
+	private val viewGroup: ViewGroup,
+	private val editText: EditText
 ) : PasswordProcessor(context, viewGroup, editText) {
 	
 	private val patternDigit = Pattern.compile("[0-9]")

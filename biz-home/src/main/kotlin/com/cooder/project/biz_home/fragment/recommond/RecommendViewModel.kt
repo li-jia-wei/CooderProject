@@ -9,8 +9,6 @@ import androidx.lifecycle.ViewModel
  *
  * 创建：2023/3/12 18:56
  *
- * 介绍：RecommondViewModel
+ * 介绍：RecommendViewModel
  */
-class RecommendViewModel : ViewModel() {
-
-}
+class RecommendViewModel : ViewModel()

@@ -1,10 +1,6 @@
 package com.cooder.project.common.http
 
-import com.cooder.library.library.restful.CoCall
-import com.cooder.library.library.restful.CoCallback
-import com.cooder.library.library.restful.CoConvert
-import com.cooder.library.library.restful.CoRequest
-import com.cooder.library.library.restful.CoResponse
+import com.cooder.library.library.restful.*
 import okhttp3.FormBody
 import okhttp3.MediaType
 import okhttp3.RequestBody
@@ -14,12 +10,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.HeaderMap
-import retrofit2.http.POST
-import retrofit2.http.QueryMap
-import retrofit2.http.Url
+import retrofit2.http.*
 
 /**
  * 项目：CooderProject
@@ -32,14 +23,14 @@ import retrofit2.http.Url
  */
 class RetrofitCallFactory(baseUrl: String) : CoCall.Factory {
 	
-	private val apiService: com.cooder.project.common.http.RetrofitCallFactory.ApiService
-	private val cooderConvert: CoConvert = com.cooder.project.common.http.GsonConvert()
+	private val apiService: ApiService
+	private val convert: CoConvert = GsonConvert()
 	
 	init {
 		val retrofit = Retrofit.Builder()
 			.baseUrl(baseUrl)
 			.build()
-		apiService = retrofit.create(com.cooder.project.common.http.RetrofitCallFactory.ApiService::class.java)
+		apiService = retrofit.create(ApiService::class.java)
 	}
 	
 	override fun newCall(request: CoRequest): CoCall<Any> {
@@ -72,7 +63,7 @@ class RetrofitCallFactory(baseUrl: String) : CoCall.Factory {
 				val body = response.errorBody()
 				if (body != null) rawData = body.string()
 			}
-			return cooderConvert.convert(rawData!!, request.returnType!!)
+			return convert.convert(rawData!!, request.returnType!!)
 		}
 		
 		/**
@@ -97,13 +88,13 @@ class RetrofitCallFactory(baseUrl: String) : CoCall.Factory {
 						for ((key, value) in parameters) {
 							jsonObjet.put(key, value)
 						}
-						RequestBody.create(MediaType.parse("application/json;utf-8"), jsonObjet.toString())
+						RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObjet.toString())
 					}
 					apiService.post(request.headers, request.getCompleteUrl(), requestBody)
 				}
 				
 				else -> {
-					throw IllegalStateException("Currently, CooderRestful support only GET and POST request method.")
+					throw IllegalStateException("Currently, CoRestful support only GET and POST request method.")
 				}
 			}
 		}

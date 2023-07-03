@@ -14,21 +14,16 @@
 		app:titleTextSize="@dimen/sp_17"
 		app:underlineEnabled="false" />
 	
-	<com.cooder.library.ui.view.IconFontTextView
+	<com.cooder.library.ui.search.CoSearchView
+		android:id="@+id/search_view"
 		android:layout_width="match_parent"
-		android:layout_height="@dimen/dp_35"
-		android:layout_marginHorizontal="@dimen/dp_16"
-		android:layout_marginTop="@dimen/dp_5"
-		android:layout_marginBottom="@dimen/dp_10"
-		android:background="@drawable/shape_home_page_search"
-		android:gravity="center"
-		android:text="@string/home_search_hint"
-		android:textColor="@color/rgb_9fa"
-		android:textSize="@dimen/sp_14" />
+		android:layout_height="@dimen/dp_60"
+		app:searchEnabled="false"
+		app:hintText="@string/home_search_hint" />
 	
 	<View
 		android:layout_width="match_parent"
-		android:layout_height="@dimen/dp_2"
+		android:layout_height="@dimen/dp_1"
 		android:layout_marginTop="@dimen/dp_10"
 		android:background="@color/rgb_eee" />
 	

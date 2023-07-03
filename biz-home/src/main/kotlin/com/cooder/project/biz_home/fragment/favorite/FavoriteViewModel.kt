@@ -11,6 +11,4 @@ import androidx.lifecycle.ViewModel
  *
  * 介绍：FavoriteViewModel
  */
-class FavoriteViewModel : ViewModel() {
-
-}
+class FavoriteViewModel : ViewModel()

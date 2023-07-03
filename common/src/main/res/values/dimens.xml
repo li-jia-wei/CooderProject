@@ -615,4 +615,6 @@
 	<dimen name="sp_198">198sp</dimen>
 	<dimen name="sp_199">199sp</dimen>
 	<dimen name="sp_200">200sp</dimen>
+	
+	<dimen name="px_1">1px</dimen>
 </resources>

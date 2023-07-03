@@ -8,8 +8,8 @@ import com.cooder.library.library.restful.CoCallback
 import com.cooder.library.library.restful.CoResponse
 import com.cooder.library.library.restful.CoResult
 import com.cooder.project.biz_home.api.CategoryApi
-import com.cooder.project.pub_mod.model.Subcategory
-import com.cooder.project.pub_mod.model.TabCategory
+import com.cooder.project.biz_home.model.SubcategoryMo
+import com.cooder.project.biz_home.model.TabCategoryMo
 
 /**
  * 项目：CooderProject
@@ -20,20 +20,22 @@ import com.cooder.project.pub_mod.model.TabCategory
  *
  * 介绍：CategoryViewModel
  */
-class CategoryViewModel(private val savedState: SavedStateHandle) : ViewModel() {
+class CategoryViewModel(
+	private val savedState: SavedStateHandle
+) : ViewModel() {
 	
 	/**
 	 * 查询类别
 	 */
-	fun queryTabCategoryList(): LiveData<CoResult<List<TabCategory>>> {
-		val liveData = MutableLiveData<CoResult<List<TabCategory>>>()
-		savedState.get<CoResult<List<TabCategory>>>("tabCategories")?.let {
+	fun queryTabCategoryList(): LiveData<CoResult<List<TabCategoryMo>>> {
+		val liveData = MutableLiveData<CoResult<List<TabCategoryMo>>>()
+		savedState.get<CoResult<List<TabCategoryMo>>>("tabCategories")?.let {
 			liveData.value = it
 			return liveData
 		}
-		com.cooder.project.common.http.ApiFactory.create(CategoryApi::class.java).queryCategoryList().enqueue(object : CoCallback<List<TabCategory>> {
-			override fun onSuccess(response: CoResponse<List<TabCategory>>) {
-				if (response.isSuccessful() && response.data != null) {
+		com.cooder.project.common.http.ApiFactory.create(CategoryApi::class.java).queryCategoryList().enqueue(object : CoCallback<List<TabCategoryMo>> {
+			override fun onSuccess(response: CoResponse<List<TabCategoryMo>>) {
+				if (response.isSuccessful()) {
 					val result = CoResult.success(response.data)
 					liveData.value = result
 					savedState["tabCategories"] = result
@@ -50,16 +52,16 @@ class CategoryViewModel(private val savedState: SavedStateHandle) : ViewModel() 
 		return liveData
 	}
 	
-	data class SubcategoryListMo(val result: CoResult<List<Subcategory>>, val categoryId: String)
+	data class SubcategoryListMo(val result: CoResult<List<SubcategoryMo>>, val categoryId: String)
 	
 	/**
 	 * 查询子类别
 	 */
 	fun querySubcategoryList(categoryId: String): LiveData<SubcategoryListMo> {
 		val liveData = MutableLiveData<SubcategoryListMo>()
-		com.cooder.project.common.http.ApiFactory.create(CategoryApi::class.java).querySubcategoryList(categoryId).enqueue(object : CoCallback<List<Subcategory>> {
-			override fun onSuccess(response: CoResponse<List<Subcategory>>) {
-				if (response.isSuccessful() && response.data != null) {
+		com.cooder.project.common.http.ApiFactory.create(CategoryApi::class.java).querySubcategoryList(categoryId).enqueue(object : CoCallback<List<SubcategoryMo>> {
+			override fun onSuccess(response: CoResponse<List<SubcategoryMo>>) {
+				if (response.isSuccessful()) {
 					liveData.value = SubcategoryListMo(CoResult.success(response.data), categoryId)
 				} else {
 					liveData.value = SubcategoryListMo(CoResult.failure(response.message), categoryId)

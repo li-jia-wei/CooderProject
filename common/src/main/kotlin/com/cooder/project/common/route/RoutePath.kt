@@ -51,6 +51,10 @@ object RoutePath {
 		const val ACTIVITY_DETAIL = "/biz_detail/detail/activity"
 	}
 	
+	object BizSearch {
+		const val ACTIVITY_SEARCH = "/biz_search/search/activity"
+	}
+	
 	@StringDef(
 		App.SERVICE_ROUTE_DEGRADE_GLOBAL,
 		BizLogin.SERVICE_LOGIN
@@ -62,7 +66,8 @@ object RoutePath {
 		BizLogin.ACTIVITY_LOGIN,
 		BizLogin.ACTIVITY_REGISTER,
 		BizHome.ACTIVITY_GOODS_GOODS_LIST,
-		BizDetail.ACTIVITY_DETAIL
+		BizDetail.ACTIVITY_DETAIL,
+		BizSearch.ACTIVITY_SEARCH
 	)
 	annotation class ActivityRef
 }

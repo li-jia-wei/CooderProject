@@ -10,13 +10,13 @@ android {
 	namespace 'com.cooder.project.app'
 	
 	defaultConfig {
-		applicationId "com.cooder.project.app"
+		applicationId 'com.cooder.project.app'
 		minSdk 26
 		targetSdk 33
 		versionCode APP_VERSION_CODE as int
 		versionName APP_VERSION_NAME
 		
-		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+		testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 		
 		javaCompileOptions {
 			annotationProcessorOptions {
@@ -41,7 +41,7 @@ android {
 	kotlinOptions {
 		jvmTarget = '17'
 	}
-	buildToolsVersion = "33.0.2"
+	buildToolsVersion = '33.0.2'
 	
 	viewBinding {
 		enable true
@@ -56,6 +56,7 @@ dependencies {
 	implementation project(':biz-home')
 	implementation project(':biz-detail')
 	implementation project(':biz-login')
+	implementation project(':biz-search')
 	implementation project(':common')
 	
 	implementation libs.core.kts

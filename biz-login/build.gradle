@@ -11,8 +11,8 @@ android {
 	defaultConfig {
 		minSdk 26
 		
-		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-		consumerProguardFiles "consumer-rules.pro"
+		testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+		consumerProguardFiles 'consumer-rules.pro'
 		targetSdk 33
 		
 		javaCompileOptions {
@@ -21,7 +21,6 @@ android {
 			}
 		}
 	}
-	
 	buildTypes {
 		release {
 			minifyEnabled true

@@ -30,12 +30,6 @@
 			android:exported="false"
 			android:screenOrientation="portrait"
 			tools:ignore="LockedOrientationActivity" />
-		
-		<activity
-			android:name=".biz.detail.DetailActivity"
-			android:exported="false"
-			android:screenOrientation="portrait"
-			tools:ignore="LockedOrientationActivity" />
 	</application>
 
 </manifest>

@@ -16,8 +16,10 @@ import com.cooder.library.ui.tab.common.CoTabLayout
 import com.cooder.library.ui.tab.top.CoTabTopInfo
 import com.cooder.project.biz_home.R
 import com.cooder.project.biz_home.databinding.FragmentHomePageBinding
+import com.cooder.project.biz_home.model.TabCategoryMo
+import com.cooder.project.common.route.CoRoute
+import com.cooder.project.common.route.RoutePath
 import com.cooder.project.common.ui.component.CoBaseFragment
-import com.cooder.project.pub_mod.model.TabCategory
 import com.cooder.project.service_login.LoginServiceProvider
 
 /**
@@ -49,6 +51,10 @@ class HomePageFragment : CoBaseFragment<FragmentHomePageBinding>() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		
+		binding.searchView.setOnClickListener {
+			CoRoute.startActivity(RoutePath.BizSearch.ACTIVITY_SEARCH)
+		}
+		
 		queryTabList()
 		
 		LoginServiceProvider.loginSuccessObserver(requireContext()) {
@@ -58,7 +64,7 @@ class HomePageFragment : CoBaseFragment<FragmentHomePageBinding>() {
 	
 	private fun queryTabList() {
 		viewModel.queryTabCategoryList().observe(viewLifecycleOwner) {
-			if (it.isSuccessful()) {
+			if (it.hasData()) {
 				updateUI(it.data!!)
 			} else {
 				Toast.makeText(requireContext(), it.msg, Toast.LENGTH_SHORT).show()
@@ -80,7 +86,7 @@ class HomePageFragment : CoBaseFragment<FragmentHomePageBinding>() {
 	/**
 	 * 更新UI
 	 */
-	private fun updateUI(data: List<TabCategory>) {
+	private fun updateUI(data: List<TabCategoryMo>) {
 		if (!isAlive() || data.isEmpty()) return
 		val defaultColor = ContextCompat.getColor(requireContext(), R.color.home_tab_top_default)
 		val tintColor = ContextCompat.getColor(requireContext(), R.color.home_tab_top_tint)
@@ -116,7 +122,7 @@ class HomePageFragment : CoBaseFragment<FragmentHomePageBinding>() {
 	@Suppress("DEPRECATION")
 	inner class HomePagerAdapter : FragmentPagerAdapter(childFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 		
-		private val tabs = mutableListOf<TabCategory>()
+		private val tabs = mutableListOf<TabCategoryMo>()
 		
 		private val fragments = SparseArray<Fragment>(tabs.size)
 		
@@ -148,7 +154,7 @@ class HomePageFragment : CoBaseFragment<FragmentHomePageBinding>() {
 			return tabs.size
 		}
 		
-		fun update(tabs: List<TabCategory>) {
+		fun update(tabs: List<TabCategoryMo>) {
 			this.tabs.clear()
 			this.tabs += tabs
 			notifyDataSetChanged()

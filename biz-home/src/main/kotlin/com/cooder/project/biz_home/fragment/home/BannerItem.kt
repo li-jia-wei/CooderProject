@@ -12,9 +12,9 @@ import com.cooder.library.ui.banner.core.CoBannerMo
 import com.cooder.library.ui.banner.indicator.CircleIndicator
 import com.cooder.library.ui.item.CoDataItem
 import com.cooder.library.ui.item.CoViewHolder
+import com.cooder.project.biz_home.model.HomeBanner
 import com.cooder.project.common.route.CoRoute
 import com.cooder.project.common.ui.view.expends.load
-import com.cooder.project.pub_mod.model.HomeBanner
 
 /**
  * 项目：CooderProject

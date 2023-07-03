@@ -8,13 +8,13 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.cooder.library.library.util.expends.dp
 import com.cooder.library.ui.item.CoDataItem
-import com.cooder.library.ui.item.CoViewHolder
+import com.cooder.library.ui.item.CoViewBindingHolder
 import com.cooder.project.biz_detail.R
 import com.cooder.project.biz_detail.databinding.ItemDetailCommentAreaBinding
 import com.cooder.project.biz_detail.databinding.ItemDetailCommentBinding
+import com.cooder.project.biz_detail.model.CommentMo
+import com.cooder.project.biz_detail.model.DetailMo
 import com.cooder.project.common.ui.view.expends.loadCircle
-import com.cooder.project.pub_mod.model.CommentModel
-import com.cooder.project.pub_mod.model.DetailModel
 import com.google.android.material.chip.Chip
 import com.google.android.material.shape.ShapeAppearanceModel
 import kotlin.math.min
@@ -29,30 +29,29 @@ import kotlin.math.min
  * 介绍：商品详情 - 评价
  */
 class CommentItem(
-	private val model: DetailModel
-) : CoDataItem<DetailModel, CoViewHolder>() {
+	private val model: DetailMo
+) : CoDataItem<DetailMo, CoViewBindingHolder<ItemDetailCommentBinding>>() {
 	
-	private lateinit var binding: ItemDetailCommentBinding
-	
-	override fun getItemView(inflater: LayoutInflater, parent: ViewGroup): View {
-		binding = ItemDetailCommentBinding.inflate(inflater, parent, false)
-		return binding.root
+	override fun getViewHolder(inflater: LayoutInflater, parent: ViewGroup): CoViewBindingHolder<ItemDetailCommentBinding> {
+		val binding = ItemDetailCommentBinding.inflate(inflater, parent, false)
+		return CoViewBindingHolder(binding)
 	}
 	
-	override fun onBindData(holder: CoViewHolder, position: Int) {
+	override fun onBindData(holder: CoViewBindingHolder<ItemDetailCommentBinding>, position: Int) {
+		val binding = holder.binding
 		if (model.commentCountTitle.isBlank()) {
 			binding.root.visibility = View.GONE
 			return
 		}
 		binding.commentTitle.text = model.commentCountTitle
-		model.commentTags?.let { bindCommentTags(holder.context, it) }
-		model.commentModels?.let { bindCommentArea(holder.context, it) }
+		model.commentTags?.let { bindCommentTags(binding, holder.context, it) }
+		model.commentModels?.let { bindCommentArea(binding, holder.context, it) }
 	}
 	
 	/**
 	 * 绑定评论标签
 	 */
-	private fun bindCommentTags(context: Context, commentTags: String) {
+	private fun bindCommentTags(binding: ItemDetailCommentBinding, context: Context, commentTags: String) {
 		binding.root.visibility = View.VISIBLE
 		binding.chipGroup.visibility = View.VISIBLE
 		commentTags.split(' ').forEachIndexed { index, tag ->
@@ -85,18 +84,14 @@ class CommentItem(
 	/**
 	 * 绑定评论区
 	 */
-	private fun bindCommentArea(context: Context, commentModels: List<CommentModel>) {
+	private fun bindCommentArea(binding: ItemDetailCommentBinding, context: Context, commentModels: List<CommentMo>) {
 		binding.root.visibility = View.VISIBLE
 		for (index in 0 until min(commentModels.size, 4)) {
 			val comment = commentModels[index]
 			val areaBinding = if (index < binding.commentArea.childCount) {
 				ItemDetailCommentAreaBinding.bind(binding.commentArea.getChildAt(index))
 			} else {
-				val area = ItemDetailCommentAreaBinding.inflate(
-					LayoutInflater.from(context),
-					binding.commentArea,
-					false
-				)
+				val area = ItemDetailCommentAreaBinding.inflate(LayoutInflater.from(context), binding.commentArea, false)
 				binding.commentArea.addView(area.root)
 				area
 			}

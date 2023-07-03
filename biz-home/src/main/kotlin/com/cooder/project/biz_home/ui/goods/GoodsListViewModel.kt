@@ -8,7 +8,6 @@ import com.cooder.library.library.restful.CoResponse
 import com.cooder.library.library.restful.CoResult
 import com.cooder.library.library.restful.annotation.CacheStrategy
 import com.cooder.project.biz_home.api.GoodsApi
-import com.cooder.project.pub_mod.model.GoodsList
 
 /**
  * 项目：CooderProject
@@ -32,13 +31,13 @@ class GoodsListViewModel : ViewModel() {
 	/**
 	 * 查询商品列表
 	 */
-	fun queryGoodsList(mo: GoodsListMo): LiveData<CoResult<GoodsList>> {
-		val liveData = MutableLiveData<CoResult<GoodsList>>()
+	fun queryGoodsList(mo: GoodsListMo): LiveData<CoResult<com.cooder.project.pub_mod.model.GoodsListMo>> {
+		val liveData = MutableLiveData<CoResult<com.cooder.project.pub_mod.model.GoodsListMo>>()
 		com.cooder.project.common.http.ApiFactory.create(GoodsApi::class.java)
 			.queryGoodsList(mo.cacheStrategyType, mo.categoryId, mo.subcategoryId, mo.pageSize, mo.pageIndex)
-			.enqueue(object : CoCallback<GoodsList> {
-				override fun onSuccess(response: CoResponse<GoodsList>) {
-					if (response.isSuccessful() && response.data != null) {
+			.enqueue(object : CoCallback<com.cooder.project.pub_mod.model.GoodsListMo> {
+				override fun onSuccess(response: CoResponse<com.cooder.project.pub_mod.model.GoodsListMo>) {
+					if (response.isSuccessful()) {
 						liveData.value = CoResult.success(response.data)
 					} else {
 						liveData.value = CoResult.failure(response.message)

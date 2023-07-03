@@ -3,19 +3,17 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:background="@color/white"
 	android:orientation="vertical"
 	tools:context=".fragment.home.HomePageFragment">
 	
-	<com.cooder.library.ui.view.IconFontTextView
+	<com.cooder.library.ui.search.CoSearchView
+		android:id="@+id/search_view"
 		android:layout_width="match_parent"
-		android:layout_height="@dimen/dp_35"
-		android:layout_margin="@dimen/dp_16"
-		android:background="@drawable/shape_home_page_search"
-		android:gravity="center"
-		android:text="@string/home_search_hint"
-		android:textColor="@color/rgb_9fa"
-		android:textSize="@dimen/sp_14" />
+		android:layout_height="@dimen/dp_60"
+		app:searchEnabled="false"
+		app:hintText="@string/home_search_hint" />
 	
 	<com.cooder.library.ui.tab.top.CoTabTopLayout
 		android:id="@+id/tab_top_layout"

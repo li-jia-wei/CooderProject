@@ -5,7 +5,6 @@ import android.os.Bundle
 import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.facade.service.DegradeService
-import com.cooder.library.library.log.CoLog
 import com.cooder.project.common.route.CoRoute
 import com.cooder.project.common.route.RoutePath
 
@@ -26,7 +25,6 @@ class DegradeGlobalService : DegradeService {
 	}
 	
 	override fun onLost(context: Context?, postcard: Postcard?) {
-		CoLog.i(postcard)
 		val bundle = Bundle()
 		bundle.putString("degradeTitle", "页面不存在")
 		bundle.putString("degradeDesc", "当前页面被程序员吃了，正在催吐中～")

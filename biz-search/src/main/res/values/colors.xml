@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	
+	<color name="quick_search_icon">@color/rgb_9fa</color>
+	<color name="quick_search_text">@color/darker_gray</color>
+	<color name="quick_search_underline">@color/rgb_eae</color>
+</resources>

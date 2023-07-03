@@ -1,24 +1,24 @@
-package com.cooder.project.pub_mod.model
+package com.cooder.project.biz_home.model
 
 import java.io.Serializable
 
 /**
  * UserProfile
  */
-data class UserProfile(
+data class UserProfileMo(
 	val isLogin: Boolean,
 	val favoriteCount: Int,
 	val browseCount: Int,
 	val learnMinutes: Int,
 	val userName: String,
 	val userIcon: String,
-	val bannerNoticeList: List<Notice>
+	val bannerNoticeList: List<NoticeMo>
 ) : Serializable
 
 /**
  * Notice
  */
-data class Notice(
+data class NoticeMo(
 	val id: String,
 	val sticky: Int,
 	val type: String,
@@ -32,7 +32,7 @@ data class Notice(
 /**
  * CourseNotice
  */
-data class CourseNotice(
+data class CourseNoticeMo(
 	val total: Int,
-	val list: List<Notice>?
+	val list: List<NoticeMo>?
 ) : Serializable

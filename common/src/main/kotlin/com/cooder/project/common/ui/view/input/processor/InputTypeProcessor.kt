@@ -1,9 +1,5 @@
 package com.cooder.project.common.ui.view.input.processor
 
-import android.content.Context
-import android.view.ViewGroup
-import android.widget.EditText
-
 /**
  * 项目：CooderProject
  *
@@ -13,11 +9,7 @@ import android.widget.EditText
  *
  * 介绍：输入类型处理者
  */
-internal abstract class InputTypeProcessor(
-	context: Context,
-	viewGroup: ViewGroup,
-	editText: EditText
-) {
+internal interface InputTypeProcessor {
 	
-	abstract fun process()
+	fun process()
 }

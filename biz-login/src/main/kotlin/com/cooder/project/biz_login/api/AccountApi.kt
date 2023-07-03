@@ -18,7 +18,7 @@ interface AccountApi : com.cooder.project.common.http.Api {
 	/**
 	 * 登录接口
 	 */
-	@POST("user/login")
+	@POST("/user/login")
 	fun login(
 		@Filed("userName") username: String,
 		@Filed("password") password: String
@@ -27,7 +27,7 @@ interface AccountApi : com.cooder.project.common.http.Api {
 	/**
 	 * 注册接口
 	 */
-	@POST("user/registration")
+	@POST("/user/registration")
 	fun register(
 		@Filed("userName") username: String,    // 用户名
 		@Filed("password") password: String,    // 密码

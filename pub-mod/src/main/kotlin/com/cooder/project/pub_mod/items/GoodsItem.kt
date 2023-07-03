@@ -12,8 +12,8 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.cooder.library.library.util.expends.dpInt
+import com.cooder.library.ui.item.CoDataBindingHolder
 import com.cooder.library.ui.item.CoDataItem
-import com.cooder.library.ui.item.CoViewDataBindingHolder
 import com.cooder.project.common.route.CoRoute
 import com.cooder.project.common.route.RoutePath
 import com.cooder.project.pub_mod.BR
@@ -36,27 +36,23 @@ open class GoodsItem(
 	private val hotTab: Boolean,
 	private val span: Int,
 	private val index: Int
-) : CoDataItem<GoodsModel, CoViewDataBindingHolder<ViewDataBinding>>() {
-	
-	private lateinit var binding: ViewDataBinding
+) : CoDataItem<GoodsModel, CoDataBindingHolder<ViewDataBinding>>() {
 	
 	companion object {
 		const val IMAGE_CORNER = 10
 		private val MARGIN = 3.dpInt
 	}
 	
-	override fun onCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): CoViewDataBindingHolder<ViewDataBinding> {
-		binding = if (hotTab) {
+	override fun getViewHolder(inflater: LayoutInflater, parent: ViewGroup): CoDataBindingHolder<ViewDataBinding> {
+		val binding = if (hotTab) {
 			ItemHomeGoodsList1Binding.inflate(inflater, parent, false)
 		} else {
 			ItemHomeGoodsList2Binding.inflate(inflater, parent, false)
 		}
-		return CoViewDataBindingHolder(binding)
+		return CoDataBindingHolder(binding)
 	}
 	
-	override fun onBindData(holder: CoViewDataBindingHolder<ViewDataBinding>, position: Int) {
-		val context = holder.context
-		
+	override fun onBindData(holder: CoDataBindingHolder<ViewDataBinding>, position: Int) {
 		holder.binding.setVariable(BR.goodsModel, goodsModel)
 		
 		val labelContainer: LinearLayout? = holder.findViewById(R.id.item_label_container)
@@ -67,7 +63,7 @@ open class GoodsItem(
 				val split = tags.split(" ")
 				for ((index, tag) in split.withIndex()) {
 					val labelView: TextView = if (index > labelContainer.childCount - 1) {
-						val view = createLabelView(context, index != 0)
+						val view = createLabelView(holder.context, index != 0)
 						labelContainer.addView(view)
 						view
 					} else {

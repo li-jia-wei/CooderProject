@@ -1,5 +1,6 @@
 package com.cooder.project.common.ui.component
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -43,17 +44,18 @@ abstract class CoBaseActivity<VB : ViewBinding> : AppCompatActivity(), CoBaseAct
 	
 	@JvmOverloads
 	protected fun onBackPressed(resultCode: Int, intent: Intent? = null) {
-		if (intent != null) {
-			setResult(resultCode, intent)
-		} else {
-			setResult(resultCode)
-		}
+		setResult(resultCode, intent)
 		onBackPressedDispatcher.onBackPressed()
 	}
 	
-	@Suppress("OVERRIDE_DEPRECATION")
-	override fun onBackPressed() {
-		onBackPressedDispatcher.onBackPressed()
+	@JvmOverloads
+	protected fun onBackPressedResultCanceled(intent: Intent? = null) {
+		onBackPressed(Activity.RESULT_CANCELED, intent)
+	}
+	
+	@JvmOverloads
+	protected fun onBackPressedResultOk(intent: Intent? = null) {
+		onBackPressed(Activity.RESULT_OK, intent)
 	}
 	
 	@CallSuper

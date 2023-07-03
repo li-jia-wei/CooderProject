@@ -12,10 +12,9 @@ android {
 		minSdk 26
 		targetSdk 33
 		
-		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-		consumerProguardFiles "consumer-rules.pro"
+		testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+		consumerProguardFiles 'consumer-rules.pro'
 	}
-	
 	buildTypes {
 		release {
 			minifyEnabled true
@@ -71,7 +70,7 @@ class Build {
 	 */
 	static def buildTime() {
 		def date = new Date()
-		return date.format("HH:mm:ss", TimeZone.getTimeZone("GMT+08:00"))
+		return date.format('HH:mm:ss', TimeZone.getTimeZone('GMT+08:00'))
 	}
 	
 	/**
@@ -80,6 +79,6 @@ class Build {
 	 */
 	static def buildDate() {
 		def date = new Date()
-		return date.format("YYYY-MM-dd", TimeZone.getTimeZone("GMT+08:00"))
+		return date.format('YYYY-MM-dd', TimeZone.getTimeZone('GMT+08:00'))
 	}
 }

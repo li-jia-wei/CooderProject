@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.cooder.library.ui.item.CoDataItem
-import com.cooder.library.ui.item.CoViewHolder
+import com.cooder.library.ui.item.CoViewBindingHolder
 import com.cooder.project.biz_detail.databinding.ItemDetailGoodsAttrBinding
 import com.cooder.project.biz_detail.databinding.ItemDetailGoodsAttrItemBinding
-import com.cooder.project.pub_mod.model.DetailModel
+import com.cooder.project.biz_detail.model.DetailMo
 
 /**
  * 项目：CooderProject
@@ -19,29 +19,23 @@ import com.cooder.project.pub_mod.model.DetailModel
  * 介绍：商品详情 - 商品属性
  */
 class AttrItem(
-	private val model: DetailModel
-) : CoDataItem<DetailModel, CoViewHolder>() {
+	private val model: DetailMo
+) : CoDataItem<DetailMo, CoViewBindingHolder<ItemDetailGoodsAttrBinding>>() {
 	
-	private lateinit var binding: ItemDetailGoodsAttrBinding
-	
-	override fun getItemView(inflater: LayoutInflater, parent: ViewGroup): View {
-		binding = ItemDetailGoodsAttrBinding.inflate(inflater, parent, false)
-		return binding.root
+	override fun getViewHolder(inflater: LayoutInflater, parent: ViewGroup): CoViewBindingHolder<ItemDetailGoodsAttrBinding> {
+		val binding = ItemDetailGoodsAttrBinding.inflate(inflater, parent, false)
+		return CoViewBindingHolder(binding)
 	}
 	
-	override fun onBindData(holder: CoViewHolder, position: Int) {
-		val context = holder.context
+	override fun onBindData(holder: CoViewBindingHolder<ItemDetailGoodsAttrBinding>, position: Int) {
+		val binding = holder.binding
 		if (!model.goodAttr.isNullOrEmpty()) {
 			binding.attrContainer.visibility = View.VISIBLE
-			model.goodAttr?.forEachIndexed { index, mutableMap ->
+			model.goodAttr.forEachIndexed { index, mutableMap ->
 				val attrItemBinding = if (index < binding.attrContainer.childCount) {
 					ItemDetailGoodsAttrItemBinding.bind(binding.attrContainer.getChildAt(index))
 				} else {
-					val itemBinding = ItemDetailGoodsAttrItemBinding.inflate(
-						LayoutInflater.from(context),
-						binding.attrContainer,
-						false
-					)
+					val itemBinding = ItemDetailGoodsAttrItemBinding.inflate(LayoutInflater.from(holder.context), binding.attrContainer, false)
 					binding.attrContainer.addView(itemBinding.root)
 					itemBinding
 				}

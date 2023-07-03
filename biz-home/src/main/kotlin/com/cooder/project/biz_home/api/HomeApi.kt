@@ -5,8 +5,8 @@ import com.cooder.library.library.restful.annotation.CacheStrategy
 import com.cooder.library.library.restful.annotation.Filed
 import com.cooder.library.library.restful.annotation.GET
 import com.cooder.library.library.restful.annotation.Path
+import com.cooder.project.biz_home.model.HomeMo
 import com.cooder.project.common.http.Api
-import com.cooder.project.pub_mod.model.HomeModel
 
 /**
  * 项目：CooderProject
@@ -22,11 +22,11 @@ interface HomeApi : Api {
 	/**
 	 * 查询顶部标题对应的数据
 	 */
-	@GET("home/{categoryId}")
+	@GET("/home/{categoryId}")
 	fun queryTabCategoryList(
 		@Path("categoryId") categoryId: String,
 		@Filed("pageIndex") pageIndex: Int,
 		@Filed("pageSize") pageSize: Int,
 		@CacheStrategy type: CacheStrategy.Type
-	): CoCall<HomeModel>
+	): CoCall<HomeMo>
 }

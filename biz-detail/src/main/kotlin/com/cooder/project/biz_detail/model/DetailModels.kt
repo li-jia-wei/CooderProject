@@ -1,5 +1,7 @@
-package com.cooder.project.pub_mod.model
+package com.cooder.project.biz_detail.model
 
+import com.cooder.project.pub_mod.model.GoodsModel
+import com.cooder.project.pub_mod.model.SliderImage
 import java.io.Serializable
 
 /**
@@ -11,10 +13,10 @@ import java.io.Serializable
  *
  * 介绍：DetailModel
  */
-data class DetailModel(
+data class DetailMo(
 	val categoryId: String,
 	val commentCountTitle: String,
-	val commentModels: List<CommentModel>?,
+	val commentModels: List<CommentMo>?,
 	val commentTags: String?,
 	val completedNumText: String,
 	val createTime: String,
@@ -28,20 +30,20 @@ data class DetailModel(
 	val hot: Boolean,
 	val isFavorite: Boolean,
 	val marketPrice: String,
-	val shop: Shop,
+	val shop: ShopMo,
 	val similarGoods: List<GoodsModel>?,
 	val sliderImage: String,
 	val sliderImages: List<SliderImage>?,
 	val tags: String
 ) : Serializable
 
-data class CommentModel(
+data class CommentMo(
 	val avatar: String,
 	val content: String,
 	val nickName: String
 ) : Serializable
 
-data class Shop(
+data class ShopMo(
 	val completedNum: String,
 	val evaluation: String,
 	val goodsNum: String,
@@ -49,4 +51,4 @@ data class Shop(
 	val name: String
 ) : Serializable
 
-data class Favorite(val goodsId: String, val isFavorite: Boolean) : Serializable
+data class FavoriteMo(val goodsId: String, val isFavorite: Boolean) : Serializable

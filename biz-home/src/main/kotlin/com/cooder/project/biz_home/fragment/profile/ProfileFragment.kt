@@ -18,12 +18,12 @@ import com.cooder.library.library.util.expends.dpInt
 import com.cooder.library.ui.banner.core.CoBannerMo
 import com.cooder.project.biz_home.R
 import com.cooder.project.biz_home.databinding.FragmentProfileBinding
+import com.cooder.project.biz_home.model.NoticeMo
+import com.cooder.project.biz_home.model.UserProfileMo
 import com.cooder.project.common.route.CoRoute
 import com.cooder.project.common.ui.component.CoBaseFragment
 import com.cooder.project.common.ui.view.expends.loadCircle
 import com.cooder.project.common.ui.view.expends.loadCorner
-import com.cooder.project.pub_mod.model.Notice
-import com.cooder.project.pub_mod.model.UserProfile
 import com.cooder.project.service_login.LoginServiceProvider
 
 /**
@@ -59,7 +59,7 @@ class ProfileFragment : CoBaseFragment<FragmentProfileBinding>() {
 	 */
 	private fun queryCourseNotice() {
 		viewModel.queryCourseNotice().observe(viewLifecycleOwner) {
-			if (it.isSuccessful()) {
+			if (it.hasData()) {
 				val total = it.data!!.total
 				binding.courseNotice.visibility = if (total > 0) View.VISIBLE else View.GONE
 				if (total > 99) {
@@ -78,7 +78,7 @@ class ProfileFragment : CoBaseFragment<FragmentProfileBinding>() {
 	 */
 	private fun queryProfile() {
 		viewModel.queryProfile().observe(viewLifecycleOwner) {
-			if (it.isSuccessful()) {
+			if (it.hasData()) {
 				updateUI(it.data!!)
 			} else {
 				showToast(it.msg)
@@ -89,7 +89,7 @@ class ProfileFragment : CoBaseFragment<FragmentProfileBinding>() {
 	/**
 	 * 更新UI
 	 */
-	private fun updateUI(userProfile: UserProfile) {
+	private fun updateUI(userProfile: UserProfileMo) {
 		if (userProfile.isLogin) {
 			binding.username.text = userProfile.userName
 			binding.loginDesc.text = getString(R.string.profile_login_desc_welcome_back)
@@ -117,7 +117,7 @@ class ProfileFragment : CoBaseFragment<FragmentProfileBinding>() {
 	/**
 	 * 更新Banner
 	 */
-	private fun updateBanner(bannerNoticeList: List<Notice>?) {
+	private fun updateBanner(bannerNoticeList: List<NoticeMo>?) {
 		if (bannerNoticeList.isNullOrEmpty()) return
 		val models = mutableListOf<CoBannerMo>()
 		bannerNoticeList.forEach {

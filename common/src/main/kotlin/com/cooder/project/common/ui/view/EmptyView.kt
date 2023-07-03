@@ -91,14 +91,14 @@ class EmptyView @JvmOverloads constructor(
 	}
 	
 	/**
-	 * 设置按钮文字
+	 * 设置刷新按钮文字
 	 */
 	fun setRefreshButton(@StringRes resId: Int) {
 		this.refreshButton.setText(resId)
 	}
 	
 	/**
-	 * 设置按钮文字
+	 * 设置刷新按钮文字
 	 */
 	fun setRefreshButton(text: String) {
 		this.refreshButton.text = text
@@ -109,6 +109,13 @@ class EmptyView @JvmOverloads constructor(
 	 */
 	fun setOnClickRefreshListener(listener: OnClickListener) {
 		this.refreshButton.setOnClickListener(listener)
+	}
+	
+	/**
+	 * 隐藏刷新按钮
+	 */
+	fun goneRefreshButton() {
+		this.refreshButton.visibility = View.GONE
 	}
 	
 	/**

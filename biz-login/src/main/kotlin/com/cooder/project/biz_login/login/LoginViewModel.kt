@@ -7,6 +7,7 @@ import com.cooder.library.library.restful.CoCallback
 import com.cooder.library.library.restful.CoResponse
 import com.cooder.library.library.restful.CoResult
 import com.cooder.project.biz_login.api.AccountApi
+import com.cooder.project.common.http.ApiFactory
 
 /**
  * 项目：CooderProject
@@ -24,9 +25,9 @@ class LoginViewModel : ViewModel() {
 	 */
 	fun login(username: String, password: String): LiveData<CoResult<String>> {
 		val liveData = MutableLiveData<CoResult<String>>()
-		com.cooder.project.common.http.ApiFactory.create(AccountApi::class.java).login(username, password).enqueue(object : CoCallback<String> {
+		ApiFactory.create(AccountApi::class.java).login(username, password).enqueue(object : CoCallback<String> {
 			override fun onSuccess(response: CoResponse<String>) {
-				if (response.isSuccessful() && response.data != null) {
+				if (response.isSuccessful()) {
 					liveData.value = CoResult.success(response.data)
 				} else {
 					liveData.value = CoResult.success(response.message)

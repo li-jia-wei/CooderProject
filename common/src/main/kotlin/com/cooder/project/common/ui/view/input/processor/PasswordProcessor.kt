@@ -25,7 +25,7 @@ internal open class PasswordProcessor(
 	private val context: Context,
 	private val viewGroup: ViewGroup,
 	private val editText: EditText
-) : InputTypeProcessor(context, viewGroup, editText) {
+) : InputTypeProcessor {
 	
 	private var hidden = true
 	
