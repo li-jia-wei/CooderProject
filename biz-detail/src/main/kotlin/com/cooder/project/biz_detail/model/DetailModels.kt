@@ -1,6 +1,6 @@
 package com.cooder.project.biz_detail.model
 
-import com.cooder.project.pub_mod.model.GoodsModel
+import com.cooder.project.pub_mod.model.GoodsMo
 import com.cooder.project.pub_mod.model.SliderImage
 import java.io.Serializable
 
@@ -20,7 +20,7 @@ data class DetailMo(
 	val commentTags: String?,
 	val completedNumText: String,
 	val createTime: String,
-	val flowGoods: List<GoodsModel>?,
+	val flowGoods: List<GoodsMo>?,
 	val gallery: List<SliderImage>?,
 	val goodAttr: List<MutableMap<String, String>>?,
 	val goodDescription: String?,
@@ -31,7 +31,7 @@ data class DetailMo(
 	val isFavorite: Boolean,
 	val marketPrice: String,
 	val shop: ShopMo,
-	val similarGoods: List<GoodsModel>?,
+	val similarGoods: List<GoodsMo>?,
 	val sliderImage: String,
 	val sliderImages: List<SliderImage>?,
 	val tags: String

@@ -50,7 +50,6 @@ class RegisterActivity : CoBaseActivity<ActivityRegisterBinding>() {
 	}
 	
 	private fun goRegister() {
-		
 		val courseOrderId = binding.courseOrderId.getText()
 		if (courseOrderId.length < 4) {
 			showToast(R.string.register_please_input_course_order_id_last_4_digits)
@@ -85,13 +84,16 @@ class RegisterActivity : CoBaseActivity<ActivityRegisterBinding>() {
 	 * 注册
 	 */
 	private fun register(username: String, password: String, moocId: String, courseOrderId: String) {
+		binding.actionSubmit.isClickable = false
 		viewModel.register(username, password, moocId, courseOrderId).observe(this) {
+			binding.actionSubmit.isClickable = true
 			if (it.success) {
+				showToast(R.string.register_success)
 				val intent = Intent()
 				intent.putExtra("username", it.username)
 				onBackPressedResultOk(intent)
 			} else {
-				showToast(getString(R.string.register_failure, it.result.msg))
+				showToast(R.string.register_failure, it.result.msg)
 				binding.password.setText("")
 				binding.confirmPassword.setText("")
 			}

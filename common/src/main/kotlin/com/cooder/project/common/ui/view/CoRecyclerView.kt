@@ -20,8 +20,10 @@ import com.cooder.project.common.R
  *
  * 介绍：CoRecyclerView
  */
-class CoRecyclerView @JvmOverloads constructor(
-	context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+open class CoRecyclerView @JvmOverloads constructor(
+	context: Context,
+	attrs: AttributeSet? = null,
+	defStyleAttr: Int = 0
 ) : RecyclerView(context, attrs, defStyleAttr) {
 	
 	private var isLoadingMore = false
@@ -33,11 +35,6 @@ class CoRecyclerView @JvmOverloads constructor(
 		 * 检查向下滑动
 		 */
 		private const val CHECK_SCROLLING_DOWN = 1
-		
-		/**
-		 * 检查向上滑动
-		 */
-		private const val CHECK_SCROLLING_UP = -1
 	}
 	
 	/**
@@ -51,7 +48,7 @@ class CoRecyclerView @JvmOverloads constructor(
 		private val coAdapter = adapter as CoAdapter
 		
 		override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-			// 根据当前的华东状态，决定要不要添加FooterView，要不要执行上拉加载分页动作
+			// 根据当前的滑动状态，决定要不要添加FooterView，要不要执行上拉加载分页动作
 			if (isLoadingMore) {
 				return
 			}
@@ -66,12 +63,10 @@ class CoRecyclerView @JvmOverloads constructor(
 			
 			// 特殊情况，咱们的列表依旧滑动到底部，但是分页失败了
 			val lastVisibleItem = findLastVisibleItemPosition(recyclerView)
-			val firstVisibleItem = findFirstVisibleItem(recyclerView)
-			if (lastVisibleItem <= 0) {
-				return
-			}
+			if (lastVisibleItem < 0) return
 			
 			// 到达底部
+			val firstVisibleItem = findFirstVisibleItem(recyclerView)
 			val arriveBottom = lastVisibleItem >= totalItemCount - 1 && firstVisibleItem > 0
 			// 可以向下滑动，或者当前已经滑动到最底下，此时拖动列表可以分页的
 			if (newState == SCROLL_STATE_DRAGGING && (canScrollVertical || arriveBottom)) {
@@ -124,32 +119,22 @@ class CoRecyclerView @JvmOverloads constructor(
 		 * 查询最后一个可见Item的位置
 		 */
 		private fun findLastVisibleItemPosition(recyclerView: RecyclerView): Int {
-			when (val manager = recyclerView.layoutManager) {
-				is LinearLayoutManager -> {
-					return manager.findLastVisibleItemPosition()
-				}
-				
-				is StaggeredGridLayoutManager -> {
-					return manager.findLastVisibleItemPositions(null)[0]
-				}
+			return when (val manager = recyclerView.layoutManager) {
+				is LinearLayoutManager -> manager.findLastVisibleItemPosition()
+				is StaggeredGridLayoutManager -> manager.findLastVisibleItemPositions(null)[0]
+				else -> -1
 			}
-			return -1
 		}
 		
 		/**
 		 * 查询第一个可见Item的位置
 		 */
 		private fun findFirstVisibleItem(recyclerView: RecyclerView): Int {
-			when (val manager = recyclerView.layoutManager) {
-				is LinearLayoutManager -> {
-					return manager.findFirstVisibleItemPosition()
-				}
-				
-				is StaggeredGridLayoutManager -> {
-					return manager.findFirstVisibleItemPositions(null)[0]
-				}
+			return when (val manager = recyclerView.layoutManager) {
+				is LinearLayoutManager -> manager.findFirstVisibleItemPosition()
+				is StaggeredGridLayoutManager -> manager.findFirstVisibleItemPositions(null)[0]
+				else -> -1
 			}
-			return -1
 		}
 	}
 	

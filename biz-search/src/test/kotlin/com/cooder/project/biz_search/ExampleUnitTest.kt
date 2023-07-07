@@ -1,6 +1,5 @@
 package com.cooder.project.biz_search
 
-import org.junit.Assert.assertEquals
 import org.junit.Test
 
 /**
@@ -11,6 +10,8 @@ import org.junit.Test
 class ExampleUnitTest {
 	@Test
 	fun addition_isCorrect() {
-		assertEquals(4, 2 + 2)
+		val str = "Hello World"
+		val newStr = str.replace(" ", "").toSet()
+		println(newStr)
 	}
 }

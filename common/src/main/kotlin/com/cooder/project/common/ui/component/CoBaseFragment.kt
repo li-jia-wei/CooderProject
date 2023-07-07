@@ -22,7 +22,9 @@ abstract class CoBaseFragment<VB : ViewBinding> : Fragment() {
 	
 	private var _binding: VB? = null
 	
-	val binding: VB get() = _binding!!
+	protected val binding: VB get() = _binding!!
+	
+	private var toast: Toast? = null
 	
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 		_binding = getViewBinding(inflater, container)
@@ -39,12 +41,22 @@ abstract class CoBaseFragment<VB : ViewBinding> : Fragment() {
 		return isRemoving || isDetached || activity == null
 	}
 	
-	fun showToast(text: String?) {
-		Toast.makeText(requireContext(), text ?: "null", Toast.LENGTH_SHORT).show()
+	protected fun showToast(text: String?) {
+		if (toast == null) {
+			toast = Toast.makeText(requireContext(), text ?: "null", Toast.LENGTH_SHORT)
+		} else {
+			toast!!.setText(text ?: "null")
+		}
+		toast!!.show()
 	}
 	
-	fun showToast(@StringRes resId: Int) {
-		Toast.makeText(requireContext(), getString(resId), Toast.LENGTH_SHORT).show()
+	protected fun showToast(@StringRes resId: Int, vararg args: Any) {
+		if (toast == null) {
+			toast = Toast.makeText(requireContext(), getString(resId, *args), Toast.LENGTH_SHORT)
+		} else {
+			toast!!.setText(getString(resId, *args))
+		}
+		toast!!.show()
 	}
 	
 	override fun onDestroy() {

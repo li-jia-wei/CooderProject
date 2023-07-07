@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.annotation.StringRes
-import androidx.core.content.ContextCompat
 import com.cooder.library.ui.R
 import com.cooder.library.ui.view.IconFontTextView
 
@@ -40,7 +39,7 @@ internal open class PasswordProcessor(
 		visibleView.textSize = 24F
 		visibleView.setText(icNotVisible)
 		visibleView.gravity = Gravity.CENTER
-		visibleView.setTextColor(ContextCompat.getColor(context, R.color.darker_gray))
+		visibleView.setTextColor(context.getColor(R.color.darker_gray))
 		visibleView.setOnClickListener {
 			hidden = !hidden
 			if (hidden) {

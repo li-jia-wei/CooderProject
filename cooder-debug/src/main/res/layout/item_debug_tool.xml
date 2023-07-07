@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="@dimen/dp_60"
+	android:background="@drawable/selector_debug_item"
+	android:gravity="center_vertical"
+	android:orientation="horizontal"
+	android:paddingHorizontal="@dimen/dp_14">
+	
+	<com.cooder.library.ui.view.IconFontTextView
+		android:id="@+id/icon"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textColor="@color/black"
+		android:textSize="@dimen/sp_18"
+		tools:text="@string/ic_tool" />
+	
+	<LinearLayout
+		android:layout_width="0dp"
+		android:layout_height="match_parent"
+		android:layout_marginHorizontal="@dimen/dp_10"
+		android:layout_weight="1"
+		android:gravity="center_vertical"
+		android:minHeight="@dimen/dp_48"
+		android:orientation="vertical">
+		
+		<TextView
+			android:id="@+id/title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="@color/black"
+			android:textSize="@dimen/sp_15"
+			tools:text="标题" />
+		
+		<TextView
+			android:id="@+id/desc"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/dp_4"
+			android:ellipsize="end"
+			android:maxLines="1"
+			android:textColor="@color/gray"
+			android:textSize="@dimen/sp_11"
+			android:visibility="gone"
+			tools:text="内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容"
+			tools:visibility="visible" />
+	
+	</LinearLayout>
+	
+	<TextView
+		android:id="@+id/warn"
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
+		android:layout_marginVertical="@dimen/dp_7"
+		android:background="@drawable/shape_debug_hint"
+		android:gravity="center"
+		android:paddingHorizontal="@dimen/dp_6"
+		android:textColor="@color/white"
+		android:textSize="@dimen/sp_11"
+		android:visibility="gone"
+		tools:text="重\n启"
+		tools:visibility="visible" />
+
+</LinearLayout>

@@ -1,4 +1,4 @@
-package com.cooder.project.debug.tool.annotation
+package com.cooder.project.debug.annotation
 
 /**
  * 项目：CooderProject
@@ -11,4 +11,4 @@ package com.cooder.project.debug.tool.annotation
  *
  * @param id 排序序号，请设置不相同的值
  */
-annotation class CoOrder(val order: Int)
+annotation class Order(val order: Int)

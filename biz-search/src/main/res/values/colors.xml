@@ -4,4 +4,11 @@
 	<color name="quick_search_icon">@color/rgb_9fa</color>
 	<color name="quick_search_text">@color/darker_gray</color>
 	<color name="quick_search_underline">@color/rgb_eae</color>
+	
+	<color name="history_search_icon">#BBBBBB</color>
+	<color name="history_search_text">#999999</color>
+	<color name="history_search_chip_bg">#EEEEEE</color>
+	<color name="history_search_chip_text">#222222</color>
+	
+	<color name="history_search_clear">@color/red</color>
 </resources>

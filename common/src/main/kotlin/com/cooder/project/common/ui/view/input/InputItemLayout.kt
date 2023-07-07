@@ -12,7 +12,6 @@ import android.view.Gravity
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import com.cooder.library.library.util.expends.dp
 import com.cooder.library.library.util.expends.sp
 import com.cooder.project.common.R
@@ -126,7 +125,7 @@ class InputItemLayout @JvmOverloads constructor(
 	@SuppressLint("CustomViewStyleable")
 	private fun parseTitleStyle(resId: Int, title: String?) {
 		val array = context.obtainStyledAttributes(resId, R.styleable.TitleTextAppearance)
-		val titleColor = array.getColor(R.styleable.TitleTextAppearance_titleColor, ContextCompat.getColor(context, R.color.darker_gray))
+		val titleColor = array.getColor(R.styleable.TitleTextAppearance_titleColor, context.getColor(R.color.darker_gray))
 		val titleSize = array.getDimensionPixelOffset(R.styleable.TitleTextAppearance_titleSize, DEFAULT_TITLE_FONT_SIZE)
 		val minWidth = array.getDimensionPixelOffset(R.styleable.TitleTextAppearance_minWidth, DEFAULT_MIN_WIDTH)
 		array.recycle()
@@ -149,8 +148,8 @@ class InputItemLayout @JvmOverloads constructor(
 	@SuppressLint("CustomViewStyleable")
 	private fun parseInputStyle(resId: Int, text: String?, hint: String?, inputType: Int) {
 		val array = context.obtainStyledAttributes(resId, R.styleable.InputTextAppearance)
-		val hintColor = array.getColor(R.styleable.InputTextAppearance_hintColor, ContextCompat.getColor(context, R.color.gray))
-		val inputColor = array.getColor(R.styleable.InputTextAppearance_inputColor, ContextCompat.getColor(context, R.color.darker_gray))
+		val hintColor = array.getColor(R.styleable.InputTextAppearance_hintColor, context.getColor(R.color.gray))
+		val inputColor = array.getColor(R.styleable.InputTextAppearance_inputColor, context.getColor(R.color.darker_gray))
 		val textSize = array.getDimensionPixelSize(R.styleable.InputTextAppearance_textSize, DEFAULT_INPUT_FONT_SIZE)
 		array.recycle()
 		
@@ -230,7 +229,7 @@ class InputItemLayout @JvmOverloads constructor(
 	@SuppressLint("CustomViewStyleable")
 	private fun parseLineStyle(resId: Int): Line {
 		val array = context.obtainStyledAttributes(resId, R.styleable.LineAppearance)
-		val color = array.getColor(R.styleable.LineAppearance_color, ContextCompat.getColor(context, R.color.lighter_gray))
+		val color = array.getColor(R.styleable.LineAppearance_color, context.getColor(R.color.lighter_gray))
 		val height = array.getDimensionPixelOffset(R.styleable.LineAppearance_height, DEFAULT_LINE_HEIGHT)
 		val marginStart = array.getDimensionPixelOffset(R.styleable.LineAppearance_marginStart, 0)
 		val marginEnd = array.getDimensionPixelOffset(R.styleable.LineAppearance_marginEnd, 0)

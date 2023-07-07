@@ -5,7 +5,7 @@ import java.io.Serializable
 /**
  * 商品列表
  */
-data class GoodsModel(
+data class GoodsMo(
 	val categoryId: String,
 	val completedNumText: String,
 	val createTime: String,
@@ -20,14 +20,14 @@ data class GoodsModel(
 	val tags: String?
 ) : Serializable
 
+data class GoodsListMo(
+	val total: Int,
+	val list: List<GoodsMo>
+) : Serializable
+
 data class SliderImage(
 	val type: Int,
 	val url: String?
-) : Serializable
-
-data class GoodsListMo(
-	val total: Int,
-	val list: List<GoodsModel>
 ) : Serializable
 
 /**

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="@dimen/dp_130"
+	android:background="@color/white"
+	android:orientation="vertical"
+	tools:context=".dialog.HintDialog"
+	tools:layout_width="@dimen/dp_288">
+	
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/dp_85"
+		android:gravity="center"
+		android:orientation="vertical"
+		android:paddingHorizontal="@dimen/dp_16">
+		
+		<TextView
+			android:id="@+id/title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/dialog_hint_title"
+			android:textColor="@color/black"
+			android:textSize="@dimen/sp_16" />
+		
+		<TextView
+			android:id="@+id/subtitle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/dp_5"
+			android:ellipsize="end"
+			android:maxLines="2"
+			android:textColor="@color/gray"
+			android:textSize="@dimen/sp_14"
+			android:visibility="gone"
+			tools:text="副标题副标题副标题副标题副标题副标题副标题副标题副标题副标题副标题副标题副标题副标题副标题副标题副标题副标题副标题副标题"
+			tools:visibility="visible" />
+	
+	</LinearLayout>
+	
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/dp_1"
+		android:background="@color/line" />
+	
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/dp_44">
+		
+		<TextView
+			android:id="@+id/cancel"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:background="@drawable/selector_dialog_hint_btn"
+			android:gravity="center"
+			android:maxLength="3"
+			android:text="@string/dialog_hint_cancel"
+			android:textColor="@color/dialog_hint_cancel"
+			android:textSize="@dimen/sp_16" />
+		
+		<View
+			android:layout_width="1dp"
+			android:layout_height="match_parent"
+			android:background="@color/line" />
+		
+		<TextView
+			android:id="@+id/confirm"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:background="@drawable/selector_dialog_hint_btn"
+			android:gravity="center"
+			android:maxLength="3"
+			android:text="@string/dialog_hint_confirm"
+			android:textColor="@color/dialog_hint_confirm"
+			android:textSize="@dimen/sp_16" />
+	
+	</LinearLayout>
+
+</LinearLayout>

@@ -34,7 +34,7 @@ class RegisterViewModel : ViewModel() {
 			.enqueue(object : CoCallback<String> {
 				override fun onSuccess(response: CoResponse<String>) {
 					if (response.isSuccessful(false)) {
-						liveData.value = RegisterMo(true, CoResult.success(null), username)
+						liveData.value = RegisterMo(true, CoResult.success(null, response.message), username)
 					} else {
 						liveData.value = RegisterMo(false, CoResult.failure(response.message), username)
 					}

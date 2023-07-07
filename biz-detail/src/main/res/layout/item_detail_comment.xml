@@ -30,8 +30,12 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginBottom="@dimen/dp_30"
+		android:clickable="false"
+		android:focusable="false"
+		android:longClickable="false"
 		android:visibility="gone"
 		app:chipSpacing="@dimen/dp_10"
+		app:selectionRequired="false"
 		app:singleLine="false" />
 	
 	<LinearLayout

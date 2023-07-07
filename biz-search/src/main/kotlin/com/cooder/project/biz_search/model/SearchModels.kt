@@ -7,6 +7,6 @@ data class QuickSearchListMo(
 )
 
 data class KeyWordMo(
-	val id: String,
+	val id: String?,
 	val keyWord: String
 )

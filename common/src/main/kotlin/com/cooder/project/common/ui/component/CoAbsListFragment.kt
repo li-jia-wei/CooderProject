@@ -15,7 +15,7 @@ import com.cooder.library.ui.item.CoDataItem
 import com.cooder.library.ui.item.CoViewHolder
 import com.cooder.library.ui.refresh.CoRefresh
 import com.cooder.library.ui.refresh.overview.CoOverView
-import com.cooder.library.ui.refresh.overview.CoTextOverView
+import com.cooder.library.ui.refresh.overview.CoRotateOverView
 import com.cooder.project.common.R
 import com.cooder.project.common.databinding.FragmentAbsListBinding
 import com.cooder.library.ui.R as RUi
@@ -33,9 +33,9 @@ abstract class CoAbsListFragment : CoBaseFragment<FragmentAbsListBinding>(), CoR
 	
 	protected lateinit var adapter: CoAdapter
 	
-	protected var pageIndex = 1
+	var pageIndex = PAGE_INDEX_INIT
 	
-	private lateinit var refreshHeaderView: CoTextOverView
+	private lateinit var refreshHeaderView: CoOverView
 	
 	private lateinit var layoutManager: RecyclerView.LayoutManager
 	
@@ -48,6 +48,7 @@ abstract class CoAbsListFragment : CoBaseFragment<FragmentAbsListBinding>(), CoR
 	
 	companion object {
 		const val PREFETCH_SIZE = 5
+		const val PAGE_INDEX_INIT = 1
 	}
 	
 	/**
@@ -68,12 +69,11 @@ abstract class CoAbsListFragment : CoBaseFragment<FragmentAbsListBinding>(), CoR
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		
-		refreshHeaderView = CoTextOverView(requireContext())
+		refreshHeaderView = CoRotateOverView(requireContext())
 		binding.refreshLayout.setRefreshOverView(refreshHeaderView)
 		binding.refreshLayout.setRefreshListener(this)
 		layoutManager = createLayoutManager()
 		adapter = CoAdapter(requireContext())
-		
 		binding.recyclerView.layoutManager = layoutManager
 		binding.recyclerView.adapter = adapter
 		
@@ -88,9 +88,7 @@ abstract class CoAbsListFragment : CoBaseFragment<FragmentAbsListBinding>(), CoR
 		binding.loadView.visibility = View.VISIBLE
 		pageIndex = 1
 		
-		enableLoadMore {
-			onLoadMore()
-		}
+		enableLoadMore()
 	}
 	
 	/**
@@ -178,7 +176,7 @@ abstract class CoAbsListFragment : CoBaseFragment<FragmentAbsListBinding>(), CoR
 	/**
 	 * 开启加载更多
 	 */
-	protected fun enableLoadMore(callback: () -> Unit) {
+	private fun enableLoadMore() {
 		binding.recyclerView.enableLoadMore(PREFETCH_SIZE) {
 			if (refreshHeaderView.state == CoOverView.CoRefreshState.STATE_REFRESH) {
 				// 正处于刷新状态
@@ -186,7 +184,7 @@ abstract class CoAbsListFragment : CoBaseFragment<FragmentAbsListBinding>(), CoR
 				@Suppress("LABEL_NAME_CLASH") return@enableLoadMore
 			}
 			pageIndex++
-			callback.invoke()
+			onLoadMore()
 		}
 	}
 	
@@ -208,11 +206,7 @@ abstract class CoAbsListFragment : CoBaseFragment<FragmentAbsListBinding>(), CoR
 	 * 加载更多
 	 */
 	protected open fun onLoadMore() {
-	
-	}
-	
-	protected fun clearAnimation() {
-		this.adapter.clearAnimation()
+		// Nothing
 	}
 	
 	/**
@@ -226,6 +220,6 @@ abstract class CoAbsListFragment : CoBaseFragment<FragmentAbsListBinding>(), CoR
 			}
 			return
 		}
-		pageIndex = 1
+		pageIndex = PAGE_INDEX_INIT
 	}
 }

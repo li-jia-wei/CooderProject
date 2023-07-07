@@ -19,12 +19,13 @@ import com.cooder.library.library.restful.CoRestful
  */
 object ApiFactory {
 	
-	const val KEY_DEGRADE_HTTP = "configure::degrade_http"
+	const val TYPE_DEGRADE_HTTP = "config"
+	const val KEY_DEGRADE_HTTP = "degrade_http"
 	
 	private const val HTTPS = "https://api.devio.org/as/"
 	private const val HTTP = "http://api.devio.org/as/"
 	
-	val degradeToHttp = CoStorage.getCache(KEY_DEGRADE_HTTP, false)!!
+	val degradeToHttp = CoStorage.getCache(TYPE_DEGRADE_HTTP, KEY_DEGRADE_HTTP, false)!!
 	
 	private val baseUrl = if (degradeToHttp) HTTP else HTTPS
 	
@@ -33,7 +34,7 @@ object ApiFactory {
 	init {
 		restful.addInterceptor(BizInterceptor())
 		restful.addInterceptor(HttpCodeInterceptor())
-		CoStorage.saveCache(KEY_DEGRADE_HTTP, false)
+		CoStorage.saveCache(TYPE_DEGRADE_HTTP, KEY_DEGRADE_HTTP, false)
 	}
 	
 	/**

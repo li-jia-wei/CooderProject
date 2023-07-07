@@ -6,13 +6,13 @@ plugins {
 }
 
 android {
-	compileSdk 33
+	compileSdk APP_COMPILE_SDK as int
 	namespace 'com.cooder.project.app'
 	
 	defaultConfig {
 		applicationId 'com.cooder.project.app'
-		minSdk 26
-		targetSdk 33
+		minSdk APP_MIN_SDK as int
+		targetSdk APP_TARGET_SDK as int
 		versionCode APP_VERSION_CODE as int
 		versionName APP_VERSION_NAME
 		

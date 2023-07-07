@@ -1,4 +1,4 @@
-package com.cooder.project.debug.tool.annotation
+package com.cooder.project.debug.annotation
 
 /**
  * 项目：CooderProject
@@ -11,4 +11,4 @@ package com.cooder.project.debug.tool.annotation
  */
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.FUNCTION)
-annotation class CoDebug(val name: String, val hint: String = "", val desc: String = "")
+annotation class Debug(val name: String, val hint: String = "", val desc: String = "")

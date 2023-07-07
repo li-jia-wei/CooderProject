@@ -23,4 +23,8 @@
 	
 	<!-- CoAbsListFragment -->
 	<color name="abs_list_empty">@color/primary</color>
+	
+	<!-- CoHintDialog -->
+	<color name="dialog_hint_cancel">@color/lighter_gray</color>
+	<color name="dialog_hint_confirm">@color/primary</color>
 </resources>

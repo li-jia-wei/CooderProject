@@ -3,13 +3,11 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:minHeight="@dimen/dp_200"
-	android:orientation="vertical"
-	tools:context=".tool.CoDebugToolDialogFragment">
+	tools:context=".DebugToolDialogFragment">
 	
 	<androidx.recyclerview.widget.RecyclerView
 		android:id="@+id/recycler_view"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content" />
+		android:layout_height="@dimen/dp_365" />
 
 </LinearLayout>

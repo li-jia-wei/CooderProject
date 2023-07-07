@@ -1,6 +1,9 @@
 <resources>
 	<string name="search_hint">搜索商品</string>
-	<string name="search_empty_desc">请输入想搜索的商品名称</string>
-	<string name="search_empty_icon">@string/ic_shopping</string>
-	<string name="search_no_quick_search_hint">未找到相关快搜词条</string>
+	
+	<string name="quick_search_no_data_hint">未找到相关快搜词</string>
+	
+	<string name="history_search_recent">最近搜索</string>
+	<string name="history_search_clear">删除</string>
+	<string name="history_search_clear_title">是否删除最近搜索记录？</string>
 </resources>

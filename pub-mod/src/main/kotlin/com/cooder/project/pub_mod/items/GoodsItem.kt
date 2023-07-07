@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.cooder.library.library.util.expends.dpInt
@@ -20,7 +19,7 @@ import com.cooder.project.pub_mod.BR
 import com.cooder.project.pub_mod.R
 import com.cooder.project.pub_mod.databinding.ItemHomeGoodsList1Binding
 import com.cooder.project.pub_mod.databinding.ItemHomeGoodsList2Binding
-import com.cooder.project.pub_mod.model.GoodsModel
+import com.cooder.project.pub_mod.model.GoodsMo
 
 /**
  * 项目：CooderProject
@@ -32,11 +31,9 @@ import com.cooder.project.pub_mod.model.GoodsModel
  * 介绍：商品Item
  */
 open class GoodsItem(
-	private val goodsModel: GoodsModel,
-	private val hotTab: Boolean,
-	private val span: Int,
-	private val index: Int
-) : CoDataItem<GoodsModel, CoDataBindingHolder<ViewDataBinding>>() {
+	private val goodsModel: GoodsMo,
+	private val tab: ITab
+) : CoDataItem<GoodsMo, CoDataBindingHolder<ViewDataBinding>>() {
 	
 	companion object {
 		const val IMAGE_CORNER = 10
@@ -44,7 +41,7 @@ open class GoodsItem(
 	}
 	
 	override fun getViewHolder(inflater: LayoutInflater, parent: ViewGroup): CoDataBindingHolder<ViewDataBinding> {
-		val binding = if (hotTab) {
+		val binding = if (tab is HotTab) {
 			ItemHomeGoodsList1Binding.inflate(inflater, parent, false)
 		} else {
 			ItemHomeGoodsList2Binding.inflate(inflater, parent, false)
@@ -75,19 +72,19 @@ open class GoodsItem(
 				labelContainer.visibility = View.GONE
 			}
 		}
-		if (!hotTab) {
+		if (tab is Tab) {
 			val param = holder.itemView.layoutParams as RecyclerView.LayoutParams
-			if (index % span == 0) {
+			if (tab.index % tab.span == 0) {
 				param.rightMargin = MARGIN
 				param.leftMargin = MARGIN * 2
-			} else if (index % span == span - 1) {
+			} else if (tab.index % tab.span == tab.span - 1) {
 				param.leftMargin = MARGIN
 				param.rightMargin = MARGIN * 2
 			} else {
 				param.leftMargin = MARGIN
 				param.rightMargin = MARGIN
 			}
-			if (index / span == 0) {
+			if (tab.index / tab.span == 0) {
 				param.topMargin = MARGIN * 2
 			} else {
 				param.topMargin = MARGIN
@@ -105,7 +102,7 @@ open class GoodsItem(
 	
 	private fun createLabelView(context: Context, hasStartMargin: Boolean): TextView {
 		val labelView = TextView(context)
-		labelView.setTextColor(ContextCompat.getColor(context, R.color.home_goods_label_font))
+		labelView.setTextColor(context.getColor(R.color.home_goods_label_font))
 		labelView.textSize = 9F
 		labelView.gravity = Gravity.CENTER
 		labelView.setBackgroundResource(R.drawable.shape_goods_label)

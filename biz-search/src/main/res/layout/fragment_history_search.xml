@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	tools:context=".fragment.history.HistorySearchFragment">
+	
+	<RelativeLayout
+		android:id="@+id/history_title"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/dp_30"
+		android:layout_marginTop="@dimen/dp_10">
+		
+		<com.cooder.library.ui.view.IconFontTextView
+			android:id="@+id/history_icon"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_marginStart="@dimen/dp_16"
+			android:text="@string/ic_time_fill"
+			android:textColor="@color/history_search_icon"
+			android:textSize="@dimen/sp_18" />
+		
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_marginStart="@dimen/dp_6"
+			android:layout_toEndOf="@+id/history_icon"
+			android:text="@string/history_search_recent"
+			android:textColor="@color/history_search_text"
+			android:textSize="@dimen/sp_14" />
+		
+		<com.cooder.library.ui.view.IconFontTextView
+			android:id="@+id/history_clear"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_alignParentEnd="true"
+			android:layout_centerVertical="true"
+			android:layout_marginEnd="@dimen/dp_12"
+			android:gravity="center"
+			android:paddingHorizontal="@dimen/dp_4"
+			android:text="@string/ic_delete"
+			android:textColor="@color/history_search_icon"
+			android:textSize="@dimen/sp_18"
+			tools:ignore="RelativeOverlap" />
+	
+	</RelativeLayout>
+	
+	<com.google.android.material.chip.ChipGroup
+		android:id="@+id/history_group"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginHorizontal="@dimen/dp_16"
+		android:layout_marginTop="@dimen/dp_10"
+		android:layout_marginBottom="@dimen/dp_30"
+		app:chipSpacing="@dimen/dp_8"
+		app:singleLine="false"
+		app:singleSelection="true" />
+
+</LinearLayout>

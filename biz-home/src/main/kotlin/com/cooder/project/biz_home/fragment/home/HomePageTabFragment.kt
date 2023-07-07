@@ -13,6 +13,8 @@ import com.cooder.project.biz_home.MainActivity
 import com.cooder.project.biz_home.model.HomeMo
 import com.cooder.project.common.ui.component.CoAbsListFragment
 import com.cooder.project.pub_mod.items.GoodsItem
+import com.cooder.project.pub_mod.items.HotTab
+import com.cooder.project.pub_mod.items.Tab
 
 /**
  * 项目：CooderProject
@@ -51,16 +53,16 @@ class HomePageTabFragment : CoAbsListFragment() {
 		super.onViewCreated(view, savedInstanceState)
 		
 		// 查询数据
-		queryTabCategoryList(CacheStrategy.Type.CACHE_ONLY_NET_CACHE)
-		
-		enableLoadMore {
-			queryTabCategoryList(CacheStrategy.Type.NET_ONLY)
-		}
+		doQueryTabCategoryList(CacheStrategy.Type.CACHE_ONLY_NET_CACHE)
+	}
+	
+	override fun onLoadMore() {
+		doQueryTabCategoryList(CacheStrategy.Type.NET_ONLY)
 	}
 	
 	override fun onRefresh() {
 		super.onRefresh()
-		queryTabCategoryList(CacheStrategy.Type.NET_ONLY)
+		doQueryTabCategoryList(CacheStrategy.Type.NET_ONLY)
 	}
 	
 	override fun createLayoutManager(): RecyclerView.LayoutManager {
@@ -68,7 +70,7 @@ class HomePageTabFragment : CoAbsListFragment() {
 		return if (isHotTab) super.createLayoutManager() else GridLayoutManager(context, 2)
 	}
 	
-	private fun queryTabCategoryList(cacheStrategyType: CacheStrategy.Type) {
+	private fun doQueryTabCategoryList(cacheStrategyType: CacheStrategy.Type) {
 		viewModel.queryTabCategoryList(categoryId!!, pageIndex, 10, cacheStrategyType).observe(viewLifecycleOwner) {
 			if (it.hasData()) {
 				updateUI(it.data!!)
@@ -92,7 +94,8 @@ class HomePageTabFragment : CoAbsListFragment() {
 			dataItems += SubcategoryItem(it)
 		}
 		data.goodsList?.forEachIndexed { index, goodsModel ->
-			dataItems += GoodsItem(goodsModel, categoryId == DEFAULT_HOT_TAB_CATEGORY_ID, GOODS_ITEM_SPAN, index)
+			val tab = if (categoryId == DEFAULT_HOT_TAB_CATEGORY_ID) HotTab() else Tab(GOODS_ITEM_SPAN, index)
+			dataItems += GoodsItem(goodsModel, tab)
 		}
 		finishRefresh(dataItems)
 		fixTabBottomPadding()

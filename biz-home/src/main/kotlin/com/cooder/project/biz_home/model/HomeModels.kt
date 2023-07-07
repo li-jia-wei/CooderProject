@@ -1,6 +1,6 @@
 package com.cooder.project.biz_home.model
 
-import com.cooder.project.pub_mod.model.GoodsModel
+import com.cooder.project.pub_mod.model.GoodsMo
 import java.io.Serializable
 
 /**
@@ -14,7 +14,7 @@ import java.io.Serializable
  */
 data class HomeMo(
 	val bannerList: List<HomeBanner>?,
-	val goodsList: List<GoodsModel>?,
+	val goodsList: List<GoodsMo>?,
 	val subcategoryList: List<SubcategoryMo>?
 ) : Serializable
 

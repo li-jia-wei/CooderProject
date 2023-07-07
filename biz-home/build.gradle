@@ -6,14 +6,14 @@ plugins {
 
 android {
 	namespace 'com.cooder.project.biz_home'
-	compileSdk 33
+	compileSdk APP_COMPILE_SDK as int
 	
 	defaultConfig {
-		minSdk 26
+		minSdk APP_MIN_SDK as int
 		
 		testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 		consumerProguardFiles 'consumer-rules.pro'
-		targetSdk 33
+		targetSdk APP_TARGET_SDK as int
 		
 		javaCompileOptions {
 			annotationProcessorOptions {

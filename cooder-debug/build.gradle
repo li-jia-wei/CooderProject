@@ -6,11 +6,11 @@ plugins {
 
 android {
 	namespace 'com.cooder.project.debug'
-	compileSdk 33
+	compileSdk APP_COMPILE_SDK as int
 	
 	defaultConfig {
-		minSdk 26
-		targetSdk 33
+		minSdk APP_MIN_SDK as int
+		targetSdk APP_TARGET_SDK as int
 		
 		testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 		consumerProguardFiles 'consumer-rules.pro'
@@ -25,7 +25,9 @@ android {
 			buildConfigField("int", "VERSION_CODE", "${APP_VERSION_CODE}")
 			buildConfigField("String", "VERSION_NAME", "\"${APP_VERSION_NAME}\"")
 			buildConfigField("String", "BUILD_TIME", "\"${Build.buildTime()}\"")
-			buildConfigField("String", "BUILD_DATE", "\"${Build.buildDate()}\"")
+			buildConfigField("String", "COMPILE_SDK", "\"${APP_COMPILE_SDK}\"")
+			buildConfigField("String", "MIN_SDK", "\"${APP_MIN_SDK}\"")
+			buildConfigField("String", "TARGET_SDK", "\"${APP_TARGET_SDK}\"")
 		}
 	}
 	compileOptions {
@@ -48,7 +50,6 @@ android {
 dependencies {
 	
 	implementation project(':common')
-	implementation project(':cooder-library')
 	
 	implementation libs.core.kts
 	implementation libs.appcompat
@@ -66,19 +67,10 @@ class Build {
 	
 	/**
 	 * 构建时间
-	 * @return 星期 时:分:秒
+	 * @return 年-月-日 时:分:秒
 	 */
 	static def buildTime() {
 		def date = new Date()
-		return date.format('HH:mm:ss', TimeZone.getTimeZone('GMT+08:00'))
-	}
-	
-	/**
-	 * 构建
-	 * @return 年-月-日
-	 */
-	static def buildDate() {
-		def date = new Date()
-		return date.format('YYYY-MM-dd', TimeZone.getTimeZone('GMT+08:00'))
+		return date.format('YYYY-MM-dd HH:mm:ss', TimeZone.getTimeZone('GMT+08:00'))
 	}
 }

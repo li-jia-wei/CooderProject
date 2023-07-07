@@ -11,7 +11,7 @@
 		
 		<variable
 			name="goodsModel"
-			type="com.cooder.project.pub_mod.model.GoodsModel" />
+			type="com.cooder.project.pub_mod.model.GoodsMo" />
 	</data>
 	
 	<androidx.constraintlayout.widget.ConstraintLayout

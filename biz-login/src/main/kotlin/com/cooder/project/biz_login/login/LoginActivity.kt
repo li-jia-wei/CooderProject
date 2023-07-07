@@ -69,14 +69,16 @@ class LoginActivity : CoBaseActivity<ActivityLoginBinding>() {
 	}
 	
 	private fun login(username: String, password: String) {
+		binding.actionLogin.isClickable = false
 		viewModel.login(username, password).observe(this) {
+			binding.actionLogin.isClickable = true
 			if (it.hasData()) {
 				showToast(R.string.login_success)
 				LoginServiceProvider.loginSuccess(it.data!!)
 				onBackPressedResultOk()
 			} else {
 				binding.password.setText("")
-				showToast(getString(R.string.login_failure, it.msg))
+				showToast(R.string.login_failure, it.msg)
 			}
 		}
 	}

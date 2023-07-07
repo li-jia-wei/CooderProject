@@ -30,7 +30,7 @@ class LoginViewModel : ViewModel() {
 				if (response.isSuccessful()) {
 					liveData.value = CoResult.success(response.data)
 				} else {
-					liveData.value = CoResult.success(response.message)
+					liveData.value = CoResult.failure(response.message)
 				}
 			}
 			

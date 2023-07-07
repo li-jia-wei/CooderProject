@@ -1,4 +1,4 @@
-package com.cooder.project.biz_search.ui
+package com.cooder.project.biz_search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -21,6 +21,10 @@ import com.cooder.project.pub_mod.model.GoodsListMo
  * 介绍：SearchViewModel
  */
 class SearchViewModel : ViewModel() {
+	
+	private companion object {
+		private const val PAGE_SIZE = 10
+	}
 	
 	/**
 	 * 搜索联想词
@@ -47,22 +51,23 @@ class SearchViewModel : ViewModel() {
 	/**
 	 * 搜索商品
 	 */
-	fun querySearchGoods(keyWord: String, pageIndex: Int, pageSize: Int): LiveData<CoResult<GoodsListMo>> {
+	fun queryGoodsSearch(keyWord: String, pageIndex: Int): LiveData<CoResult<GoodsListMo>> {
 		val liveData = MutableLiveData<CoResult<GoodsListMo>>()
-		ApiFactory.create(GoodsApi::class.java).querySearchGoods(keyWord, pageIndex, pageSize).enqueue(object : CoCallback<GoodsListMo> {
-			override fun onSuccess(response: CoResponse<GoodsListMo>) {
-				if (response.isSuccessful()) {
-					liveData.value = CoResult.success(response.data)
-				} else {
-					liveData.value = CoResult.failure(response.message)
+		ApiFactory.create(GoodsApi::class.java).querySearchGoods(keyWord, pageIndex, PAGE_SIZE)
+			.enqueue(object : CoCallback<GoodsListMo> {
+				override fun onSuccess(response: CoResponse<GoodsListMo>) {
+					if (response.isSuccessful()) {
+						liveData.value = CoResult.success(response.data)
+					} else {
+						liveData.value = CoResult.failure(response.message)
+					}
 				}
-			}
-			
-			override fun onFailed(throwable: Throwable) {
-				super.onFailed(throwable)
-				liveData.value = CoResult.failure(throwable.message)
-			}
-		})
+				
+				override fun onFailed(throwable: Throwable) {
+					super.onFailed(throwable)
+					liveData.value = CoResult.failure(throwable.message)
+				}
+			})
 		return liveData
 	}
 }

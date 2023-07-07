@@ -12,7 +12,6 @@ import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.core.content.ContextCompat
 import com.cooder.library.ui.view.IconFontTextView
 import com.cooder.project.common.R
 
@@ -69,7 +68,7 @@ class EmptyView @JvmOverloads constructor(
 		this.iconView.setText(resId)
 		this.iconView.visibility = View.VISIBLE
 		if (colorId != -1) {
-			this.iconView.setTextColor(ContextCompat.getColor(context, colorId))
+			this.iconView.setTextColor(context.getColor(colorId))
 		}
 		this.imageView.visibility = View.GONE
 	}

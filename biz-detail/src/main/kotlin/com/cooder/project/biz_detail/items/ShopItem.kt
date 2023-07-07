@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cooder.library.ui.item.CoAdapter
@@ -25,7 +24,8 @@ import com.cooder.project.biz_detail.databinding.ItemDetailShopGoodsBinding
 import com.cooder.project.biz_detail.model.DetailMo
 import com.cooder.project.common.ui.view.expends.load
 import com.cooder.project.pub_mod.items.GoodsItem
-import com.cooder.project.pub_mod.model.GoodsModel
+import com.cooder.project.pub_mod.items.Tab
+import com.cooder.project.pub_mod.model.GoodsMo
 
 /**
  * 项目：CooderProject
@@ -73,7 +73,7 @@ class ShopItem(
 					tag.layoutParams = params
 					tag.gravity = Gravity.CENTER
 					tag.textSize = 14F
-					tag.setTextColor(ContextCompat.getColor(context, R.color.gray))
+					tag.setTextColor(context.getColor(R.color.gray))
 					val name = tags[i * 2]
 					val level = tags[i * 2 + 1]
 					tag.text = spanTag(context, name, level)
@@ -103,7 +103,7 @@ class ShopItem(
 		}
 	}
 	
-	private class ShopGoodsItem(model: GoodsModel, index: Int) : GoodsItem(model, false, SHOP_GOODS_ITEM_SPAN, index) {
+	private class ShopGoodsItem(model: GoodsMo, index: Int) : GoodsItem(model, Tab(SHOP_GOODS_ITEM_SPAN, index)) {
 		
 		override fun getViewHolder(inflater: LayoutInflater, parent: ViewGroup): CoDataBindingHolder<ViewDataBinding> {
 			val binding = ItemDetailShopGoodsBinding.inflate(inflater, parent, false)
@@ -129,20 +129,16 @@ class ShopItem(
 	private fun spanTag(context: Context, name: String, level: String): CharSequence {
 		val ssLevel = SpannableString(level)
 		ssLevel.setSpan(
-			ForegroundColorSpan(
-				ContextCompat.getColor(
-					context,
-					R.color.detail_shop_tag_level_fg
-				)
-			), 0, ssLevel.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+			ForegroundColorSpan(context.getColor(R.color.detail_shop_tag_level_fg)),
+			0,
+			ssLevel.length,
+			Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
 		)
 		ssLevel.setSpan(
-			BackgroundColorSpan(
-				ContextCompat.getColor(
-					context,
-					R.color.detail_shop_tag_level_bg
-				)
-			), 0, ssLevel.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+			BackgroundColorSpan(context.getColor(R.color.detail_shop_tag_level_bg)),
+			0,
+			ssLevel.length,
+			Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
 		)
 		val ssbTag = SpannableStringBuilder()
 		ssbTag.append(name)

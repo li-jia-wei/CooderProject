@@ -1,4 +1,4 @@
-package com.cooder.project.debug.tool.tools
+package com.cooder.project.debug.tools
 
 import android.content.Intent
 import android.os.Process
@@ -6,9 +6,10 @@ import android.widget.Toast
 import com.cooder.library.library.cache.CoStorage
 import com.cooder.library.library.log.CoLog
 import com.cooder.library.library.util.AppGlobals
+import com.cooder.project.common.http.ApiFactory
 import com.cooder.project.debug.BuildConfig
-import com.cooder.project.debug.tool.annotation.CoDebug
-import com.cooder.project.debug.tool.annotation.CoOrder
+import com.cooder.project.debug.annotation.Debug
+import com.cooder.project.debug.annotation.Order
 import java.io.File
 
 /**
@@ -25,7 +26,7 @@ class DebugTools {
 	/**
 	 * 构建版本名称
 	 */
-	@CoOrder(order = 1)
+	@Order(order = 1)
 	fun buildVersionName(): String {
 		// 版本名称：2.0.5
 		return "构建版本名称：${BuildConfig.VERSION_NAME}"
@@ -34,7 +35,7 @@ class DebugTools {
 	/**
 	 * 构建版本号
 	 */
-	@CoOrder(order = 2)
+	@Order(order = 2)
 	fun buildVersionCode(): String {
 		return "构建版本号：${BuildConfig.VERSION_CODE}"
 	}
@@ -42,24 +43,21 @@ class DebugTools {
 	/**
 	 * 构建时间
 	 */
-	@CoOrder(order = 3)
+	@Order(order = 3)
 	fun buildTime(): String {
 		return "构建时间：${BuildConfig.BUILD_TIME}"
 	}
 	
-	/**
-	 * 构建日期
-	 */
-	@CoOrder(order = 4)
-	fun buildDate(): String {
-		return "构建日期：${BuildConfig.BUILD_DATE}"
+	@Order(order = 4)
+	fun buildSdk(): String {
+		return "编译：${BuildConfig.COMPILE_SDK}  最小：${BuildConfig.MIN_SDK}  目标：${BuildConfig.TARGET_SDK}"
 	}
 	
 	/**
 	 * 构建环境
 	 * @return debug or release
 	 */
-	@CoOrder(order = 5)
+	@Order(order = 5)
 	fun buildEnvironment(): String {
 		return "构建环境：${BuildConfig.BUILD_TYPE}"
 	}
@@ -67,16 +65,16 @@ class DebugTools {
 	/**
 	 * 降级成http
 	 */
-	@CoOrder(order = 6)
-	@CoDebug(name = "开启https降级", hint = "重\n启", desc = "降级成http，可以使用抓包工具明文抓包")
+	@Order(order = 6)
+	@Debug(name = "开启https降级", hint = "重\n启", desc = "降级成http，可以使用抓包工具明文抓包")
 	fun degradeToHttp() {
 		val context = AppGlobals.getBaseContext()
-		if (com.cooder.project.common.http.ApiFactory.degradeToHttp) {
+		if (ApiFactory.degradeToHttp) {
 			Toast.makeText(context, "已经降级成http了", Toast.LENGTH_SHORT).show()
 			return
 		}
 		Toast.makeText(context, "正在重启app", Toast.LENGTH_SHORT).show()
-		CoStorage.saveCache(com.cooder.project.common.http.ApiFactory.KEY_DEGRADE_HTTP, true)
+		CoStorage.saveCache(ApiFactory.TYPE_DEGRADE_HTTP, ApiFactory.KEY_DEGRADE_HTTP, true)
 		val intent = context.packageManager.getLaunchIntentForPackage(context.packageName)
 		intent?.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 		intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -84,8 +82,8 @@ class DebugTools {
 		Process.killProcess(Process.myPid())
 	}
 	
-	@CoOrder(order = 7)
-	@CoDebug(name = "清理缓存", desc = "将清理应用缓存在内存中的数据")
+	@Order(order = 7)
+	@Debug(name = "清理缓存", desc = "将清理应用缓存在内存中的数据")
 	fun clearCache() {
 		val context = AppGlobals.getBaseContext()
 		val deleteCacheDirSuccess = deleteDir(context.cacheDir, true)
@@ -97,8 +95,8 @@ class DebugTools {
 		}
 	}
 	
-	@CoOrder(order = 8)
-	@CoDebug(name = "清理储存", desc = "将清理用户存储在应用上的数据")
+	@Order(order = 8)
+	@Debug(name = "清理储存", desc = "将清理用户存储在应用上的数据")
 	fun clearData() {
 		val context = AppGlobals.getBaseContext()
 		val success = deleteDir(context.dataDir, false)

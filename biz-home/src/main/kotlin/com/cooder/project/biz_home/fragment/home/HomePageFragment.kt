@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProvider
@@ -88,8 +87,8 @@ class HomePageFragment : CoBaseFragment<FragmentHomePageBinding>() {
 	 */
 	private fun updateUI(data: List<TabCategoryMo>) {
 		if (!isAlive() || data.isEmpty()) return
-		val defaultColor = ContextCompat.getColor(requireContext(), R.color.home_tab_top_default)
-		val tintColor = ContextCompat.getColor(requireContext(), R.color.home_tab_top_tint)
+		val defaultColor = requireContext().getColor(R.color.home_tab_top_default)
+		val tintColor = requireContext().getColor(R.color.home_tab_top_tint)
 		val tabTopInfos = mutableListOf<CoTabTopInfo<Int>>()
 		data.forEachIndexed { _, tabCategory ->
 			val tabTopInfo = CoTabTopInfo(tabCategory.categoryName, defaultColor, tintColor)

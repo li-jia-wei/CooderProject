@@ -17,14 +17,20 @@ import com.cooder.library.library.util.expends.immersiveStatusBar
 import com.cooder.library.ui.item.CoAdapter
 import com.cooder.library.ui.item.CoDataItem
 import com.cooder.project.biz_detail.databinding.ActivityDetailBinding
-import com.cooder.project.biz_detail.items.*
+import com.cooder.project.biz_detail.items.AttrItem
+import com.cooder.project.biz_detail.items.CommentItem
+import com.cooder.project.biz_detail.items.GalleryItem
+import com.cooder.project.biz_detail.items.HeaderItem
+import com.cooder.project.biz_detail.items.ShopItem
+import com.cooder.project.biz_detail.items.SimilarTitleItem
 import com.cooder.project.biz_detail.model.DetailMo
 import com.cooder.project.common.route.CoRoute
 import com.cooder.project.common.route.RoutePath
 import com.cooder.project.common.ui.component.CoBaseActivity
 import com.cooder.project.common.ui.view.EmptyView
 import com.cooder.project.pub_mod.items.GoodsItem
-import com.cooder.project.pub_mod.model.GoodsModel
+import com.cooder.project.pub_mod.items.Tab
+import com.cooder.project.pub_mod.model.GoodsMo
 import com.cooder.project.pub_mod.model.selectPrice
 import com.cooder.project.service_login.LoginServiceProvider
 import com.cooder.library.ui.R as RUi
@@ -47,7 +53,7 @@ class DetailActivity : CoBaseActivity<ActivityDetailBinding>() {
 	
 	@JvmField
 	@Autowired
-	var goodsModel: GoodsModel? = null
+	var goodsModel: GoodsMo? = null
 	
 	private companion object {
 		private const val SIMILAR_GOODS_ITEM_SPAN = 2
@@ -179,7 +185,7 @@ class DetailActivity : CoBaseActivity<ActivityDetailBinding>() {
 		detailModel.similarGoods?.let { models ->
 			dataItems += SimilarTitleItem()
 			models.forEachIndexed { index, goodsModel ->
-				dataItems += GoodsItem(goodsModel, false, SIMILAR_GOODS_ITEM_SPAN, index)
+				dataItems += GoodsItem(goodsModel, Tab(SIMILAR_GOODS_ITEM_SPAN, index))
 			}
 		}
 		

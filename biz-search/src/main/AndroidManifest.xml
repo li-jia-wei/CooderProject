@@ -4,7 +4,7 @@
 	
 	<application>
 		<activity
-			android:name=".ui.SearchActivity"
+			android:name=".SearchActivity"
 			android:exported="false"
 			android:screenOrientation="portrait"
 			tools:ignore="LockedOrientationActivity" />

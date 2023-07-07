@@ -12,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.cooder.library.library.util.expends.dpInt
 import com.cooder.library.ui.banner.core.CoBannerMo
@@ -145,7 +144,7 @@ class ProfileFragment : CoBaseFragment<FragmentProfileBinding>() {
 		
 		// 设置字体颜色
 		ssTop.setSpan(
-			ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.black)), 0, ssTop.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+			ForegroundColorSpan(requireContext().getColor(R.color.black)), 0, ssTop.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
 		)
 		// 设置字体大小
 		ssTop.setSpan(AbsoluteSizeSpan(18, true), 0, ssTop.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
