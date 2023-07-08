@@ -15,16 +15,17 @@ import com.cooder.project.pub_mod.model.GoodsMo
  * 介绍：当搜索到内容时显示
  */
 class GoodsSearchFragment(
-	private val doLoadMoreGoodsSearch: (isInit: Boolean) -> Unit
+	private val doLoadMore: () -> Unit,
+	private val doRefresh: () -> Unit
 ) : CoAbsListFragment() {
 	
 	override fun onLoadMore() {
-		doLoadMoreGoodsSearch.invoke(false)
+		doLoadMore.invoke()
 	}
 	
 	override fun onRefresh() {
 		super.onRefresh()
-		doLoadMoreGoodsSearch.invoke(true)
+		doRefresh.invoke()
 	}
 	
 	fun bindData(goodsList: List<GoodsMo>) {

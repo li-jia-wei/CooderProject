@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="@dimen/dp_70"
+	android:background="@color/white">
+	
+	<TextView
+		android:id="@+id/hint"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerInParent="true"
+		android:textColor="@color/gray"
+		tools:text="@string/empty_search_hint_1" />
+	
+	<View
+		android:id="@+id/line"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/dp_1"
+		android:layout_alignParentBottom="true"
+		android:background="@color/background" />
+
+</RelativeLayout>

@@ -30,7 +30,7 @@ class HeaderItem(
 	private val goodsName: String?
 ) : CoDataItem<DetailMo, CoViewBindingHolder<ItemDetailHeaderBinding>>() {
 	
-	override fun getViewHolder(inflater: LayoutInflater, parent: ViewGroup): CoViewBindingHolder<ItemDetailHeaderBinding>? {
+	override fun getViewHolder(inflater: LayoutInflater, parent: ViewGroup): CoViewBindingHolder<ItemDetailHeaderBinding> {
 		val binding = ItemDetailHeaderBinding.inflate(inflater, parent, false)
 		return CoViewBindingHolder(binding)
 	}

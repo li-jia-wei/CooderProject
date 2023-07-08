@@ -21,7 +21,7 @@ class HistorySearchViewModel : ViewModel() {
 	private var histories = mutableListOf<String>()
 	
 	private companion object {
-		private const val TYPE_SEARCH_HISTORY = "search"
+		private const val TYPE_SEARCH = "search"
 		private const val KEY_SEARCH_HISTORY = "history"
 		private const val MAX_HISTORY_SIZE = 20
 	}
@@ -38,7 +38,7 @@ class HistorySearchViewModel : ViewModel() {
 			if (histories.size > MAX_HISTORY_SIZE) {
 				histories.removeLast()
 			}
-			CoStorage.saveCache(TYPE_SEARCH_HISTORY, KEY_SEARCH_HISTORY, histories)
+			CoStorage.saveCache(TYPE_SEARCH, KEY_SEARCH_HISTORY, histories)
 		}
 	}
 	
@@ -48,7 +48,7 @@ class HistorySearchViewModel : ViewModel() {
 	fun queryHistorySearch(): LiveData<CoResult<List<String>>> {
 		val liveData = MutableLiveData<CoResult<List<String>>>()
 		CoExecutor.execute {
-			this.histories = CoStorage.getCache(TYPE_SEARCH_HISTORY, KEY_SEARCH_HISTORY, mutableListOf())!!
+			this.histories = CoStorage.getCache(TYPE_SEARCH, KEY_SEARCH_HISTORY, mutableListOf())!!
 			liveData.postValue(CoResult.success(histories))
 		}
 		return liveData
@@ -56,7 +56,7 @@ class HistorySearchViewModel : ViewModel() {
 	
 	fun clearHistorySearch() {
 		CoExecutor.execute {
-			CoStorage.deleteCache(TYPE_SEARCH_HISTORY, KEY_SEARCH_HISTORY)
+			CoStorage.deleteCache(TYPE_SEARCH, KEY_SEARCH_HISTORY)
 		}
 	}
 }

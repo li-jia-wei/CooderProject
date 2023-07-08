@@ -27,7 +27,7 @@ class QuickSearchItem(
 	private val highlight: String?,
 	private val callback: ((String) -> Unit)?,
 	private val type: QuickSearchType
-) : CoDataItem<String, CoViewBindingHolder<ItemQuickSearchBinding>>() {
+) : CoDataItem<Any, CoViewBindingHolder<ItemQuickSearchBinding>>() {
 	
 	override fun getViewHolder(inflater: LayoutInflater, parent: ViewGroup): CoViewBindingHolder<ItemQuickSearchBinding> {
 		return CoViewBindingHolder(ItemQuickSearchBinding.inflate(inflater, parent, false))

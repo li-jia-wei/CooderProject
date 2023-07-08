@@ -1,11 +1,11 @@
 package com.cooder.project.biz_search.fragment.empty
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import com.cooder.project.biz_search.databinding.FragmentEmptySearchBinding
-import com.cooder.project.common.ui.component.CoBaseFragment
+import com.cooder.library.ui.item.CoDataItem
+import com.cooder.library.ui.item.CoViewHolder
+import com.cooder.project.common.ui.component.CoAbsListFragment
+import com.cooder.project.pub_mod.items.GoodsItem
+import com.cooder.project.pub_mod.items.HotTab
+import com.cooder.project.pub_mod.model.GoodsMo
 
 /**
  * 项目：CooderProject
@@ -16,14 +16,29 @@ import com.cooder.project.common.ui.component.CoBaseFragment
  *
  * 介绍：当搜索不到内容时显示
  */
-class EmptySearchFragment : CoBaseFragment<FragmentEmptySearchBinding>() {
+class EmptySearchFragment(
+	private val doLoadMore: () -> Unit,
+	private val doRefresh: () -> Unit
+) : CoAbsListFragment() {
 	
-	override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentEmptySearchBinding {
-		return FragmentEmptySearchBinding.inflate(inflater, container, false)
+	override fun onLoadMore() {
+		doLoadMore.invoke()
 	}
 	
-	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		super.onViewCreated(view, savedInstanceState)
-		
+	override fun onRefresh() {
+		super.onRefresh()
+		doRefresh.invoke()
+	}
+	
+	fun bindData(goodsList: List<GoodsMo>?, isInit: Boolean, hasLastSuccessfulSearch: Boolean) {
+		if (isNotAlive()) return
+		val dataItems = mutableListOf<CoDataItem<*, out CoViewHolder>>()
+		if (isInit) {
+			dataItems += EmptySearchItem(hasLastSuccessfulSearch)
+		}
+		goodsList?.forEach {
+			dataItems += GoodsItem(it, HotTab())
+		}
+		finishRefresh(dataItems)
 	}
 }

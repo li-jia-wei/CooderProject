@@ -11,6 +11,7 @@ import com.cooder.project.biz_search.fragment.empty.EmptySearchFragment
 import com.cooder.project.biz_search.fragment.goods.GoodsSearchFragment
 import com.cooder.project.biz_search.fragment.history.HistorySearchFragment
 import com.cooder.project.biz_search.fragment.quick.QuickSearchFragment
+import com.cooder.project.common.R
 import com.cooder.project.common.route.RoutePath
 import com.cooder.project.common.ui.component.CoBaseActivity
 import com.cooder.project.common.ui.component.CoBaseFragment
@@ -31,8 +32,8 @@ class SearchActivity : CoBaseActivity<ActivitySearchBinding>() {
 	
 	private val quickSearchFragment by lazy { QuickSearchFragment() }
 	private val historySearchFragment by lazy { HistorySearchFragment(::doQueryGoodsSearch) }
-	private val goodsSearchFragment by lazy { GoodsSearchFragment(::doLoadMoreGoodsSearch) }
-	private val emptySearchFragment by lazy { EmptySearchFragment() }
+	private val goodsSearchFragment by lazy { GoodsSearchFragment(::doLoadMoreFromGoodsSearch, ::doRefreshFromGoodsSearch) }
+	private val emptySearchFragment by lazy { EmptySearchFragment(::doLoadMoreFromEmptySearch, ::doRefreshFromEmptySearch) }
 	
 	private var keyWord: String? = null
 	
@@ -46,7 +47,7 @@ class SearchActivity : CoBaseActivity<ActivitySearchBinding>() {
 		
 		initSearchView()
 		
-		doQueryHistorySearch()
+		toHistorySearchFragment()
 	}
 	
 	private fun initSearchView() {
@@ -62,7 +63,7 @@ class SearchActivity : CoBaseActivity<ActivitySearchBinding>() {
 			if (it.isNotEmpty()) {
 				doQueryQuickSearch(it)
 			} else {
-				doQueryHistorySearch()
+				toHistorySearchFragment()
 			}
 		}
 		binding.searchView.closeHint()
@@ -76,17 +77,26 @@ class SearchActivity : CoBaseActivity<ActivitySearchBinding>() {
 					doQueryGoodsSearch(it, true)
 				}
 			} else {
-				doQueryHistorySearch()
+				toHistorySearchFragment()
 			}
 		}
 	}
 	
 	/**
-	 * 加载更多商品
+	 * 在商品页面加载更多
 	 */
-	private fun doLoadMoreGoodsSearch(isInit: Boolean) {
+	private fun doLoadMoreFromGoodsSearch() {
 		keyWord?.also {
-			doQueryGoodsSearch(it, isInit)
+			doQueryGoodsSearch(it, false)
+		}
+	}
+	
+	/**
+	 * 在商品页面刷新
+	 */
+	private fun doRefreshFromGoodsSearch() {
+		keyWord?.also {
+			doQueryGoodsSearch(it, true)
 		}
 	}
 	
@@ -105,27 +115,80 @@ class SearchActivity : CoBaseActivity<ActivitySearchBinding>() {
 			binding.searchView.setKeyWordCloseClickable(true)
 			if ((it.hasData() && it.data!!.list.isNotEmpty()) || !isInit) {
 				showFragment(goodsSearchFragment)
+				viewModel.saveLastSuccessfulSearchKeyWord(keyWord)
 				goodsSearchFragment.bindData(it.data!!.list)
 			} else {
-				showFragment(emptySearchFragment)
+				doEmptySearchFragment(true)
 			}
 		}
 	}
 	
-	private fun doQueryHistorySearch() {
-		showFragment(historySearchFragment)
+	/**
+	 * 前往历史页
+	 */
+	private fun toHistorySearchFragment(animation: Boolean = false) {
+		showFragment(historySearchFragment, animation)
 	}
 	
-	private fun showFragment(fragment: CoBaseFragment<*>) {
+	/**
+	 * 在空页面加载更多商品
+	 */
+	private fun doLoadMoreFromEmptySearch() {
+		doEmptySearchFragment(false)
+	}
+	
+	/**
+	 * 在空商品页面上刷新更多商品
+	 */
+	private fun doRefreshFromEmptySearch() {
+		doEmptySearchFragment(true)
+	}
+	
+	/**
+	 * 执行未找到商品页
+	 */
+	private fun doEmptySearchFragment(isInit: Boolean) {
+		if (isInit) {
+			emptySearchFragment.pageIndex = 1
+		}
+		val keyWord = viewModel.getLastSuccessfulSearchKeyWord()
+		binding.searchView.setKeyWordCloseClickable(false)
+		viewModel.queryGoodsSearch(keyWord ?: "", emptySearchFragment.pageIndex).observe(this) {
+			binding.searchView.setKeyWordCloseClickable(true)
+			showFragment(emptySearchFragment)
+			if (it.hasData()) {
+				emptySearchFragment.bindData(it.data!!.list, isInit, keyWord != null)
+			} else {
+				emptySearchFragment.bindData(null, isInit, keyWord != null)
+			}
+		}
+	}
+	
+	private fun showFragment(fragment: CoBaseFragment<*>, animation: Boolean = false) {
 		val manager = supportFragmentManager
 		val currentFragment = manager.findFragmentById(binding.fragmentContainer.id)
 		if (fragment == currentFragment) return
-		val beginTransaction = manager.beginTransaction()
-		if (currentFragment == null) {
-			beginTransaction.add(binding.fragmentContainer.id, fragment)
-		} else {
-			beginTransaction.replace(binding.fragmentContainer.id, fragment)
+		val transaction = manager.beginTransaction()
+		if (animation) {
+			transaction.setCustomAnimations(R.anim.deceleration_to_right_enter, R.anim.deceleration_to_right_exit)
 		}
-		beginTransaction.commitNow()
+		if (currentFragment == null) {
+			transaction.add(binding.fragmentContainer.id, fragment)
+		} else {
+			transaction.replace(binding.fragmentContainer.id, fragment)
+		}
+		transaction.commitNow()
+	}
+	
+	@Suppress("DEPRECATION")
+	@Deprecated("Deprecated in Java")
+	override fun onBackPressed() {
+		val manager = supportFragmentManager
+		val currentFragment = manager.findFragmentById(binding.fragmentContainer.id)
+		if (currentFragment == historySearchFragment) {
+			super.onBackPressed()
+		} else {
+			toHistorySearchFragment(true)
+		}
 	}
 }

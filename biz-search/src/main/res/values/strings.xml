@@ -6,4 +6,7 @@
 	<string name="history_search_recent">最近搜索</string>
 	<string name="history_search_clear">删除</string>
 	<string name="history_search_clear_title">是否删除最近搜索记录？</string>
+	
+	<string name="empty_search_hint_1">未找到相关商品！您还未搜索过，为你推荐以下商品</string>
+	<string name="empty_search_hint_2">未找到相关商品！以下是您上次搜索的商品</string>
 </resources>

@@ -3,6 +3,8 @@ package com.cooder.project.biz_search
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.cooder.library.library.cache.CoStorage
+import com.cooder.library.library.executor.CoExecutor
 import com.cooder.library.library.restful.CoCallback
 import com.cooder.library.library.restful.CoResponse
 import com.cooder.library.library.restful.CoResult
@@ -22,8 +24,12 @@ import com.cooder.project.pub_mod.model.GoodsListMo
  */
 class SearchViewModel : ViewModel() {
 	
+	private var lastSearchKeyWord: String? = null
+	
 	private companion object {
 		private const val PAGE_SIZE = 10
+		private const val TYPE_SEARCH = "search"
+		private const val KEY_SEARCH_LAST = "last"
 	}
 	
 	/**
@@ -69,5 +75,25 @@ class SearchViewModel : ViewModel() {
 				}
 			})
 		return liveData
+	}
+	
+	/**
+	 * 保存最近一次搜索到商品的关键字
+	 */
+	fun saveLastSuccessfulSearchKeyWord(keyWord: String) {
+		CoExecutor.execute {
+			CoStorage.saveCache(TYPE_SEARCH, KEY_SEARCH_LAST, keyWord)
+			this.lastSearchKeyWord = keyWord
+		}
+	}
+	
+	/**
+	 * 获取最近一次搜索到商品的关键字
+	 */
+	fun getLastSuccessfulSearchKeyWord(): String? {
+		if (this.lastSearchKeyWord == null) {
+			this.lastSearchKeyWord = CoStorage.getCache<String>(TYPE_SEARCH, KEY_SEARCH_LAST, null)
+		}
+		return this.lastSearchKeyWord
 	}
 }

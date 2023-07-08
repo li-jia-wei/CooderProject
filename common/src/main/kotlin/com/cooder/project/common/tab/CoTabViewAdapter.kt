@@ -4,6 +4,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.cooder.library.library.log.CoLog
 import com.cooder.library.ui.tab.common.CoTabInfo
 import com.cooder.project.common.R
 import com.cooder.project.common.tab.ToggleSpeedType.*
@@ -82,6 +83,7 @@ class CoTabViewAdapter(
 	 * @param direction 大于0:左或上 等于0:不变 小于0:右或下
 	 */
 	private fun FragmentTransaction.setToggleAnimation(direction: Int) {
+		CoLog.i(direction)
 		if (direction > 0) {
 			when (speedType) {
 				AVERAGE -> setCustomAnimations(R.anim.average_to_left_enter, R.anim.average_to_left_exit)
