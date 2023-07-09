@@ -8,8 +8,11 @@ import com.cooder.library.library.util.CoDisplayUtil
 import com.cooder.library.library.util.expends.immersiveStatusBar
 import com.cooder.project.biz_search.databinding.ActivitySearchBinding
 import com.cooder.project.biz_search.fragment.empty.EmptySearchFragment
+import com.cooder.project.biz_search.fragment.empty.IEmptySearch
 import com.cooder.project.biz_search.fragment.goods.GoodsSearchFragment
+import com.cooder.project.biz_search.fragment.goods.IGoodsSearch
 import com.cooder.project.biz_search.fragment.history.HistorySearchFragment
+import com.cooder.project.biz_search.fragment.history.IHistorySearch
 import com.cooder.project.biz_search.fragment.quick.QuickSearchFragment
 import com.cooder.project.common.R
 import com.cooder.project.common.route.RoutePath
@@ -26,14 +29,14 @@ import com.cooder.project.common.ui.component.CoBaseFragment
  * 介绍：搜索页
  */
 @Route(path = RoutePath.BizSearch.ACTIVITY_SEARCH)
-class SearchActivity : CoBaseActivity<ActivitySearchBinding>() {
+class SearchActivity : CoBaseActivity<ActivitySearchBinding>(), IHistorySearch, IGoodsSearch, IEmptySearch {
 	
 	private val viewModel by lazy { ViewModelProvider(this)[SearchViewModel::class.java] }
 	
 	private val quickSearchFragment by lazy { QuickSearchFragment() }
-	private val historySearchFragment by lazy { HistorySearchFragment(::doQueryGoodsSearch) }
-	private val goodsSearchFragment by lazy { GoodsSearchFragment(::doLoadMoreFromGoodsSearch, ::doRefreshFromGoodsSearch) }
-	private val emptySearchFragment by lazy { EmptySearchFragment(::doLoadMoreFromEmptySearch, ::doRefreshFromEmptySearch) }
+	private val historySearchFragment by lazy { HistorySearchFragment(this) }
+	private val goodsSearchFragment by lazy { GoodsSearchFragment(this) }
+	private val emptySearchFragment by lazy { EmptySearchFragment(this) }
 	
 	private var keyWord: String? = null
 	
@@ -85,7 +88,7 @@ class SearchActivity : CoBaseActivity<ActivitySearchBinding>() {
 	/**
 	 * 在商品页面加载更多
 	 */
-	private fun doLoadMoreFromGoodsSearch() {
+	override fun doLoadMoreInGoodsSearch() {
 		keyWord?.also {
 			doQueryGoodsSearch(it, false)
 		}
@@ -94,7 +97,7 @@ class SearchActivity : CoBaseActivity<ActivitySearchBinding>() {
 	/**
 	 * 在商品页面刷新
 	 */
-	private fun doRefreshFromGoodsSearch() {
+	override fun doRefreshInGoodsSearch() {
 		keyWord?.also {
 			doQueryGoodsSearch(it, true)
 		}
@@ -103,7 +106,7 @@ class SearchActivity : CoBaseActivity<ActivitySearchBinding>() {
 	/**
 	 * 查询商品
 	 */
-	private fun doQueryGoodsSearch(keyWord: String, isInit: Boolean) {
+	override fun doQueryGoodsSearch(keyWord: String, isInit: Boolean) {
 		this.keyWord = keyWord
 		if (isInit) {
 			goodsSearchFragment.pageIndex = 1
@@ -133,14 +136,14 @@ class SearchActivity : CoBaseActivity<ActivitySearchBinding>() {
 	/**
 	 * 在空页面加载更多商品
 	 */
-	private fun doLoadMoreFromEmptySearch() {
+	override fun doLoadMoreInEmptySearch() {
 		doEmptySearchFragment(false)
 	}
 	
 	/**
 	 * 在空商品页面上刷新更多商品
 	 */
-	private fun doRefreshFromEmptySearch() {
+	override fun doRefreshInEmptySearch() {
 		doEmptySearchFragment(true)
 	}
 	

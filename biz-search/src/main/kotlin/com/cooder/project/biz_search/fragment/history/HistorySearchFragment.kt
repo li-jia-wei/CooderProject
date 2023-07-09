@@ -27,7 +27,7 @@ import com.google.android.material.shape.ShapeAppearanceModel
  * 介绍：当搜索框为空时显示
  */
 class HistorySearchFragment(
-	private val queryGoodsSearch: (keyWord: String, isInit: Boolean) -> Unit
+	private val historySearch: IHistorySearch
 ) : CoBaseFragment<FragmentHistorySearchBinding>() {
 	
 	private val viewModel by lazy { ViewModelProvider(this)[HistorySearchViewModel::class.java] }
@@ -76,7 +76,7 @@ class HistorySearchFragment(
 			}
 			chip.text = history
 			chip.setOnClickListener {
-				queryGoodsSearch.invoke(histories[index], true)
+				historySearch.doQueryGoodsSearch(histories[index], true)
 			}
 		}
 	}

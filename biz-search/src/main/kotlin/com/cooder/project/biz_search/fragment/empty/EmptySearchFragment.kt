@@ -17,17 +17,16 @@ import com.cooder.project.pub_mod.model.GoodsMo
  * 介绍：当搜索不到内容时显示
  */
 class EmptySearchFragment(
-	private val doLoadMore: () -> Unit,
-	private val doRefresh: () -> Unit
+	private val emptySearch: IEmptySearch
 ) : CoAbsListFragment() {
 	
 	override fun onLoadMore() {
-		doLoadMore.invoke()
+		emptySearch.doLoadMoreInEmptySearch()
 	}
 	
 	override fun onRefresh() {
 		super.onRefresh()
-		doRefresh.invoke()
+		emptySearch.doRefreshInEmptySearch()
 	}
 	
 	fun bindData(goodsList: List<GoodsMo>?, isInit: Boolean, hasLastSuccessfulSearch: Boolean) {
